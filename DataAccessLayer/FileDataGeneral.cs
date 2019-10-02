@@ -9,11 +9,11 @@ namespace DataAccessLayer
 {
     internal class FileDataGeneral
     {
-        internal DirectoryInfo GetFilePath()
+        internal DirectoryInfo GetFilePath(string folderName)
         {
             string filePath = AppDomain.CurrentDomain.BaseDirectory;
-            string xmlFolderName = "Xml\\";
-            string folderPathToCreate = filePath + xmlFolderName;
+            //string xmlFolderName = "Xml\\";
+            string folderPathToCreate = filePath + folderName;
             DirectoryInfo fileDirectory = Directory.CreateDirectory(folderPathToCreate);
             return fileDirectory;
         }

@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace RssFeedProcessor
 {
     [XmlRoot("rss")]
-    internal class EpisodeDeserializer
+    public class EpisodeDeserializer
     {
         [XmlIgnore]
         public List<DeserializedEpisode> AllDeserializedEpisodes { get; set; }

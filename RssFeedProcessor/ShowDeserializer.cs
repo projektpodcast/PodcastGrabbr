@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace RssFeedProcessor
 {
     [XmlRoot("rss")]
-    internal class ShowDeserializer
+    public class ShowDeserializer
     {
         [XmlElement("channel")]
         public DeserializedShow DeserializedShowData { get; set; }

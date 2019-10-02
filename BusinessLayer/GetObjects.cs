@@ -12,7 +12,7 @@ namespace BusinessLayer
     {
         public List<Show> GetSeriesList()
         {
-            FileDataSource fileSource = Factory.CreateFileSource();
+            XmlDataSource fileSource = Factory.CreateFileSource();
             List<Show> allShowList = fileSource.GetAllSeries();
             return allShowList;
         }

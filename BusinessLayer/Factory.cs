@@ -17,12 +17,12 @@ namespace BusinessLayer
 
         public static IDataTarget CreateFileTarget()
         {
-            return new FileDataTarget();
+            return new XmlDataTarget();
         }
 
-        public static FileDataSource CreateFileSource()
+        public static XmlDataSource CreateFileSource()
         {
-            return new FileDataSource();
+            return new XmlDataSource();
         }
     }
 }

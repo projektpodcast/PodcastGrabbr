@@ -42,8 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileDataGeneral.cs" />
-    <Compile Include="FileDataSource.cs" />
-    <Compile Include="FileDataTarget.cs" />
+    <Compile Include="MediaDataTarget.cs" />
+    <Compile Include="XmlDataSource.cs" />
+    <Compile Include="XmlDataTarget.cs" />
     <Compile Include="IDataTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
