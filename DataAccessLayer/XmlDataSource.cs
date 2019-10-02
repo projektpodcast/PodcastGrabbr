@@ -38,11 +38,7 @@ namespace DataAccessLayer
 
         public List<Show> Deserialize(DirectoryInfo folderPath, FileInfo[] allFiles)
         {
-            //List<Podcast> podcastList = new List<Podcast>();
-
-
             List<Show> seriesList = new List<Show>();
-
 
             foreach (FileInfo item in allFiles)
             {

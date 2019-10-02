@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace CommonTypes
 {
+    /// <summary>
+    /// Die Klasse "Podcast" gruppiert die Daten einer Show UND alle verfügbaren Episoden dieser Show.
+    /// Die Properties des Typs "Show" und "List<Episode>" werden über inerhitance eingebunden.
+    /// </summary>
     public class Podcast
     {
         public Show ShowInfo { get; set; }

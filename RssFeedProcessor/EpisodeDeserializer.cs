@@ -19,14 +19,17 @@ namespace RssFeedProcessor
     [XmlRoot("rss")]
     public class EpisodeDeserializer
     {
+        //Interne Liste der Klasse "DeserializedEpisode". Nicht fähig für übergreifenen Datentransfer. Ist an eine Listenobjekt des Typs "Episode" gebunden werden.
         [XmlIgnore]
-        public List<DeserializedEpisode> AllDeserializedEpisodes { get; set; }
+        private List<DeserializedEpisode> AllDeserializedEpisodes { get; set; }
+
+        //DataTransferObjekt der Klasse "Episode" welches zurückgegeben werden soll.
         [XmlIgnore]
         public List<Episode> EpisodeListDTO { get; set; }
 
         //Map Properties
         #region MappedProperties
-        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss ein Klassen-Wrapper verwendet werden. 
+        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss eine nested-Class verwendet werden. 
         //(Beispiel: die Property "FileInfo" des Typs "FileData" zeigt das XmlElement an das gelesen werden muss. 
         //Die Definition der Klasse "FileData" zeigt das XmlAttribute an (url), das gelesen werden soll.
         [XmlElement("channel")]
