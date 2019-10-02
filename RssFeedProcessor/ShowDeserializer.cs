@@ -26,6 +26,9 @@ namespace RssFeedProcessor
 
         //Map Properties
         #region MappedProperties
+        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss ein Klassen-Wrapper verwendet werden. 
+        //(Beispiel: die Property "ImageUri" des Typs "ImageValue" zeigt das XmlElement an das gelesen werden muss. 
+        //Die Definition der Klasse "ImageValue" zeigt das XmlAttribute an (href), das gelesen werden soll.
         [XmlElement("channel")]
         public DeserializedShow DeserializedShowData { get; set; }
         public class DeserializedShow
@@ -95,9 +98,12 @@ namespace RssFeedProcessor
         }
 
         /// <summary>
-        /// Bindet die Properties
+        /// Bindet die klasseneigenen Properties an eine Instanz der allgemeinen "Show"-Klasse.
+        /// Mit dem konditionellen Operator "?:" 
+        /// wird a) ein default-Wert an eine non-nullable Property zugewiesen.
+        /// oder b) eine alternativer Property-Wert zugewiesen.
         /// </summary>
-        /// <param name="deserializedShow"></param>
+        /// <param name="deserializedShow">Deserialisiertes Show-Objekt. Nicht fähig für übergreifenden Datentransfer. Muss an ein "Show"-Objekt gebunden werden.</param>
         private void SerializedShowToDataTransferObject(DeserializedShow deserializedShow)
         {
             ShowDTO = new Show
@@ -115,12 +121,23 @@ namespace RssFeedProcessor
             };
         }
 
+        /// <summary>
+        /// Initialisiert den Zugriff auf einen DateTimeParser.
+        /// </summary>
+        /// <param name="dateTimeForParsing">string, der zu DateTime geparsed werden soll</param>
+        /// <returns>DateTime Objekt</returns>
         private DateTime ConvertDateTime(string dateTimeForParsing)
         {
             DateTimeParser dateParser = new DateTimeParser();
             return dateParser.ConvertStringToDateTime(dateTimeForParsing);
         }
 
+        /// <summary>
+        /// Die Unterklasse "Categories" des übergebenen "DeserializedShow"-Objekts wird iteriert.
+        /// Jeder gefundene Eintrag dieser List<Categories> wird einer Liste<string> hinzugefügt.
+        /// </summary>
+        /// <param name="_neueSerie"></param>
+        /// <returns>Liste an strings, enthält alle Kategorien einer Serie</returns>
         private List<string> IterateCategoriesAndAddToShow(DeserializedShow _neueSerie)
         {
             List<string> categoryList = new List<string>();

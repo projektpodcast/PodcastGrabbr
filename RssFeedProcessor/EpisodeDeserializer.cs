@@ -26,6 +26,9 @@ namespace RssFeedProcessor
 
         //Map Properties
         #region MappedProperties
+        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss ein Klassen-Wrapper verwendet werden. 
+        //(Beispiel: die Property "FileInfo" des Typs "FileData" zeigt das XmlElement an das gelesen werden muss. 
+        //Die Definition der Klasse "FileData" zeigt das XmlAttribute an (url), das gelesen werden soll.
         [XmlElement("channel")]
         public ChannelNode Channel { get; set; }
 
@@ -103,9 +106,14 @@ namespace RssFeedProcessor
         }
 
         /// <summary>
-        /// 
+        /// Bindet die klasseneigenen Properties an eine Instanz der allgemeinen "Show"-Klasse.
+        /// Mit dem konditionellen Operator "?:" 
+        /// wird a) ein default-Wert an eine non-nullable Property zugewiesen.
+        /// oder b) eine alternativer Property-Wert zugewiesen.
+        /// Es werden so viele Listeneinträge initialisiert wie es Listeneinträge im übergebenen Parameter gibt.
         /// </summary>
-        /// <param name="deserializedSeriesList"></param>
+        /// <param name="deserializedSeriesList">Deserialisierte Liste mit Episodeneinträgen. 
+        /// Nicht fähig für übergreifenen Datentransfer. Muss an eine Listenobjekt des Typs "Episode" gebunden werden.</param>
         private void SerializedSeriesToDataTransferObject(List<DeserializedEpisode> deserializedSeriesList)
         {
             EpisodeListDTO = new List<Episode>();
@@ -125,6 +133,11 @@ namespace RssFeedProcessor
             AllDeserializedEpisodes = null;
         }
 
+        /// <summary>
+        /// Initialisiert den Zugriff auf einen DateTimeParser.
+        /// </summary>
+        /// <param name="dateTimeForParsing">string, der zu DateTime geparsed werden soll</param>
+        /// <returns>DateTime Objekt</returns>
         private DateTime ConvertDateTime(string dateTimeForParsing)
         {
             DateTimeParser dateParser = new DateTimeParser();
