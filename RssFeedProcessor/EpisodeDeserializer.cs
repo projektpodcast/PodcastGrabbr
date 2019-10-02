@@ -6,7 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
+/// <summary>
+/// Die Klasse EpisodeDeserializer besitzt drei Aufgaben:
+/// 1. Xml-Knoten, die Daten einer "Episode" enthalten, an Properties mappen.
+/// 2. Eine Xml deserialisieren und die Werte an die Properties binden.
+/// 3. Die Properties an ein "Episode"-Listenobjekt und zurückgeben.
+/// Die Klasse wird mit Aufruf der Methode "XmlToDeserializedEpisode(MemoryStream xmlStream)" angesteuert. Der MemoryStream enthält eine Rss-Feed-Xml eines Podcasts.
+/// Anhand den gemappten Properties kann die Xml deserialisiert werden.
+/// </summary>
 namespace RssFeedProcessor
 {
     [XmlRoot("rss")]
@@ -16,6 +23,9 @@ namespace RssFeedProcessor
         public List<DeserializedEpisode> AllDeserializedEpisodes { get; set; }
         [XmlIgnore]
         public List<Episode> EpisodeListDTO { get; set; }
+
+        //Map Properties
+        #region MappedProperties
         [XmlElement("channel")]
         public ChannelNode Channel { get; set; }
 
@@ -55,7 +65,15 @@ namespace RssFeedProcessor
             [XmlAttribute("type")]
             public string Type { get; set; }
         }
+        #endregion MappedProperties
 
+        /// <summary>
+        /// Helfermethode regelt den Methodenfluss. Diese Methode wird von außen angesteuert und erhält einen MemoryStream mit geladener Xml.
+        /// Sie ruft eine Methode auf, welche die vielzahl an "Episoden" aus der Xml deserialisiert.
+        /// Das deserialisierte Objekt wird durch eine zweite Methode an ein DTO-Listenobjekt des Typs "Episode" gebunden und zurückgegeben.
+        /// </summary>
+        /// <param name="xmlStream">Stream: enthält Xml einer Show mit beliebig vielen Episoden</param>
+        /// <returns></returns>
         public List<Episode> XmlToDeserializedEpisode(MemoryStream xmlStream)
         {
             XmlLoader deserializingProcessor = new XmlLoader();
@@ -66,17 +84,28 @@ namespace RssFeedProcessor
             return EpisodeListDTO;
         }
 
-        private void DeserializeXmlToMappedPodcastEpisode(MemoryStream memoryStreamWithXml)
+        /// <summary>
+        /// Instanziert einen XmlSerializer. Der XmlSerializer wird mit den gemappten Properties der Klasse ShowDeserializer geladen.
+        /// Anhand den gemappten Properties werden nun die Knotenwerte der Xml an die übereinstimmenden Properties gebunden.
+        /// Jede einzelne deserialisierte Episode wird derselben klasseneigenen Property-Liste "AllDeserializedEpisodes" hinzugefügt.
+        /// Für einen xmlStream enstehen so viele Listeneinträge wie die Xml-Datei Episodenknoten hat.
+        /// </summary>
+        /// <param name="xmlStream">Stream: enthält Xml einer Show mit beliebig vielen Episoden</param>
+        private void DeserializeXmlToMappedPodcastEpisode(MemoryStream xmlStream)
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(EpisodeDeserializer));
             DeserializedEpisode serializedSeries = new DeserializedEpisode();
 
             EpisodeDeserializer episodesCollection = new EpisodeDeserializer();
-            episodesCollection = (EpisodeDeserializer)deserializer.Deserialize(memoryStreamWithXml);
+            episodesCollection = (EpisodeDeserializer)deserializer.Deserialize(xmlStream);
 
             AllDeserializedEpisodes = episodesCollection.Channel.DeserializedEpisodeList;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="deserializedSeriesList"></param>
         private void SerializedSeriesToDataTransferObject(List<DeserializedEpisode> deserializedSeriesList)
         {
             EpisodeListDTO = new List<Episode>();

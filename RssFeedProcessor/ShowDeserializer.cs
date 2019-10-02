@@ -7,15 +7,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
+/// <summary>
+/// Die Klasse ShowDeserializer besitzt drei Aufgaben:
+/// 1. Xml-Knoten, die Daten einer "Show" enthalten, an Properties mappen.
+/// 2. Eine Xml deserialisieren und die Werte an die Properties binden.
+/// 3. Die Properties an ein "Show"-Objekt binden und zurückgeben.
+/// Die Klasse wird mit Aufruf der Methode "XmlToDeserializedShow(MemoryStream xmlStream)" angesteuert. Der MemoryStream enthält eine Rss-Feed-Xml eines Podcasts.
+/// Anhand den gemappten Properties kann die Xml deserialisiert werden.
+/// </summary>
 namespace RssFeedProcessor
 {
     [XmlRoot("rss")]
     public class ShowDeserializer
     {
-        [XmlElement("channel")]
-        public DeserializedShow DeserializedShowData { get; set; }
+        //DataTransferObjekt der Klasse "Show" welches zurückgegeben werden soll.
         [XmlIgnore]
         public Show ShowDTO { get; set; }
+
+        //Map Properties
+        #region MappedProperties
+        [XmlElement("channel")]
+        public DeserializedShow DeserializedShowData { get; set; }
         public class DeserializedShow
         {
             [XmlElement("managingEditor")]
@@ -40,10 +52,7 @@ namespace RssFeedProcessor
             public string LastBuildDate { get; set; }
             [XmlElement("image", Namespace = "http://www.itunes.com/dtds/podcast-1.0.dtd")]
             public ImageValue ImageUri { get; set; }
-            //[XmlElement("image")]
-            //public ImageValue ImageUri2 { get; set; }
         }
-
         public class Categories
         {
             [XmlAttribute("text")]
@@ -54,23 +63,41 @@ namespace RssFeedProcessor
             [XmlAttribute("href")]
             public string ImageLink { get; set; }
         }
+        #endregion MappedProperties
 
-        public Show XmlToDeserializedShow(MemoryStream memoryStreamWithXml)
+        /// <summary>
+        /// Helfermethode regelt den Methodenfluss. Diese Methode wird von außen angesteuert und erhält einen MemoryStream mit geladener Xml.
+        /// Sie ruft eine Methode auf, welche die einzige "Show" aus der Xml deserialisiert. 
+        /// Das deserialisierte Objekt wird durch eine zweite Methode an ein DTO-Objekt des Typs "Show" gebunden und zurückgegeben.
+        /// </summary>
+        /// <param name="xmlStream">Stream: enthält Xml einer Show mit beliebig vielen Episoden</param>
+        /// <returns>Eine Show die aus dem xmlStream deserialisiert wurde</returns>
+        public Show XmlToDeserializedShow(MemoryStream xmlStream)
         {
-            DeserializeXmlToMappedPodcastShow(memoryStreamWithXml);
+            DeserializeXmlToMappedPodcastShow(xmlStream);
             SerializedShowToDataTransferObject(DeserializedShowData);
             return ShowDTO;
         }
 
-        private void DeserializeXmlToMappedPodcastShow(MemoryStream memoryStreamWithXml)
+        /// <summary>
+        /// Instanziert einen XmlSerializer. Der XmlSerializer wird mit den gemappten Properties der Klasse ShowDeserializer geladen.
+        /// Anhand den gemappten Properties werden nun die Knotenwerte der Xml an die übereinstimmenden Properties gebunden.
+        /// Für einen xmlStream entsteht ein Serien-Objekt. Das Objekt wird an die klasseneigene Property "DeserializedShowData" gebunden. 
+        /// </summary>
+        /// <param name="xmlStream">Stream: enthält Xml einer Show mit beliebig vielen Episoden</param>
+        private void DeserializeXmlToMappedPodcastShow(MemoryStream xmlStream)
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(ShowDeserializer));
 
             ShowDeserializer serializedShow = new ShowDeserializer();
-            serializedShow = (ShowDeserializer)deserializer.Deserialize(memoryStreamWithXml);
+            serializedShow = (ShowDeserializer)deserializer.Deserialize(xmlStream);
             DeserializedShowData = serializedShow.DeserializedShowData;
         }
 
+        /// <summary>
+        /// Bindet die Properties
+        /// </summary>
+        /// <param name="deserializedShow"></param>
         private void SerializedShowToDataTransferObject(DeserializedShow deserializedShow)
         {
             ShowDTO = new Show

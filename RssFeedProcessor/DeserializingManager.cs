@@ -9,18 +9,32 @@ using System.Xml;
 
 namespace RssFeedProcessor
 {
+    /// <summary>
+    /// Diese Klasse regelt den Ablauf verschiedener, an der Xml-Deserialisierung teilhabenden, Klassen.
+    /// Mit dem externen Aufruf der Methode "DeserializeRssXml(string xmlUri)" wird eine online gehostete Uri eines Rss-Feeds übergeben.
+    /// Die Xml des Rss-Feeds enthält Daten eines Podcasts.
+    /// Die Xml wird in einen Stream geladen und zur Deserialisierung weitergeleitet. Daraus entstehen zwei Objekte mit Relation zueinander.
+    /// Die Liste enthält alle "Episoden" einer spezifischen "Show".
+    /// Diese beiden Objekte werden gruppiert und als "Podcast" zurückgegeben.
+    /// </summary>
     public class DeserializingManager
     {
+        /// <summary>
+        /// Steuert den Fluss als Methodenhelfer.
+        /// Lädt Xml in einen MemoryStream. Die MemoryStreams werden an zwei Klassen verteilt.
+        /// Der MemoryStream enthält eine einzige "Show" mit allen "Episoden". Diese Objekte werden aus dem Stream serialisiert und in einem "Podcast"-Objekt gruppiert.
+        /// </summary>
+        /// <param name="xmlUri">Uri einer online gehosteten Xml Datei</param>
+        /// <returns>Gruppierung aller Episoden einer Show</returns>
         public Podcast DeserializeRssXml(string xmlUri)
         {
+            XmlLoader xmlLoader = new XmlLoader();
+            XmlDocument loadedXml = xmlLoader.CreateXmlDocument(xmlUri);
 
-            XmlLoader deserializingProcessor = new XmlLoader();
-            XmlDocument loadedXml = deserializingProcessor.CreateXmlDocument(xmlUri);
-
-            using (MemoryStream memoryStreamWithXml = deserializingProcessor.LoadXmlDocumentIntoMemoryStream(loadedXml))
+            using (MemoryStream memoryStreamWithXml = xmlLoader.LoadXmlDocumentIntoMemoryStream(loadedXml))
             {
                 Show series = CreateSeriesObject(memoryStreamWithXml);
-                deserializingProcessor.SetMemoryStreamPositionToStart(memoryStreamWithXml);
+                xmlLoader.SetMemoryStreamPositionToStart(memoryStreamWithXml);
                 List<Episode> episodeList = CreateEpisodeListObject(memoryStreamWithXml);
 
                 Podcast newPodcast = CreatePodcast(series, episodeList);
@@ -28,7 +42,14 @@ namespace RssFeedProcessor
             }
         }
 
-        public Podcast CreatePodcast(Show series, List<Episode> episodeList)
+        /// <summary>
+        /// Erstellt ein Klassenobjekt (Podcast) aus den beiden Parametern.
+        /// Gruppiert alle Episoden einer Show in ein "Podcast"-Objekt.
+        /// </summary>
+        /// <param name="series">Deserialisiertes Objekt. Stellt eine einzelne Show dar.</param>
+        /// <param name="episodeList">Deserialisiertes Objekt. Enthält alle Episoden einer Show</param>
+        /// <returns>Erstelltes Klassenobjekt "Podcast"</returns>
+        private Podcast CreatePodcast(Show series, List<Episode> episodeList)
         {
             Podcast newPodcast = new Podcast
             {
@@ -38,14 +59,26 @@ namespace RssFeedProcessor
             return newPodcast;
         }
 
-        public Show CreateSeriesObject(MemoryStream memStream)
+        /// <summary>
+        /// Instanziert die Klasse ShowDeserializer. Reicht einen, mit Xml geladenen, MemoryStream weiter.
+        /// Erzeugt ein aus der Xml deserialisiertes "Show"-Objekt.
+        /// </summary>
+        /// <param name="memStream">Stream: enthält Xml einer Show mit beliebig vielen Episoden</param>
+        /// <returns>Objekt einer "Show"</returns>
+        private Show CreateSeriesObject(MemoryStream memStream)
         {
             ShowDeserializer showDeserializer = new ShowDeserializer();
             Show deserializedShow = showDeserializer.XmlToDeserializedShow(memStream);
             return deserializedShow;
         }
 
-        public List<Episode> CreateEpisodeListObject(MemoryStream memoryStream)
+        /// <summary>
+        /// Instanziert die Klasse "EpisodeDeserializer". Reicht einen, mit Xml geladenen, MemoryStream weiter.
+        /// Erzeugt eine aus der Xml deserialisierte Listensammlung der Klasse "Episode".
+        /// </summary>
+        /// <param name="memoryStream">Stream: enthält Xml einer Show mit beliebig vielen Episoden</param>
+        /// <returns>Sammlung aller "Episoden" in einem MemoryStream</returns>
+        private List<Episode> CreateEpisodeListObject(MemoryStream memoryStream)
         {
             EpisodeDeserializer episodeDeserializer = new EpisodeDeserializer();
             List<Episode> deserializedEpisodeList = episodeDeserializer.XmlToDeserializedEpisode(memoryStream);
