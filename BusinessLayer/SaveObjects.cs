@@ -15,5 +15,16 @@ namespace BusinessLayer
             IDataTarget fileTarget = Factory.CreateFileTarget();
             fileTarget.SavePodcast(podcast);
         }
+
+        public void SavePodcastAsMediaFile(Podcast podcast)
+        {
+            MediaDataTarget mediaTarget = new MediaDataTarget();
+
+            Episode selectedEpisode = podcast.EpisodeList[0];
+            Show selectedShow = podcast.ShowInfo;
+            Podcast selectedPodcastData = new Podcast() { ShowInfo = selectedShow, EpisodeList = new List<Episode> { selectedEpisode } };
+
+            mediaTarget.SavePodcast(selectedPodcastData);
+        }
     }
 }

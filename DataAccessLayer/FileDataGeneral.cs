@@ -12,7 +12,6 @@ namespace DataAccessLayer
         internal DirectoryInfo GetFilePath(string folderName)
         {
             string filePath = AppDomain.CurrentDomain.BaseDirectory;
-            //string xmlFolderName = "Xml\\";
             string folderPathToCreate = filePath + folderName;
             DirectoryInfo fileDirectory = Directory.CreateDirectory(folderPathToCreate);
             return fileDirectory;

@@ -27,6 +27,8 @@ namespace MockPresentationLayer
 
             GetObjects blGet = new GetObjects();
             List<Show> seriesList = blGet.GetSeriesList();
+
+            blSave.SavePodcastAsMediaFile(a);
         }
     }
 }
