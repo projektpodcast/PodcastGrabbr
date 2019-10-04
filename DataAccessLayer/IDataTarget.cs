@@ -11,6 +11,7 @@ namespace DataAccessLayer
     {
         void SavePodcast(Podcast podcastToSave);
 
+
         ///weitere operations wie update, create, insert, select(suchparameter), ...
     }
 }

@@ -10,19 +10,46 @@ namespace BusinessLayer
 {
     public static class Factory
     {
-        public static Podcast CreateSerializer()
+        public static IDataTarget CreateFileTarget(int targetType)
         {
-            return new Podcast();
+            IDataTarget dataTargetInstance = null; ;
+            switch (targetType)
+            {
+                case 0:
+                    dataTargetInstance = new XmlDataTarget();
+                    break;
+                case 1:
+                    dataTargetInstance = null;
+                    break;
+                case 2:
+                    dataTargetInstance = null;
+                    break;
+                default:
+                    dataTargetInstance = null;
+                    break;
+            }
+            return dataTargetInstance;
         }
 
-        public static IDataTarget CreateFileTarget()
+        public static IDataSource CreateFileSource(int sourceType)
         {
-            return new XmlDataTarget();
-        }
-
-        public static XmlDataSource CreateFileSource()
-        {
-            return new XmlDataSource();
+            IDataSource dataSourceInstance = null; ;
+            switch (sourceType)
+            {
+                case 0:
+                    dataSourceInstance = new XmlDataSource();
+                    break;
+                case 1:
+                    dataSourceInstance = null;
+                    break;
+                case 2:
+                    dataSourceInstance = null;
+                    break;
+                default:
+                    dataSourceInstance = null;
+                    break;
+            }
+            return dataSourceInstance;
         }
     }
 }

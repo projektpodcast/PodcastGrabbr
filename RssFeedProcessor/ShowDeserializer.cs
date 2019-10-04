@@ -26,7 +26,7 @@ namespace RssFeedProcessor
 
         //Map Properties
         #region MappedProperties
-        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss ein Klassen-Wrapper verwendet werden. 
+        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss eine nested-Class verwendet werden. 
         //(Beispiel: die Property "ImageUri" des Typs "ImageValue" zeigt das XmlElement an das gelesen werden muss. 
         //Die Definition der Klasse "ImageValue" zeigt das XmlAttribute an (href), das gelesen werden soll.
         [XmlElement("channel")]
