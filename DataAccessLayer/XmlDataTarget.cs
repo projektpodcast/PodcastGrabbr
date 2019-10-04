@@ -9,53 +9,41 @@ using System.Xml.Serialization;
 
 namespace DataAccessLayer
 {
-    public class XmlDataTarget : IDataTarget
+    public class XmlDataTarget : LocalDataTarget, IDataTarget 
     {
         public void SavePodcast(Podcast podcastToSave)
         {
-            string fileName = CreateFileName(podcastToSave.ShowInfo);
-            DirectoryInfo filePath = CreateFilePath();
-            string fullFilePath = filePath.FullName + fileName;
-            CheckIfFileExists(fullFilePath);
+            string fileName = GetFileName(podcastToSave);
+            string folderName = GetFolderName();
 
-            SerializePodcast(podcastToSave, fullFilePath);
+            DirectoryInfo dirInfo = base.GetDirectoryInfo(folderName);
+
+            SerializePodcast(podcastToSave, dirInfo, fileName);
         }
 
-        private string CreateFileName(Show series)
+        internal override string GetFileName(Podcast podcast)
         {
             string fileExtension = ".xml";
-            string fileName = series.PodcastTitle.Split('/').Last() + fileExtension;
+            string fileName = podcast.ShowInfo.PodcastTitle.Split('/').Last() + fileExtension;
             return fileName;
         }
 
-        private DirectoryInfo CreateFilePath()
+        internal override string GetFolderName()
         {
-            string filePath = AppDomain.CurrentDomain.BaseDirectory;
             string xmlFolderName = "Xml\\";
-            string folderPathToCreate = filePath + xmlFolderName;
-            DirectoryInfo fileDirectory = Directory.CreateDirectory(folderPathToCreate);
-            return fileDirectory;
+            return xmlFolderName;
         }
 
-        private bool CheckIfFileExists(string fullFilePath)
+        private void SerializePodcast(Podcast podcast, DirectoryInfo folderPath, string fileName)
         {
-            bool fileExists = false;
-            if (File.Exists(fullFilePath))
-            {
-                fileExists = true;
-            }
-            return fileExists;
-        }
-
-        private void SerializePodcast(Podcast podcast, string filePath)
-        {
-            //Podcast transformedPodcast = new Podcast();
-
+            string folderName = $"{ folderPath.FullName }{ fileName }";
             XmlSerializer serializer = new XmlSerializer(typeof(Podcast));
 
-            FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite);
+            FileStream fileStream = new FileStream(folderName, FileMode.Create, FileAccess.ReadWrite);
             serializer.Serialize(fileStream, podcast);
             fileStream.Close();
         }
+
+
     }
 }

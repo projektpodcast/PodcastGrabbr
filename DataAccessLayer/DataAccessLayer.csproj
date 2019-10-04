@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileDataGeneral.cs" />
+    <Compile Include="IDataSource.cs" />
+    <Compile Include="LocalDataSource.cs" />
+    <Compile Include="LocalDataTarget.cs" />
     <Compile Include="MediaDataSource.cs" />
     <Compile Include="MediaDataTarget.cs" />
     <Compile Include="XmlDataSource.cs" />

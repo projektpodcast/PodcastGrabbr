@@ -9,34 +9,33 @@ using System.Xml.Serialization;
 
 namespace DataAccessLayer
 {
-    public class XmlDataSource
+    public class XmlDataSource : LocalDataSource, IDataSource
     {
 
         public List<Show> GetAllSeries()
         {
-            FileDataGeneral fileMethods = new FileDataGeneral();
-            string folderName = GetXmlFolderName();
-            DirectoryInfo folderPath = fileMethods.GetFilePath(folderName);
-            FileInfo[] allFiles = GetFileNames(folderPath);
+            string folderName = GetFolderName();
+            DirectoryInfo folderPath = base.GetDirectoryInfo(folderName);
+            FileInfo[] allFiles = GetFileInfo(folderPath);
 
-            List<Show> allSeries = Deserialize(folderPath, allFiles);
+            List<Show> allSeries = DeserializePodcast(folderPath, allFiles);
 
             return allSeries;
         }
 
-        public string GetXmlFolderName()
+        internal override string GetFolderName()
         {
             string xmlFolderName = "Xml\\";
             return xmlFolderName;
         }
 
-        public FileInfo[] GetFileNames(DirectoryInfo folderPath)
+        private FileInfo[] GetFileInfo(DirectoryInfo folderPath)
         {
             FileInfo[] allFiles = folderPath.GetFiles();
             return allFiles;
         }
 
-        public List<Show> Deserialize(DirectoryInfo folderPath, FileInfo[] allFiles)
+        private List<Show> DeserializePodcast(DirectoryInfo folderPath, FileInfo[] allFiles)
         {
             List<Show> seriesList = new List<Show>();
 
@@ -51,5 +50,6 @@ namespace DataAccessLayer
             }
             return seriesList;
         }
+
     }
 }
