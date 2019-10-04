@@ -15,13 +15,13 @@ namespace BusinessLayer
             IDataTarget dataTargetInstance = null; ;
             switch (targetType)
             {
-                case 1:
+                case 0:
                     dataTargetInstance = new XmlDataTarget();
                     break;
-                case 2:
+                case 1:
                     dataTargetInstance = null;
                     break;
-                case 3:
+                case 2:
                     dataTargetInstance = null;
                     break;
                 default:
@@ -36,13 +36,13 @@ namespace BusinessLayer
             IDataSource dataSourceInstance = null; ;
             switch (sourceType)
             {
-                case 1:
+                case 0:
                     dataSourceInstance = new XmlDataSource();
                     break;
-                case 2:
+                case 1:
                     dataSourceInstance = null;
                     break;
-                case 3:
+                case 2:
                     dataSourceInstance = null;
                     break;
                 default:
