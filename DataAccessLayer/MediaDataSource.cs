@@ -10,7 +10,7 @@ namespace DataAccessLayer
 {
     public class MediaDataSource : LocalDataSource, IDataSource
     {
-        public List<Show> GetAllSeries()
+        public List<Show> GetAllShows()
         {
             string mainFolder = GetFolderName();
             DirectoryInfo mainDir = base.GetDirectoryInfo(mainFolder);

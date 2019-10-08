@@ -10,10 +10,10 @@ namespace BusinessLayer
 {
     public class GetObjects
     {
-        public List<Show> GetSeriesList(int sourceType)
+        public List<Show> GetShowList(int sourceType)
         {
             IDataSource fileSource = Factory.CreateFileSource(sourceType);
-            List<Show> allShowList = fileSource.GetAllSeries();
+            List<Show> allShowList = fileSource.GetAllShows();
             return allShowList;
         }
 
@@ -21,7 +21,7 @@ namespace BusinessLayer
         {
             MediaDataSource dal = new MediaDataSource();
 
-            dal.GetAllSeries();
+            dal.GetAllShows();
             return null;
             
         }
