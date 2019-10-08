@@ -12,15 +12,15 @@ namespace DataAccessLayer
     public class XmlDataSource : LocalDataSource, IDataSource
     {
 
-        public List<Show> GetAllSeries()
+        public List<Show> GetAllShows()
         {
             string folderName = GetFolderName();
             DirectoryInfo folderPath = base.GetDirectoryInfo(folderName);
             FileInfo[] allFiles = GetFileInfo(folderPath);
 
-            List<Show> allSeries = DeserializePodcast(folderPath, allFiles);
+            List<Show> allShows = DeserializePodcast(folderPath, allFiles);
 
-            return allSeries;
+            return allShows;
         }
 
         internal override string GetFolderName()
@@ -37,7 +37,7 @@ namespace DataAccessLayer
 
         private List<Show> DeserializePodcast(DirectoryInfo folderPath, FileInfo[] allFiles)
         {
-            List<Show> seriesList = new List<Show>();
+            List<Show> showList = new List<Show>();
 
             foreach (FileInfo item in allFiles)
             {
@@ -46,9 +46,9 @@ namespace DataAccessLayer
                 FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
                 Podcast podcast = (Podcast)serializer.Deserialize(fileStream);
 
-                seriesList.Add(podcast.ShowInfo);
+                showList.Add(podcast.ShowInfo);
             }
-            return seriesList;
+            return showList;
         }
 
     }

@@ -33,11 +33,11 @@ namespace RssFeedProcessor
 
             using (MemoryStream memoryStreamWithXml = xmlLoader.LoadXmlDocumentIntoMemoryStream(loadedXml))
             {
-                Show series = CreateSeriesObject(memoryStreamWithXml);
+                Show show = CreateShowObject(memoryStreamWithXml);
                 xmlLoader.SetMemoryStreamPositionToStart(memoryStreamWithXml);
                 List<Episode> episodeList = CreateEpisodeListObject(memoryStreamWithXml);
 
-                Podcast newPodcast = CreatePodcast(series, episodeList);
+                Podcast newPodcast = CreatePodcast(show, episodeList);
                 return newPodcast;
             }
         }
@@ -46,14 +46,14 @@ namespace RssFeedProcessor
         /// Erstellt ein Klassenobjekt (Podcast) aus den beiden Parametern.
         /// Gruppiert alle Episoden einer Show in ein "Podcast"-Objekt.
         /// </summary>
-        /// <param name="series">Deserialisiertes Objekt. Stellt eine einzelne Show dar.</param>
+        /// <param name="show">Deserialisiertes Objekt. Stellt eine einzelne Show dar.</param>
         /// <param name="episodeList">Deserialisiertes Objekt. Enthält alle Episoden einer Show</param>
         /// <returns>Erstelltes Klassenobjekt "Podcast"</returns>
-        private Podcast CreatePodcast(Show series, List<Episode> episodeList)
+        private Podcast CreatePodcast(Show show, List<Episode> episodeList)
         {
             Podcast newPodcast = new Podcast
             {
-                ShowInfo = series,
+                ShowInfo = show,
                 EpisodeList = episodeList
             };
             return newPodcast;
@@ -65,7 +65,7 @@ namespace RssFeedProcessor
         /// </summary>
         /// <param name="memStream">Stream: enthält Xml einer Show mit beliebig vielen Episoden</param>
         /// <returns>Objekt einer "Show"</returns>
-        private Show CreateSeriesObject(MemoryStream memStream)
+        private Show CreateShowObject(MemoryStream memStream)
         {
             ShowDeserializer showDeserializer = new ShowDeserializer();
             Show deserializedShow = showDeserializer.XmlToDeserializedShow(memStream);

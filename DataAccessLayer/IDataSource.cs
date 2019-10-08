@@ -9,6 +9,6 @@ namespace DataAccessLayer
 {
     public interface IDataSource
     {
-        List<Show> GetAllSeries();
+        List<Show> GetAllShows();
     }
 }

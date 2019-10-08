@@ -33,7 +33,7 @@ namespace MockPresentationLayer
             blSave.SavePodcastAsXml(a, 0);
 
             GetObjects blGet = new GetObjects();
-            List<Show> seriesList = blGet.GetSeriesList(0);
+            List<Show> showList = blGet.GetShowList(0);
 
             blSave.SavePodcastAsMediaFile(a);
 

@@ -86,7 +86,7 @@ namespace RssFeedProcessor
 
             DeserializeXmlToMappedPodcastEpisode(xmlStream);
 
-            SerializedSeriesToDataTransferObject(AllDeserializedEpisodes);
+            SerializedShowToDataTransferObject(AllDeserializedEpisodes);
             return EpisodeListDTO;
         }
 
@@ -100,7 +100,7 @@ namespace RssFeedProcessor
         private void DeserializeXmlToMappedPodcastEpisode(MemoryStream xmlStream)
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(EpisodeDeserializer));
-            DeserializedEpisode serializedSeries = new DeserializedEpisode();
+            DeserializedEpisode serializedShow = new DeserializedEpisode();
 
             EpisodeDeserializer episodesCollection = new EpisodeDeserializer();
             episodesCollection = (EpisodeDeserializer)deserializer.Deserialize(xmlStream);
@@ -115,12 +115,12 @@ namespace RssFeedProcessor
         /// oder b) eine alternativer Property-Wert zugewiesen.
         /// Es werden so viele Listeneinträge initialisiert wie es Listeneinträge im übergebenen Parameter gibt.
         /// </summary>
-        /// <param name="deserializedSeriesList">Deserialisierte Liste mit Episodeneinträgen. 
+        /// <param name="deserializedShow">Deserialisierte Liste mit Episodeneinträgen. 
         /// Nicht fähig für übergreifenen Datentransfer. Muss an eine Listenobjekt des Typs "Episode" gebunden werden.</param>
-        private void SerializedSeriesToDataTransferObject(List<DeserializedEpisode> deserializedSeriesList)
+        private void SerializedShowToDataTransferObject(List<DeserializedEpisode> deserializedShow)
         {
             EpisodeListDTO = new List<Episode>();
-            foreach (DeserializedEpisode item in deserializedSeriesList)
+            foreach (DeserializedEpisode item in deserializedShow)
             {
                 Episode newEpisode = new Episode
                 {
