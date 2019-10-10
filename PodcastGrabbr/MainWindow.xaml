@@ -11,6 +11,120 @@
 
 
     <Window.Resources>
+
+        
+        
+        <Style x:Key="ButtonVLeftTest" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Path Fill="{TemplateBinding Background}"
+                            Data="M 0 -20 L 0 20 L -20 0 Z">
+                            <!--Data="M 0 0 L 20 50 L 20 -50 Z">-->
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ButtonVRightTest" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Path Fill="{TemplateBinding Background}"
+                            Data="M 0 20 L 0 -20 L 20 0 Z">
+                            <!--Data="M 0 0 L 20 50 L 20 -50 Z">
+                             Data="M -20 50 L -20 -50 L 0 0 Z">-->
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--<Style x:Key="ButtonVLeftTest" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Path Fill="{TemplateBinding Background}"
+                            Data="M 0 0 L 20 50 L 20 -50 Z">
+                            -->
+        <!--Data="M 0 0 L 30 50 L -50 0 Z">-->
+        <!--
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+
+        <!--<Style x:Key="ButtonVRightTest" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Path Fill="{TemplateBinding Background}"
+                            Data="M -20 50 L -20 -50 L 0 0 Z">
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+        <ControlTemplate x:Key="ScrollViewerWithButtons" TargetType="{x:Type ScrollViewer}">
+            <Grid>
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+                </Grid.ColumnDefinitions>-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="90*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+
+                <RepeatButton Style="{StaticResource ButtonVLeftTest}"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                              HorizontalAlignment="Right"
+                Command="ScrollBar.LineLeftCommand"
+                Content="Up" />
+
+                <ScrollContentPresenter
+                Grid.Column="1"
+                Width="{TemplateBinding Width}"
+                Height="{TemplateBinding Height}"
+                Margin="{TemplateBinding Margin}"
+                CanContentScroll="{TemplateBinding CanContentScroll}"
+                Content="{TemplateBinding Content}" />
+
+                <RepeatButton Style="{StaticResource ButtonVRightTest}"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                Command="ScrollBar.LineRightCommand"
+                Content="Down" />
+            </Grid>
+        </ControlTemplate>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Template">
@@ -55,11 +169,13 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
-                        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" CanContentScroll="True" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                        <ScrollViewer Template="{StaticResource ScrollViewerWithButtons}" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" CanContentScroll="True" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
                             <StackPanel Orientation="Horizontal"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       IsItemsHost="True"/>
+                       IsItemsHost="True">
+
+                            </StackPanel>
                         </ScrollViewer>
                     </ControlTemplate>
 
@@ -80,7 +196,6 @@
                             <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
                                 <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" FontSize="10pt" Foreground="White" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"></TextBlock>
                             </WrapPanel>
-
                         </Grid>
                     </DataTemplate>
                 </Setter.Value>
@@ -111,6 +226,19 @@
             <Setter Property="Margin" Value="20,0,20,0"/>
         </Style>
 
+        <Style x:Key="HeadlineTb" TargetType="{x:Type TextBlock}">
+            <Setter Property="Opacity" Value="0.7"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
+        </Style>
+
+        <Style x:Key="DetailTb" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
+        </Style>
 
 
 
@@ -121,8 +249,389 @@
 
 
 
+        <Style x:Key="ExpanderStyling" TargetType="{x:Type Expander}">
+            <Style.Triggers>
+                <Trigger Property="IsExpanded" Value="true">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsExpanded" Value="false">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="EpisodeListStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" CanContentScroll="True">
+                            <StackPanel Orientation="Vertical"
+                                        IsItemsHost="True">
+                            </StackPanel>
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+
+                    <DataTemplate>
+                        <Expander x:Name="myexpander" DockPanel.Dock="Left" Background="Transparent" 
+                                  BorderBrush="Black" BorderThickness="0,1,0,0"
+                                  Style="{StaticResource ExpanderStyling}"
+                                  IsExpanded="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                            <Expander.Header>
+
+                                <Grid Width="{Binding ElementName=myexpander, Path=ActualWidth}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
 
 
+                                    <Button Grid.Column="2" Content="Download" Width="80"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding PublishDate}"></TextBlock>
+                                    <TextBlock Grid.Column="0" Text="{Binding Title}"></TextBlock>
+
+                                    <!--<DockPanel LastChildFill="True">-->
+                                    <!--<Button DockPanel.Dock="Right" Content="Download"/>
+                                    <TextBlock DockPanel.Dock="Right" Margin="0,0,10,0" Text="{Binding PublishDate}"></TextBlock>
+                                    <TextBlock Text="{Binding Title}" ></TextBlock>-->
+                                    <!--</DockPanel>-->
+                                </Grid>
+
+                            </Expander.Header>
+
+                            <WrapPanel Orientation="Vertical">
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Summary}"></TextBlock>
+                                <TextBlock Text="{Binding Keywords}"></TextBlock>
+                            </WrapPanel>
+                        </Expander>
+
+
+
+
+
+
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--<Setter Property="ItemTemplate">
+                <Setter.Value>
+                    
+                    <DataTemplate>
+                        <Expander x:Name="myexpander" DockPanel.Dock="Left" Background="Transparent" 
+                                  BorderBrush="Black" BorderThickness="0,1,0,0"
+                                  Style="{StaticResource ExpanderStyling}"
+                                  IsExpanded="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
+                            <Expander.Header>
+
+                                <Grid Width="{Binding ElementName=myexpander, Path=ActualWidth}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Button Grid.Column="2" Content="Download" Width="80"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding PublishDate}"></TextBlock>
+                                    <TextBlock Grid.Column="0" Text="{Binding Title}"></TextBlock>
+
+                                    -->
+        <!--<DockPanel LastChildFill="True">-->
+        <!--<Button DockPanel.Dock="Right" Content="Download"/>
+                                    <TextBlock DockPanel.Dock="Right" Margin="0,0,10,0" Text="{Binding PublishDate}"></TextBlock>
+                                    <TextBlock Text="{Binding Title}" ></TextBlock>-->
+        <!--</DockPanel>-->
+        <!--
+                                </Grid>
+
+                            </Expander.Header>
+
+                            <WrapPanel Orientation="Vertical">
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Summary}"></TextBlock>
+                                <TextBlock Text="{Binding Keywords}"></TextBlock>
+                            </WrapPanel>
+                        </Expander>
+
+
+
+
+
+
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+
+
+
+
+
+
+
+
+
+        <!--<Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+
+
+                    <DockPanel LastChildFill="True">
+                        <Button DockPanel.Dock="Right" Content="Download"/>
+
+                        <Expander DockPanel.Dock="Left" Background="Transparent" BorderBrush="Black" BorderThickness="1">
+                            <Expander.Header>
+                                <TextBlock Text="{Binding Title}"></TextBlock>
+                            </Expander.Header>
+                            <WrapPanel>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding Summary}"></TextBlock>
+                                <TextBlock Text="{Binding Keywords}"></TextBlock>
+                            </WrapPanel>
+                        </Expander>
+                    </DockPanel>
+
+
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        </Style>-->
+
+
+
+
+
+
+
+
+        <Style x:Key="EpisodeItems" TargetType="{x:Type ListBoxItem}">
+            <!--<Setter Property="Width" Value="150"></Setter>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <!--<Border Name="Border" Background="Transparent">-->
+                        <ContentPresenter />
+                        <!--</Border>-->
+                        <!--<ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Border" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="false">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Setter Property="Margin" Value="20,0,20,0"/>-->
+        </Style>
+
+        <DataTemplate x:Key="myHeaderTemplate">
+            <DockPanel>
+                <TextBlock FontSize="16" Foreground="DarkBlue">
+                    <TextBlock.Text>
+                        Title
+                    </TextBlock.Text>
+                </TextBlock>
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TitleCell">
+            <DockPanel>
+                <TextBlock Foreground="DarkBlue" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Title}"></TextBlock>
+            </TextBlock>
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PublishedCell">
+            <DockPanel>
+                <TextBlock Foreground="DarkBlue" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding PublishDate}"></TextBlock>
+            </TextBlock>
+            </DockPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DownloadCell">
+            <DockPanel>
+                <Button Content="Download">
+                </Button>
+            </DockPanel>
+        </DataTemplate>
+
+
+
+        <Style x:Key="EpisodeListViewStyle" TargetType="{x:Type ListViewItem}">
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Grid>
+                            <Border BorderBrush="Black" BorderThickness="0,0,0,1" Focusable="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    >
+                            <GridViewRowPresenter/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
+
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Border Name="Selection" BorderBrush="Black" BorderThickness="0,0,0,1" />
+                            --><!-- This is used when GridView is put inside the ListView --><!--
+                            <GridViewRowPresenter Grid.RowSpan="2"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
+
+
+
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Top"></Setter>
+            <Style.Triggers>
+            <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsSelected" Value="false">
+                    <Setter Property="Opacity" Value="0.4"/>
+                </Trigger>
+            </Style.Triggers>
+
+
+
+
+        </Style>
+
+
+        <Style x:Key="HeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#FF5A5193"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate x:Name="CustomColumnHeaderControl" TargetType="{x:Type GridViewColumnHeader}">
+                        <Grid SnapsToDevicePixels="True">
+                            <Border x:Name="HeaderBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1" Background="{TemplateBinding Background}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition MaxHeight="7"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle x:Name="UpperHighlight" Fill="#FFBFAAF5" Visibility="Collapsed"/>
+                                    <Border Padding="{TemplateBinding Padding}" Grid.RowSpan="2">
+                                        <ContentPresenter x:Name="HeaderContent" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="0,0,0,1" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border x:Name="HeaderHoverBorder" BorderThickness="1,0,1,1" Margin="1,1,0,0"/>
+                            <Border x:Name="HeaderPressBorder" BorderThickness="1,1,1,0" Margin="1,0,0,1"/>
+                            <Canvas>
+                                <Thumb x:Name="PART_HeaderGripper">
+                                    <Thumb.Style>
+                                        <Style TargetType="{x:Type Thumb}">
+                                            <Setter Property="Canvas.Right" Value="-9"/>
+                                            <Setter Property="Width" Value="18"/>
+                                            <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                                        <GradientStop Color="#FFBFAAF5" Offset="0"/>
+                                                        <GradientStop Color="#FFBFAAF5" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Thumb}">
+                                                        <Border Background="Transparent" Padding="{TemplateBinding Padding}">
+                                                            <Rectangle Fill="{TemplateBinding Background}" HorizontalAlignment="Center" Width="1"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Thumb.Style>
+                                </Thumb>
+                            </Canvas>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="HeaderBorder">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFBFAAF5" Offset="0"/>
+                                            <GradientStop Color="#FFBFAAF5" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" TargetName="HeaderHoverBorder" Value="#FFBFAAF5"/>
+                                <Setter Property="Visibility" TargetName="UpperHighlight" Value="Visible"/>
+                                <Setter Property="Background" TargetName="PART_HeaderGripper" Value="Transparent"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="HeaderBorder">
+                                    <Setter.Value>
+                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                            <GradientStop Color="#FFBFAAF5" Offset="0"/>
+                                            <GradientStop Color="#FFBFAAF5" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" TargetName="HeaderHoverBorder" Value="#FFBFAAF5"/>
+                                <Setter Property="BorderBrush" TargetName="HeaderPressBorder" Value="#FFBFAAF5"/>
+                                <Setter Property="Visibility" TargetName="UpperHighlight" Value="Visible"/>
+                                <Setter Property="Fill" TargetName="UpperHighlight" Value="#FFBFAAF5"/>
+                                <Setter Property="Visibility" TargetName="PART_HeaderGripper" Value="Hidden"/>
+                                <Setter Property="Margin" TargetName="HeaderContent" Value="1,1,0,0"/>
+                            </Trigger>
+                            <Trigger Property="Height" Value="Auto">
+                                <Setter Property="MinHeight" Value="20"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <!--<Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="40"/>-->
+            <!--<Style.Triggers>-->
+                <!--<Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FF5A5193"/>
+                </Trigger>-->
+                <!--<Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="#FF5A5193"/>
+                    <Setter Property="BorderBrush" Value="#FF88CBEB"/>
+                    <Setter Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </Style.Triggers>-->
+
+        </Style>
+
+
+        
 
     </Window.Resources>
 
@@ -132,8 +641,7 @@
 
 
 
-
-    <Grid ShowGridLines="True">
+    <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -143,8 +651,89 @@
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-
         </Grid.RowDefinitions>
+
+
+
+        <!-- Bottom List -->
+        <!--<Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="#FF5A5193" Grid.Column="0" Grid.ColumnSpan="4"></Rectangle>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" Foreground="White">Titel</TextBlock>
+            <TextBlock Grid.Column="2" HorizontalAlignment="Stretch" Foreground="White">Erscheinungsdatum</TextBlock>
+            <TextBlock Grid.Column="3" HorizontalAlignment="Stretch" Foreground="White">Download</TextBlock>
+        </Grid>-->
+
+        <Rectangle Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FFBFAAF5"></Rectangle>
+
+
+        <!--<ListBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Background="Transparent"  Name="episodeViewList" ItemContainerStyle="{StaticResource EpisodeItems}" Style="{StaticResource EpisodeListStyle}">
+
+        </ListBox>-->
+        <ListView SelectionMode="Single" x:Name="blablub" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5">
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyle}">
+                    <GridViewColumn Header="" Width="30" HeaderContainerStyle="{StaticResource HeaderStyle}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Expander Margin="-5,2,-5000,0" HorizontalAlignment="Left" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsPresenter}}}"
+                                         x:Name="lvExpander"
+                                          Style="{StaticResource ExpanderStyling}"
+                                    IsExpanded="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor}}">
+                                    <GroupBox Header="Description">
+                                        <TextBlock Text="{Binding Summary}" FontWeight="Normal" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                                    </GroupBox>
+                                </Expander>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <!--<GridViewColumn HeaderTemplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource TitleCell}"/>
+                    <GridViewColumn HeaderTemplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource PublishedCell}"/>
+                    <GridViewColumn HeaderTe6mplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource DownloadCell}"/>-->
+                    <GridViewColumn Width="300">
+                        <GridViewColumnHeader Content="Titel" Style="{StaticResource HeaderStyle}"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" VerticalAlignment="Center">
+                                            <TextBlock TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Title}" />
+                                    </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Content="Erscheinungsdatum" Style="{StaticResource HeaderStyle}"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding PublishDate}" />
+                                    </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Style="{StaticResource HeaderStyle}"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" VerticalAlignment="Center">
+                                            <Button Content="Download"></Button>
+                                    </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+
+        <!-- ^^^^^^^^^^Bottom List -->
+
+
         <Rectangle Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FF5A5193" />
         <!--<Button Width="40" Height="40" Content="&lt;" FontSize="30" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left">
             <Button.Template>
@@ -160,21 +749,21 @@
 
 
         <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="90*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="60*"></RowDefinition>
                 <RowDefinition Height="35*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Style="{StaticResource ButtonVLeft}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,55,0,0"></Button>
-            <Button Style="{StaticResource ButtonVRight}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,55,10,0"></Button>
+            <!--<Button Style="{StaticResource ButtonVLeft}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,55,0,0"></Button>
+            <Button Style="{StaticResource ButtonVRight}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,55,10,0"></Button>-->
 
 
-            <ListBox Name="showViewList"  Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#FF5A5193" HorizontalAlignment="Stretch"
+            <ListBox Name="showViewList" Grid.Row="1" BorderThickness="0" Background="#FF5A5193" HorizontalAlignment="Stretch"
                      VerticalAlignment="Center" ItemContainerStyle="{StaticResource ShowItems}" Style="{StaticResource HorizontalStyle}"
 >
             </ListBox>
@@ -182,22 +771,29 @@
 
             <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="90*"></ColumnDefinition>
-                    <ColumnDefinition Width="5*"></ColumnDefinition>
-                    <ColumnDefinition Width="90*"></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="20*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="3" Fill="#FF311855" Opacity="0.5" ></Rectangle>
-                <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" FontSize="10pt" Foreground="White">Podcast-Titel</TextBlock>
-                <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Left" FontSize="10pt" Foreground="White" Text="{Binding ElementName=showViewList, Path=SelectedItem.Title}"></TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" FontSize="10pt" Foreground="White">Publisher</TextBlock>
-                <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" FontSize="10pt" Foreground="White" Text="{Binding ElementName=showViewList, Path=SelectedItem.Publisher}"></TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" FontSize="10pt" Foreground="White">Beschreibung</TextBlock>
-                <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" FontSize="10pt" Foreground="White" Text="{Binding ElementName=showViewList, Path=SelectedItem.Description}"></TextBlock>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
+                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource HeadlineTb}">Publisher</TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.Publisher}"></TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource HeadlineTb}">Podcast-Titel</TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.Title}"></TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="0" Style="{StaticResource HeadlineTb}">Beschreibung</TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource DetailTb}" TextWrapping="Wrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.Description}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource HeadlineTb}">Letztes Update</TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.LastUpdated}"></TextBlock>
             </Grid>
 
 
