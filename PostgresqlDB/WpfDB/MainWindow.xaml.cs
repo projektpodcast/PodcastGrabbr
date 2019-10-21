@@ -49,21 +49,19 @@ namespace WpfDB
 
 
 
-            // Insert Values
-            for (int i = 0; i < 4; i++)
-            {
-                //insert values
-                //myConnection.InsertValuesShows(dbName);
-            }
+            //// Insert Values
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    //insert values
+            //    myConnection.InsertValuesShows(dbName);
+            //}
 
-            DataSet values = new DataSet();
             // show values
-            values = myConnection.DownloadValues(dbName);
+            DataTable dt = new DataTable();
+            DataSet values = new DataSet();
 
-            //gridView.ItemsSource = ds.Tables["Table"].AsEnumerable();
-
-            dbDatagrid.ItemsSource = values.Tables;
-
+            dt = myConnection.DownloadValues(dbName);
+            dbDatagrid.ItemsSource = dt.DefaultView;
         }
     }
 }

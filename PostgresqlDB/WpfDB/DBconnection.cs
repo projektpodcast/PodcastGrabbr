@@ -132,29 +132,30 @@ namespace WpfDB
 
         #region check values
 
-        public DataSet DownloadValues(string db)
+        public DataTable DownloadValues(string db)
         {
-            DataSet values = new DataSet();
+            //DataSet values = new DataSet();
+            
 
             Connect(db);
-            string csql = "SELECT * FROM shows";
+            string csql = "SELECT * FROM shows where sid > 45 ";
 
-            try
-            {
                 NpgsqlCommand comando = new NpgsqlCommand(csql, con);
-                comando.ExecuteScalar();
+                comando.ExecuteNonQuery();
+                //NpgsqlDataReader reader = comando.ExecuteReader();
+                //reader.Read();
+                //var x = reader["sid"];
 
-                NpgsqlDataAdapter respuest = new NpgsqlDataAdapter(comando);
+                //myTable.Load(comando.ExecuteReader());
+
+                NpgsqlDataAdapter dataAdap = new NpgsqlDataAdapter(comando);
+                DataTable myTable = new DataTable("shows");
                 
-                respuest.Fill(values);
-            }
-            catch (Exception)
-            {
+                dataAdap.Fill(myTable);
+                Console.WriteLine("comentar");
+                DesConnect();
+                return myTable;
 
-                throw;
-            }
-            DesConnect();
-            return values;
 
         }
         #endregion
