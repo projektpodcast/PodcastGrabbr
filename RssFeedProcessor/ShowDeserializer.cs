@@ -113,7 +113,7 @@ namespace RssFeedProcessor
                 Language = deserializedShow.Language,
                 PodcastTitle = deserializedShow.PodcastTitle,
                 Keywords = deserializedShow.Keywords,
-                PublisherName = deserializedShow.PublisherName != null ? deserializedShow.PublisherName : deserializedShow.ITunesPublisherName,
+                PublisherName = deserializedShow.PublisherName ?? deserializedShow.ITunesPublisherName,
                 Subtitle = deserializedShow.Subtitle,
                 LastUpdated = ConvertDateTime(deserializedShow.LastUpdated),
                 LastBuildDate = ConvertDateTime(deserializedShow.LastBuildDate),
