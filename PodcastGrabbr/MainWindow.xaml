@@ -797,8 +797,8 @@
                     <!--<GridViewColumn HeaderTemplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource TitleCell}"/>
                     <GridViewColumn HeaderTemplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource PublishedCell}"/>
                     <GridViewColumn HeaderTe6mplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource DownloadCell}"/>-->
-                    <GridViewColumn Width="300">
-                        <GridViewColumnHeader Content="Titel" Style="{StaticResource HeaderStyleNonresizeable}" MinWidth="300"/>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Content="Titel" Style="{StaticResource HeaderStyleNonresizeable}"/>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Margin="0,5,0,0" TextAlignment="Left" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Title}" Foreground="Black">
