@@ -111,6 +111,7 @@ namespace PodcastGrabbr
                 this.MenueButton1.Visibility = Visibility.Collapsed;
                 this.MenueButton2.Visibility = Visibility.Collapsed;
                 this.MenueButton3.Visibility = Visibility.Collapsed;
+                this.MenueButton4.Visibility = Visibility.Collapsed;
                 this.MenueBackground.Visibility = Visibility.Visible;
 
             }
@@ -120,9 +121,15 @@ namespace PodcastGrabbr
                 this.MenueButton1.Visibility = Visibility.Visible;
                 this.MenueButton2.Visibility = Visibility.Visible;
                 this.MenueButton3.Visibility = Visibility.Visible;
+                this.MenueButton4.Visibility = Visibility.Visible;
                 this.MenueBackground.Visibility = Visibility.Collapsed;
 
             }
+        }
+
+        private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
         }
     }
 }
