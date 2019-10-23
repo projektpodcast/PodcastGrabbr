@@ -102,5 +102,27 @@ namespace PodcastGrabbr
             }
             e.Handled = true;
         }
+
+        private void TestMenueButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.TestMenue.Visibility == Visibility.Visible)
+            {
+                this.TestMenue.Visibility = Visibility.Collapsed;
+                this.MenueButton1.Visibility = Visibility.Collapsed;
+                this.MenueButton2.Visibility = Visibility.Collapsed;
+                this.MenueButton3.Visibility = Visibility.Collapsed;
+                this.MenueBackground.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                this.TestMenue.Visibility = Visibility.Visible;
+                this.MenueButton1.Visibility = Visibility.Visible;
+                this.MenueButton2.Visibility = Visibility.Visible;
+                this.MenueButton3.Visibility = Visibility.Visible;
+                this.MenueBackground.Visibility = Visibility.Collapsed;
+
+            }
+        }
     }
 }

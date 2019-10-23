@@ -13,6 +13,119 @@
     <Window.Resources>
 
 
+        <!--<Style x:Key="BurgerButtonTest" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            
+                            <Rectangle Grid.Row="0" Fill="White" RadiusX="5" RadiusY="5"></Rectangle>
+                            <Rectangle Grid.Row="1" Fill="Transparent"></Rectangle>
+                            <Rectangle Grid.Row="2" Fill="White" RadiusX="5" RadiusY="5"></Rectangle>
+                            <Rectangle Grid.Row="3" Fill="Transparent"></Rectangle>
+                            <Rectangle Grid.Row="4" Fill="White" RadiusX="5" RadiusY="5"></Rectangle>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+        <SolidColorBrush x:Key="MenueBrush" Color="White" Opacity="0.3"/>
+        <SolidColorBrush x:Key="MenueBrushPurple" Color="#463574" Opacity="1"/>
+
+        <Style x:Key="MenueButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" BorderBrush="{StaticResource MenueBrushPurple}" BorderThickness="0,0,0,1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Fill="Transparent"/>
+                                <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="Menüpunkt 1" Foreground="White" Margin="4,0,0,0"></TextBlock>-->
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="{TemplateBinding Content}" Foreground="White" Margin="6,0,0,0"></TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="#FFBFAAF5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BurgerButtonTest" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <DockPanel>
+                            <Border x:Name="Bd" BorderBrush="#463574" BorderThickness="2" CornerRadius="50" Background="#463574" SnapsToDevicePixels="True">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="3"/>
+                                        <RowDefinition Height="2"/>
+                                        <RowDefinition Height="3"/>
+                                        <RowDefinition Height="2"/>
+                                        <RowDefinition Height="3"/>
+                                        <RowDefinition Height="2*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="50*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Row="2" Grid.Column="0" Fill="Transparent" Height="2"></Rectangle>
+                                    <Rectangle x:Name="Burger1" Grid.Row="1" Grid.Column="1" Fill="White" RadiusX="5" RadiusY="5" Height="3" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="2" Grid.Column="2" Fill="Transparent" Height="2"></Rectangle>
+                                    <Rectangle x:Name="Burger2" Grid.Row="3" Grid.Column="1" Fill="White" RadiusX="5" RadiusY="5" Height="3" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="4" Grid.Column="4" Fill="Transparent" Height="2"></Rectangle>
+                                    <Rectangle x:Name="Burger3" Grid.Row="5" Grid.Column="1" Fill="White" RadiusX="5" RadiusY="5" Height="3" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="6" Grid.Column="6" Fill="Transparent" Height="2"></Rectangle>
+
+
+
+                                </Grid>
+                            </Border>
+                        </DockPanel>
+                        <ControlTemplate.Triggers>
+                            <!--<Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Bd" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="false">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.4"/>
+                            </Trigger>-->
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="#FFBFAAF5"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="#FFBFAAF5"/>
+                                <Setter Property="Fill" TargetName="Burger1" Value="#463574"/>
+                                <Setter Property="Fill" TargetName="Burger2" Value="#463574"/>
+                                <Setter Property="Fill" TargetName="Burger3" Value="#463574"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="false">
+                                <!--<Setter TargetName="Bd" Property="Opacity" Value="0.4"/>-->
+                            </Trigger>
+                            <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource myBrush}"/>
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="Black"/>-->
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
 
         <Style x:Key="ButtonVLeftTest" TargetType="{x:Type RepeatButton}">
             <Setter Property="Background" Value="#FFBFAAF5"/>
@@ -159,7 +272,7 @@
 
 
         <Style x:Key="ExpanderStyling" TargetType="{x:Type Expander}">
-            
+
             <!--<Style.Triggers>
                 <Trigger Property="IsExpanded" Value="true">
                     <Setter Property="Opacity" Value="1"/>
@@ -449,7 +562,7 @@
 
     <Grid ShowGridLines="False">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <!--<ColumnDefinition Width="0.1*"></ColumnDefinition>-->
@@ -459,9 +572,60 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
+        <!--<Rectangle x:Name="TestMenue" Fill="Gold" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Width="150" Visibility="Collapsed"></Rectangle>
+        <Rectangle x:Name="MenueBackground" Fill="#FF5A5193" Grid.Row="0" Grid.RowSpan="2" Width="Auto"></Rectangle>-->
+        <!--
+        <Button x:Name="TestMenueButton" Height="20" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Click="TestMenueButton_Click" Grid.Column="0" Grid.Row="0"></Button>-->
 
 
-        <!-- Bottom List -->
+        <Grid ShowGridLines="False" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <!--<ColumnDefinition Width="0.1*"></ColumnDefinition>-->
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <!--<Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Fill="#FF5A5193" />
+            <Rectangle x:Name="TestMenue" Fill="#FF311855" Opacity="0.5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Width="150" Visibility="Collapsed"></Rectangle>
+            <Rectangle x:Name="MenueBackground" Fill="#FF5A5193" Grid.Row="0" Width="Auto" Grid.RowSpan="2"></Rectangle>-->
+            <!--<Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Fill="#FF5A5193" />-->
+
+
+
+            <Grid ShowGridLines="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <!--<ColumnDefinition Width="0.1*"></ColumnDefinition>-->
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Rectangle x:Name="TestMenue" Fill="#FF5A5193" Opacity="1" Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="2" Width="150" Visibility="Collapsed"></Rectangle>
+                <Rectangle x:Name="MenueBackground" Fill="#FF5A5193" Grid.Row="0" Width="Auto" Grid.RowSpan="9"></Rectangle>
+                <Button Style="{StaticResource BurgerButtonTest}" Height="30" Width="30" Grid.Row="0" Grid.Column="0" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Click="TestMenueButton_Click" 
+                    Margin="2,10,0,0"></Button>
+
+                <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton1" Visibility="Collapsed" Content="Neue Show anlegen"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton2" Visibility="Collapsed" Content="Shows aktualisieren"></Button>
+                <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton3" Visibility="Collapsed" Content="Einstellungen"></Button>
+
+
+            </Grid>
+        </Grid>
+
+
         <!--<Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"></ColumnDefinition>
@@ -481,14 +645,15 @@
         <!--<ListBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Background="Transparent"  Name="episodeViewList" ItemContainerStyle="{StaticResource EpisodeItems}" Style="{StaticResource EpisodeListStyle}">
 
         </ListBox>-->
-        <ListView BorderThickness="0" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5" Foreground="Black">
-
+        <ListView BorderThickness="0" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" 
+                  ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5" Foreground="Black">
             <ListView.View>
-                
+
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyle}">
                     <GridViewColumn Header="" Width="30" HeaderContainerStyle="{StaticResource HeaderStyle}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
+
                                 <Expander Margin="-5,2,-5000,0" HorizontalAlignment="Left" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsPresenter}}}"
                                          x:Name="lvExpander"
                                           VerticalAlignment="Center"
@@ -496,7 +661,7 @@
                                           Foreground="Black"
                                     IsExpanded="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem, Mode=FindAncestor}}">
                                     <GroupBox Header="Beschreibung" VerticalAlignment="Top" Foreground="#FF311855" BorderThickness="0.5,0,0,0" BorderBrush="#FF311855">
-                                        <TextBlock Text="{Binding Summary}" FontWeight="Normal" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Foreground="Black"/>
+                                        <TextBlock Text="{Binding Summary}" FontWeight="Normal" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Foreground="Black" MaxWidth="800" HorizontalAlignment="Left"/>
                                     </GroupBox>
                                 </Expander>
                             </DataTemplate>
