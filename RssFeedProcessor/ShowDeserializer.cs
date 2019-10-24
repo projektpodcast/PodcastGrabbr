@@ -24,6 +24,7 @@ namespace RssFeedProcessor
         [XmlIgnore]
         public Show ShowDTO { get; set; }
 
+        //Die verknotete Xml Struktur wird mit Klassen-Wrappern dargestellt.
         //Map Properties
         #region MappedProperties
         //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss eine nested-Class verwendet werden. 
