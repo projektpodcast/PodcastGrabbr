@@ -1,0 +1,348 @@
+﻿<Page x:Class="PodcastGrabbr.View.AllShowsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:PodcastGrabbr.ViewModel"
+        xmlns:vm="clr-namespace:PodcastGrabbr.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AllShowsViewModel">
+
+    <Page.DataContext>
+        <local:AllShowsViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+
+
+        <Style x:Key="ButtonVLeftTest" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Path Fill="{TemplateBinding Background}"
+                            Data="M 0 -20 L 0 20 L -20 0 Z">
+                            <!--Data="M 0 0 L 20 50 L 20 -50 Z">-->
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ButtonVRightTest" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Path Fill="{TemplateBinding Background}"
+                            Data="M 0 20 L 0 -20 L 20 0 Z">
+                            <!--Data="M 0 0 L 20 50 L 20 -50 Z">
+                             Data="M -20 50 L -20 -50 L 0 0 Z">-->
+                        </Path>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="HeadlineTb" TargetType="{x:Type TextBlock}">
+            <Setter Property="Opacity" Value="0.7"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
+        </Style>
+
+        <ControlTemplate x:Key="ScrollViewerWithButtons2" TargetType="{x:Type ScrollViewer}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="90*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+
+                <RepeatButton Style="{StaticResource ButtonVLeftTest}"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                              HorizontalAlignment="Right"
+                Command="ScrollBar.LineLeftCommand"
+                Content="Up" />
+
+                <ScrollContentPresenter
+                Grid.Column="1"
+                CanContentScroll="{TemplateBinding CanContentScroll}" />
+
+                <RepeatButton Style="{StaticResource ButtonVRightTest}"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                Command="ScrollBar.LineRightCommand"
+                Content="Down" />
+            </Grid>
+        </ControlTemplate>
+
+
+        <Style x:Key="HorizontalStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <ScrollViewer Template="{StaticResource ScrollViewerWithButtons2}" VerticalScrollBarVisibility="Disabled" 
+                                      HorizontalScrollBarVisibility="Hidden" CanContentScroll="True">
+
+                            <!--PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"-->
+                            <!--PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+                            PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"-->
+
+                            <StackPanel Orientation="Horizontal"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       IsItemsHost="True">
+
+                            </StackPanel>
+                        </ScrollViewer>
+                    </ControlTemplate>
+
+
+                </Setter.Value>
+            </Setter>
+
+
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"></RowDefinition>
+                                <RowDefinition Height="2*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0" Source="{Binding Path=ImageUri}" HorizontalAlignment="Stretch"></Image>
+                            <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding Path=PodcastTitle}" HorizontalAlignment="Center" FontSize="10pt" Foreground="White" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"></TextBlock>
+                            </WrapPanel>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
+        <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
+
+        <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Width="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle x:Name="WarningBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10" 
+                                           Height="15" Width="15" Fill="{StaticResource RedBrush}"></Rectangle>
+                                <Grid Width="11" Height="11">
+                                    <Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>
+                                    <Path Fill="White" Data="M 9 0 L 0 9 L 2 11 L 11 2 Z"/>
+                                </Grid>
+                                <TextBlock x:Name="ButtonDescription" Text="Show entfernen" Grid.Column="1" Style="{StaticResource HeadlineTb}" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontSize="13"></TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="WarningBorder" Value="{StaticResource RedBrushBright}"/>
+                                <Setter Property="Opacity" TargetName="ButtonDescription" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--<LinearGradientBrush
+    x:Key="TransparentGradient"
+    StartPoint="0,0"
+    EndPoint="0,0.8">
+            <GradientStop Color="White" Offset="0.91"/>
+            <GradientStop Color="Transparent" Offset="0.91"/>
+        </LinearGradientBrush>-->
+        <LinearGradientBrush
+    x:Key="TransparentGradient"
+    StartPoint="0.5,0"
+    EndPoint="0.9,0.9">
+            <GradientStop Color="White" Offset="0.71"/>
+            <GradientStop Color="Transparent" Offset="0.71"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
+        <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
+        <Style x:Key="RefreshButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Width="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle x:Name="WarningBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10" 
+                                           Height="15" Width="15" Fill="{StaticResource GreenBrush}"></Rectangle>
+                                <Grid Width="15" Height="15">
+                                    <!--<Path Fill="White" Data="M 13 15 L 0 2 L 2 0 L 15 13"/>
+                                    <Path Fill="White" Data="M 13 0 L 0 13 L 2 15 L 15 2 Z"/>-->
+                                    <Path Fill="White" Data="M 15 7.5 L 8 7.5 L 11.5 12.5 Z"></Path>
+                                    <!--<Rectangle RadiusX="3" RadiusY="3" Width="8" Height="8" Fill="Green"></Rectangle>-->
+
+                                    <Border CornerRadius="10" Width="11" Height="11" BorderBrush="White" BorderThickness="2" OpacityMask="{StaticResource TransparentGradient}"></Border>
+                                </Grid>
+                                <TextBlock x:Name="ButtonDescription" Text="Aktualisieren" Grid.Column="1" Style="{StaticResource HeadlineTb}" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontSize="13"></TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="WarningBorder" Value="{StaticResource GreenBrushBright}"/>
+                                <Setter Property="Opacity" TargetName="ButtonDescription" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+
+
+
+        <Style x:Key="DetailTb" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
+        </Style>
+
+        <Style x:Key="ShowItems" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Width" Value="150"></Setter>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="Border" Background="Transparent">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="Border" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="false">
+                                <Setter TargetName="Border" Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="20,0,20,0"/>
+        </Style>
+
+        <ControlTemplate x:Key="ScrollViewerWithButtons" TargetType="{x:Type ScrollViewer}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="90*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+
+                <RepeatButton Style="{StaticResource ButtonVLeftTest}"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                              HorizontalAlignment="Right"
+                Command="ScrollBar.LineLeftCommand"
+                Content="Up" />
+
+                <ScrollContentPresenter
+                Grid.Column="1"
+                CanContentScroll="{TemplateBinding CanContentScroll}" />
+
+                <RepeatButton Style="{StaticResource ButtonVRightTest}"
+                Grid.Column="2"
+                VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                Command="ScrollBar.LineRightCommand"
+                Content="Down" />
+            </Grid>
+        </ControlTemplate>
+
+
+
+
+    </Page.Resources>
+    <Grid>
+        <Rectangle Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FF5A5193" />
+
+        <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
+            <!--<Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="90*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="20*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListBox Name="showViewList" Grid.Row="1" BorderThickness="0" Background="#FF5A5193" HorizontalAlignment="Stretch"
+                     VerticalAlignment="Center" ItemContainerStyle="{StaticResource ShowItems}" 
+                     Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}">
+            </ListBox>
+            <!--ShowViewList-->
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*"></ColumnDefinition>
+                    <ColumnDefinition Width="20*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
+                    <!--<RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>-->
+                </Grid.RowDefinitions>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
+                <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource HeadlineTb}">Publisher</TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.PublisherName}"></TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource HeadlineTb}">Podcast-Titel</TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.PodcastTitle}"></TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="0" Style="{StaticResource HeadlineTb}">Beschreibung</TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource DetailTb}" TextWrapping="Wrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.Description}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource HeadlineTb}">Letztes Update</TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.LastUpdated}"></TextBlock>
+                <Grid Grid.Row="3" Grid.Column="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource RefreshButton}" Grid.Column="0"
+                    HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,0,10,0"></Button>
+                    <Button Style="{StaticResource DeleteButton}" Grid.Column="2"
+                    HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,10,0"></Button>
+                </Grid>
+
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
