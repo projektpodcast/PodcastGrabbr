@@ -55,11 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\EpisodeModel.cs" />
     <Compile Include="ViewModel\AllShowsViewModel.cs" />
+    <Compile Include="ViewModel\EpisodesViewModel.cs" />
     <Compile Include="ViewModel\PagesViewModel.cs" />
     <Compile Include="ViewModel\SelectedShowViewModel.cs" />
     <Compile Include="View\AllShowsView.xaml.cs">
       <DependentUpon>AllShowsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EpisodesView.xaml.cs">
+      <DependentUpon>EpisodesView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -74,6 +79,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AllShowsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EpisodesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

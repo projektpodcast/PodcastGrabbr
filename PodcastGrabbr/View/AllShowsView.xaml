@@ -7,11 +7,12 @@
         xmlns:vm="clr-namespace:PodcastGrabbr.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AllShowsViewModel">
+      Title="AllShowsView">
 
     <Page.DataContext>
         <local:AllShowsViewModel/>
     </Page.DataContext>
+    
     <Page.Resources>
 
 
@@ -85,7 +86,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBox">
                         <ScrollViewer Template="{StaticResource ScrollViewerWithButtons2}" VerticalScrollBarVisibility="Disabled" 
-                                      HorizontalScrollBarVisibility="Hidden" CanContentScroll="True">
+                                      HorizontalScrollBarVisibility="Hidden" CanContentScroll="True" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
 
                             <!--PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"-->
                             <!--PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"

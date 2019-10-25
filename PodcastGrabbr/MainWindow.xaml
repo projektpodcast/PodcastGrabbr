@@ -7,12 +7,17 @@
         xmlns:vm="clr-namespace:PodcastGrabbr.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
+
     <Window.DataContext>
-        <local:AllShowsViewModel/>
+        <local:PagesViewModel/>
     </Window.DataContext>
 
+
     <Window.Resources>
+
+        <!--<DataTemplate DataType="{x:Type local:PagesViewModel}">
+            
+        </DataTemplate>-->
 
         <Style x:Key="HeadlineTb" TargetType="{x:Type TextBlock}">
             <Setter Property="Opacity" Value="0.7"></Setter>
@@ -863,12 +868,16 @@
             <TextBlock Grid.Column="3" HorizontalAlignment="Stretch" Foreground="White">Download</TextBlock>
         </Grid>-->
 
-        <Rectangle Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FFBFAAF5"></Rectangle>
+        <!--<Rectangle Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FFBFAAF5"></Rectangle>-->
 
+
+        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2">
+            <Frame Content="{Binding EpisodesPage}"/>
+        </Border>
 
         <!--<ListBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Background="Transparent"  Name="episodeViewList" ItemContainerStyle="{StaticResource EpisodeItems}" Style="{StaticResource EpisodeListStyle}">
 
-        </ListBox>-->
+        </ListBox>--><!--
         <ListView BorderThickness="0" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                   ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5" Foreground="Black"
                   SizeChanged="HeaderContent_SizeChanged"
@@ -892,9 +901,9 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!--<GridViewColumn HeaderTemplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource TitleCell}"/>
+                    --><!--<GridViewColumn HeaderTemplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource TitleCell}"/>
                     <GridViewColumn HeaderTemplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource PublishedCell}"/>
-                    <GridViewColumn HeaderTe6mplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource DownloadCell}"/>-->
+                    <GridViewColumn HeaderTe6mplate="{StaticResource myHeaderTemplate}" CellTemplate="{StaticResource DownloadCell}"/>--><!--
                     <GridViewColumn>
                         <GridViewColumnHeader Content="Titel" Style="{StaticResource HeaderStyleNonresizeable}"/>
                         <GridViewColumn.CellTemplate>
@@ -926,41 +935,43 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
 
 
 
         <!-- ^^^^^^^^^^Bottom List -->
 
-
+        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
+            <Frame Content="{Binding AllShowsPage}"/>
+        </Border>
         <!-- Replace with page -->
         <!-- Replace with page -->
         <!-- Replace with page -->
         <!-- Replace with page -->
-        <Rectangle Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FF5A5193" />
+        <!--<Rectangle Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FF5A5193" />
 
         <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
-            <!--<Grid.ColumnDefinitions>
+            --><!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="90*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>-->
+            </Grid.ColumnDefinitions>--><!--
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="20*"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <!--<Button Style="{StaticResource ButtonVLeft}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,55,0,0"></Button>
+            --><!--<Button Style="{StaticResource ButtonVLeft}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,55,0,0"></Button>
             <Button Style="{StaticResource ButtonVRight}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,55,10,0"></Button>-->
 
-            <!--ShowViewList-->
+            <!--ShowViewList--><!--
             <ListBox Name="showViewList" Grid.Row="1" BorderThickness="0" Background="#FF5A5193" HorizontalAlignment="Stretch"
                      VerticalAlignment="Center" ItemContainerStyle="{StaticResource ShowItems}" 
                      Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}"
                      
 >
             </ListBox>
-            <!--ShowViewList-->
+            --><!--ShowViewList--><!--
 
             <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -974,8 +985,8 @@
                     <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
                     <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
                     <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
-                    <!--<RowDefinition Height="15" MaxHeight="100"></RowDefinition>
-                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>-->
+                    --><!--<RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>--><!--
                 </Grid.RowDefinitions>
                 <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource HeadlineTb}">Publisher</TextBlock>
@@ -998,7 +1009,7 @@
                 </Grid>
 
             </Grid>
-        </Grid>
+        </Grid>-->
         <!-- Replace with page -->
         <!-- Replace with page -->
         <!-- Replace with page -->

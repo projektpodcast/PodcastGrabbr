@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\pgrundmann\Source\Repos\projektpodcast\PodcastGrabbr\PodcastGrabbr\obj\Debug\
+C:\Users\phili\Source\Repos\Grabbr\PodcastGrabbr\PodcastGrabbr\obj\Debug\
 PodcastGrabbr
 none
 false
 DEBUG;TRACE
-C:\Users\pgrundmann\Source\Repos\projektpodcast\PodcastGrabbr\PodcastGrabbr\App.xaml
-2255105822
+C:\Users\phili\Source\Repos\Grabbr\PodcastGrabbr\PodcastGrabbr\App.xaml
+3365939094
 
-14-884981219
-151713429861
-MainWindow.xaml;View\AllShowsView.xaml;
+17-1357813231
+15889654675
+MainWindow.xaml;View\AllShowsView.xaml;View\EpisodesView.xaml;
 
-True
+False
 
