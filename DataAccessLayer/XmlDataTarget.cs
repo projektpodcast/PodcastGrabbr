@@ -24,7 +24,7 @@ namespace DataAccessLayer
         internal override string GetFileName(Podcast podcast)
         {
             string fileExtension = ".xml";
-            string fileName = podcast.ShowInfo.PodcastTitle.Split('/').Last() + fileExtension;
+            string fileName = podcast.ShowInfo.ShowName.Split('/').Last() + fileExtension;
             return fileName;
         }
 
@@ -36,12 +36,23 @@ namespace DataAccessLayer
 
         private void SerializePodcast(Podcast podcast, DirectoryInfo folderPath, string fileName)
         {
-            string folderName = $"{ folderPath.FullName }{ fileName }";
+            string folderName = folderPath.FullName + fileName;
+            //string folderName = $"{ folderPath.FullName }{ fileName }";
             XmlSerializer serializer = new XmlSerializer(typeof(Podcast));
 
             FileStream fileStream = new FileStream(folderName, FileMode.Create, FileAccess.ReadWrite);
             serializer.Serialize(fileStream, podcast);
             fileStream.Close();
+        }
+
+        public void DeletePodcast(Podcast podcastToDelete)
+        {
+
+        }
+
+        public void UpdatePodcast(Podcast oldPodcast, Podcast newPodcast)
+        {
+
         }
 
 

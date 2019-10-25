@@ -1,0 +1,14 @@
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\CommonTypes.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\Mk.DBConnector.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\Mk.Log.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\Mono.Security.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\MySql.Data.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\Npgsql.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\Npgsql.EntityFramework.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\Npgsql.EntityFrameworkLegacy.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\bin\Debug\CommonTypes.pdb
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

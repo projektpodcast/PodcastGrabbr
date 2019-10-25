@@ -31,6 +31,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mk.DBConnector">
+      <HintPath>..\..\DbConnector\Mk.DBConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="Mk.Log">
+      <HintPath>..\..\DbConnector\Mk.Log.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\..\DbConnector\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\DbConnector\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\DbConnector\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.EntityFramework">
+      <HintPath>..\..\DbConnector\Npgsql.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql.EntityFrameworkLegacy">
+      <HintPath>..\..\DbConnector\Npgsql.EntityFrameworkLegacy.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +68,8 @@
     <Compile Include="LocalDataTarget.cs" />
     <Compile Include="MediaDataSource.cs" />
     <Compile Include="MediaDataTarget.cs" />
+    <Compile Include="MySQLDataTarget.cs" />
+    <Compile Include="SqlDataSource.cs" />
     <Compile Include="XmlDataSource.cs" />
     <Compile Include="XmlDataTarget.cs" />
     <Compile Include="IDataTarget.cs" />
