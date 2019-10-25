@@ -1,0 +1,14 @@
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\obj\Debug\BusinessLayer.csprojResolveAssemblyReference.cache
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\BusinessLayer.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\BusinessLayer.pdb
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\CommonTypes.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\DataAccessLayer.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\Mk.DBConnector.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\Mk.Log.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\MySql.Data.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\Npgsql.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\Mono.Security.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\CommonTypes.pdb
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\bin\Debug\DataAccessLayer.pdb
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\obj\Debug\BusinessLayer.dll
+H:\PodcastGrabbr\PodcastGrabbr-master\BusinessLayer\obj\Debug\BusinessLayer.pdb
