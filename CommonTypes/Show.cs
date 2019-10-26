@@ -8,17 +8,17 @@ namespace CommonTypes
 {
     public class Show
     {
-        public string PublisherName { get; set; }
-        public string PodcastTitle { get; set; }
-        public List<string> Category { get; set; }
-        public string Keywords { get; set; }
-        public string Subtitle { get; set; }
-        public string Language { get; set; }
-        public string Description { get; set; }
+        public virtual string PublisherName { get; set; }
+        public virtual string PodcastTitle { get; set; }
+        public virtual List<string> Category { get; set; }
+        public virtual string Keywords { get; set; }
+        public virtual string Subtitle { get; set; }
+        public virtual string Language { get; set; }
+        public virtual string Description { get; set; }
 
-        public DateTime LastUpdated { get; set; }
-        public DateTime LastBuildDate { get; set; }
-        public string ImageUri { get; set; }
+        public virtual DateTime LastUpdated { get; set; }
+        public virtual DateTime LastBuildDate { get; set; }
+        public virtual string ImageUri { get; set; }
 
         public Show()
         {
