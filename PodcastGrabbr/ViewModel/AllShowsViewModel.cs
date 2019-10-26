@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,12 @@ namespace PodcastGrabbr.ViewModel
 {
     public class AllShowsViewModel
     {
+        //private ShowModel _selectedShow { get; set; }
+        //public ShowModel SelectedShow
+        //{
+        //    get { return _selectedShow; }
+        //    set { _selectedShow = value; OnPropertyChanged(_selectedShow); }
+        //}
         public ObservableCollection<ShowModel> AllShows { get; set; }
 
         public AllShowsViewModel()

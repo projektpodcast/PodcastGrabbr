@@ -12,7 +12,7 @@
     <Page.DataContext>
         <local:AllShowsViewModel/>
     </Page.DataContext>
-    
+
     <Page.Resources>
 
 
@@ -87,15 +87,10 @@
                     <ControlTemplate TargetType="ListBox">
                         <ScrollViewer Template="{StaticResource ScrollViewerWithButtons2}" VerticalScrollBarVisibility="Disabled" 
                                       HorizontalScrollBarVisibility="Hidden" CanContentScroll="True" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
-
-                            <!--PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"-->
-                            <!--PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
-                            PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"-->
-
                             <StackPanel Orientation="Horizontal"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       IsItemsHost="True">
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        IsItemsHost="True">
 
                             </StackPanel>
                         </ScrollViewer>
@@ -120,7 +115,9 @@
                             </WrapPanel>
                         </Grid>
                     </DataTemplate>
+
                 </Setter.Value>
+
             </Setter>
         </Style>
 
