@@ -1,15 +1,38 @@
 ﻿using PodcastGrabbr.View;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PodcastGrabbr.ViewModel
 {
-    public class PagesViewModel : BaseViewModel
+    public sealed class PagesSingletonViewModel : BaseViewModel
     {
+        private static readonly PagesSingletonViewModel instance = new PagesSingletonViewModel();
+
+        // Explicit static constructor to tell C# compiler
+        // not to mark type as beforefieldinit
+        static PagesSingletonViewModel()
+        {
+
+        }
+
+        private PagesSingletonViewModel()
+        {
+            InstantiateStandardView();
+        }
+
+        public static PagesSingletonViewModel Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+
+
         private AllShowsView _allShowsPage { get; set; }
         public AllShowsView AllShowsPage
         {
@@ -48,25 +71,25 @@ namespace PodcastGrabbr.ViewModel
 
 
 
-        public PagesViewModel()
-        {
-            InstantiateStandardView();
-        }
-
         public void LoadSettingsView()
         {
-            AllShowsPage = null;
-            EpisodesPage = null;
-            CurrentTopPage = null;
+            //AllShowsPage = null;
+            ////EpisodesPage = null;
+            //CurrentTopPage = null;
+
             SettingsPage = new SettingsView();
-            //CurrentTopPage = SettingsPage;
-            //SettingsPage = new SettingsVieWModel();
-            //CurrentTopPage = SettingsPage;
+
+            CurrentTopPage = SettingsPage;
+        }
+
+        public void LoadShowView()
+        {
+            SettingsPage = null;
+            CurrentTopPage = AllShowsPage;
         }
 
 
-
-        private void InstantiateStandardView()
+        public void InstantiateStandardView()
         {
             App.Current.Dispatcher.BeginInvoke((Action)delegate
             {
@@ -84,6 +107,5 @@ namespace PodcastGrabbr.ViewModel
                 CurrentTopPage = AllShowsPage;
             });
         }
-
     }
 }

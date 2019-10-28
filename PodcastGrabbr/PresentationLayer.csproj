@@ -56,15 +56,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\EpisodeModel.cs" />
+    <Compile Include="OnShowSelected.cs" />
+    <Compile Include="UiDependencies.cs" />
     <Compile Include="ViewModel\AllShowsViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\EpisodesViewModel.cs" />
     <Compile Include="ViewModel\PagesViewModel.cs" />
     <Compile Include="ViewModel\SelectedShowViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\PagesSingletonViewModel.cs" />
     <Compile Include="View\AllShowsView.xaml.cs">
       <DependentUpon>AllShowsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EpisodesView.xaml.cs">
       <DependentUpon>EpisodesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -83,6 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EpisodesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,6 +127,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{c7c218cf-677b-4a0e-9fa1-d623c97422c4}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonTypes\CommonTypes.csproj">
       <Project>{D042B04C-579A-40C9-8870-C2DABC168DB1}</Project>
       <Name>CommonTypes</Name>

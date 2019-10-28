@@ -9,9 +9,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AllShowsView">
 
-    <Page.DataContext>
+    <!--<Page.DataContext>
         <local:AllShowsViewModel/>
-    </Page.DataContext>
+    </Page.DataContext>-->
 
     <Page.Resources>
 
@@ -287,7 +287,6 @@
     </Page.Resources>
     <Grid>
         <Rectangle Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FF5A5193" />
-
         <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
             <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
@@ -301,7 +300,8 @@
             </Grid.RowDefinitions>
             <ListBox Name="showViewList" Grid.Row="1" BorderThickness="0" Background="#FF5A5193" HorizontalAlignment="Stretch"
                      VerticalAlignment="Center" ItemContainerStyle="{StaticResource ShowItems}" 
-                     Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}">
+                     Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}"
+                     SelectedItem="{Binding SelectedShow}">
             </ListBox>
             <!--ShowViewList-->
 
@@ -322,13 +322,13 @@
                 </Grid.RowDefinitions>
                 <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource HeadlineTb}">Publisher</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.PublisherName}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding SelectedShow.PublisherName}"></TextBlock>
                 <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource HeadlineTb}">Podcast-Titel</TextBlock>
-                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.PodcastTitle}"></TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding SelectedShow.PodcastTitle}"></TextBlock>
                 <TextBlock Grid.Column="3" Grid.Row="0" Style="{StaticResource HeadlineTb}">Beschreibung</TextBlock>
-                <TextBlock Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource DetailTb}" TextWrapping="Wrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.Description}"></TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" Style="{StaticResource DetailTb}" TextWrapping="Wrap" Text="{Binding SelectedShow.Description}"></TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource HeadlineTb}">Letztes Update</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding ElementName=showViewList, Path=SelectedItem.LastUpdated}"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding SelectedShow.LastUpdated}"></TextBlock>
                 <Grid Grid.Row="3" Grid.Column="3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

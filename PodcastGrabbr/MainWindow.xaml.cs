@@ -22,9 +22,12 @@ namespace PodcastGrabbr
     /// </summary>
     public partial class MainWindow : Window
     {
+        //public SingletonTest SingleTest { get; set; }
         public MainWindow()
         {
-
+            //this.DataContext = SingletonTest.Instance;
+            //SingleTest.InstantiateStandardView();
+            //this.DataContext = SingleTest;
             InitializeComponent();
 
             //DateTime now = DateTime.Now;
@@ -118,6 +121,7 @@ namespace PodcastGrabbr
                 this.MenueButton2.Visibility = Visibility.Collapsed;
                 this.MenueButton3.Visibility = Visibility.Collapsed;
                 this.MenueButton4.Visibility = Visibility.Collapsed;
+                this.MenueButton5.Visibility = Visibility.Collapsed;
                 this.MenueBackground.Visibility = Visibility.Visible;
 
             }
@@ -128,6 +132,7 @@ namespace PodcastGrabbr
                 this.MenueButton2.Visibility = Visibility.Visible;
                 this.MenueButton3.Visibility = Visibility.Visible;
                 this.MenueButton4.Visibility = Visibility.Visible;
+                this.MenueButton5.Visibility = Visibility.Visible;
                 this.MenueBackground.Visibility = Visibility.Collapsed;
 
             }
@@ -166,6 +171,16 @@ namespace PodcastGrabbr
         private void ListView_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateColumnsWidth(sender as ListView);
+        }
+
+        private void MenueButton4_Click(object sender, RoutedEventArgs e)
+        {
+            PagesSingletonViewModel.Instance.LoadSettingsView();
+        }
+
+        private void MenueButton1_Click(object sender, RoutedEventArgs e)
+        {
+            PagesSingletonViewModel.Instance.LoadShowView();
         }
     }
 

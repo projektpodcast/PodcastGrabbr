@@ -6,14 +6,29 @@
         xmlns:local="clr-namespace:PodcastGrabbr.ViewModel"
         xmlns:vm="clr-namespace:PodcastGrabbr.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="507" Width="800">
 
+    <!--<Window.DataContext>
+        <local:SingletonTest/>
+    </Window.DataContext>-->
     <Window.DataContext>
-        <local:PagesViewModel/>
+        <x:StaticExtension Member="local:PagesSingletonViewModel.Instance"/>
     </Window.DataContext>
-
-
+    
     <Window.Resources>
+        
+
+        <Style TargetType="{x:Type Frame}">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Frame}">
+                        <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}">
+                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Name="PART_FrameCP" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <!--<DataTemplate DataType="{x:Type local:PagesViewModel}">
             
@@ -844,11 +859,11 @@
                     HorizontalAlignment="Left" VerticalAlignment="Top" Click="TestMenueButton_Click" 
                     Margin="2,10,0,0"></Button>
 
-
-                <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton1" Visibility="Collapsed" Content="Meine Downloads"></Button>
-                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton2" Visibility="Collapsed" Content="Show importieren"></Button>
-                <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton3" Visibility="Collapsed" Content="Shows aktualisieren"></Button>
-                <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton4" Visibility="Collapsed" Content="Einstellungen"></Button>
+                <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton1" Visibility="Collapsed" Content="Startseite" Click="MenueButton1_Click"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton2" Visibility="Collapsed" Content="Meine Downloads"></Button>
+                <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton3" Visibility="Collapsed" Content="Show importieren"></Button>
+                <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton4" Visibility="Collapsed" Content="Shows aktualisieren"></Button>
+                <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton5" Visibility="Collapsed" Content="Einstellungen" Click="MenueButton4_Click"></Button>
 
 
             </Grid>
@@ -942,7 +957,7 @@
         <!-- ^^^^^^^^^^Bottom List -->
 
         <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
-            <Frame Content="{Binding AllShowsPage}"/>
+            <Frame x:Name="TopContent" Content="{Binding CurrentTopPage}"/>
         </Border>
         <!-- Replace with page -->
         <!-- Replace with page -->
