@@ -9,6 +9,7 @@ namespace DataAccessLayer
 {
     public class MockDataSource : IDataSource
     {
+        public MockDataSource() { }
         public List<Show> GetAllShows()
         {
             List<Show> mockList = new List<Show>();

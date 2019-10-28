@@ -31,7 +31,12 @@ namespace PodcastGrabbr.ViewModel
             }
         }
 
-
+        private UserNavigationView _userNavigation { get; set; }
+        public UserNavigationView UserNavigation
+        {
+            get { return _userNavigation; }
+            set { _userNavigation = value; OnPropertyChanged("UserNavigation"); }
+        }
 
         private AllShowsView _allShowsPage { get; set; }
         public AllShowsView AllShowsPage
@@ -73,12 +78,7 @@ namespace PodcastGrabbr.ViewModel
 
         public void LoadSettingsView()
         {
-            //AllShowsPage = null;
-            ////EpisodesPage = null;
-            //CurrentTopPage = null;
-
             SettingsPage = new SettingsView();
-
             CurrentTopPage = SettingsPage;
         }
 
@@ -105,6 +105,10 @@ namespace PodcastGrabbr.ViewModel
                 EpisodesPage.DataContext = episodesVm;
 
                 CurrentTopPage = AllShowsPage;
+
+                UserNavigation = new UserNavigationView();
+                UserNavigationViewModel userNaviVm = new UserNavigationViewModel();
+                UserNavigation.DataContext = userNaviVm;
             });
         }
     }

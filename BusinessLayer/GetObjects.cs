@@ -10,7 +10,7 @@ namespace BusinessLayer
 {
     public class GetObjects
     {
-        public List<Show> GetShowList(int sourceType)
+        public List<Show> GetShowList(/*int sourceType*/)
         {
             //IDataSource fileSource = Factory.CreateFileSource(sourceType);
             //List<Show> allShowList = fileSource.GetAllShows();

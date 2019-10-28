@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\EpisodeModel.cs" />
     <Compile Include="OnShowSelected.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="UiDependencies.cs" />
     <Compile Include="ViewModel\AllShowsViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -65,11 +66,15 @@
     <Compile Include="ViewModel\SelectedShowViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\PagesSingletonViewModel.cs" />
+    <Compile Include="ViewModel\UserNavigationViewModel.cs" />
     <Compile Include="View\AllShowsView.xaml.cs">
       <DependentUpon>AllShowsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EpisodesView.xaml.cs">
       <DependentUpon>EpisodesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserNavigationView.xaml.cs">
+      <DependentUpon>UserNavigationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -91,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EpisodesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserNavigationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

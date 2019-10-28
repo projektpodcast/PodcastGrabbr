@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLayer;
+using CommonTypes;
 
 namespace PodcastGrabbr.ViewModel
 {
@@ -22,22 +24,28 @@ namespace PodcastGrabbr.ViewModel
 
         public AllShowsViewModel()
         {
+            SetList();
+
+
+            //AddMockData();
+        }
+
+        public void SetList()
+        {
             List<ShowModel> test = new List<ShowModel>();
             AllShows = new ObservableCollection<ShowModel>();
-            BusinessLayer.GetObjects bl = new BusinessLayer.GetObjects();
-            var showList = bl.GetShowList(0);
+
+            GetObjects bl = new GetObjects();
+
+            List<Show> showList = bl.GetShowList();
 
             foreach (var item in showList)
             {
                 test.Add(new ShowModel(item));
-                //AllShows.Add(new ShowModel(item));
             }
 
             AllShows = new ObservableCollection<ShowModel>(test);
             Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
-
-
-            //AddMockData();
         }
 
         public event EventHandler<OnShowSelected> ShowSelected;
