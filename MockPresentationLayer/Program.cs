@@ -29,18 +29,18 @@ namespace MockPresentationLayer
 
 
 
-            SaveObjects blSave = new SaveObjects();
-            blSave.SavePodcastAsXml(a, 0);
+            //SaveObjects blSave = new SaveObjects();
+            //blSave.SavePodcastAsXml(a, 0);
 
-            GetObjects blGet = new GetObjects();
-            List<Show> showList = blGet.GetShowList(0);
+            //GetObjects blGet = new GetObjects();
+            //List<Show> showList = blGet.GetShowList();
 
-            blSave.SavePodcastAsMediaFile(a);
+            //blSave.SavePodcastAsMediaFile(a);
 
-            blGet.GetLocalMedia();
+            //blGet.GetLocalMedia();
 
 
-            //AppConfigWriteToXml();
+            ////AppConfigWriteToXml();
 
             //ConnectionStringSetter();
             //Test2();

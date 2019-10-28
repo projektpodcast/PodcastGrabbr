@@ -47,6 +47,7 @@
     <Compile Include="LocalDataTarget.cs" />
     <Compile Include="MediaDataSource.cs" />
     <Compile Include="MediaDataTarget.cs" />
+    <Compile Include="MockDataSource.cs" />
     <Compile Include="XmlDataSource.cs" />
     <Compile Include="XmlDataTarget.cs" />
     <Compile Include="IDataTarget.cs" />
