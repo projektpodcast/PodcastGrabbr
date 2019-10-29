@@ -352,7 +352,7 @@
 
     </Page.Resources>
     <Grid>
-        <Rectangle Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FFBFAAF5"></Rectangle>
+        <Rectangle Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Fill="#FF5A5193"></Rectangle>
 
 
         <!--<ListBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Background="Transparent"  Name="episodeViewList" ItemContainerStyle="{StaticResource EpisodeItems}" Style="{StaticResource EpisodeListStyle}">
@@ -361,7 +361,7 @@
         <ListView BorderThickness="0" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                   ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5" Foreground="Black"
                   SizeChanged="HeaderContent_SizeChanged"
-                  Loaded="ListView_Loaded" ItemsSource="{Binding EpisodesCollection}">
+                  Loaded="ListView_Loaded" ItemsSource="{Binding EpisodesCollection}" Visibility="{Binding Visible}">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyleNonresizeable}" AllowsColumnReorder="False">
                     <GridViewColumn Width="30">

@@ -9,13 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer;
 using CommonTypes;
+using System.Windows.Input;
+using System.Windows;
 
 namespace PodcastGrabbr.ViewModel
 {
     public class AllShowsViewModel : BaseViewModel
     {
+        
         private ShowModel _selectedShow { get; set; }
-        public ShowModel SelectedShow { get { return _selectedShow; } set { _selectedShow = value; OnPropertyChanged("SelectedShow"); NewShowSelected(); } }
+        public ShowModel SelectedShow { get { return _selectedShow; } set { _selectedShow = value; OnPropertyChanged("SelectedShow"); NewShowSelected(); /*MakeVisible();*/ } }
         //{
         //    get { return _selectedShow; }
         //    set { _selectedShow = value; OnPropertyChanged(_selectedShow); }
@@ -25,10 +28,95 @@ namespace PodcastGrabbr.ViewModel
         public AllShowsViewModel()
         {
             SetList();
-
-
             //AddMockData();
         }
+
+        //private Visibility _visibility = Visibility.Hidden;
+        //public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible"); } }
+
+        //private ICommand _toggleVisibility;
+        //public ICommand ToggleVisibility
+        //{
+        //    get
+        //    {
+        //        if (_toggleVisibility == null)
+        //        {
+        //            _toggleVisibility = new RelayCommand(
+        //                p => this.IsShowSelected(),
+        //                p => this.DecideVisibilityProperty());
+        //        }
+        //        return _deleteAllPodcasts;
+        //    }
+        //}
+
+        //public void MakeVisible()
+        //{
+        //    if (Visible == Visibility.Hidden)
+        //    {
+        //        Visible = Visibility.Visible;
+        //    }
+        //}
+
+        private ICommand _deleteAllPodcasts;
+        public ICommand DeleteSelectedPodcast
+        {
+            get
+            {
+                if (_deleteAllPodcasts == null)
+                {
+                    _deleteAllPodcasts = new RelayCommand(
+                        p => this.IsShowSelected(),
+                        p => this.ExecuteDeleteSelectedPodcasts());
+                }
+                return _deleteAllPodcasts;
+            }
+        }
+
+        private ICommand _refreshSelectedPodcast;
+        public ICommand RefreshSelectedPodcast
+        {
+            get
+            {
+                if (_refreshSelectedPodcast == null)
+                {
+                    _refreshSelectedPodcast = new RelayCommand(
+                        p => this.IsShowSelected(),
+                        p => this.ExecuteRefreshSelectedPodcast());
+                }
+                return _refreshSelectedPodcast;
+            }
+        }
+
+
+        private bool IsShowSelected()
+        {
+            if (SelectedShow != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void ExecuteDeleteSelectedPodcasts()
+        {
+
+        }
+
+        private void ExecuteRefreshSelectedPodcast()
+        {
+
+        }
+
+
+
+
+
+
+
+
+
+
+
 
         public void SetList()
         {

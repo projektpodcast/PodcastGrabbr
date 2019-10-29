@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PodcastGrabbr.ViewModel
 {
@@ -21,8 +22,21 @@ namespace PodcastGrabbr.ViewModel
             PagesSingletonViewModel.Instance.LoadSettingsView();
         }
 
+        private void MakeVisible()
+        {
+            if (Visible != Visibility.Visible)
+            {
+                Visible = Visibility.Visible;
+            }
+        }
+
+        private Visibility _visible = Visibility.Collapsed;
+        public Visibility Visible { get { return _visible; } set { _visible = value; OnPropertyChanged("Visible"); } }
+
         public void SubscriberNewShowSelected(object sender, OnShowSelected e)
         {
+            MakeVisible();
+
             DateTime now = DateTime.Now;
             ShowSelection = e.ShowSelection;
             EpisodesCollection.Add(new EpisodeModel() { Title = "Neue Show Selected", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg",
