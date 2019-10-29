@@ -100,7 +100,7 @@ namespace PodcastGrabbr
 
         private void MenueButton1_Click(object sender, RoutedEventArgs e)
         {
-            PagesSingletonViewModel.Instance.LoadShowView();
+            PagesSingletonViewModel.Instance.LoadHomeView();
         }
     }
 

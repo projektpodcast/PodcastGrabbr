@@ -125,6 +125,7 @@
         <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
         <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
 
+
         <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>

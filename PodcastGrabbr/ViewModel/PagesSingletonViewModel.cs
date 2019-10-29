@@ -11,8 +11,6 @@ namespace PodcastGrabbr.ViewModel
     {
         private static readonly PagesSingletonViewModel instance = new PagesSingletonViewModel();
 
-        // Explicit static constructor to tell C# compiler
-        // not to mark type as beforefieldinit
         static PagesSingletonViewModel()
         {
 
@@ -75,21 +73,21 @@ namespace PodcastGrabbr.ViewModel
         }
 
 
-
         public void LoadSettingsView()
         {
             SettingsPage = new SettingsView();
             CurrentTopPage = SettingsPage;
         }
 
-        public void LoadShowView()
+        public void LoadHomeView()
         {
             SettingsPage = null;
             CurrentTopPage = AllShowsPage;
+            CurrentBottomPage = EpisodesPage;
         }
 
 
-        public void InstantiateStandardView()
+        private void InstantiateStandardView()
         {
             App.Current.Dispatcher.BeginInvoke((Action)delegate
             {

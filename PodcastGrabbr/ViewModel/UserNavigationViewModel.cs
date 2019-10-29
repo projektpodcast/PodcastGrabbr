@@ -12,40 +12,106 @@ namespace PodcastGrabbr.ViewModel
     {
         private Visibility _visibility = Visibility.Collapsed;
         public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible") ; } }
-        private ICommand _doSomething;
-        public ICommand DoSomethingCommand
+
+        private ICommand _toggleMenueVisibility;
+        public ICommand ToggleMenueVisibility
         {
             get
             {
-                if (_doSomething == null)
+                if (_toggleMenueVisibility == null)
                 {
-                    _doSomething = new RelayCommand(
-                        p => true,
-                        p => this.DoSomeImportantMethod());
+                    _toggleMenueVisibility = new RelayCommand(
+                        p => this.CanClickButton(),
+                        p => this.DecideVisibilityProperty());
                 }
-                return _doSomething;
+                return _toggleMenueVisibility;
             }
         }
 
-        //private bool _canDoSomething { get; set; }
-        ////public bool CanDoSomething { get { return true; } }
-        //public bool CanDoSomething
-        //{
-        //    get { return _canDoSomething; }
-        //    set {; }
-        //}
-
-        public void DoSomeImportantMethod()
+        private ICommand _switchPageToSettings;
+        public ICommand SwitchPageToSettings
         {
-            if (Visible == Visibility.Collapsed)
+            get
             {
-                this.Visible = Visibility.Visible;
+                if (_switchPageToSettings == null)
+                {
+                    _switchPageToSettings = new RelayCommand(
+                        p => this.CanSwitchToSettingsPage(),
+                        p => this.ExecuteSwitchToSettingsPage());
+                }
+                return _switchPageToSettings;
+            }
+        }
+
+        private ICommand _switchPageToHome;
+        public ICommand SwitchPageToHome
+        {
+            get
+            {
+                if (_switchPageToHome == null)
+                {
+                    _switchPageToHome = new RelayCommand(
+                        p => this.CanSwitchToHomePage(),
+                        p => this.ExecuteSwitchToHomePage());
+                }
+                return _switchPageToHome;
+            }
+        }
+        public void ExecuteSwitchToSettingsPage()
+        {
+            PagesSingletonViewModel.Instance.LoadSettingsView();
+        }
+
+        public void ExecuteSwitchToHomePage()
+        {
+            PagesSingletonViewModel.Instance.LoadHomeView();
+        }
+
+        private bool CanSwitchToSettingsPage()
+        {
+            if (PagesSingletonViewModel.Instance.CurrentTopPage != PagesSingletonViewModel.Instance.SettingsPage)
+            {
+                return true;
             }
             else
             {
-                this.Visible = Visibility.Collapsed;
+                return false;
             }
-
         }
+
+        private bool CanSwitchToHomePage()
+        {
+            if (PagesSingletonViewModel.Instance.CurrentTopPage != PagesSingletonViewModel.Instance.AllShowsPage)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool CanClickButton()
+        {
+            return true;
+        }
+
+        public void DecideVisibilityProperty()
+        {
+            switch (Visible)
+            {
+                case Visibility.Visible:
+                    this.Visible = Visibility.Collapsed;
+                    break;
+                case Visibility.Collapsed:
+                    this.Visible = Visibility.Visible;
+                    break;
+                default:
+                    this.Visible = Visibility.Collapsed;
+                    break;
+            }
+        }
+
+
     }
 }
