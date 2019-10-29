@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PodcastGrabbr.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,10 @@ namespace PodcastGrabbr.View
     /// </summary>
     public partial class SettingsView : Page
     {
-        public SettingsView()
+        public SettingsView(UserNavigationViewModel settingsVm)
         {
             InitializeComponent();
+            this.DataContext = settingsVm;
         }
     }
 }

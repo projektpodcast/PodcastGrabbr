@@ -8,13 +8,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <!--<UserControl.DataContext>
+    <UserControl.DataContext>
         <local:UserNavigationViewModel/>
-    </UserControl.DataContext>-->
+    </UserControl.DataContext>
 
     <UserControl.Resources>
         <SolidColorBrush x:Key="MenueBrush" Color="White" Opacity="0.3"/>
         <SolidColorBrush x:Key="MenueBrushPurple" Color="#463574" Opacity="1"/>
+        <SolidColorBrush x:Key="ButtonActiveHighlight" Color="#FFA27DFF" />
+        
         <Style x:Key="MenueButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -27,7 +29,7 @@
                                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Fill="Transparent"/>
                                 <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="Menüpunkt 1" Foreground="White" Margin="4,0,0,0"></TextBlock>-->
                                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="{TemplateBinding Content}" Foreground="White" Margin="6,0,0,0"></TextBlock>
-                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Column="0" Fill="{StaticResource MenueBrush}" Height="1" Margin="0,0,-15,0"/>
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Column="0" Fill="{StaticResource MenueBrush}" Height="1" Margin="0,0,0,0"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -37,6 +39,11 @@
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
                             </Trigger>
+                
+                                <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ButtonActiveHighlight}"></Setter>
+                            </Trigger>
+                          
 
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -105,6 +112,8 @@
             </Setter>
         </Style>
 
+
+        
     </UserControl.Resources>
     <Grid>
         <Grid ShowGridLines="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
@@ -125,13 +134,13 @@
 
             <Rectangle x:Name="MenueBackground" Fill="#FF5A5193" Grid.Row="0" Width="Auto" Grid.RowSpan="7"></Rectangle>
             <Button x:Name="BurgerButton" Style="{StaticResource BurgerButtonTest}"  Height="30" Width="30" Grid.Row="0" Grid.Column="0" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding DoSomethingCommand}"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ToggleMenueVisibility}"
                     Margin="2,10,0,0"></Button>
 
 
-            <Grid x:Name="wow" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" Visibility="{Binding Visible}">
+            <Grid x:Name="MenueItemsGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" Visibility="{Binding Visible}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="{Binding ElementName=BurgerButtonColumn, Path=Height}"></RowDefinition>
@@ -142,12 +151,13 @@
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Rectangle x:Name="TestMenue" Fill="#FF5A5193" Opacity="1" Width="150" Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"></Rectangle>
-                <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton1" Content="Startseite" Click="MenueButton1_Click"></Button>
-                <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton2" Content="Meine Downloads"></Button>
-                <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton3" Content="Show importieren"></Button>
-                <Button Grid.Row="4" Grid.Column="1" Style="{StaticResource MenueButton}"  Width="auto" x:Name="MenueButton4" Content="Shows aktualisieren"></Button>
-                <Button Grid.Row="5" Grid.Column="1" Style="{StaticResource MenueButton}" Width="auto" x:Name="MenueButton5" Content="Einstellungen" Click="MenueButton4_Click"></Button>
+                <Rectangle x:Name="TestMenue" Fill="#FF5A5193" Opacity="1" Width="120" Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"></Rectangle>
+                <Button Grid.Row="1" Style="{StaticResource MenueButton}" Width="auto" Content="Startseite" Command="{Binding SwitchPageToHome}"/>
+                <Button Grid.Row="2" Style="{StaticResource MenueButton}" Width="auto" Content="Einstellungen" Command="{Binding SwitchPageToSettings}"/>
+                <Button Grid.Row="3" Style="{StaticResource MenueButton}" Width="auto" Content="Meine Downloads"/>
+                <Button Grid.Row="4" Style="{StaticResource MenueButton}" Width="auto" Content="Show importieren"/>
+                <Button Grid.Row="5" Style="{StaticResource MenueButton}" Width="auto" Content="Shows aktualisieren"/>
+
             </Grid>
 
         </Grid>

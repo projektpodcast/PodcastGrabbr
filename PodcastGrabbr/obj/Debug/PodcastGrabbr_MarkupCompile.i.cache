@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\pgrundmann\Source\Repos\PodcastGrabbrGit\PodcastGrabbr\App.xaml
-5-148211764
+4-12118603
 
-26-865624490
+19-735894233
 16-245823921
-MainWindow.xaml;View\AllShowsView.xaml;View\EpisodesView.xaml;View\UserNavigationView.xaml;View\SettingsView.xaml;
+MainWindow.xaml;View\PodcastView.xaml;View\UserNavigationView.xaml;View\SettingsView.xaml;
 
 False
 

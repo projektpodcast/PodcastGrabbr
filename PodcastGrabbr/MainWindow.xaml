@@ -13,19 +13,19 @@
     </Window.DataContext>
 
     <Window.Resources>
-        
-            <Style TargetType="{x:Type Frame}">
+
+        <Style TargetType="{x:Type Frame}">
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Frame}">
-                        <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}">
-                            <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" Name="PART_FrameCP" />
+                        <Border>
+                            <ContentPresenter/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
     </Window.Resources>
 
     <Grid ShowGridLines="False">
@@ -35,10 +35,12 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*" MaxHeight="380"></RowDefinition>
-            <RowDefinition Height="40*"></RowDefinition>
         </Grid.RowDefinitions>
 
+        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" BorderThickness="0" Grid.RowSpan="2">
+            <Frame x:Name="MainContent" Content="{Binding CurrentContent}"/>
+        </Border>
+        
         <Grid ShowGridLines="False" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -48,21 +50,9 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-
             <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2">
                 <UserControl Content="{Binding UserNavigation}"/>
             </Border>
         </Grid>
-
-        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" BorderThickness="0">
-            <Frame Content="{Binding EpisodesPage}"/>
-        </Border>
-
-
-        <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" BorderThickness="0">
-            <Frame x:Name="TopContent" Content="{Binding CurrentTopPage}"/>
-        </Border>
-
-
     </Grid>
 </Window>

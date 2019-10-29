@@ -15,7 +15,7 @@ namespace PodcastGrabbr.Model
         public override string Title
         {
             get { return _title; }
-            set { _title = value; OnPropertyChanged("Title"); }
+            set { _title = value;/* OnPropertyChanged("Title");*/ }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

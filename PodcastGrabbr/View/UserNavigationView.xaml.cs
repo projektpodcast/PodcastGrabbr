@@ -21,35 +21,36 @@ namespace PodcastGrabbr.View
     /// </summary>
     public partial class UserNavigationView : UserControl
     {
-        public UserNavigationView()
+        public UserNavigationView(UserNavigationViewModel userNavigationVm)
         {
             InitializeComponent();
+            this.DataContext = userNavigationVm;
         }
-        private void TestMenueButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.wow.Visibility == Visibility.Visible)
-            {
-                this.wow.Visibility = Visibility.Collapsed;
-                //this.MenueBackground.Visibility = Visibility.Visible;
+        //private void TestMenueButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (this.wow.Visibility == Visibility.Visible)
+        //    {
+        //        this.wow.Visibility = Visibility.Collapsed;
+        //        //this.MenueBackground.Visibility = Visibility.Visible;
 
-            }
-            else
-            {
-                this.wow.Visibility = Visibility.Visible;
-                //this.MenueBackground.Visibility = Visibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        this.wow.Visibility = Visibility.Visible;
+        //        //this.MenueBackground.Visibility = Visibility.Collapsed;
 
-            }
-        }
+        //    }
+        //}
 
-        private void MenueButton4_Click(object sender, RoutedEventArgs e)
-        {
-            PagesSingletonViewModel.Instance.LoadSettingsView();
-        }
+        //private void MenueButton4_Click(object sender, RoutedEventArgs e)
+        //{
+        //    PagesSingletonViewModel.Instance.LoadSettingsView();
+        //}
 
-        private void MenueButton1_Click(object sender, RoutedEventArgs e)
-        {
-            PagesSingletonViewModel.Instance.LoadShowView();
-            //PagesSingletonViewModel.Instance.LoadShowView();
-        }
+        //private void MenueButton1_Click(object sender, RoutedEventArgs e)
+        //{
+        //    PagesSingletonViewModel.Instance.LoadShowView();
+        //    //PagesSingletonViewModel.Instance.LoadShowView();
+        //}
     }
 }
