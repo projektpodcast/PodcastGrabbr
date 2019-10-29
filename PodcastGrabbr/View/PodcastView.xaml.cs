@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PodcastGrabbr.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,15 +17,29 @@ using System.Windows.Shapes;
 namespace PodcastGrabbr.View
 {
     /// <summary>
-    /// Interaction logic for EpisodesView.xaml
+    /// Interaction logic for AllShowsViewModel.xaml
     /// </summary>
-    public partial class EpisodesView : Page
+    public partial class PodcastView : Page
     {
-        public EpisodesView()
+        public PodcastView(PodcastViewModel podcastVm)
         {
             InitializeComponent();
+            this.DataContext = podcastVm;
         }
-        private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scrollViewer = (ScrollViewer)sender;
+            if (e.Delta < 0)
+            {
+                scrollViewer.LineRight();
+            }
+            else
+            {
+                scrollViewer.LineLeft();
+            }
+            e.Handled = true;
+        }
+                private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateColumnsWidth(sender as ListView);
         }

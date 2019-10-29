@@ -8,9 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <!--<UserControl.DataContext>
+    <UserControl.DataContext>
         <local:UserNavigationViewModel/>
-    </UserControl.DataContext>-->
+    </UserControl.DataContext>
 
     <UserControl.Resources>
         <SolidColorBrush x:Key="MenueBrush" Color="White" Opacity="0.3"/>
@@ -29,7 +29,7 @@
                                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Fill="Transparent"/>
                                 <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="Menüpunkt 1" Foreground="White" Margin="4,0,0,0"></TextBlock>-->
                                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="{TemplateBinding Content}" Foreground="White" Margin="6,0,0,0"></TextBlock>
-                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Column="0" Fill="{StaticResource MenueBrush}" Height="1" Margin="0,0,-15,0"/>
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Column="0" Fill="{StaticResource MenueBrush}" Height="1" Margin="0,0,0,0"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -140,7 +140,7 @@
 
             <Grid x:Name="MenueItemsGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" Visibility="{Binding Visible}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="{Binding ElementName=BurgerButtonColumn, Path=Height}"></RowDefinition>
@@ -151,7 +151,7 @@
                     <RowDefinition Height="30"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Rectangle x:Name="TestMenue" Fill="#FF5A5193" Opacity="1" Width="150" Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"></Rectangle>
+                <Rectangle x:Name="TestMenue" Fill="#FF5A5193" Opacity="1" Width="120" Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"></Rectangle>
                 <Button Grid.Row="1" Style="{StaticResource MenueButton}" Width="auto" Content="Startseite" Command="{Binding SwitchPageToHome}"/>
                 <Button Grid.Row="2" Style="{StaticResource MenueButton}" Width="auto" Content="Einstellungen" Command="{Binding SwitchPageToSettings}"/>
                 <Button Grid.Row="3" Style="{StaticResource MenueButton}" Width="auto" Content="Meine Downloads"/>

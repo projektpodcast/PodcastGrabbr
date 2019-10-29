@@ -21,9 +21,10 @@ namespace PodcastGrabbr.View
     /// </summary>
     public partial class UserNavigationView : UserControl
     {
-        public UserNavigationView()
+        public UserNavigationView(UserNavigationViewModel userNavigationVm)
         {
             InitializeComponent();
+            this.DataContext = userNavigationVm;
         }
         //private void TestMenueButton_Click(object sender, RoutedEventArgs e)
         //{

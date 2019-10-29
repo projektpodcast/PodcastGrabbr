@@ -9,6 +9,7 @@ namespace PodcastGrabbr.ViewModel
 {
     public sealed class PagesSingletonViewModel : BaseViewModel
     {
+        #region Singleton
         private static readonly PagesSingletonViewModel instance = new PagesSingletonViewModel();
 
         static PagesSingletonViewModel()
@@ -28,7 +29,9 @@ namespace PodcastGrabbr.ViewModel
                 return instance;
             }
         }
+        #endregion Singleton
 
+        #region Properties (Instanzen der Views)
         private UserNavigationView _userNavigation { get; set; }
         public UserNavigationView UserNavigation
         {
@@ -36,20 +39,13 @@ namespace PodcastGrabbr.ViewModel
             set { _userNavigation = value; OnPropertyChanged("UserNavigation"); }
         }
 
-        private AllShowsView _allShowsPage { get; set; }
-        public AllShowsView AllShowsPage
+        private PodcastView _podcastPage { get; set; }
+        public PodcastView PodcastPage
         {
-            get { return _allShowsPage; }
-            set { _allShowsPage = value; OnPropertyChanged("AllShowsPage"); }
+            get { return _podcastPage; }
+            set { _podcastPage = value; OnPropertyChanged("AllShowsPage"); }
         }
 
-
-        private EpisodesView _episodesPage { get; set; }
-        public EpisodesView EpisodesPage
-        {
-            get { return _episodesPage; }
-            set { _episodesPage = value; OnPropertyChanged("EpisodesPage"); }
-        }
 
         private SettingsView _settingsPage { get; set; }
         public SettingsView SettingsPage
@@ -57,56 +53,39 @@ namespace PodcastGrabbr.ViewModel
             get { return _settingsPage; }
             set { _settingsPage = value; OnPropertyChanged("SettingsPage"); }
         }
+        #endregion SettingsViewModel  
 
-        private object _currentTopPage { get; set; }
-        public object CurrentTopPage
+        private object _currentContent { get; set; }
+        public object CurrentContent
         {
-            get { return _currentTopPage; }
-            set { _currentTopPage = value; OnPropertyChanged("CurrentTopPage"); }
+            get { return _currentContent; }
+            set { _currentContent = value; OnPropertyChanged("CurrentContent"); }
         }
-
-        private object _currentBottomPage { get; set; }
-        public object CurrentBottomPage
-        {
-            get { return _currentBottomPage; }
-            set { _currentBottomPage = value; OnPropertyChanged("CurrentBottomPage"); }
-        }
-
 
         public void LoadSettingsView()
         {
-            SettingsPage = new SettingsView();
-            CurrentTopPage = SettingsPage;
+            UserNavigationViewModel settingsVM = new UserNavigationViewModel();
+            SettingsPage = new SettingsView(settingsVM);
+            CurrentContent = SettingsPage;
         }
 
-        public void LoadHomeView()
+        public void LoadPodcastView()
         {
             SettingsPage = null;
-            CurrentTopPage = AllShowsPage;
-            CurrentBottomPage = EpisodesPage;
+            CurrentContent = PodcastPage;
         }
-
 
         private void InstantiateStandardView()
         {
             App.Current.Dispatcher.BeginInvoke((Action)delegate
             {
-                AllShowsPage = UiDependencies.AllShowsViewInstance();
-                EpisodesPage = UiDependencies.EpisodesViewInstance();
+                UserNavigationViewModel userNavigationVm = new UserNavigationViewModel();
+                UserNavigation = new UserNavigationView(userNavigationVm);
 
-                AllShowsViewModel showsVm = UiDependencies.AllShowsViewModelInstance();
-                EpisodesViewModel episodesVm = UiDependencies.EpisodesViewModelInstance();
+                PodcastViewModel podcastVm = new PodcastViewModel();
+                PodcastPage = new PodcastView(podcastVm);
 
-                UiDependencies.SetSubcriptionToShowSelectedEvent(showsVm, episodesVm);
-
-                AllShowsPage.DataContext = showsVm;
-                EpisodesPage.DataContext = episodesVm;
-
-                CurrentTopPage = AllShowsPage;
-
-                UserNavigation = new UserNavigationView();
-                UserNavigationViewModel userNaviVm = new UserNavigationViewModel();
-                UserNavigation.DataContext = userNaviVm;
+                CurrentContent = PodcastPage;
             });
         }
     }

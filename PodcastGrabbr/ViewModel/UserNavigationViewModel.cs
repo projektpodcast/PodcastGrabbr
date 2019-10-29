@@ -64,12 +64,12 @@ namespace PodcastGrabbr.ViewModel
 
         public void ExecuteSwitchToHomePage()
         {
-            PagesSingletonViewModel.Instance.LoadHomeView();
+            PagesSingletonViewModel.Instance.LoadPodcastView();
         }
 
         private bool CanSwitchToSettingsPage()
         {
-            if (PagesSingletonViewModel.Instance.CurrentTopPage != PagesSingletonViewModel.Instance.SettingsPage)
+            if (PagesSingletonViewModel.Instance.CurrentContent != PagesSingletonViewModel.Instance.SettingsPage)
             {
                 return true;
             }
@@ -81,7 +81,7 @@ namespace PodcastGrabbr.ViewModel
 
         private bool CanSwitchToHomePage()
         {
-            if (PagesSingletonViewModel.Instance.CurrentTopPage != PagesSingletonViewModel.Instance.AllShowsPage)
+            if (PagesSingletonViewModel.Instance.CurrentContent != PagesSingletonViewModel.Instance.PodcastPage)
             {
                 return true;
             }
