@@ -20,6 +20,7 @@ namespace BusinessLayer
 
             List<Show> a = dal.GetAllShows();
             return a;
+            
         }
 
         public List<Show> GetLocalMedia()

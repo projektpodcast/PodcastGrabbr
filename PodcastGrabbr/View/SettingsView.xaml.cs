@@ -21,7 +21,7 @@ namespace PodcastGrabbr.View
     /// </summary>
     public partial class SettingsView : Page
     {
-        public SettingsView(UserNavigationViewModel settingsVm)
+        public SettingsView(SettingsViewModel settingsVm)
         {
             InitializeComponent();
             this.DataContext = settingsVm;

@@ -80,12 +80,12 @@ namespace PodcastGrabbr.ViewModel
 
         private void ExecuteDeleteSelectedShow()
         {
-
+            //BusinessLayer-Zugriff um Show(SelectedShow) + alle Episoden zu löschen
         }
 
         private void ExecuteRefreshSelectedShow()
         {
-
+            //BusinessLayer-Zugriff um XML der Show(SelectedShow) neu zu laden, zu deserialisieren und neue Episoden in die DB zu speichern.
         }
 
         #region Mockdata

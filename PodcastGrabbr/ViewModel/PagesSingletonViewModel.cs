@@ -64,7 +64,7 @@ namespace PodcastGrabbr.ViewModel
 
         public void LoadSettingsView()
         {
-            UserNavigationViewModel settingsVM = new UserNavigationViewModel();
+            SettingsViewModel settingsVM = new SettingsViewModel();
             SettingsPage = new SettingsView(settingsVM);
             CurrentContent = SettingsPage;
         }

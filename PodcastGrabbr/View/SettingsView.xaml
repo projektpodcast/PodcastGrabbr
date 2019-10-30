@@ -6,6 +6,301 @@
       xmlns:local="clr-namespace:PodcastGrabbr.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Title="SettingsView"
+      >
+    <Page.Resources>
+        <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
+        <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
+        <SolidColorBrush x:Key="myBrush" Color="#FFBFAAF5" Opacity="0.4"/>
+        <SolidColorBrush x:Key="MenueBrush" Color="White" Opacity="0.3"/>
+        <SolidColorBrush x:Key="MenueBrushPurple" Color="#463574" Opacity="1"/>
+        <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
+        <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
+        <SolidColorBrush x:Key="HeadlineBrush" Color="White" Opacity="1"/>
+        <SolidColorBrush x:Key="DetailBrush" Color="White" Opacity="0.7"/>
+        <Style x:Key="HeadlineTb" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{StaticResource HeadlineBrush}"></Setter>
+            <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
+        </Style>
+        <Style x:Key="DetailTb" TargetType="{x:Type TextBlock}">
+            <Setter Property="Opacity" Value="0.7"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+        </Style>
+
+        <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Width="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle x:Name="WarningBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10" 
+                                           Height="15" Width="15" Fill="{StaticResource RedBrush}"></Rectangle>
+                                <Grid Width="11" Height="11" Grid.Column="0">
+                                    <Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>
+                                    <Path Fill="White" Data="M 9 0 L 0 9 L 2 11 L 11 2 Z"/>
+                                </Grid>
+                                <TextBlock x:Name="ButtonDescription" Grid.Column="1"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontSize="13" Text="{TemplateBinding Content}" Style="{StaticResource DetailTb}"></TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="WarningBorder" Value="{StaticResource RedBrushBright}"/>
+                                <Setter Property="Opacity" TargetName="ButtonDescription" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+
+
+
+
+
+    </Page.Resources>
+    <!--<Grid>-->
+
+
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="2" Fill="#FF5A5193" />
+
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+                <RowDefinition Height="auto" MinHeight="60"></RowDefinition>
+                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
+            <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
+
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Konfiguration der Datenquelle" Style="{StaticResource HeadlineTb}"></TextBlock>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*" MinWidth="50"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
+
+                <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Datenziel" Style="{StaticResource DetailTb}" Margin="0,0,10,0"/>
+                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Width="150" 
+                                  ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding SelectedDataType}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Value}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                            <!--<ComboBoxItem>Datenbank: MySQL</ComboBoxItem>
+                            <ComboBoxItem>Datenbank: PostgreSQL</ComboBoxItem>
+                            <ComboBoxItem>Lokal: XML</ComboBoxItem>-->
+                        </ComboBox>
+                    </Grid>
+
+                    <!--<DockPanel Margin="10,0,0,0" FlowDirection="RightToLeft">
+                        <ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Text="itte auswählen" Width="150" MinWidth="50">
+                            <ComboBoxItem>Datenbank: MySQL</ComboBoxItem>
+                            <ComboBoxItem>Datenbank: PostgreSQL</ComboBoxItem>
+                            <ComboBoxItem>Lokal: XML</ComboBoxItem>
+                        </ComboBox>
+                        <TextBlock Margin="5,0,0,0" Text="Datenziel" Style="{StaticResource DetailTb}"></TextBlock>
+                    </DockPanel>-->
+                    <!--<DockPanel Margin="10,0,0,0">
+                        <TextBlock Text="Datenziel:" Style="{StaticResource DetailTb}"
+                       TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"></TextBlock>
+                        <ComboBox Margin="5,0,0,0" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Text="itte auswählen" Width="150" MinWidth="50">
+                            <ComboBoxItem>Datenbank: MySQL</ComboBoxItem>
+                            <ComboBoxItem>Datenbank: PostgreSQL</ComboBoxItem>
+                            <ComboBoxItem>Lokal: XML</ComboBoxItem>
+                        </ComboBox>
+                    </DockPanel>-->
+                </WrapPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+                <RowDefinition Height="auto" MinHeight="60"></RowDefinition>
+                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
+            <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Massenimport" Style="{StaticResource HeadlineTb}"></TextBlock>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*" MinWidth="50"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
+
+                <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
+                    <DockPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Textdatei mit RSS-Feed Links" Style="{StaticResource DetailTb}" Margin="0,0,10,0"/>
+                            <Button Grid.Column="1" Height="25" Content=".txt Datei wählen" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </DockPanel>
+                    <!--<DockPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Textdatei mit RSS-Feed Links" Style="{StaticResource DetailTb}" Margin="0,0,10,0"/>
+                            <Button Grid.Column="1" Height="25" Content=".txt Datei wählen" HorizontalAlignment="Left"/>
+                        </Grid>
+                    </DockPanel>-->
+                    <!--<DockPanel Margin="10,0,0,0" FlowDirection="RightToLeft">
+                    <Button Grid.Column="1" Grid.Row="2" Height="25" Content=".txt Datei wählen" HorizontalAlignment="Left"/>
+                    <TextBlock Margin="5,0,0,0" Text="Textdatei mit RSS-Feed Links" Style="{StaticResource DetailTb}"/>
+                    </DockPanel> -->
+                    <!--<DockPanel Margin="10,0,0,0" FlowDirection="RightToLeft">
+                        <Button Grid.Column="1" Grid.Row="2" Height="25" Content=".txt Datei wählen" HorizontalAlignment="Left"/>
+                        <TextBlock Margin="5,0,0,0" Text="Textdatei mit RSS-Feed Links" Style="{StaticResource DetailTb}"/>
+                    </DockPanel>-->
+                    <!--<DockPanel Margin="10,0,0,0">
+                        <TextBlock Text="Datenziel:" Style="{StaticResource DetailTb}"
+                       TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"></TextBlock>
+                        <ComboBox Margin="5,0,0,0" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Text="itte auswählen" Width="150" MinWidth="50">
+                            <ComboBoxItem>Datenbank: MySQL</ComboBoxItem>
+                            <ComboBoxItem>Datenbank: PostgreSQL</ComboBoxItem>
+                            <ComboBoxItem>Lokal: XML</ComboBoxItem>
+                        </ComboBox>
+                    </DockPanel>-->
+                </WrapPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+                <RowDefinition Height="auto" MinHeight="60"></RowDefinition>
+                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
+            <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Podcast Optionen" Style="{StaticResource HeadlineTb}"></TextBlock>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*" MinWidth="50"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="4" Fill="#FF311855" Opacity="0.5"></Rectangle>
+
+                <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
+                    <DockPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*" MinWidth="30"/>
+                            </Grid.ColumnDefinitions>
+                            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Podcasts löschen"/>
+                        </Grid>
+                    </DockPanel>
+                        <DockPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Downloads löschen"/>
+                        </Grid>
+                    </DockPanel>
+
+                </WrapPanel>
+
+            </Grid>
+        </Grid>
+
+
+
+    </Grid>
+
+
+
+
+
+
+
+
+</Page>
+
+<!--
+    <Page x:Class="PodcastGrabbr.View.SettingsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PodcastGrabbr.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingsView">
     <Page.Resources>
         <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
@@ -94,7 +389,7 @@
             <TextBlock Grid.Column="1" Grid.Row="2" Text="Art des Datenziels:" Style="{StaticResource DetailTb}"></TextBlock>
             <Border Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="4" BorderThickness="0,0,0,1" BorderBrush="{StaticResource myBrush}"></Border>
 
-            <ComboBox Grid.Column="3" Grid.Row="2" Height="25" Width="150" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Text="--Bitte auswählen--">
+            <ComboBox Grid.Column="3" Grid.Row="2" Height="25" Width="150" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Text="Bitte wählen">
                 <ComboBoxItem>Datenbank: MySQL</ComboBoxItem>
                 <ComboBoxItem>Datenbank: PostgreSQL</ComboBoxItem>
                 <ComboBoxItem>Lokal: XML</ComboBoxItem>
@@ -107,36 +402,39 @@
 
 
             <TextBlock Grid.Column="1" Grid.Row="5" Text="Podcast Optionen" Style="{StaticResource HeadlineTb}"></TextBlock>
-            <!--<TextBlock Grid.Column="1" Grid.Row="6" Text="Alle Podcasts löschen" Style="{StaticResource DetailTb}"></TextBlock>-->
-            <StackPanel Grid.Column="3" Grid.Row="6">
-                <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Podcasts löschen" Margin="0,5,0,0"/>
-                <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Downloads löschen" Margin="0,5,0,0"/>
-            </StackPanel>
-            
+<StackPanel Grid.Column="3" Grid.Row="6">
+    <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Podcasts löschen" Margin="0,5,0,0"/>
+    <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Downloads löschen" Margin="0,5,0,0"/>
+</StackPanel>
 
 
 
-            <Grid Grid.Column="0" Grid.ColumnSpan="7" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-  
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"></ColumnDefinition>
-                    <ColumnDefinition Width="10*"></ColumnDefinition>
-                    <ColumnDefinition Width="10*"></ColumnDefinition>
-                    <ColumnDefinition Width="20*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
-                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
-                    <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
-                    <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" Fill="#463574"></Rectangle>
-                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
-            </Grid>
 
-        </Grid>
+<Grid Grid.Column="0" Grid.ColumnSpan="7" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="10"></ColumnDefinition>
+        <ColumnDefinition Width="10*"></ColumnDefinition>
+        <ColumnDefinition Width="10*"></ColumnDefinition>
+        <ColumnDefinition Width="20*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+        <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
+        <RowDefinition Height="15" MaxHeight="100"></RowDefinition>
+        <RowDefinition Height="20" MaxHeight="100"></RowDefinition>
+    </Grid.RowDefinitions>
+    <Rectangle Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" Fill="#463574"></Rectangle>
+    <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
+</Grid>
+
+</Grid>
 
 
 
-    </Grid>
+</Grid>
 </Page>
+
+-->
+        
+    

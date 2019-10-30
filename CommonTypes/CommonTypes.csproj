@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataType.cs" />
     <Compile Include="DateTimeParser.cs" />
     <Compile Include="Episode.cs" />
     <Compile Include="FileInformation.cs" />
