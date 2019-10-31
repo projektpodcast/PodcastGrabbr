@@ -26,6 +26,7 @@ namespace PodcastGrabbr.View
             InitializeComponent();
             this.DataContext = podcastVm;
         }
+
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             ScrollViewer scrollViewer = (ScrollViewer)sender;

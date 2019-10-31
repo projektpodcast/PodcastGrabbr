@@ -10,19 +10,19 @@ namespace BusinessLayer
 {
     public class GetObjects
     {
-        public List<Show> GetShowList(/*int sourceType*/)
+        public List<Show> GetShowList()
         {
-            //IDataSource fileSource = Factory.CreateFileSource(sourceType);
-            //List<Show> allShowList = fileSource.GetAllShows();
-            //return allShowList;
+            //IDataSource dataSource = Factory.CreateDataSource();
+            //dataSource.GetAllShows();
 
             MockDataSource dal = new MockDataSource();
 
             List<Show> a = dal.GetAllShows();
             return a;
+            
         }
 
-        public List<Show> GetLocalMedia()
+        public List<Show> GetLocalMedia() //umschreiben, gibt das falsche zurück
         {
             MediaDataSource dal = new MediaDataSource();
 

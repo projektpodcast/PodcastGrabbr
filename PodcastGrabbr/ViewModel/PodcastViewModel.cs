@@ -1,5 +1,4 @@
-﻿using PodcastGrabbr.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,21 +16,21 @@ namespace PodcastGrabbr.ViewModel
     public class PodcastViewModel : BaseViewModel
     {
 
-        private ShowModel _selectedShow { get; set; }
-        public ShowModel SelectedShow {
+        private Show _selectedShow { get; set; }
+        public Show SelectedShow {
             get { return _selectedShow; }
             set { _selectedShow = value; OnPropertyChanged("SelectedShow"); AddNewEpisode(); }
         }
 
-        public ObservableCollection<EpisodeModel> EpisodesCollection { get; set; }
+        public ObservableCollection<Episode> EpisodesCollection { get; set; }
 
-        public ObservableCollection<ShowModel> AllShows { get; set; }
+        public ObservableCollection<Show> AllShows { get; set; }
 
         public PodcastViewModel()
         {
 
-            AllShows = new ObservableCollection<ShowModel>();
-            EpisodesCollection = new ObservableCollection<EpisodeModel>();
+            AllShows = new ObservableCollection<Show>();
+            EpisodesCollection = new ObservableCollection<Episode>();
 
             SetList();
             FillEpisodeListWithMockData();
@@ -80,19 +79,22 @@ namespace PodcastGrabbr.ViewModel
 
         private void ExecuteDeleteSelectedShow()
         {
-
+            //BusinessLayer-Zugriff um Show(SelectedShow) + alle Episoden zu löschen
         }
 
         private void ExecuteRefreshSelectedShow()
         {
+            SaveObjects bl = new SaveObjects();
+            bl.Test();
 
+            //BusinessLayer-Zugriff um XML der Show(SelectedShow) neu zu laden, zu deserialisieren und neue Episoden in die DB zu speichern.
         }
 
         #region Mockdata
         public void SetList()
         {
-            List<ShowModel> test = new List<ShowModel>();
-            AllShows = new ObservableCollection<ShowModel>();
+            List<Show> test = new List<Show>();
+            AllShows = new ObservableCollection<Show>();
 
             GetObjects bl = new GetObjects();
 
@@ -100,10 +102,10 @@ namespace PodcastGrabbr.ViewModel
 
             foreach (var item in showList)
             {
-                test.Add(new ShowModel(item));
+                test.Add(item);
             }
 
-            AllShows = new ObservableCollection<ShowModel>(test);
+            AllShows = new ObservableCollection<Show>(test);
             Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
         }
 
@@ -114,7 +116,7 @@ namespace PodcastGrabbr.ViewModel
                 string bild = "https://www.swr.de/swr2/programm/Podcastbild-SWR2-Forum,1564746463623,swr2-forum-podcast-106~_v-1x1@2dXL_-1f32c27c4978132dd0854e53b5ed30e10facc189.jpg";
                 App.Current.Dispatcher.BeginInvoke((Action)delegate
                 {
-                    AllShows.Add(new ShowModel
+                    AllShows.Add(new Show
                     {
                         PodcastTitle = "Addedfun",
                         PublisherName = "WDR",
@@ -128,7 +130,7 @@ namespace PodcastGrabbr.ViewModel
         private void AddNewEpisode()
         {
             DateTime now = DateTime.Now;
-            this.EpisodesCollection.Add(new EpisodeModel()
+            this.EpisodesCollection.Add(new Episode()
             {
                 Title = "Neue Show Selected",
                 PublishDate = now,
@@ -143,8 +145,8 @@ namespace PodcastGrabbr.ViewModel
             DateTime now = DateTime.Now;
             for (int i = 0; i < 4; i++)
             {
-                EpisodesCollection.Add(new EpisodeModel() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg" });
-                EpisodesCollection.Add(new EpisodeModel() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg" });
+                EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg" });
+                EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg" });
             }
         }
         #endregion Mockdata

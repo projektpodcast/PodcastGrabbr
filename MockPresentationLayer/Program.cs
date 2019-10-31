@@ -39,14 +39,85 @@ namespace MockPresentationLayer
 
             //blGet.GetLocalMedia();
 
-
-            ////AppConfigWriteToXml();
+            SetNewTargetType(2);
+            //AppConfigWriteToXml();
 
             //ConnectionStringSetter();
             //Test2();
             //int xmlOrDb = GetXmlAllowance();
+            int key = GetTargetType();
+        }
+
+        static void SetNewTargetType(int type)
+        {
+            string key = "TargetType";
+            string convertedType = type.ToString();
+
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            var settings = config.AppSettings.Settings;
+
+            if (settings[key] == null)
+            {
+                settings.Add(key, convertedType);
+            }
+            else
+            {
+                settings[key].Value = convertedType;
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+        static int GetTargetType()
+        {
+            string key = "TargetType";
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            var settings = config.AppSettings.Settings;
+
+            string result = settings[key].Value;
+            return int.Parse(result);
+        }
+
+
+        static void AppConfigWriteToXml()
+        {
+
+
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (config.AppSettings.Settings.AllKeys.Contains("TargetType"))
+            {
+
+            }
+            else
+            {
+                config.AppSettings.Settings.Add("TargetType", "NotSet");
+                config.Save(ConfigurationSaveMode.Modified);
+
+                ConfigurationManager.RefreshSection("appSettings");
+            }
 
         }
+
+        static int GetXmlAllowance()
+        {
+            var appSettings = ConfigurationManager.AppSettings;
+
+            List<string> b = new List<string>();
+            foreach (var key in appSettings.AllKeys)
+            {
+                if (key == "xmlAllowed")
+                {
+                    b = appSettings.GetValues(0).ToList();
+                }
+            }
+
+            int abc = Int32.Parse(b[0]);
+
+            return abc;
+        }
+
+
 
         //static void ConnectionStringSetter()
         //{
@@ -57,47 +128,13 @@ namespace MockPresentationLayer
         //    ConfigurationManager.RefreshSection("connectionStrings");
         //}
 
-        //static void AppConfigWriteToXml()
-        //{
 
 
-        //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-        //    if (config.AppSettings.Settings.AllKeys.Contains("xmlAllowed"))
-        //    {
 
-        //    }
-        //    else
-        //    {
-        //        config.AppSettings.Settings.Add("xmlAllowed", "1");
-        //        config.Save(ConfigurationSaveMode.Modified);
-
-        //        ConfigurationManager.RefreshSection("appSettings");
-        //    }
-
-        //}
-
-
-        ///// <summary>
-        ///// METHODE NUR FÜR TESTZWECKE
-        ///// </summary>
-        ///// <returns></returns>
-        //static int GetXmlAllowance()
-        //{
-        //    var appSettings = ConfigurationManager.AppSettings;
-
-        //    List<string> b = new List<string>();
-        //    foreach (var key in appSettings.AllKeys)
-        //    {
-        //        if (key == "xmlAllowed")
-        //        {
-        //            b = appSettings.GetValues(0).ToList();
-        //        }
-        //    }
-
-        //    int abc = Int32.Parse(b[0]);
-
-        //    return abc;
-        //}
+        /// <summary>
+        /// METHODE NUR FÜR TESTZWECKE
+        /// </summary>
+        /// <returns></returns>
 
 
 

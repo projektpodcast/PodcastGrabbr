@@ -10,13 +10,18 @@ namespace BusinessLayer
 {
     public class SaveObjects
     {
-        public void SavePodcastAsXml(Podcast podcast, int targetType)
+        public void SavePodcastAsXml(Podcast podcast)
         {
-            IDataTarget fileTarget = Factory.CreateFileTarget(targetType);
+            IDataTarget fileTarget = Factory.CreateDataTarget();
             fileTarget.SavePodcast(podcast);
         }
 
-        public void SavePodcastAsMediaFile(Podcast podcast)
+        public void Test()
+        {
+            IDataTarget fileTarget = Factory.CreateDataTarget();
+        }
+
+        public void SavePodcastAsMediaFile(Podcast podcast)//rework (interface, umschreiben(episode list hier nicht festlegen, kommt aus interface)
         {
             MediaDataTarget mediaTarget = new MediaDataTarget();
 
