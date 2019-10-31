@@ -11,44 +11,42 @@ namespace BusinessLayer
     public static class Factory
     {
         public static int TargetType { get; set; }
-        public static IDataTarget CreateFileTarget()
+        public static IDataTarget CreateDataTarget()
         {
             IDataTarget dataTargetInstance = null; ;
             switch (TargetType)
             {
-                case 0:
-                    dataTargetInstance = new XmlDataTarget();
-                    break;
                 case 1:
-                    dataTargetInstance = null;
+                    dataTargetInstance = new XmlDataTarget();
                     break;
                 case 2:
                     dataTargetInstance = null;
                     break;
-                default:
+                case 3:
                     dataTargetInstance = null;
                     break;
+                default:
+                    throw new Exception(); //impl.
             }
             return dataTargetInstance;
         }
 
-        public static IDataSource CreateFileSource(int Target)
+        public static IDataSource CreateDataSource()
         {
             IDataSource dataSourceInstance = null; ;
-            switch (Target)
+            switch (TargetType)
             {
-                case 0:
-                    dataSourceInstance = new XmlDataSource();
-                    break;
                 case 1:
-                    dataSourceInstance = null;
+                    dataSourceInstance = new XmlDataSource();
                     break;
                 case 2:
                     dataSourceInstance = null;
                     break;
-                default:
+                case 3:
                     dataSourceInstance = null;
                     break;
+                default:
+                    throw new Exception(); //impl.
             }
             return dataSourceInstance;
         }

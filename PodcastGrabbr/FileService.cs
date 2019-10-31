@@ -22,16 +22,17 @@ namespace PodcastGrabbr
                 Filter = "Textdatei (*.txt)|*.txt"
             };
 
-            //if (openFileDialog.ShowDialog() == true)
-            //{
-            //    string[] lines = File.ReadAllLines(openFileDialog.FileName);
-            //    //FileName = File.ReadAllLines(openFileDialog.FileName);
-            //}
-
-
             if (fileDialog.ShowDialog() == true)
             {
                 FilePath = fileDialog.FileName;
+
+                //if (openFileDialog.ShowDialog() == true)
+                //{
+                //    string[] lines = File.ReadAllLines(openFileDialog.FileName);
+                //}
+
+            //Oder:
+
                 //using (StreamReader reader = new StreamReader(openFileDialog.FileName))
                 //{
                 //    string ln;
@@ -41,16 +42,6 @@ namespace PodcastGrabbr
                 //    }
                 //}
             }
-
-            //using (StreamReader sR = new StreamReader(openFileDialog.FileName))
-            //{
-            //    var a = sR;
-            //    while (sR.Read())
-            //    {
-
-            //    }
-            //}
-
         }
     }
 }

@@ -59,7 +59,6 @@
     <Compile Include="AppConfigManager.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="IFileService.cs" />
-    <Compile Include="Model\EpisodeModel.cs" />
     <Compile Include="OnValueChanged.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="SettingsManager.cs" />
@@ -103,7 +102,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ShowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

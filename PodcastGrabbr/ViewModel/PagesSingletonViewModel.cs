@@ -32,6 +32,7 @@ namespace PodcastGrabbr.ViewModel
             }
         }
         #endregion Singleton
+
         #region Properties (Instanzen der Views)
         private UserNavigationView _userNavigation { get; set; }
         public UserNavigationView UserNavigation
