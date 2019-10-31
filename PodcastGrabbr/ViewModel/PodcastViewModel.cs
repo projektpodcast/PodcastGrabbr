@@ -85,6 +85,9 @@ namespace PodcastGrabbr.ViewModel
 
         private void ExecuteRefreshSelectedShow()
         {
+            SaveObjects bl = new SaveObjects();
+            bl.Test();
+
             //BusinessLayer-Zugriff um XML der Show(SelectedShow) neu zu laden, zu deserialisieren und neue Episoden in die DB zu speichern.
         }
 

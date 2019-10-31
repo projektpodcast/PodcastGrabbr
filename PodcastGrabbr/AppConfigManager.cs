@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonTypes;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -7,49 +8,120 @@ using System.Threading.Tasks;
 
 namespace PodcastGrabbr
 {
-    public static class AppConfigManager
+    public class AppConfigManager : ISettingsManager
     {
-        public static int GetCurrentTarget(int type)
+
+
+        private readonly string Key = "TargetType";
+        public int Value { get; set; }
+
+        public AppConfigManager()
         {
-            int currentTarget = GetCurrentTargetType();
-            return currentTarget;
+            CreateSection();
         }
 
+        public event EventHandler<OnValueChanged> ValueChanged;
 
-        public static void SetNewTargetType(int type)
+        public void ValueHasChanged()
         {
-            string key = "TargetType";
+            if (ValueChanged != null)
+            {
+                ValueChanged(this, new OnValueChanged());
+            }
+        }
+
+        public void CreateSection()
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
+
+            if (cfgSections[Key] == null)
+            {
+                cfgSections.Add(Key, "NotSet");
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+        }
+
+        public void SaveSectionValue(int type)
+        {
             string convertedType = type.ToString();
 
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
 
-            var settings = config.AppSettings.Settings;
-
-            if (settings[key] == null)
+            if (cfgSections[Key].Value != convertedType)
             {
-                settings.Add(key, convertedType);
-            }
-            else
-            {
-                if (settings[key].Value != convertedType)
-                {
-                    settings[key].Value = convertedType;
-                }
-
+                cfgSections[Key].Value = convertedType;
             }
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
 
-        public static int GetCurrentTargetType()
+        public string GetSectionValue()
         {
-            string key = "TargetType";
-            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var settings = config.AppSettings.Settings;
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
 
-            string result = settings[key].Value;
-            return int.Parse(result);
+            string currentValue = "NotSet";
+
+            //Prüfung ob Section existiert: nein (hinzufügen) ja(prüfung ob Value exisitert und schreiben)
+            if (cfgSections[Key] == null)
+            {
+            }
+            else
+            {
+                currentValue = cfgSections[Key].Value;
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+            return currentValue;
         }
+
+
+
+        //public static int GetCurrentTarget(int type)
+        //{
+        //    int currentTarget = GetCurrentTargetType();
+        //    return currentTarget;
+        //}
+
+        //public static void SetNewTargetType(int type)
+        //{
+        //    string key = "TargetType";
+        //    string convertedType = type.ToString();
+
+        //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+        //    var settings = config.AppSettings.Settings;
+
+        //    //Prüfung ob Section existiert: nein (hinzufügen) ja(prüfung ob Value exisitert und schreiben)
+        //    if (settings[key] == null)
+        //    {
+        //        settings.Add(key, convertedType);
+        //    }
+        //    else
+        //    {
+        //        if (settings[key].Value != convertedType)
+        //        {
+        //            settings[key].Value = convertedType;
+        //        }
+
+        //    }
+        //    config.Save(ConfigurationSaveMode.Modified);
+        //    ConfigurationManager.RefreshSection("appSettings");
+        //}
+
+        //public static int GetCurrentTargetType()
+        //{
+        //    string key = "TargetType";
+        //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //    var settings = config.AppSettings.Settings;
+
+        //    string result = settings[key].Value;
+        //    return int.Parse(result);
+        //}
 
     }
     //static void AppConfigWriteToXml()

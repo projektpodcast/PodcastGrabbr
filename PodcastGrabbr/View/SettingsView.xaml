@@ -1,9 +1,10 @@
-﻿<Page x:Class="PodcastGrabbr.View.SettingsView"
+﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PodcastGrabbr.View"
+      xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="PodcastGrabbr.View.SettingsView"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SettingsView"
@@ -19,17 +20,17 @@
         <SolidColorBrush x:Key="HeadlineBrush" Color="White" Opacity="1"/>
         <SolidColorBrush x:Key="DetailBrush" Color="White" Opacity="0.7"/>
         <Style x:Key="HeadlineTb" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{StaticResource HeadlineBrush}"></Setter>
-            <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-            <Setter Property="FontSize" Value="10pt"></Setter>
+            <Setter Property="Foreground" Value="{StaticResource HeadlineBrush}"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="10pt"/>
         </Style>
         <Style x:Key="DetailTb" TargetType="{x:Type TextBlock}">
-            <Setter Property="Opacity" Value="0.7"></Setter>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-            <Setter Property="FontSize" Value="10pt"></Setter>
+            <Setter Property="Opacity" Value="0.7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="10pt"/>
             <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
             <Setter Property="TextWrapping" Value="NoWrap"/>
         </Style>
@@ -41,19 +42,19 @@
                         <Border x:Name="Bd">
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Width="auto">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Rectangle x:Name="WarningBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10" 
-                                           Height="15" Width="15" Fill="{StaticResource RedBrush}"></Rectangle>
+                                           Height="15" Width="15" Fill="{StaticResource RedBrush}"/>
                                 <Grid Width="11" Height="11" Grid.Column="0">
                                     <Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>
                                     <Path Fill="White" Data="M 9 0 L 0 9 L 2 11 L 11 2 Z"/>
                                 </Grid>
                                 <TextBlock x:Name="ButtonDescription" Grid.Column="1"
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
-                                           FontSize="13" Text="{TemplateBinding Content}" Style="{StaticResource DetailTb}"></TextBlock>
+                                           FontSize="13" Text="{TemplateBinding Content}" Style="{StaticResource DetailTb}"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -69,6 +70,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+
+
 
 
 
@@ -100,46 +104,44 @@
 
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
-                <RowDefinition Height="auto" MinHeight="60"></RowDefinition>
-                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="auto" MinHeight="60"/>
+                <RowDefinition Height="2*" MinHeight="10"/>
             </Grid.RowDefinitions>
             <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
-            <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
+            <Rectangle Grid.Row="2" Fill="#463574"/>
 
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Konfiguration der Datenquelle" Style="{StaticResource HeadlineTb}"></TextBlock>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Konfiguration der Datenquelle" Style="{StaticResource HeadlineTb}"/>
 
             <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*" MinWidth="50"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*" MinWidth="50"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                    <RowDefinition Height="10" MaxHeight="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10" MaxHeight="30"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"/>
 
                 <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Datenziel" Style="{StaticResource DetailTb}" Margin="0,0,10,0"/>
-                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Width="150" 
-                                  ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding SelectedDataType}">
-                            <ComboBox.ItemTemplate>
+                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="True" IsEnabled="True" Width="150" 
+                                  ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding SelectedDataType}" Text="{Binding Path=ConfigDataType.Value, Mode=OneWay}"
+                                  DisplayMemberPath="Value">
+                            <!--<ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=Value}"></TextBlock>
                                 </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                            <!--<ComboBoxItem>Datenbank: MySQL</ComboBoxItem>
-                            <ComboBoxItem>Datenbank: PostgreSQL</ComboBoxItem>
-                            <ComboBoxItem>Lokal: XML</ComboBoxItem>-->
+                            </ComboBox.ItemTemplate>-->                       
                         </ComboBox>
                     </Grid>
 
@@ -166,37 +168,37 @@
 
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
-                <RowDefinition Height="auto" MinHeight="60"></RowDefinition>
-                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="auto" MinHeight="60"/>
+                <RowDefinition Height="2*" MinHeight="10"/>
             </Grid.RowDefinitions>
             <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
-            <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Massenimport" Style="{StaticResource HeadlineTb}"></TextBlock>
+            <Rectangle Grid.Row="2" Fill="#463574"/>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Massenimport" Style="{StaticResource HeadlineTb}"/>
 
             <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*" MinWidth="50"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*" MinWidth="50"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                    <RowDefinition Height="10" MaxHeight="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10" MaxHeight="30"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"></Rectangle>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"/>
 
                 <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <DockPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="Textdatei mit RSS-Feed Links" Style="{StaticResource DetailTb}" Margin="0,0,10,0"/>
-                            <Button Grid.Column="1" Height="25" Content=".txt Datei wählen" HorizontalAlignment="Left"/>
+                            <Button Grid.Column="1" Height="25" Content=".txt Datei wählen" HorizontalAlignment="Left" Command="{Binding FileImport}"/>
                         </Grid>
                     </DockPanel>
                     <!--<DockPanel>
@@ -232,27 +234,27 @@
 
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
-                <RowDefinition Height="auto" MinHeight="60"></RowDefinition>
-                <RowDefinition Height="2*" MinHeight="10"></RowDefinition>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="auto" MinHeight="60"/>
+                <RowDefinition Height="2*" MinHeight="10"/>
             </Grid.RowDefinitions>
             <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
-            <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Podcast Optionen" Style="{StaticResource HeadlineTb}"></TextBlock>
+            <Rectangle Grid.Row="2" Fill="#463574"/>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Podcast Optionen" Style="{StaticResource HeadlineTb}"/>
 
             <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*" MinWidth="50"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="10*" MinWidth="50"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="10" MaxHeight="30"></RowDefinition>
+                    <RowDefinition Height="10" MaxHeight="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10" MaxHeight="30"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="4" Fill="#FF311855" Opacity="0.5"></Rectangle>
+                <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="4" Fill="#FF311855" Opacity="0.5"/>
 
                 <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <DockPanel>
@@ -261,16 +263,18 @@
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*" MinWidth="30"/>
                             </Grid.ColumnDefinitions>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Podcasts löschen"/>
+                            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" 
+                                    Content="Alle Podcasts löschen" Command="{Binding DeleteAllPodcasts}"/>
                         </Grid>
                     </DockPanel>
-                        <DockPanel>
+                    <DockPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" Content="Alle Downloads löschen"/>
+                            <Button HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource DeleteButton}" 
+                                    Content="Alle Downloads löschen"/>
                         </Grid>
                     </DockPanel>
 

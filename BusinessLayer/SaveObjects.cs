@@ -12,8 +12,13 @@ namespace BusinessLayer
     {
         public void SavePodcastAsXml(Podcast podcast, int targetType)
         {
-            IDataTarget fileTarget = Factory.CreateFileTarget(targetType);
-            fileTarget.SavePodcast(podcast);
+            //IDataTarget fileTarget = Factory.CreateFileTarget(targetType);
+            //fileTarget.SavePodcast(podcast);
+        }
+
+        public void Test()
+        {
+            IDataTarget fileTarget = Factory.CreateFileTarget();
         }
 
         public void SavePodcastAsMediaFile(Podcast podcast)

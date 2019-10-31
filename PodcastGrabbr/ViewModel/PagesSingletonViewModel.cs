@@ -1,9 +1,11 @@
-﻿using PodcastGrabbr.View;
+﻿using CommonTypes;
+using PodcastGrabbr.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PodcastGrabbr.ViewModel
 {
@@ -30,7 +32,6 @@ namespace PodcastGrabbr.ViewModel
             }
         }
         #endregion Singleton
-
         #region Properties (Instanzen der Views)
         private UserNavigationView _userNavigation { get; set; }
         public UserNavigationView UserNavigation
@@ -64,29 +65,46 @@ namespace PodcastGrabbr.ViewModel
 
         public void LoadSettingsView()
         {
-            SettingsViewModel settingsVM = new SettingsViewModel();
-            SettingsPage = new SettingsView(settingsVM);
+            SettingsPage = new SettingsView(new SettingsViewModel());
             CurrentContent = SettingsPage;
         }
 
         public void LoadPodcastView()
         {
-            SettingsPage = null;
-            CurrentContent = PodcastPage;
+            
+            if (CheckIfDataTargetIsSet() == true)
+            {
+                SettingsPage = null;
+            }
+            else
+            {
+                LoadSettingsView();
+                MessageBox.Show("Bitte Datenziel auswählen");
+            }
+
         }
 
         private void InstantiateStandardView()
         {
             App.Current.Dispatcher.BeginInvoke((Action)delegate
             {
-                UserNavigationViewModel userNavigationVm = new UserNavigationViewModel();
-                UserNavigation = new UserNavigationView(userNavigationVm);
-
-                PodcastViewModel podcastVm = new PodcastViewModel();
-                PodcastPage = new PodcastView(podcastVm);
-
+                UserNavigation = new UserNavigationView(new UserNavigationViewModel());
+                PodcastPage = new PodcastView(new PodcastViewModel());
                 CurrentContent = PodcastPage;
+
+                CheckIfDataTargetIsSet();
             });
         }
+
+        private bool CheckIfDataTargetIsSet()
+        {
+            if (SettingsManager.IsDataTypeSet() == false)
+            {
+                LoadSettingsView();
+                return false;
+            }
+            return true;
+        }
+
     }
 }
