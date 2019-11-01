@@ -41,7 +41,6 @@ namespace PodcastGrabbr
         {
             Properties.Settings.Default.DataType = newValue;
             Properties.Settings.Default.Save();
-
             Factory.TargetType = newValue;
         }
 
