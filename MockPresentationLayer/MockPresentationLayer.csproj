@@ -58,6 +58,10 @@
       <Project>{d042b04c-579a-40c9-8870-c2dabc168db1}</Project>
       <Name>CommonTypes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{f95c2980-4b18-4605-b992-3e63e366c2c0}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RssFeedProcessor\RssFeedProcessor.csproj">
       <Project>{725c78c2-bb58-4908-b81e-d1c418e26b99}</Project>
       <Name>RssFeedProcessor</Name>

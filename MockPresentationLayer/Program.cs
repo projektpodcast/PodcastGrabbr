@@ -29,6 +29,9 @@ namespace MockPresentationLayer
             ////Podcast a = deserializer.DeserializeRssXml("http://www1.swr.de/podcast/xml/swr2/forum.xml");
 
 
+            //call postdb
+            PostDB(a);
+
 
             //SaveObjects blSave = new SaveObjects();
             //blSave.SavePodcastAsXml(a, 0);
@@ -119,7 +122,7 @@ namespace MockPresentationLayer
         }
 
 
-        static void PostDB()
+        static void PostDB(Podcast a)
         {
             // new Object to connect with Postgres
             PostdbConnection myConnection = new PostdbConnection();
