@@ -56,7 +56,7 @@ namespace PodcastGrabbr.ViewModel
                 {
                     _deleteAllPodcasts = new RelayCommand(
                         p => this.IsDataTypeSelected(),
-                        p => this.ExecuteFileImport());
+                        p => this.ExecuteDeleteAllPodcasts());
                 }
                 return _deleteAllPodcasts;
             }
