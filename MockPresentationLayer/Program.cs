@@ -124,9 +124,11 @@ namespace MockPresentationLayer
 
         static void PostDB(Podcast a)
         {
+
             // new Object to connect with Postgres
             PostdbConnection myConnection = new PostdbConnection();
 
+            // dadaBase Name
             string dbName = "test_podcast1";
 
             // check if the DB exist
@@ -134,9 +136,20 @@ namespace MockPresentationLayer
             if (dbExist == false)
             {
                 // create db if not exist.
-                myConnection.Createdb(dbName);
-                myConnection.CreateTable(dbName);
-                Console.WriteLine("The db cas created");
+                bool ifcreated = myConnection.Createdb(dbName);
+                if (ifcreated == false)
+                {
+                    Console.WriteLine("ERROR:");
+                    Console.WriteLine("make sure you have pgAdmin open");
+                    System.Threading.Thread.Sleep(5000);
+                    System.Environment.Exit(1);
+                }
+                else
+                {
+                    myConnection.CreateTable(dbName);
+                    Console.WriteLine("The db cas created");
+                }
+
             }
             else
             {
