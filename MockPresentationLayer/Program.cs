@@ -1,4 +1,4 @@
-﻿using BusinessLayer;
+using BusinessLayer;
 using CommonTypes;
 using DataAccessLayer;
 using RssFeedProcessor;
