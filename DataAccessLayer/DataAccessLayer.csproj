@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mk.DBConnector, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\downloads\Mk.DBConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="Mk.Log, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>F:\downloads\Mk.Log.dll</HintPath>
+    </Reference>
+
     <Reference Include="Npgsql, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
       <HintPath>..\packages\Npgsql.4.0.0\lib\net45\Npgsql.dll</HintPath>
     </Reference>
@@ -53,16 +62,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileDataGeneral.cs" />
+    <Compile Include="Local\FileDataGeneral.cs" />
     <Compile Include="IDataSource.cs" />
-    <Compile Include="LocalDataSource.cs" />
-    <Compile Include="LocalDataTarget.cs" />
-    <Compile Include="MediaDataSource.cs" />
-    <Compile Include="MediaDataTarget.cs" />
+    <Compile Include="Local\LocalDataSource.cs" />
+    <Compile Include="Local\LocalDataTarget.cs" />
+    <Compile Include="Local\MediaDataSource.cs" />
+    <Compile Include="Local\MediaDataTarget.cs" />
     <Compile Include="MockDataSource.cs" />
-    <Compile Include="PostdbConnection.cs" />
-    <Compile Include="XmlDataSource.cs" />
-    <Compile Include="XmlDataTarget.cs" />
+    <Compile Include="MySQL\MySQLDataSource.cs" />
+    <Compile Include="MySQL\MySQLDataTarget.cs" />
+    <Compile Include="PostgreSQL\PostgresData.cs" />
+    <Compile Include="Local\XmlDataSource.cs" />
+    <Compile Include="Local\XmlDataTarget.cs" />
     <Compile Include="IDataTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

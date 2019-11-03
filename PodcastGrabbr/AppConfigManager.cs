@@ -8,75 +8,75 @@ using System.Threading.Tasks;
 
 namespace PodcastGrabbr
 {
-    public class AppConfigManager : ISettingsManager
+    public class AppConfigManager /*: ISettingsManager*/
     {
 
 
-        private readonly string Key = "TargetType";
-        public int Value { get; set; }
+        //private readonly string Key = "TargetType";
+        //public int Value { get; set; }
 
-        public AppConfigManager()
-        {
-            CreateSection();
-        }
+        //public AppConfigManager()
+        //{
+        //    CreateSection();
+        //}
 
-        public event EventHandler<OnValueChanged> ValueChanged;
+        //public event EventHandler<OnValueChanged> ValueChanged;
 
-        public void ValueHasChanged()
-        {
-            if (ValueChanged != null)
-            {
-                ValueChanged(this, new OnValueChanged());
-            }
-        }
+        //public void ValueHasChanged()
+        //{
+        //    if (ValueChanged != null)
+        //    {
+        //        ValueChanged(this, new OnValueChanged());
+        //    }
+        //}
 
-        public void CreateSection()
-        {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
+        //public void CreateSection()
+        //{
+        //    Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //    KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
 
-            if (cfgSections[Key] == null)
-            {
-                cfgSections.Add(Key, "NotSet");
-                config.Save(ConfigurationSaveMode.Modified);
-                ConfigurationManager.RefreshSection("appSettings");
-            }
-        }
+        //    if (cfgSections[Key] == null)
+        //    {
+        //        cfgSections.Add(Key, "NotSet");
+        //        config.Save(ConfigurationSaveMode.Modified);
+        //        ConfigurationManager.RefreshSection("appSettings");
+        //    }
+        //}
 
-        public void SaveSectionValue(int type)
-        {
-            string convertedType = type.ToString();
+        //public void SaveSectionValue(int type)
+        //{
+        //    string convertedType = type.ToString();
 
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
+        //    Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //    KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
 
-            if (cfgSections[Key].Value != convertedType)
-            {
-                cfgSections[Key].Value = convertedType;
-            }
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
-        }
+        //    if (cfgSections[Key].Value != convertedType)
+        //    {
+        //        cfgSections[Key].Value = convertedType;
+        //    }
+        //    config.Save(ConfigurationSaveMode.Modified);
+        //    ConfigurationManager.RefreshSection("appSettings");
+        //}
 
-        public string GetSectionValue()
-        {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
+        //public string GetSectionValue()
+        //{
+        //    Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        //    KeyValueConfigurationCollection cfgSections = config.AppSettings.Settings;
 
-            string currentValue = "NotSet";
+        //    string currentValue = "NotSet";
 
-            //Prüfung ob Section existiert: nein (hinzufügen) ja(prüfung ob Value exisitert und schreiben)
-            if (cfgSections[Key] == null)
-            {
-            }
-            else
-            {
-                currentValue = cfgSections[Key].Value;
-            }
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
+        //    //Prüfung ob Section existiert: nein (hinzufügen) ja(prüfung ob Value exisitert und schreiben)
+        //    if (cfgSections[Key] == null)
+        //    {
+        //    }
+        //    else
+        //    {
+        //        currentValue = cfgSections[Key].Value;
+        //    }
+        //    config.Save(ConfigurationSaveMode.Modified);
+        //    ConfigurationManager.RefreshSection("appSettings");
 
-            return currentValue;
+        //    return currentValue;
         }
 
 
@@ -165,4 +165,4 @@ namespace PodcastGrabbr
 
     //    return abc;
     //}
-}
+

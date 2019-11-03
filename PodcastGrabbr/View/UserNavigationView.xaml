@@ -16,7 +16,7 @@
         <SolidColorBrush x:Key="MenueBrush" Color="White" Opacity="0.3"/>
         <SolidColorBrush x:Key="MenueBrushPurple" Color="#463574" Opacity="1"/>
         <SolidColorBrush x:Key="ButtonActiveHighlight" Color="#FFA27DFF" />
-        
+
         <Style x:Key="MenueButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -39,12 +39,10 @@
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
                             </Trigger>
-                
-                                <Trigger Property="IsEnabled" Value="False">
+
+                            <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Background" TargetName="Bd" Value="{StaticResource ButtonActiveHighlight}"></Setter>
                             </Trigger>
-                          
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -113,7 +111,7 @@
         </Style>
 
 
-        
+
     </UserControl.Resources>
     <Grid>
         <Grid ShowGridLines="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">

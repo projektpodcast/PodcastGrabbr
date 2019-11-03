@@ -72,17 +72,17 @@ namespace PodcastGrabbr.ViewModel
 
         public void LoadPodcastView()
         {
-            
+
             if (CheckIfDataTargetIsSet() == true)
             {
                 SettingsPage = null;
+                CurrentContent = PodcastPage;
             }
             else
             {
                 LoadSettingsView();
                 MessageBox.Show("Bitte Datenziel auswählen");
             }
-
         }
 
         private void InstantiateStandardView()
@@ -91,9 +91,19 @@ namespace PodcastGrabbr.ViewModel
             {
                 UserNavigation = new UserNavigationView(new UserNavigationViewModel());
                 PodcastPage = new PodcastView(new PodcastViewModel());
-                CurrentContent = PodcastPage;
 
-                CheckIfDataTargetIsSet();
+                LoadPodcastView();
+
+                //if (SettingsManager.IsDataTypeSet() == false)
+                //{
+                //    LoadSettingsView();
+                //}
+                //else
+                //{
+                //    CurrentContent = PodcastPage;
+                //}
+
+                //CheckIfDataTargetIsSet();
             });
         }
 

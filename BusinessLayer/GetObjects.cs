@@ -22,7 +22,7 @@ namespace BusinessLayer
             
         }
 
-        public List<Show> GetLocalMedia() //umschreiben, gibt das falsche zurück
+        public List<Show> GetLocalMedia() //umschreiben, gibt falschen Typ zurück
         {
             MediaDataSource dal = new MediaDataSource();
 
