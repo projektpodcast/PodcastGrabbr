@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer;
 
 namespace MockPresentationLayer
 {
@@ -118,7 +119,61 @@ namespace MockPresentationLayer
         }
 
 
+        static void PostDB()
+        {
+            // new Object to connect with Postgres
+            PostdbConnection myConnection = new PostdbConnection();
 
+            string dbName = "test_podcast1";
+
+            // check if the DB exist
+            Boolean dbExist = myConnection.CheckDatenBank(dbName);
+            if (dbExist == false)
+            {
+                // create db if not exist.
+                myConnection.Createdb(dbName);
+                myConnection.CreateTable(dbName);
+                Console.WriteLine("The db cas created");
+            }
+            else
+            {
+                Console.WriteLine("The db ist already to use");
+            }
+
+            //read values from Shows
+            string _PublisherName = a.ShowInfo.PublisherName;
+            string _PodcastTitle = a.ShowInfo.PodcastTitle;
+            string Keywords = a.ShowInfo.Keywords;
+            string _Subtitle = a.ShowInfo.Subtitle;
+            string _Language = a.ShowInfo.Language;
+            string _Description = a.ShowInfo.Description;
+            DateTime LastUpdated = a.ShowInfo.LastUpdated;
+            DateTime LastBuildDate = a.ShowInfo.LastBuildDate;
+            string ImageUri = a.ShowInfo.ImageUri;
+            string _Categorie = "new";
+
+            // inster values in shows
+            myConnection.InsertValuesShows(dbName, _PublisherName, _Description, _PublisherName, _Categorie, _Language, ImageUri, LastUpdated, LastBuildDate);
+
+
+
+            // read episodios
+            foreach (var Episode in a.EpisodeList)
+            {
+                string _Title = Episode.Title;
+                _Title = _Title.Replace("'", "''");
+                DateTime _PublishDate = Episode.PublishDate;
+                string _Summary = Episode.Summary;
+                _Summary = _Summary.Replace("'", "''");
+                string _Keywords = Episode.Keywords;
+                string _ImageUri = Episode.ImageUri;
+                string _FileDetails = Episode.FileDetails.SourceUri;
+
+                // inser values in each episode
+                myConnection.InsertValuesDownload(dbName, _FileDetails);
+                myConnection.InsertValuesEpisodes(dbName, _Title, _PublishDate, _Summary, _Keywords, _ImageUri, _FileDetails);
+            }
+        }
         //static void ConnectionStringSetter()
         //{
         //    var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
