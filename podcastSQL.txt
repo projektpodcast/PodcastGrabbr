@@ -1,0 +1,33 @@
+create database pdocastmanager;
+
+create table shows (sid INT(5) not null AUTO_INCREMENT PRIMARY KEY,
+					podcastName VARCHAR(255) NOT NULL,
+					description varchar(2000),
+					publisherName varchar(100),
+					category varchar(100),
+					language varchar(5),
+					imageUri varchar(5000),
+					lastUpdated date,
+					lastBuild date);
+
+create table episodes (episodeID INT(10) not null AUTO_INCREMENT PRIMARY KEY,
+					   showID INT(5),
+					   downloadID INT(5),
+					   FOREIGN KEY(showID) references shows(sid),
+					   FOREIGN KEY(downloadID) references downloads(downloadID),
+					   name varchar(255) not null,
+					   title varchar(255) not null,
+					   description varchar(2000),
+					   publishDate date,
+					   duration varchar(10) not null, 
+					   sizeOfFile varchar(10),
+					   author varchar(255) not null,
+					   subtitle varchar(255),
+					   imageUrl varchar(500),
+					   fileUrl varchar(500) not null,
+					   copyright varchar(255)
+					  );
+
+create table downloads(downloadID INT(5) not null AUTO_INCREMENT PRIMARY KEY,				
+				filepath varchar(255)
+				);
