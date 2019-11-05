@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace PodcastGrabbr.ViewModel
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : IViewModel , INotifyPropertyChanged
     {
+        public string Name { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {

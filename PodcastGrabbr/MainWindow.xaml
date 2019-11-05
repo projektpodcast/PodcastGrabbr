@@ -8,8 +8,12 @@
         mc:Ignorable="d"
         Title="PodcastGrabbr" Height="768" Width="1024">
 
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <x:StaticExtension Member="local:PagesSingletonViewModel.Instance"/>
+    </Window.DataContext>-->
+
+    <Window.DataContext>
+        <vm:Initializer></vm:Initializer>
     </Window.DataContext>
 
     <Window.Resources>
@@ -51,7 +55,7 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2">
-                <UserControl Content="{Binding UserNavigation}"/>
+                <UserControl Content="{Binding UserNavigationUi}"/>
             </Border>
         </Grid>
     </Grid>
