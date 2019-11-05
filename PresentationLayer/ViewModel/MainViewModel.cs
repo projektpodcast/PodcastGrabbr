@@ -119,7 +119,6 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-
         private void SetUpSubscriber(UserNavigationViewModel userVm)
         {
             this.OnTestChanged += userVm.MainViewModel_OnTestChanged;

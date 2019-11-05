@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppConfigManager.cs" />
+    <Compile Include="Models\ButtonModel.cs" />
     <Compile Include="OnCurrentContentChanged.cs" />
     <Compile Include="Services\FileDialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />

@@ -26,6 +26,9 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                </Grid.RowDefinitions>
                                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Fill="Transparent"/>
                                 <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="Menüpunkt 1" Foreground="White" Margin="4,0,0,0"></TextBlock>-->
                                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="{TemplateBinding Content}" Foreground="White" Margin="6,0,0,0"></TextBlock>
@@ -137,6 +140,7 @@
 
 
             <Grid x:Name="MenueItemsGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" Visibility="{Binding Visible}">
+                  <!--Visibility="{Binding Visible}"-->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
@@ -150,12 +154,21 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Rectangle x:Name="TestMenue" Fill="#FF5A5193" Opacity="1" Width="120" Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"></Rectangle>
-                <Button Grid.Row="1" Style="{StaticResource MenueButton}" Width="auto" Content="Startseite" Command="{Binding SwitchPageToHome}"/>
+                <!--<Button Grid.Row="1" Style="{StaticResource MenueButton}" Width="auto" Content="Startseite" Command="{Binding SwitchPageToHome}"/>
                 <Button Grid.Row="2" Style="{StaticResource MenueButton}" Width="auto" Content="Einstellungen" Command="{Binding SwitchPageToSettings}"/>
                 <Button Grid.Row="3" Style="{StaticResource MenueButton}" Width="auto" Content="Meine Downloads"/>
                 <Button Grid.Row="4" Style="{StaticResource MenueButton}" Width="auto" Content="Show importieren"/>
-                <Button Grid.Row="5" Style="{StaticResource MenueButton}" Width="auto" Content="Shows aktualisieren"/>
+                <Button Grid.Row="5" Style="{StaticResource MenueButton}" Width="auto" Content="Shows aktualisieren"/>-->
 
+
+                <ItemsControl ItemsSource="{Binding MenueOptions}" Grid.Column="0" Grid.Row="1" Grid.RowSpan="6">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MenueButton}" Width="auto" Content="{Binding Path=BtnContent}" 
+                                    Command="{Binding Path=BtnCommand}"></Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Grid>
 
         </Grid>
