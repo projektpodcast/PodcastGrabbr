@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:local="clr-namespace:PresentationLayer.ViewModel"
+        xmlns:local="clr-namespace:PresentationLayer.View"
         xmlns:vm="clr-namespace:PresentationLayer.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -14,6 +14,8 @@
     </Page.DataContext>-->
 
     <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"></BooleanToVisibilityConverter>
+        <local:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibility"></local:InvertedBoolToVisibilityConverter>
 
 
         <Style x:Key="ButtonVLeftTest" TargetType="{x:Type RepeatButton}">
@@ -726,8 +728,12 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Padding="0,0,8,0" BorderThickness="0">
-                                    <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Download" Width="70">
-                                    </Button>
+                                    <WrapPanel>
+                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Download" Width="70" 
+                                                Visibility="{Binding Path=IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}"/>
+                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Play" Width="70" 
+                                                Visibility="{Binding Path=IsDownloaded, Converter={StaticResource BoolToVisibility}}"/>
+                                    </WrapPanel>
                                 </Border>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

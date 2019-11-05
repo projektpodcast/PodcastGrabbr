@@ -76,6 +76,7 @@
     <Compile Include="ViewModel\PagesSingletonViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\UserNavigationViewModel.cs" />
+    <Compile Include="View\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="View\IView.cs" />
     <Compile Include="View\PodcastView.xaml.cs">
       <DependentUpon>PodcastView.xaml</DependentUpon>
