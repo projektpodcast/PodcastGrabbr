@@ -19,12 +19,14 @@ namespace PodcastGrabbr.View
     /// <summary>
     /// Interaction logic for SettingsPage.xaml
     /// </summary>
-    public partial class SettingsView : Page
+    public partial class SettingsView : Page, IView
     {
-        public SettingsView(SettingsViewModel settingsVm)
+        public IViewModel ViewModelType { get; set; }
+        public SettingsView(IViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = settingsVm;
+            ViewModelType = viewModel;
+            this.DataContext = ViewModelType;
         }
     }
 }

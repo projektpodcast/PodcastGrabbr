@@ -19,12 +19,14 @@ namespace PodcastGrabbr.View
     /// <summary>
     /// Interaction logic for AllShowsViewModel.xaml
     /// </summary>
-    public partial class PodcastView : Page
+    public partial class PodcastView : Page, IView
     {
-        public PodcastView(PodcastViewModel podcastVm)
+        public IViewModel ViewModelType { get; set; }
+        public PodcastView(IViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = podcastVm;
+            ViewModelType = viewModel;
+            this.DataContext = ViewModelType;
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -47,10 +49,6 @@ namespace PodcastGrabbr.View
         private void UpdateColumnsWidth(ListView listView)
         {
             int columnToResize = (listView.View as GridView).Columns.Count - 3;
-            //if (listView.ActualWidth == Double.NaN)
-            //{
-            //    listView.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
-            //}
 
             double remainingSpace = listView.ActualWidth - 29;
             for (int i = 0; i < (listView.View as GridView).Columns.Count; i++)

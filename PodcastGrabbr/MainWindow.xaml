@@ -13,7 +13,7 @@
     </Window.DataContext>-->
 
     <Window.DataContext>
-        <vm:Initializer></vm:Initializer>
+        <vm:MainViewModel></vm:MainViewModel>
     </Window.DataContext>
 
     <Window.Resources>

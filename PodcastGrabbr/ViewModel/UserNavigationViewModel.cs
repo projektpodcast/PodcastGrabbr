@@ -61,40 +61,7 @@ namespace PodcastGrabbr.ViewModel
                 return _switchPageToHome;
             }
         }
-        //public void ExecuteSwitchToSettingsPage()
-        //{
-        //    PagesSingletonViewModel.Instance.LoadSettingsView();
-        //}
-
-        //public void ExecuteSwitchToHomePage()
-        //{
-        //    PagesSingletonViewModel.Instance.LoadPodcastView();
-        //}
-
-        //private bool CanSwitchToSettingsPage()
-        //{
-        //    if (PagesSingletonViewModel.Instance.CurrentContent != PagesSingletonViewModel.Instance.SettingsPage)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-
-        //private bool CanSwitchToHomePage()
-        //{
-        //    if (PagesSingletonViewModel.Instance.CurrentContent != PagesSingletonViewModel.Instance.PodcastPage)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-
+       
         private bool CanClickButton()
         {
             return true;
@@ -117,26 +84,24 @@ namespace PodcastGrabbr.ViewModel
         }
 
 
-        public event EventHandler<OnTestEventChanged> OnTestChanged;
+        public event EventHandler<OnNavigationButtonClicked> OnTestChanged;
 
         public void OnTest(string property)
         {
             if (OnTestChanged != null)
             {
-                OnTestChanged(this, new OnTestEventChanged() { PropertyName = property});
+                OnTestChanged(this, new OnNavigationButtonClicked());
             }
         }
 
-
-
-        public void MainViewModel_OnTestChanged(object sender, OnTestEventChanged e)
+        public void MainViewModel_OnTestChanged(object sender, OnCurrentContentChanged e)
         {
-            if (e.PropertyName.Contains("PodcastView"))
+            if (e.ViewModelName.Contains("PodcastView"))
             {
                 this._canSwitchToPodcast = false;
                 this._canSwitchToSettings = true;
             }
-            else if (e.PropertyName.Contains("SettingsView"))
+            else if (e.ViewModelName.Contains("SettingsView"))
             {
                 this._canSwitchToPodcast = true;
                 this._canSwitchToSettings = false;

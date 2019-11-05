@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace PodcastGrabbr
 {
-    public class OnTestEventChanged
+    public class OnNavigationButtonClicked : EventArgs
     {
-        public string PropertyName { get; set; }
     }
 }

@@ -6,12 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PodcastGrabbr
+namespace PodcastGrabbr.Services
 {
-    public class FileService : IFileService
+    public class FileDialogService : IDialogService
     {
         public string FilePath { get; set; }
-        public FileService()
+        public FileDialogService()
         {
         }
         public void StartFileDialog()
@@ -26,21 +26,6 @@ namespace PodcastGrabbr
             {
                 FilePath = fileDialog.FileName;
 
-                //if (openFileDialog.ShowDialog() == true)
-                //{
-                //    string[] lines = File.ReadAllLines(openFileDialog.FileName);
-                //}
-
-            //Oder:
-
-                //using (StreamReader reader = new StreamReader(openFileDialog.FileName))
-                //{
-                //    string ln;
-                //    while (reader.Read() != 0)
-                //    {
-                //        ln = reader.ReadToEnd();
-                //    }
-                //}
             }
         }
     }

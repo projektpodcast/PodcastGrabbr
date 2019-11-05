@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PodcastGrabbr
+namespace PodcastGrabbr.Services
 {
-    public interface IFileService
+    public interface IDialogService
     {
         string FilePath { get; set; }
         void StartFileDialog();

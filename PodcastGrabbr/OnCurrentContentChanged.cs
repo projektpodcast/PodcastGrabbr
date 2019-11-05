@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace PodcastGrabbr
 {
-    public class OnValueChanged : EventArgs
+    public class OnCurrentContentChanged : EventArgs
     {
-
+        public string ViewModelName { get; set; }
     }
 }

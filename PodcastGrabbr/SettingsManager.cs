@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PodcastGrabbr
 {
-    public static class SettingsManager
+    public static class UserSettingsManager
     {
         private static int _testValue { get; set; }
         public static int TestValue {

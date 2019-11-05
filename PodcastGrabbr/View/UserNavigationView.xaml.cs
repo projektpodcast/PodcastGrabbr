@@ -19,13 +19,17 @@ namespace PodcastGrabbr.View
     /// <summary>
     /// Interaction logic for NavigationUserControl.xaml
     /// </summary>
-    public partial class UserNavigationView : UserControl
+    public partial class UserNavigationView : UserControl, IView
     {
-        public UserNavigationView(UserNavigationViewModel userNavigationVm)
+        public IViewModel ViewModelType { get; set; }
+        public UserNavigationView(IViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = userNavigationVm;
+            ViewModelType = viewModel;
+            this.DataContext = ViewModelType;
         }
+
+
         //private void TestMenueButton_Click(object sender, RoutedEventArgs e)
         //{
         //    if (this.wow.Visibility == Visibility.Visible)

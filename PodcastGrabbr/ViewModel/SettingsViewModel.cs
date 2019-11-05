@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PodcastGrabbr.Services;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -90,7 +91,7 @@ namespace PodcastGrabbr.ViewModel
 
         private void ExecuteFileImport()
         {
-            IFileService fileServe = new FileService();
+            IDialogService fileServe = new FileDialogService();
             fileServe.StartFileDialog();
         }
 
@@ -108,7 +109,7 @@ namespace PodcastGrabbr.ViewModel
 
         public void DoesItExist()
         {
-            int currentValue = SettingsManager.TestValue;
+            int currentValue = UserSettingsManager.TestValue;
             if (currentValue != 0)
             {
                 var configValue = PossibleTypes.First(p => p.Key == currentValue);
@@ -148,7 +149,7 @@ namespace PodcastGrabbr.ViewModel
         {
             if (SelectedDataType.Value != null)
             {
-                SettingsManager.TestValue = SelectedDataType.Key;
+                UserSettingsManager.TestValue = SelectedDataType.Key;
                 ConfigDataType = SelectedDataType;
             }
         }
