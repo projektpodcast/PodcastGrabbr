@@ -9,12 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MockPresentationLayer
 {
     /// <summary>
     /// Dieses Projekt besteht nur für Testzwecke. Hier können Methodenaufrufe und -abläufe getestet werden.
     /// Dieses Projekt muss dafür als "Startup Project" in den Properties der Solution eingestellt werden.
     /// </summary>
+    [Obsolete]
     class Program
     {
         static void Main(string[] args)

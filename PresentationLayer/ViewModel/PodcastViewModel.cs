@@ -68,6 +68,37 @@ namespace PresentationLayer.ViewModel
                 return _refreshSelectedPodcast;
             }
         }
+
+        private ICommand _playMedia;
+        public ICommand PlayMedia
+        {
+            get
+            {
+                if (_playMedia == null)
+                {
+                    _playMedia = new RelayCommand(
+                        p => this.IsShowSelected(),
+                        p => this.ExecutePlayMedia());
+                }
+                return _playMedia;
+            }
+        }
+
+        private ICommand _downloadMedia;
+        public ICommand DownloadMedia
+        {
+            get
+            {
+                if (_downloadMedia == null)
+                {
+                    _downloadMedia = new RelayCommand(
+                        p => this.IsShowSelected(),
+                        p => this.ExecuteDownloadMedia());
+                }
+                return _deleteAllPodcasts;
+            }
+        }
+
         #endregion ICommand Properties
 
         private bool IsShowSelected()
@@ -79,15 +110,27 @@ namespace PresentationLayer.ViewModel
             return false;
         }
 
+        private void ExecutePlayMedia()
+        {
+            throw new NotImplementedException();
+            //BusinessLayer-Zugriff um (Property) DownloadPath der Episode aufzulösen und abzuspielen.
+        }
+
+        private void ExecuteDownloadMedia()
+        {
+            throw new NotImplementedException();
+            //BusinessLayer-Zugriff um LocalMedia anzusteuern und Episode anhand des DownloadPath runterzuladen.
+        }
+
         private void ExecuteDeleteSelectedShow()
         {
-            _businessAccess.Save.Test();
-            //BusinessLayer-Zugriff um Show(SelectedShow) + alle Episoden zu löschen
+            throw new NotImplementedException();
+            //BusinessLayer-Zugriff um Show(SelectedShow) + alle Episoden zu löschen.
         }
 
         private void ExecuteRefreshSelectedShow()
         {
-            _businessAccess.Save.Test();
+            throw new NotImplementedException();
             //BusinessLayer-Zugriff um XML der Show(SelectedShow) neu zu laden, zu deserialisieren und neue Episoden in die DB zu speichern.
         }
 

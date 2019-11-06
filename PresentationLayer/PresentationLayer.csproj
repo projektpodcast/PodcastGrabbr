@@ -78,6 +78,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\UserNavigationViewModel.cs" />
+    <Compile Include="View\DateFormatter.cs" />
     <Compile Include="View\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="View\IView.cs" />
     <Compile Include="View\PodcastView.xaml.cs">

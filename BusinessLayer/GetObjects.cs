@@ -24,6 +24,11 @@ namespace BusinessLayer
 
         }
 
+        public void Test()
+        {
+            IDataTarget fileTarget = Factory.CreateDataTarget();
+        }
+
         public List<Show> GetLocalMedia() //umschreiben, gibt falschen Typ zurück
         {
             MediaDataSource dal = new MediaDataSource();

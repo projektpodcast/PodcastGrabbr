@@ -82,7 +82,7 @@
             </Grid>
         </ControlTemplate>
 
-
+        
         <Style x:Key="HorizontalStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -102,7 +102,7 @@
                 </Setter.Value>
             </Setter>
 
-
+            
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -729,9 +729,9 @@
                             <DataTemplate>
                                 <Border Padding="0,0,8,0" BorderThickness="0">
                                     <WrapPanel>
-                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Download" Width="70" 
+                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Download" Width="70" Command="{Binding DownloadMedia}"
                                                 Visibility="{Binding Path=IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}"/>
-                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Play" Width="70" 
+                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Play" Width="70" Command="{Binding PlayMedia}"
                                                 Visibility="{Binding Path=IsDownloaded, Converter={StaticResource BoolToVisibility}}"/>
                                     </WrapPanel>
                                 </Border>

@@ -26,9 +26,9 @@ namespace PresentationLayer.ViewModel
         {
             ButtonModel firstButton = new ButtonModel("Startseite", SwitchPageToHome);
             ButtonModel secondButton = new ButtonModel("Einstellungen", SwitchPageToSettings);
-            ButtonModel thirdButton = new ButtonModel("Meine Downloads", NotImplemented);
+            ButtonModel thirdButton = new ButtonModel("Meine Downloads", SwitchPageToDownloads);
             ButtonModel fourthButton = new ButtonModel("Show importieren", NotImplemented);
-            ButtonModel fifthButton = new ButtonModel("Shows aktualisieren", NotImplemented);
+            ButtonModel fifthButton = new ButtonModel("Shows aktualisieren", RefreshEpisodesOfAllShows);
             MenueOptions = new ObservableCollection<ButtonModel>
             {
                 firstButton,
@@ -42,6 +42,7 @@ namespace PresentationLayer.ViewModel
 
         private bool _canSwitchToSettings { get; set; }
         private bool _canSwitchToPodcast { get; set; }
+        private bool _canSwitchToDownloads { get; set; }
 
         private Visibility _visibility = Visibility.Collapsed;
         public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible") ; } }
@@ -104,7 +105,52 @@ namespace PresentationLayer.ViewModel
                 return _switchPageToHome;
             }
         }
-       
+
+        private ICommand _switchPageToDownloads;
+        public ICommand SwitchPageToDownloads
+        {
+            get
+            {
+                if (_switchPageToDownloads == null)
+                {
+                    _switchPageToDownloads = new RelayCommand(
+                        p => this._canSwitchToDownloads,
+                        p => this.OnTest("ToDownloads"));
+                }
+                return _switchPageToDownloads;
+            }
+        }
+
+        private ICommand _openShowImport;
+        public ICommand OpenShowImport
+        {
+            get
+            {
+                if (_openShowImport == null)
+                {
+                    _openShowImport = new RelayCommand(
+                        p => this.CanClickButton(),
+                        p => this.DecideVisibilityProperty());
+                }
+                return _openShowImport;
+            }
+        }
+
+        private ICommand _refreshEpisodesOfAllShows;
+        public ICommand RefreshEpisodesOfAllShows
+        {
+            get
+            {
+                if (_refreshEpisodesOfAllShows == null)
+                {
+                    _refreshEpisodesOfAllShows = new RelayCommand(
+                        p => this.CanClickButton(),
+                        p => this.RefreshEpisodes());
+                }
+                return _refreshEpisodesOfAllShows;
+            }
+        }
+
         private bool CanClickButton()
         {
             return true;
@@ -131,6 +177,12 @@ namespace PresentationLayer.ViewModel
 
         }
 
+        public void RefreshEpisodes()
+        {
+            throw new NotImplementedException();
+            //BL Zugriff: Show-RSS Feed erneut laden, deserialisieren, prüfen ob neue Episoden verfügbar sind, in Db schieben, Db abruf: ShowList
+        }
+
         public event EventHandler<OnNavigationButtonClicked> OnTestChanged;
 
         public void OnTest(string property)
@@ -147,11 +199,19 @@ namespace PresentationLayer.ViewModel
             {
                 this._canSwitchToPodcast = false;
                 this._canSwitchToSettings = true;
+                this._canSwitchToDownloads = true;
             }
             else if (e.ViewModelName.Contains("SettingsView"))
             {
                 this._canSwitchToPodcast = true;
                 this._canSwitchToSettings = false;
+                this._canSwitchToDownloads = true;
+            }
+            else if (e.ViewModelName.Contains("DownloadsView"))
+            {
+                this._canSwitchToPodcast = true;
+                this._canSwitchToSettings = true;
+                this._canSwitchToDownloads = false;
             }
         }
 
