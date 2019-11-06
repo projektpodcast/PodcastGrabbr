@@ -1,10 +1,15 @@
-﻿using PresentationLayer.View;
+﻿using BusinessLayer;
+using PresentationLayer.View;
 using PresentationLayer.ViewModel;
 
 namespace PresentationLayer.Services
 {
-    public interface IInitializerService
+    public interface IDependencyService
     {
         IView InitializeView(IViewModel viewModel);
+
+        IUserConfigService InitializeConfigService();
+
+        IBusinessAccessService InitializeBusinessLayer();
     }
 }

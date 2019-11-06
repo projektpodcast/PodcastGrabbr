@@ -10,6 +10,8 @@ namespace BusinessLayer
 {
     public class SaveObjects
     {
+        public SaveObjects()
+        { }
         public void SavePodcastAsXml(Podcast podcast)
         {
             IDataTarget fileTarget = Factory.CreateDataTarget();

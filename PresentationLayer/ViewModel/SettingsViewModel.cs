@@ -8,6 +8,7 @@ namespace PresentationLayer.ViewModel
 {
     public class SettingsViewModel : BaseViewModel
     {
+        private IUserConfigService _configService { get; set; }
         #region Ui Properties
         private KeyValuePair<int, string> _selectedDataType { get; set; }
         public KeyValuePair<int, string> SelectedDataType
@@ -109,7 +110,7 @@ namespace PresentationLayer.ViewModel
 
         public void DoesItExist()
         {
-            int currentValue = UserSettingsManager.TestValue;
+            int currentValue = _configService.ConfigValue;
             if (currentValue != 0)
             {
                 var configValue = PossibleTypes.First(p => p.Key == currentValue);
@@ -123,8 +124,9 @@ namespace PresentationLayer.ViewModel
         }
 
         public Dictionary<int, string> PossibleTypes { get; set; }
-        public SettingsViewModel()
+        public SettingsViewModel(IUserConfigService configService)
         {
+            _configService = configService;
             SelectedDataType = new KeyValuePair<int, string>();
 
             PossibleTypes = new Dictionary<int, string>
@@ -141,18 +143,38 @@ namespace PresentationLayer.ViewModel
             if (SelectedDataType.Key != ConfigDataType.Key)
             {
                 MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
-                SetConnectionType();
+                SetConnectionType2();
             }
         }
 
-        public void SetConnectionType()
+        public void SetConnectionType2()
         {
             if (SelectedDataType.Value != null)
             {
-                UserSettingsManager.TestValue = SelectedDataType.Key;
+                _configService.ConfigValue = SelectedDataType.Key;
                 ConfigDataType = SelectedDataType;
+                OnTest();
             }
         }
+
+        public event System.EventHandler<OnConfigChanged> OnTestChanged;
+
+        public void OnTest()
+        {
+            if (OnTestChanged != null)
+            {
+                OnTestChanged(this, new OnConfigChanged());
+            }
+        }
+
+        //public void SetConnectionType()
+        //{
+        //    if (SelectedDataType.Value != null)
+        //    {
+        //        GlobalUserCfgService.TestValue = SelectedDataType.Key;
+        //        ConfigDataType = SelectedDataType;
+        //    }
+        //}
 
     }
 }

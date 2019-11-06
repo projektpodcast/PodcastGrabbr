@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PresentationLayer.Services;
 using PresentationLayer.View;
+using PresentationLayer.ViewModel;
 
 namespace PresentationLayer.View
 {
@@ -28,6 +30,8 @@ namespace PresentationLayer.View
             //Initializer init = new Initializer();
             //this.DataContext = init;
         }
+
+
     }
 
 }

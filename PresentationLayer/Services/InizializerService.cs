@@ -1,4 +1,5 @@
-﻿using PresentationLayer.View;
+﻿using BusinessLayer;
+using PresentationLayer.View;
 using PresentationLayer.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace PresentationLayer.Services
 {
-    public class ViewInitializer : IInitializerService
+    public class DependencyService : IDependencyService
     {
-        public ViewInitializer()
+        public DependencyService()
         {
 
         }
@@ -29,10 +30,24 @@ namespace PresentationLayer.Services
                     viewType = new UserNavigationView(viewModel);
                     break;
                 default:
-                    throw new Exception();
+                    throw new NotImplementedException();
             }
             return viewType;
         }
+
+        public IUserConfigService InitializeConfigService()
+        {
+            IUserConfigService configService = new UserConfigService();
+            return configService;
+        }
+
+        public IBusinessAccessService InitializeBusinessLayer()
+        {
+            IBusinessAccessService businessLayer = new BusinessAccess();
+            return businessLayer;
+        }
+
+
 
 
         //public void SetUpSubscriber()

@@ -10,12 +10,13 @@ using BusinessLayer;
 using CommonTypes;
 using System.Windows.Input;
 using System.Windows;
+using System.Configuration;
 
 namespace PresentationLayer.ViewModel
 {
     public class PodcastViewModel : BaseViewModel
     {
-
+        private IBusinessAccessService _businessAccess { get; set; }
         private Show _selectedShow { get; set; }
         public Show SelectedShow {
             get { return _selectedShow; }
@@ -26,8 +27,9 @@ namespace PresentationLayer.ViewModel
 
         public ObservableCollection<Show> AllShows { get; set; }
 
-        public PodcastViewModel()
+        public PodcastViewModel(IBusinessAccessService businessAccess)
         {
+            _businessAccess = businessAccess;
 
             AllShows = new ObservableCollection<Show>();
             EpisodesCollection = new ObservableCollection<Episode>();
@@ -79,33 +81,36 @@ namespace PresentationLayer.ViewModel
 
         private void ExecuteDeleteSelectedShow()
         {
+            _businessAccess.Save.Test();
             //BusinessLayer-Zugriff um Show(SelectedShow) + alle Episoden zu löschen
         }
 
         private void ExecuteRefreshSelectedShow()
         {
-            SaveObjects bl = new SaveObjects();
-            bl.Test();
-
+            _businessAccess.Save.Test();
             //BusinessLayer-Zugriff um XML der Show(SelectedShow) neu zu laden, zu deserialisieren und neue Episoden in die DB zu speichern.
         }
 
         #region Mockdata
         public void SetList()
         {
-            List<Show> test = new List<Show>();
-            AllShows = new ObservableCollection<Show>();
+            List<Show> showList = _businessAccess.Get.GetShowList();
+            AllShows = new ObservableCollection<Show>(showList);
 
-            GetObjects bl = new GetObjects();
 
-            List<Show> showList = bl.GetShowList();
+            //List<Show> test = new List<Show>();
+            //AllShows = new ObservableCollection<Show>();
 
-            foreach (var item in showList)
-            {
-                test.Add(item);
-            }
+            //GetObjects bl = new GetObjects();
 
-            AllShows = new ObservableCollection<Show>(test);
+            ////List<Show> showList = bl.GetShowList();
+
+            //foreach (var item in showList)
+            //{
+            //    test.Add(item);
+            //}
+
+            //AllShows = new ObservableCollection<Show>(test);
             Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
         }
 

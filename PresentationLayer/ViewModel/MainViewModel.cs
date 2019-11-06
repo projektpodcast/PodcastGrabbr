@@ -1,4 +1,5 @@
-﻿using PresentationLayer.Services;
+﻿using BusinessLayer;
+using PresentationLayer.Services;
 using PresentationLayer.View;
 using PresentationLayer.ViewModel;
 using System;
@@ -11,13 +12,18 @@ using System.Windows.Input;
 
 namespace PresentationLayer.ViewModel
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : BaseViewModel, IViewModel
     {
+        #region Services
+        private IUserConfigService _configService { get; set; }
+        private IDependencyService _initializerService { get; set; }
+        private IBusinessAccessService _businessAccessService { get; set; }
+        #endregion Services
+
         #region Properties
-        private IInitializerService _initializerService { get; set; }
-        private IView PodcastUi { get; set; }
+        private IView _podcastUi { get; set; }
+        //private IView _settingsUi { get; set; }
         private IView _settingsUi { get; set; }
-        private IView SettingsUi { get; set; }
         private IView _userNavigationUi { get; set; }
         public IView UserNavigationUi
         {
@@ -32,27 +38,39 @@ namespace PresentationLayer.ViewModel
             set { _currentContent = value; OnPropertyChanged("CurrentContent"); OnTest(_currentContent.ToString()); }
         }
         #endregion Properties
-        public MainViewModel()
+        public MainViewModel(/*IInitializerService initializerService*/)
         {
-            _initializerService = new ViewInitializer();
+            _initializerService = new DependencyService();
+
+            _businessAccessService = _initializerService.InitializeBusinessLayer();
+            _configService = _initializerService.InitializeConfigService();
+
+
+
             InitializeUserNavigationUi();
             InitializeCurrentContent();
         }
 
         public void InitializeCurrentContent()
         {
-            if (PodcastUi == null)
+            if (_podcastUi == null)
             {
-                IViewModel viewModel = new PodcastViewModel();
-                PodcastUi = _initializerService.InitializeView(viewModel);
+                InitializePodcastUi();
             }
             DecideCurrentContent();
         }
 
+        public void InitializePodcastUi()
+        {
+            IViewModel viewModel = new PodcastViewModel(_businessAccessService);
+            _podcastUi = _initializerService.InitializeView(viewModel);
+        }
+
         public void InitializeSettingsUi()
         {
-            IViewModel viewModel = new SettingsViewModel();
-            SettingsUi = _initializerService.InitializeView(viewModel);
+            IViewModel viewModel = new SettingsViewModel(_configService);
+            _settingsUi = _initializerService.InitializeView(viewModel);
+            SetUpSubscriber(viewModel);
         }
 
         public void InitializeUserNavigationUi()
@@ -64,25 +82,27 @@ namespace PresentationLayer.ViewModel
 
         private void DecideCurrentContent()
         {
-            bool dataTargetIsSet = UserSettingsManager.IsDataTypeSet();
+            bool dataTargetIsSet = _configService.IsPropertySet();
+
+            //bool dataTargetIsSet = GlobalUserCfgService.IsPropertySet();
             if (dataTargetIsSet == true)
             {
-                CurrentContent = PodcastUi;
+                CurrentContent = _podcastUi;
             }
             else
             {
                 InitializeSettingsUi();
-                CurrentContent = SettingsUi;
+                CurrentContent = _settingsUi;
                 //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
         private void SwitchCurrentContentTo()
         {
-            if (CurrentContent == PodcastUi)
+            if (CurrentContent == _podcastUi)
             {
                 InitializeSettingsUi();
-                CurrentContent = SettingsUi;
+                CurrentContent = _settingsUi;
             }
             else
             {
@@ -92,16 +112,24 @@ namespace PresentationLayer.ViewModel
 
         private void SwitchToPodcastUi()
         {
-            if (UserSettingsManager.IsDataTypeSet() == true)
+            if (_configService.IsPropertySet() == true)
             {
-                SettingsUi.ViewModelType = null;
-                SettingsUi = null;
-                CurrentContent = PodcastUi;
+                _settingsUi.ViewModelType = null;
+                _settingsUi = null;
+                CurrentContent = _podcastUi;
             }
             else
             {
                 //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void ReloadPodcastUi()
+        {
+            _podcastUi.ViewModelType = null;
+            _podcastUi = null;
+
+            InitializePodcastUi();
         }
 
         public void UserNavigationUi_OnTestChanged(object sender, OnNavigationButtonClicked e)
@@ -119,12 +147,25 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private void SetUpSubscriber(UserNavigationViewModel userVm)
+        private void SetUpSubscriber(IViewModel viewModel)
         {
-            this.OnTestChanged += userVm.MainViewModel_OnTestChanged;
-            userVm.OnTestChanged += this.UserNavigationUi_OnTestChanged;
+            if (viewModel.GetType().Equals(typeof(UserNavigationViewModel)))
+            {
+                UserNavigationViewModel userVm = viewModel as UserNavigationViewModel;
+                this.OnTestChanged += userVm.MainViewModel_OnTestChanged;
+                userVm.OnTestChanged += this.UserNavigationUi_OnTestChanged;
+            }
+            else if (viewModel.GetType().Equals(typeof(SettingsViewModel)))
+            {
+                SettingsViewModel settingsVm = viewModel as SettingsViewModel;
+                settingsVm.OnTestChanged += ViewModel_OnTestChanged;
+            }
         }
 
+        private void ViewModel_OnTestChanged(object sender, OnConfigChanged e)
+        {
+            ReloadPodcastUi();
+        }
     }
 }
 
