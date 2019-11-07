@@ -18,6 +18,10 @@
         <local:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibility"></local:InvertedBoolToVisibilityConverter>
 
 
+
+        
+
+
         <Style x:Key="ButtonVLeftTest" TargetType="{x:Type RepeatButton}">
             <Setter Property="Background" Value="#FFBFAAF5"/>
             <Setter Property="Template">
@@ -82,7 +86,7 @@
             </Grid>
         </ControlTemplate>
 
-        
+
         <Style x:Key="HorizontalStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -102,7 +106,7 @@
                 </Setter.Value>
             </Setter>
 
-            
+
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -217,8 +221,56 @@
 
 
 
+        <SolidColorBrush x:Key="GreenBrushPlay" Color="Green" Opacity="1"/>
+        <Style x:Key="PlayButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <Rectangle Fill="{StaticResource GreenBrushPlay}" RadiusX="30" RadiusY="30"></Rectangle>
+                                <Path Fill="White" Data="M 16 10 L 7 3 L 7 17 Z"/>
+                                <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-
+        <SolidColorBrush x:Key="TestBrush" Color="#FF311855"></SolidColorBrush>
+        <SolidColorBrush x:Key="myBrush" Color="#FFBFAAF5" Opacity="1"/>
+        <SolidColorBrush x:Key="BlackBrushDownload" Color="Gray" Opacity="1"/>
+        <Style x:Key="DownloadButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <Rectangle Fill="{StaticResource TestBrush}" RadiusX="30" RadiusY="30"></Rectangle>
+                                <Path Fill="White" Data="M 8 11 L 12 11 L 12 3 L 8 3 Z"></Path>
+                                <Path Fill="White" Data="M 10 14 L 16 9 L 4 9 Z"></Path>
+                                <Path Fill="White" Data="M 4 17 L 16 17 L 16 15 L 4 15"></Path>
+                                <!--<Path Fill="White" Data="M 16 10 L 7 3 L 7 17 Z"/>-->
+                                <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
 
 
@@ -299,7 +351,7 @@
             </Style.Triggers>-->
         </Style>
 
-        <SolidColorBrush x:Key="myBrush" Color="#FFBFAAF5" Opacity="0.4"/>
+
 
 
         <Style x:Key="EpisodeListViewStyle" TargetType="{x:Type ListViewItem}">
@@ -629,7 +681,7 @@
             <RowDefinition Height="40*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="20*" MinHeight="100"></RowDefinition>
@@ -641,6 +693,7 @@
                      Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}"
                      SelectedItem="{Binding SelectedShow}">
             </ListBox>
+            <!--<Rectangle Grid.Row="0" Fill="Black" Height="20"></Rectangle>-->
             <!--ShowViewList-->
             <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
             <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -682,6 +735,7 @@
         </Grid>
 
         <Rectangle Grid.Row="1" Fill="#FF5A5193"></Rectangle>
+        <!--<Button Style="{StaticResource DownloadButton}"></Button>-->
         <ListView BorderThickness="0" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                   ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5" Foreground="Black"
                   SizeChanged="HeaderContent_SizeChanged"
@@ -728,11 +782,11 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Padding="0,0,8,0" BorderThickness="0">
-                                    <WrapPanel>
-                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Download" Width="70" Command="{Binding DownloadMedia}"
-                                                Visibility="{Binding Path=IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}"/>
-                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Play" Width="70" Command="{Binding PlayMedia}"
-                                                Visibility="{Binding Path=IsDownloaded, Converter={StaticResource BoolToVisibility}}"/>
+                                    <WrapPanel HorizontalAlignment="Center">
+                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Download" Command="{Binding DownloadMedia}"
+                                                Visibility="{Binding Path=IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}" Style="{StaticResource DownloadButton}"/>
+                                        <Button Margin="0,3,0,0" VerticalAlignment="Center" Content="Play" Command="{Binding PlayMedia}"
+                                                Visibility="{Binding Path=IsDownloaded, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource PlayButton}"/>
                                     </WrapPanel>
                                 </Border>
                             </DataTemplate>
