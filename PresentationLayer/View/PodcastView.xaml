@@ -18,17 +18,25 @@
         <local:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibility"></local:InvertedBoolToVisibilityConverter>
 
 
-
-        
-
+        <SolidColorBrush x:Key="WindowBackground" Color="#FF5A5193" Opacity="1"/>
+        <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
+        <SolidColorBrush x:Key="DownloadBrushTranslucent" Color="#FF311855" Opacity="0.7"/>
+        <SolidColorBrush x:Key="myBrush" Color="#FFBFAAF5" Opacity="1"/>
+        <SolidColorBrush x:Key="DownloadBrushHighlight" Color="#FF6F509C" Opacity="1"/>
+        <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
+        <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
+        <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
+        <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
+        <SolidColorBrush x:Key="GreenBrushPlay" Color="#FF1BA61B" Opacity="1"/>
+        <SolidColorBrush x:Key="GreenBrushPlayTranslucent" Color="Green" Opacity="0.8"/>
 
         <Style x:Key="ButtonVLeftTest" TargetType="{x:Type RepeatButton}">
             <Setter Property="Background" Value="#FFBFAAF5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Path Fill="{TemplateBinding Background}"
-                            Data="M 0 -20 L 0 20 L -20 0 Z">
+                        <Path Fill="{TemplateBinding Background}" MinHeight="20" MinWidth="20"
+                            Data="M 0 18 L 20 36 L 20 0 Z">
                             <!--Data="M 0 0 L 20 50 L 20 -50 Z">-->
                         </Path>
                     </ControlTemplate>
@@ -41,8 +49,9 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Path Fill="{TemplateBinding Background}"
-                            Data="M 0 20 L 0 -20 L 20 0 Z">
+                        <Path Fill="{TemplateBinding Background}" MinHeight="20" MinWidth="20"
+                              Data="M 20 18 L 0 36 L 0 0 Z">
+                            <!--Data="M 0 20 L 0 -20 L 20 0 Z">-->
                             <!--Data="M 0 0 L 20 50 L 20 -50 Z">
                              Data="M -20 50 L -20 -50 L 0 0 Z">-->
                         </Path>
@@ -61,9 +70,9 @@
         <ControlTemplate x:Key="ScrollViewerWithButtons2" TargetType="{x:Type ScrollViewer}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="auto" MinWidth="20"/>
                     <ColumnDefinition Width="90*"/>
-                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="auto" MinWidth="20"/>
                 </Grid.ColumnDefinitions>
 
                 <RepeatButton Style="{StaticResource ButtonVLeftTest}"
@@ -73,7 +82,7 @@
                 Command="ScrollBar.LineLeftCommand"
                 Content="Up" />
 
-                <ScrollContentPresenter
+                <ScrollContentPresenter Margin="10,0,10,0"
                 Grid.Column="1"
                 CanContentScroll="{TemplateBinding CanContentScroll}" />
 
@@ -85,6 +94,13 @@
                 Content="Down" />
             </Grid>
         </ControlTemplate>
+        <LinearGradientBrush
+    x:Key="TransparentGradient"
+    StartPoint="0.5,0"
+    EndPoint="0.9,0.9">
+            <GradientStop Color="White" Offset="0.71"/>
+            <GradientStop Color="Transparent" Offset="0.71"/>
+        </LinearGradientBrush>
 
 
         <Style x:Key="HorizontalStyle" TargetType="{x:Type ListBox}">
@@ -102,7 +118,6 @@
                         </ScrollViewer>
                     </ControlTemplate>
 
-
                 </Setter.Value>
             </Setter>
 
@@ -110,15 +125,53 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-                        <Grid>
+                        <Grid MaxWidth="190" x:Name="ImageGrid">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"></RowDefinition>
-                                <RowDefinition Height="2*"></RowDefinition>
+                                <RowDefinition Height="10*"></RowDefinition>
+                                <RowDefinition Height="2*" MaxHeight="45"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Source="{Binding Path=ImageUri}" HorizontalAlignment="Stretch"></Image>
-                            <WrapPanel Grid.Row="1" HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding Path=PodcastTitle}" HorizontalAlignment="Center" FontSize="10pt" Foreground="White" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"></TextBlock>
-                            </WrapPanel>
+
+                            <Image x:Name="Default" Grid.Row="0" Grid.RowSpan="2">
+                                <Image.Source>
+                                    <DrawingImage>
+                                        <DrawingImage.Drawing>
+                                            <GeometryDrawing>
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+
+                                                        <GeometryCollection>
+                                                            <PathGeometry Figures="M 0 0 L 20 20"></PathGeometry>
+                                                            <PathGeometry Figures="M 0 20 L 20 0"></PathGeometry>
+                                                        </GeometryCollection>
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                                <GeometryDrawing.Pen>
+                                                    <Pen Thickness="4" Brush="{StaticResource RedBrush}" />
+                                                </GeometryDrawing.Pen>
+                                            </GeometryDrawing>
+                                        </DrawingImage.Drawing>
+                                    </DrawingImage>
+                                </Image.Source>
+                            </Image>
+
+                            <Image x:Name="ShowImage" Grid.Row="0" Grid.RowSpan="2">
+                                <Image.Source>
+                                    <BitmapImage DecodePixelWidth="190" DecodePixelHeight="190" 
+                                                 UriSource="{Binding ImageUri}">
+                                    </BitmapImage>
+                                </Image.Source>
+                            </Image>
+
+                            <!--<Image x:Name="ShowImage" Grid.Row="0" Grid.RowSpan="2"
+                                   Source="{Binding Path=ImageUri}" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                               Stretch="Fill" MaxHeight="190"
+                                   ></Image>-->
+                            <!--Stretch="UniformToFill" MaxHeight="190"></Image>-->
+                            <DockPanel Grid.Row="1" Width="{Binding ActualWidth, ElementName=Default}" Background="{DynamicResource DownloadBrushTranslucent}">
+                                <TextBlock Grid.Row="1" Text="{Binding Path=PodcastTitle}" HorizontalAlignment="Center" FontSize="10pt" 
+                                       Foreground="White" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"
+                                       ></TextBlock>
+                            </DockPanel>
                         </Grid>
                     </DataTemplate>
                 </Setter.Value>
@@ -126,8 +179,7 @@
         </Style>
 
 
-        <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
-        <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
+
 
 
         <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
@@ -168,15 +220,6 @@
             </Setter>
         </Style>
 
-        <LinearGradientBrush
-    x:Key="TransparentGradient"
-    StartPoint="0.5,0"
-    EndPoint="0.9,0.9">
-            <GradientStop Color="White" Offset="0.71"/>
-            <GradientStop Color="Transparent" Offset="0.71"/>
-        </LinearGradientBrush>
-        <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
-        <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
         <Style x:Key="RefreshButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -221,7 +264,7 @@
 
 
 
-        <SolidColorBrush x:Key="GreenBrushPlay" Color="Green" Opacity="1"/>
+
         <Style x:Key="PlayButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -234,19 +277,31 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
-                                <Rectangle Fill="{StaticResource GreenBrushPlay}" RadiusX="30" RadiusY="30"></Rectangle>
-                                <Path Fill="White" Data="M 16 10 L 7 3 L 7 17 Z"/>
+                                <Rectangle x:Name="Circle" Fill="{StaticResource GreenBrushBright}" RadiusX="30" RadiusY="30"></Rectangle>
+                                <Path x:Name="Triangle" Fill="White" Data="M 16 10 L 7 3 L 7 17 Z"/>
                                 <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
                             </Grid>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="Circle" Value="{StaticResource GreenBrushPlay}"/>
+                                <!--<Setter Property="Opacity" TargetName="Triangle" Value=""/>-->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <SolidColorBrush x:Key="TestBrush" Color="#FF311855"></SolidColorBrush>
-        <SolidColorBrush x:Key="myBrush" Color="#FFBFAAF5" Opacity="1"/>
-        <SolidColorBrush x:Key="BlackBrushDownload" Color="Gray" Opacity="1"/>
+
+
+
         <Style x:Key="DownloadButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -259,7 +314,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
-                                <Rectangle Fill="{StaticResource TestBrush}" RadiusX="30" RadiusY="30"></Rectangle>
+                                <Rectangle x:Name="Circle" Fill="{StaticResource DownloadBrush}" RadiusX="30" RadiusY="30"></Rectangle>
                                 <Path Fill="White" Data="M 8 11 L 12 11 L 12 3 L 8 3 Z"></Path>
                                 <Path Fill="White" Data="M 10 14 L 16 9 L 4 9 Z"></Path>
                                 <Path Fill="White" Data="M 4 17 L 16 17 L 16 15 L 4 15"></Path>
@@ -267,6 +322,18 @@
                                 <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
                             </Grid>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="Circle" Value="{StaticResource DownloadBrushHighlight}"/>
+                                <!--<Setter Property="Opacity" TargetName="Triangle" Value=""/>-->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -283,7 +350,7 @@
         </Style>
 
         <Style x:Key="ShowItems" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Width" Value="150"></Setter>
+            <!--<Setter Property="Width" Value="150"></Setter>-->
             <Setter Property="OverridesDefaultStyle" Value="true"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -302,7 +369,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Margin" Value="20,0,20,0"/>
+            <Setter Property="Margin" Value="0,0,20,0"/>
         </Style>
 
         <ControlTemplate x:Key="ScrollViewerWithButtons" TargetType="{x:Type ScrollViewer}">
@@ -675,28 +742,28 @@
 
     </Page.Resources>
 
-    <Grid>
+    <Grid ShowGridLines="True" Background="{StaticResource WindowBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*" MaxHeight="380" MinHeight="200"></RowDefinition>
             <RowDefinition Height="40*"></RowDefinition>
         </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" ShowGridLines="True">
+        <Rectangle Grid.RowSpan="2"  Fill="#FF5A5193" />
+        <Grid Grid.Row="0" ShowGridLines="False">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="5"></RowDefinition>
                 <RowDefinition Height="20*" MinHeight="100"></RowDefinition>
+                <RowDefinition Height="5"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <Rectangle Grid.Row="0" Grid.RowSpan="2" Fill="#FF5A5193" />
-            <ListBox Name="showViewList" Grid.Row="1" BorderThickness="0" Background="Black" HorizontalAlignment="Stretch"
+            <ListBox Name="showViewList" Grid.Row="1" BorderThickness="0" HorizontalAlignment="Stretch"
                      VerticalAlignment="Center" ItemContainerStyle="{StaticResource ShowItems}" 
                      Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}"
                      SelectedItem="{Binding SelectedShow}">
             </ListBox>
             <!--<Rectangle Grid.Row="0" Fill="Black" Height="20"></Rectangle>-->
             <!--ShowViewList-->
-            <Rectangle Grid.Row="2" Fill="#463574"></Rectangle>
-            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Rectangle Grid.Row="3" Fill="#463574"></Rectangle>
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"></ColumnDefinition>
                     <ColumnDefinition Width="10*"></ColumnDefinition>
@@ -738,7 +805,7 @@
         <!--<Button Style="{StaticResource DownloadButton}"></Button>-->
         <ListView BorderThickness="0" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                   ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5" Foreground="Black"
-                  SizeChanged="HeaderContent_SizeChanged"
+                  SizeChanged="HeaderContent_SizeChanged" 
                   Loaded="ListView_Loaded" ItemsSource="{Binding EpisodesCollection}">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyleNonresizeable}" AllowsColumnReorder="False">

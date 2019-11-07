@@ -11,6 +11,7 @@ using CommonTypes;
 using System.Windows.Input;
 using System.Windows;
 using System.Configuration;
+using System.Windows.Media;
 
 namespace PresentationLayer.ViewModel
 {
@@ -18,7 +19,8 @@ namespace PresentationLayer.ViewModel
     {
         private IBusinessAccessService _businessAccess { get; set; }
         private Show _selectedShow { get; set; }
-        public Show SelectedShow {
+        public Show SelectedShow
+        {
             get { return _selectedShow; }
             set { _selectedShow = value; OnPropertyChanged("SelectedShow"); AddNewEpisode(); }
         }
@@ -169,7 +171,7 @@ namespace PresentationLayer.ViewModel
                         PodcastTitle = "Addedfun",
                         PublisherName = "WDR",
                         Description = "enttäuschende sachen",
-                        ImageUri = bild,
+                        ImageUri = bild
                     });
                 });
             }
@@ -200,7 +202,7 @@ namespace PresentationLayer.ViewModel
     }
 }
 
-#region Uncommented Visibility ICommand
+#region out-commented Visibility ICommand
 //private Visibility _visibility = Visibility.Hidden;
 //public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible"); } }
 
@@ -226,4 +228,4 @@ namespace PresentationLayer.ViewModel
 //        Visible = Visibility.Visible;
 //    }
 //}
-#endregion Uncommented Visibility ICommand
+#endregion out-commented Visibility ICommand
