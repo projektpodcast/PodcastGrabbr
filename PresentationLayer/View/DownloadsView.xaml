@@ -288,9 +288,11 @@
                                          x:Name="lvExpander" Grid.Row="0"
                                           VerticalAlignment="Center" 
                                           Foreground="Black" BorderThickness="0"
-                                 
-                                          Template="{DynamicResource ExpanderControlTemplate1}">
+                                 HorizontalContentAlignment="Stretch"
 
+                                    Template="{DynamicResource ExpanderControlTemplate1}">
+                                    <!--IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, 
+                                    RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"-->
                                     <Expander.Header>
                                         <WrapPanel Grid.Row="0" Background="{StaticResource DownloadBrush}" x:Name="ShowPanel">
 
@@ -357,31 +359,96 @@
 
 
 
-                                        <!--HIER EPISODENSAMMLUNG DARSTELLEN
-                                                                HIER EPISODENSAMMLUNG DARSTELLEN-->
-                                        <ItemsControl ItemsSource="{Binding EpisodeList}" Background="White">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <WrapPanel>
-                                                        <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                                            </Grid.ColumnDefinitions>
-                                                            <DockPanel Grid.Column="0" MinWidth="150">
+                                        <ItemsControl ItemsSource="{Binding EpisodeList}" Background="White" Grid.Column="0" 
+                                                      HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+
+                                                    <!--<Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="10*" MinWidth="50"/>
+                                                            <ColumnDefinition Width="1*"/>
+                                                        </Grid.ColumnDefinitions>-->
+                                                    <WrapPanel Orientation="Horizontal">
+                                                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                                            <Grid HorizontalAlignment="Stretch">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" MinWidth="80"/>
+                                                                    <ColumnDefinition Width="auto" MinWidth="20"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="0">
                                                                     <TextBlock Text="{Binding Title}" Style="{StaticResource EpisodeTb}"></TextBlock>
                                                                 </DockPanel>
-                                                            <DockPanel Grid.Column="1" MinWidth="50">
-                                                                <TextBlock Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"></TextBlock>
-                                                            </DockPanel>
-                                                        </Grid>
-                                                    </WrapPanel>
-                                                   </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
+                                                                <DockPanel Grid.Column="1">
+                                                                    <TextBlock Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"
+                                                                               HorizontalAlignment="Right"></TextBlock>
+                                                                </DockPanel>
 
-                                                <!--<TextBlock Text="{Binding PublisherName}" Style="{StaticResource EpisodeTb}"></TextBlock>-->
-                                                <!--<TextBlock Text="TestEintrag" Style="{StaticResource EpisodeTb}"></TextBlock>-->
-                                            </ItemsControl>
+
+
+                                                                <!--<TextBlock Grid.Column="0" Text="{Binding Title}" Style="{StaticResource EpisodeTb}" MinWidth="400"></TextBlock>
+                                                            <TextBlock Grid.Column="1" Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"></TextBlock>-->
+                                                            </Grid>
+                                                        </DockPanel>
+                                                    </WrapPanel>
+
+                                                    <!--<DockPanel Grid.Column="0" Grid.ColumnSpan="2" >
+                                                        -->
+                                                    <!--Ansicht: Title-->
+                                                    <!--
+                                                        <DockPanel>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="auto" MinWidth="30"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Text="{Binding Title}" Style="{StaticResource EpisodeTb}"></TextBlock>
+                                                            </Grid>
+                                                        </DockPanel>
+                                                        -->
+                                                    <!--Ansicht: Datum-->
+                                                    <!--
+                                                        <DockPanel>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="auto" MinWidth="30"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="1" MinWidth="50">
+                                                                    <TextBlock Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"></TextBlock>
+                                                                </DockPanel>
+                                                            </Grid>
+                                                        </DockPanel>
+
+                                                    </DockPanel>-->
+                                                    <!--<Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                                </Grid.ColumnDefinitions>
+                                                                <DockPanel Grid.Column="0" MinWidth="150">
+                                                                    <TextBlock Text="{Binding Title}" Style="{StaticResource EpisodeTb}"></TextBlock>
+                                                                </DockPanel>
+                                                                <DockPanel Grid.Column="1" MinWidth="50">
+                                                                    <TextBlock Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"></TextBlock>
+                                                                </DockPanel>
+                                                            </Grid>-->
+
+
+                                                    <!--</Grid>-->
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+
+                                            <!--<TextBlock Text="{Binding PublisherName}" Style="{StaticResource EpisodeTb}"></TextBlock>-->
+                                            <!--<TextBlock Text="TestEintrag" Style="{StaticResource EpisodeTb}"></TextBlock>-->
+                                        </ItemsControl>
+
+
+
+
+                                        <!--HIER EPISODENSAMMLUNG DARSTELLEN
+                                                                HIER EPISODENSAMMLUNG DARSTELLEN-->
+
 
                                         <!--HIER EPISODENSAMMLUNG DARSTELLEN
                                                                 HIER EPISODENSAMMLUNG DARSTELLEN-->
@@ -390,8 +457,8 @@
 
 
                                     </Expander.Content>
-                              
-                                    
+
+
                                 </Expander>
                             </Grid>
 
@@ -417,17 +484,17 @@
                         <Border Name="Border" Background="White" BorderBrush="Black" BorderThickness="0,0,0,1" CornerRadius="0">
                             <ContentPresenter x:Name="ListBoxContent"/>
                         </Border>
-                        <ControlTemplate.Triggers>
+                        <!--<ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="true">
                                 <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="false">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="0.85"/>
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
                             </Trigger>
-                        </ControlTemplate.Triggers>
+                        </ControlTemplate.Triggers>-->
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
