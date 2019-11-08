@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -72,5 +73,7 @@ namespace PresentationLayer.View
         {
             UpdateColumnsWidth(sender as ListView);
         }
+
+
     }
 }

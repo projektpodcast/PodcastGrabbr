@@ -22,36 +22,35 @@ namespace PresentationLayer.ViewModel
 
         #region Properties
         private IView _podcastUi { get; set; }
-        //private IView _settingsUi { get; set; }
         private IView _settingsUi { get; set; }
         private IView _userNavigationUi { get; set; }
         public IView UserNavigationUi
         {
             get { return _userNavigationUi; }
-            set { _userNavigationUi = value; OnPropertyChanged("UserNavigationUi"); }
+            private set { _userNavigationUi = value; OnPropertyChanged("UserNavigationUi"); }
         }
 
         private object _currentContent { get; set; }
         public object CurrentContent
         {
             get { return _currentContent; }
-            set { _currentContent = value; OnPropertyChanged("CurrentContent"); OnTest(_currentContent.ToString()); }
+            private set { _currentContent = value; OnPropertyChanged("CurrentContent"); OnTest(_currentContent.ToString()); }
         }
+
         #endregion Properties
         public MainViewModel(/*IInitializerService initializerService*/)
         {
             _initializerService = new DependencyService();
-
             _businessAccessService = _initializerService.InitializeBusinessLayer();
             _configService = _initializerService.InitializeConfigService();
 
 
-
             InitializeUserNavigationUi();
-            InitializeCurrentContent();
+            //InitializeCurrentContent();
+            CurrentContent = new DownloadsView();
         }
 
-        public void InitializeCurrentContent()
+        private void InitializeCurrentContent()
         {
             if (_podcastUi == null)
             {
@@ -60,20 +59,20 @@ namespace PresentationLayer.ViewModel
             DecideCurrentContent();
         }
 
-        public void InitializePodcastUi()
+        private void InitializePodcastUi()
         {
             IViewModel viewModel = new PodcastViewModel(_businessAccessService);
             _podcastUi = _initializerService.InitializeView(viewModel);
         }
 
-        public void InitializeSettingsUi()
+        private void InitializeSettingsUi()
         {
             IViewModel viewModel = new SettingsViewModel(_configService);
             _settingsUi = _initializerService.InitializeView(viewModel);
             SetUpSubscriber(viewModel);
         }
 
-        public void InitializeUserNavigationUi()
+        private void InitializeUserNavigationUi()
         {
             UserNavigationViewModel viewModel = new UserNavigationViewModel();
             UserNavigationUi = _initializerService.InitializeView(viewModel);

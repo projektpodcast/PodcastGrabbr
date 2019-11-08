@@ -52,13 +52,13 @@
             </Setter>
         </Style>
 
-        <Style x:Key="BurgerButtonTest" TargetType="{x:Type Button}">
+        <Style x:Key="BurgerButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#FFBFAAF5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <DockPanel>
-                            <Border x:Name="Bd" BorderBrush="#463574" BorderThickness="2" CornerRadius="50" Background="#463574" SnapsToDevicePixels="True">
+                            <Border x:Name="Bd" SnapsToDevicePixels="True">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="2*"/>
@@ -74,16 +74,14 @@
                                         <ColumnDefinition Width="50*"/>
                                         <ColumnDefinition Width="25*"/>
                                     </Grid.ColumnDefinitions>
+                                    <Rectangle x:Name="Background" Fill="#463574" Grid.RowSpan="7" Grid.ColumnSpan="3" RadiusX="40" RadiusY="50"></Rectangle>
                                     <Rectangle Grid.Row="2" Grid.Column="0" Fill="Transparent" Height="2"></Rectangle>
-                                    <Rectangle x:Name="Burger1" Grid.Row="1" Grid.Column="1" Fill="White" RadiusX="5" RadiusY="5" Height="3" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle x:Name="Burger1" Grid.Row="1" Grid.Column="1" Fill="White"  Height="3" HorizontalAlignment="Stretch"></Rectangle>
                                     <Rectangle Grid.Row="2" Grid.Column="2" Fill="Transparent" Height="2"></Rectangle>
-                                    <Rectangle x:Name="Burger2" Grid.Row="3" Grid.Column="1" Fill="White" RadiusX="5" RadiusY="5" Height="3" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle x:Name="Burger2" Grid.Row="3" Grid.Column="1" Fill="White"  Height="3" HorizontalAlignment="Stretch"></Rectangle>
                                     <Rectangle Grid.Row="4" Grid.Column="4" Fill="Transparent" Height="2"></Rectangle>
-                                    <Rectangle x:Name="Burger3" Grid.Row="5" Grid.Column="1" Fill="White" RadiusX="5" RadiusY="5" Height="3" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle x:Name="Burger3" Grid.Row="5" Grid.Column="1" Fill="White" Height="3" HorizontalAlignment="Stretch"></Rectangle>
                                     <Rectangle Grid.Row="6" Grid.Column="6" Fill="Transparent" Height="2"></Rectangle>
-
-
-
                                 </Grid>
                             </Border>
                         </DockPanel>
@@ -95,8 +93,7 @@
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.4"/>
                             </Trigger>-->
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="Bd" Value="#FFBFAAF5"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="#FFBFAAF5"/>
+                                <Setter Property="Fill" TargetName="Background" Value="#FFBFAAF5"/>
                                 <Setter Property="Fill" TargetName="Burger1" Value="#463574"/>
                                 <Setter Property="Fill" TargetName="Burger2" Value="#463574"/>
                                 <Setter Property="Fill" TargetName="Burger3" Value="#463574"/>
@@ -107,6 +104,9 @@
                             <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource myBrush}"/>
                                     <Setter Property="Opacity" Value="1"/>
                                     <Setter Property="BorderBrush" TargetName="Bd" Value="Black"/>-->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -134,7 +134,7 @@
 
 
             <Rectangle x:Name="MenueBackground" Fill="#FF5A5193" Grid.Row="0" Width="Auto" Grid.RowSpan="7"></Rectangle>
-            <Button x:Name="BurgerButton" Style="{StaticResource BurgerButtonTest}"  Height="30" Width="30" Grid.Row="0" Grid.Column="0" 
+            <Button x:Name="BurgerButton" Style="{StaticResource BurgerButton}" Height="30" Width="30" Grid.Row="0" Grid.Column="0" 
                     HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ToggleMenueVisibility}"
                     Margin="2,10,0,0"></Button>
 
