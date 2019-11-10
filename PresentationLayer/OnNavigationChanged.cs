@@ -8,5 +8,6 @@ namespace PresentationLayer
 {
     public class OnNavigationButtonClicked : EventArgs
     {
+        public string ChangeTo { get; set; }
     }
 }

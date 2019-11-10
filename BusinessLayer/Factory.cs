@@ -23,7 +23,7 @@ namespace BusinessLayer
                     dataTargetInstance = new MySQLDataTarget();
                     break;
                 case 3:
-                    dataTargetInstance = null;
+                    dataTargetInstance = null; //impl.
                     break;
                 default:
                     throw new Exception(); //impl.
@@ -43,7 +43,7 @@ namespace BusinessLayer
                     dataSourceInstance = new MySQLDataSource();
                     break;
                 case 3:
-                    dataSourceInstance = null;
+                    dataSourceInstance = null; //impl.
                     break;
                 default:
                     throw new Exception(); //impl.

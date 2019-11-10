@@ -21,6 +21,7 @@ namespace PresentationLayer.ViewModel
         #endregion Services
 
         #region Properties
+        private DownloadsView _dopwnloadsUi { get; set; }
         private IView _podcastUi { get; set; }
         private IView _settingsUi { get; set; }
         private IView _userNavigationUi { get; set; }
@@ -46,8 +47,8 @@ namespace PresentationLayer.ViewModel
 
 
             InitializeUserNavigationUi();
-            //InitializeCurrentContent();
-            CurrentContent = new DownloadsView();
+            InitializeCurrentContent();
+            //CurrentContent = new DownloadsView();
         }
 
         private void InitializeCurrentContent()
@@ -79,6 +80,11 @@ namespace PresentationLayer.ViewModel
             SetUpSubscriber(viewModel);
         }
 
+        private void InitializeDownloadsUi()
+        {
+            _dopwnloadsUi = new DownloadsView();
+        }
+
         private void DecideCurrentContent()
         {
             bool dataTargetIsSet = _configService.IsPropertySet();
@@ -96,18 +102,18 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private void SwitchCurrentContentTo()
-        {
-            if (CurrentContent == _podcastUi)
-            {
-                InitializeSettingsUi();
-                CurrentContent = _settingsUi;
-            }
-            else
-            {
-                SwitchToPodcastUi();
-            }
-        }
+        //private void SwitchCurrentContentTo()
+        //{
+        //    if (CurrentContent == _podcastUi)
+        //    {
+        //        InitializeSettingsUi();
+        //        CurrentContent = _settingsUi;
+        //    }
+        //    else
+        //    {
+        //        SwitchToPodcastUi();
+        //    }
+        //}
 
         private void SwitchToPodcastUi()
         {
@@ -123,6 +129,26 @@ namespace PresentationLayer.ViewModel
             }
         }
 
+        private void SwitchToSettingsUi()
+        {
+            if (CurrentContent != _settingsUi)
+            {
+                InitializeSettingsUi();
+                CurrentContent = _settingsUi;
+            }
+        }
+
+        private void SwitchToDownloads()
+        {
+            if (CurrentContent != _dopwnloadsUi)
+            {
+                InitializeDownloadsUi();
+                CurrentContent = _dopwnloadsUi;
+            }
+        }
+
+
+
         private void ReloadPodcastUi()
         {
             _podcastUi.ViewModelType = null;
@@ -133,7 +159,21 @@ namespace PresentationLayer.ViewModel
 
         public void UserNavigationUi_OnTestChanged(object sender, OnNavigationButtonClicked e)
         {
-            SwitchCurrentContentTo();
+            //SwitchCurrentContentTo();
+            switch (e.ChangeTo)
+            {
+                case "ToSettings":
+                    SwitchToSettingsUi();
+                        break;
+                case "ToPodcast":
+                    SwitchToPodcastUi();
+                    break;
+                case "ToDownloads":
+                    SwitchToDownloads();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public event EventHandler<OnCurrentContentChanged> OnTestChanged;

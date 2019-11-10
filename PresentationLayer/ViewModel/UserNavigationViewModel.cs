@@ -189,7 +189,7 @@ namespace PresentationLayer.ViewModel
         {
             if (OnTestChanged != null)
             {
-                OnTestChanged(this, new OnNavigationButtonClicked());
+                OnTestChanged(this, new OnNavigationButtonClicked() { ChangeTo = property });
             }
         }
 
