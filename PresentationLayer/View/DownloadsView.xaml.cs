@@ -30,5 +30,9 @@ namespace PresentationLayer.View
             this.DataContext = new PodcastViewModel(new BusinessLayer.BusinessAccess());
         }
 
+        private void ListBoxItem_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

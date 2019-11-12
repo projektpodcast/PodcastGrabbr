@@ -58,6 +58,7 @@ namespace PresentationLayer.ViewModel
             p1.ShowInfo.Description = "The podcast of Comedian Joe Rogan.";
             p1.ShowInfo.ImageUri = bild;
             p1.ShowInfo.LastUpdated = DateTime.UtcNow;
+            
 
             Podcasts.Add(p1);
             Podcasts.Add(p1);
@@ -210,7 +211,7 @@ namespace PresentationLayer.ViewModel
                 PublishDate = now,
                 ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg",
                 Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
-                Summary = SelectedShow.Description,
+                Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called 'StandUP!with Pete Dominick' available on Apple Podcasts.",
             });
         }
 

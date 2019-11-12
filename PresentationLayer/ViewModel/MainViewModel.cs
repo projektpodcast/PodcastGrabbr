@@ -119,8 +119,11 @@ namespace PresentationLayer.ViewModel
         {
             if (_configService.IsPropertySet() == true)
             {
-                _settingsUi.ViewModelType = null;
-                _settingsUi = null;
+                if (_settingsUi != null)
+                {
+                    _settingsUi.ViewModelType = null;
+                    _settingsUi = null;
+                }
                 CurrentContent = _podcastUi;
             }
             else
