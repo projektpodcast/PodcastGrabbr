@@ -199,7 +199,7 @@
             <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
         </Style>
 
-       
+
         <ControlTemplate x:Key="ExpanderControlTemplate2" TargetType="{x:Type Expander}">
             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" SnapsToDevicePixels="True">
                 <DockPanel>
@@ -453,9 +453,150 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
+        <Style x:Key="ShowItems" TargetType="{x:Type ListBoxItem}">
+            <!--<Setter Property="Width" Value="150"></Setter>-->
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="Border" Background="{StaticResource DownloadBrush}" BorderBrush="White" BorderThickness="0,0,0,1" CornerRadius="0">
+                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
+                        </Border>
+                        <!--<ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="false">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
+            </EventSetter>
+        </Style>
 
+
+        <Style x:Key="EpisodeItems" TargetType="{x:Type ListBoxItem}">
+            <!--<Setter Property="Width" Value="150"></Setter>-->
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="Border" Background="White" BorderBrush="White" CornerRadius="0">
+                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
+                        </Border>
+                        <!--<ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="false">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
+            </EventSetter>
+        </Style>
 
         <Style x:Key="EpisodeListStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Border BorderThickness="0,1,0,0" BorderBrush="Black" SnapsToDevicePixels="True" x:Name="Bd" Background="Transparent">
+                            <Grid Margin="3,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto" MinWidth="10"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="16"/>
+                                    <RowDefinition Height="auto" MaxHeight="16"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <!--<WrapPanel>-->
+                                <DockPanel Grid.Column="0" Grid.Row="0">
+                                    <TextBlock x:Name="EpisodeTitle" Text="{Binding Title}" Style="{StaticResource EpisodeTb}" FontWeight="Medium"></TextBlock>
+                                </DockPanel>
+                                <DockPanel Grid.Column="1" Grid.Row="0">
+                                    <TextBlock Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"
+                                                                               HorizontalAlignment="Right" FontWeight="Medium"></TextBlock>
+                                </DockPanel>
+                                <!--<DockPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" MinWidth="100" HorizontalAlignment="Left" VerticalAlignment="Stretch">-->
+
+                                <TextBlock Text="{Binding Summary}" TextTrimming="WordEllipsis" VerticalAlignment="Stretch"
+                                                                       Grid.Row="1" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" MaxHeight="32"/>
+                                <!--</DockPanel>-->
+                                <DockPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Top" Margin="0,5,0,5">
+                                    <Button Style="{StaticResource PlayButton}" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                            Command="{Binding DataContext.PlayEpisode, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}" 
+                                            CommandParameter="{Binding}"/>
+                                    <Button Style="{StaticResource DeleteButton}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                </DockPanel>
+                                <!--</WrapPanel>-->
+                            </Grid>
+                        </Border>
+
+                        <DataTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource WindowBackgroundTranslucent}"/>
+                            </Trigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <ControlTemplate x:Key="ListBoxControlTemplate1" TargetType="{x:Type ListBox}">
+            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" 
+                    Padding="1" SnapsToDevicePixels="True">
+                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" TargetName="Bd" Value="White"/>
+                    <Setter Property="BorderBrush" TargetName="Bd" Value="#FFD9D9D9"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="True"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="False"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                </MultiTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+
+
+        <Style x:Key="ShowListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="{StaticResource WindowBackground}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
@@ -465,7 +606,7 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
- 
+
                         <Border>
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -562,14 +703,14 @@
                                     </Expander.Header>
                                     <Expander.Content>
 
-
+                                        <!--<ListBox Style="{StaticResource EpisodeListStyle}" ItemsSource="{Binding EpisodeList}" 
+                                                 ItemContainerStyle="{StaticResource EpisodeItems}" Template="{DynamicResource ListBoxControlTemplate1}"
+                                                 SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"></ListBox>-->
 
                                         <ItemsControl ItemsSource="{Binding EpisodeList}" Background="White" Grid.Column="0" 
                                                       HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True" Margin="4,0,0,0">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-
-
 
                                                     <Border BorderThickness="0,1,0,0" BorderBrush="Black" SnapsToDevicePixels="True" x:Name="Bd" Background="Transparent">
                                                         <Grid Margin="3,0,0,0">
@@ -586,7 +727,7 @@
                                                                 <RowDefinition/>
                                                             </Grid.RowDefinitions>
 
-                                                            <!--<WrapPanel>-->
+
                                                             <DockPanel Grid.Column="0" Grid.Row="0">
                                                                 <TextBlock Text="{Binding Title}" Style="{StaticResource EpisodeTb}" FontWeight="Medium"></TextBlock>
                                                             </DockPanel>
@@ -594,35 +735,26 @@
                                                                 <TextBlock Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"
                                                                                HorizontalAlignment="Right" FontWeight="Medium"></TextBlock>
                                                             </DockPanel>
-                                                            <!--<DockPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" MinWidth="100" HorizontalAlignment="Left" VerticalAlignment="Stretch">-->
+
 
                                                             <TextBlock Text="{Binding Summary}" TextTrimming="WordEllipsis" VerticalAlignment="Stretch"
                                                                        Grid.Row="1" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" MaxHeight="32"/>
-                                                            <!--</DockPanel>-->
+
                                                             <DockPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Top" Margin="0,5,0,5">
-                                                                <Button Style="{StaticResource PlayButton}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                                                <Button Style="{StaticResource DeleteButton}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                                                <Button Style="{StaticResource PlayButton}"
+                                                                        Command="{Binding DataContext.PlayEpisode, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}" 
+                                                                        CommandParameter="{Binding}"/>
+                                                                        
+                                                                        <!--Command="{Binding PlayEpisode}"
+                                                                        CommandParameter="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+                                                                <Button Style="{StaticResource DeleteButton}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                                                        Command="{Binding DataContext.DeleteEpisode, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}" 
+                                                                        CommandParameter="{Binding}"/>
                                                             </DockPanel>
-                                                            <!--</WrapPanel>-->
+
                                                         </Grid>
                                                     </Border>
-                                                    <!--<WrapPanel Orientation="Horizontal">
-                                                        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
-                                                            <Grid HorizontalAlignment="Stretch">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*" MinWidth="80"/>
-                                                                    <ColumnDefinition Width="auto" MinWidth="20"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <DockPanel Grid.Column="0">
-                                                                    <TextBlock Text="{Binding Title}" Style="{StaticResource EpisodeTb}"></TextBlock>
-                                                                </DockPanel>
-                                                                <DockPanel Grid.Column="1">
-                                                                    <TextBlock Text="{Binding PublishDate}" Style="{StaticResource EpisodeTb}"
-                                                                               HorizontalAlignment="Right"></TextBlock>
-                                                                </DockPanel>
-                                                            </Grid>
-                                                        </DockPanel>
-                                                    </WrapPanel>-->
+
                                                     <DataTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
                                                             <Setter TargetName="Bd" Property="Background" Value="{StaticResource WindowBackgroundTranslucent}"/>
@@ -631,12 +763,7 @@
 
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
-
-                                            <!--<TextBlock Text="{Binding PublisherName}" Style="{StaticResource EpisodeTb}"></TextBlock>-->
-                                            <!--<TextBlock Text="TestEintrag" Style="{StaticResource EpisodeTb}"></TextBlock>-->
                                         </ItemsControl>
-
-
 
 
                                         <!--HIER EPISODENSAMMLUNG DARSTELLEN
@@ -667,36 +794,7 @@
             </Setter>
 
         </Style>
-        <Style x:Key="ShowItems" TargetType="{x:Type ListBoxItem}">
-            <!--<Setter Property="Width" Value="150"></Setter>-->
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="Border" Background="{StaticResource DownloadBrush}" BorderBrush="White" BorderThickness="0,0,0,1" CornerRadius="0">
-                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
-                        </Border>
-                        <!--<ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="false">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>-->
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
-            </EventSetter>
-        </Style>
+
 
     </Page.Resources>
 
@@ -713,7 +811,7 @@
         <Rectangle Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource WindowBackground}"></Rectangle>
         <Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource WindowBackground}"></Rectangle>
 
-        <ListBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource EpisodeListStyle}" ItemsSource="{Binding Podcasts}"
+        <ListBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ShowListStyle}" ItemsSource="{Binding Podcasts}"
                  ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemContainerStyle="{StaticResource ShowItems}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         </ListBox>

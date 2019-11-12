@@ -24,6 +24,7 @@ namespace PresentationLayer.View
     public partial class DownloadsView : Page, IView
     {
         public IViewModel ViewModelType { get; set; }
+
         public DownloadsView(IViewModel viewModel)
         {
             InitializeComponent();
@@ -36,5 +37,6 @@ namespace PresentationLayer.View
         {
             e.Handled = true;
         }
+
     }
 }
