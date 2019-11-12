@@ -39,31 +39,8 @@ namespace PresentationLayer.ViewModel
             SetList();
             FillEpisodeListWithMockData();
 
-            MergeMockData();
         }
 
-        public ObservableCollection<Podcast> Podcasts { get; set; }
-
-        private void MergeMockData()
-        {
-            Podcasts = new ObservableCollection<Podcast>();
-            string bild = "https://img.br.de/6f808e9b-beb7-464c-a912-f8cc752ffe8d.png?w=1800";
-            Podcast p1 = new Podcast();
-            p1.EpisodeList = new List<Episode>();
-            p1.EpisodeList = EpisodesCollection.ToList();
-            p1.ShowInfo = new Show();
-
-            p1.ShowInfo.PodcastTitle = "Titel des PodcastsTitel des PodcastsTitel des Podcasts";
-            p1.ShowInfo.PublisherName = "Ich bin der Publisher";
-            p1.ShowInfo.Description = "The podcast of Comedian Joe Rogan.";
-            p1.ShowInfo.ImageUri = bild;
-            p1.ShowInfo.LastUpdated = DateTime.UtcNow;
-            
-
-            Podcasts.Add(p1);
-            Podcasts.Add(p1);
-            Podcasts.Add(p1);
-         }
 
         #region ICommand Properties
         private ICommand _deleteAllPodcasts;

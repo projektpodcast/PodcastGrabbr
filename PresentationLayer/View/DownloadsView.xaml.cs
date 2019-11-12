@@ -21,13 +21,15 @@ namespace PresentationLayer.View
     /// <summary>
     /// Interaction logic for DownloadsView.xaml
     /// </summary>
-    public partial class DownloadsView : Page
+    public partial class DownloadsView : Page, IView
     {
-
-        public DownloadsView()
+        public IViewModel ViewModelType { get; set; }
+        public DownloadsView(IViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = new PodcastViewModel(new BusinessLayer.BusinessAccess());
+            ViewModelType = viewModel;
+            this.DataContext = ViewModelType;
+            //this.DataContext = new PodcastViewModel(new BusinessLayer.BusinessAccess());
         }
 
         private void ListBoxItem_RequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)

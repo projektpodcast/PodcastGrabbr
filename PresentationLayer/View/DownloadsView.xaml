@@ -9,6 +9,7 @@
       Title="DownloadsView">
 
     <Page.Resources>
+
         <SolidColorBrush x:Key="WindowBackground" Color="#FF5A5193" Opacity="1"/>
         <SolidColorBrush x:Key="WindowBackgroundTranslucent" Color="#FF5A5193" Opacity="0.3"/>
         <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
@@ -18,6 +19,7 @@
         <SolidColorBrush x:Key="myBrush3" Color="#FFD3B9F1" Opacity="1"/>
         <SolidColorBrush x:Key="DownloadBrushHighlight" Color="#FF6F509C" Opacity="1"/>
         <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
+        <SolidColorBrush x:Key="RedBrushBright2" Color="#FFB01B1B" Opacity="1"/>
         <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
         <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
         <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
@@ -25,26 +27,38 @@
         <SolidColorBrush x:Key="GreenBrushPlayTranslucent" Color="Green" Opacity="0.8"/>
         <SolidColorBrush x:Key="WhiteTranslucent" Color="White" Opacity="0.8"/>
 
+        <Style x:Key="EpisodeTb" TargetType="{x:Type TextBlock}">
+            <Setter Property="Opacity" Value="1"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="FontSize" Value="10pt"></Setter>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+
         <Style x:Key="PlayButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="Bd" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Border x:Name="Bd" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
-                                <Rectangle x:Name="Circle" Fill="{StaticResource GreenBrushBright}" RadiusX="30" RadiusY="30"></Rectangle>
+                                <Rectangle x:Name="Circle" Fill="{StaticResource GreenBrushBright}" RadiusX="30" RadiusY="30" Width="20"></Rectangle>
                                 <Path x:Name="Triangle" Fill="White" Data="M 16 10 L 7 3 L 7 17 Z"/>
                                 <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
+                                <TextBlock x:Name="ButtonText" Grid.Column="1" Text="Abspielen" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource EpisodeTb}"></TextBlock>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
                                 <Setter Property="Fill" TargetName="Circle" Value="{StaticResource GreenBrushPlay}"/>
+                                <Setter TargetName="ButtonText" Property="Foreground" Value="#FF4D4D4D"/>
                                 <!--<Setter Property="Opacity" TargetName="Triangle" Value=""/>-->
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
@@ -58,6 +72,82 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <Rectangle x:Name="Circle" Fill="{StaticResource RedBrushBright2}" RadiusX="30" RadiusY="30" Width="20"></Rectangle>
+                                <Path x:Name="TopLeftToBottomRight" Fill="White" Data="M 3 5 L 15 17 L 17 15 L 5 3 Z"/>
+                                <Path x:Name="TopRightToBottomLeft" Fill="White" Data="M 3 15 L 15 3 L 17 5 L 5 17 Z"/>
+                                <TextBlock x:Name="ButtonText" Grid.Column="1" Text="Löschen" HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center" Style="{StaticResource EpisodeTb}"></TextBlock>
+                                <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="Circle" Value="{StaticResource RedBrushBright}"/>
+                                <Setter TargetName="ButtonText" Property="Foreground" Value="#FF4D4D4D"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--<Style x:Key="DeleteButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Width="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15"></ColumnDefinition>
+                                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle x:Name="WarningBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10" 
+                                           Height="15" Width="15" Fill="{StaticResource RedBrush}"></Rectangle>
+                                <Grid Width="11" Height="11">
+                                    <Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>
+                                    <Path Fill="White" Data="M 9 0 L 0 9 L 2 11 L 11 2 Z"/>
+                                </Grid>
+                                <TextBlock x:Name="ButtonDescription" Text="Show entfernen" Grid.Column="1" Style="{StaticResource HeadlineTb}" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           FontSize="13"></TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Fill" TargetName="WarningBorder" Value="{StaticResource RedBrushBright}"/>
+                                <Setter Property="Opacity" TargetName="ButtonDescription" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Visibility" Value="Hidden"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
 
         <Style x:Key="ExpandButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
@@ -98,14 +188,7 @@
             <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
         </Style>
 
-        <Style x:Key="EpisodeTb" TargetType="{x:Type TextBlock}">
-            <Setter Property="Opacity" Value="1"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-            <Setter Property="FontSize" Value="10pt"></Setter>
-            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-        </Style>
+
 
         <Style x:Key="Episode2Tb" TargetType="{x:Type TextBlock}">
             <Setter Property="Opacity" Value="1"></Setter>
@@ -116,8 +199,7 @@
             <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
         </Style>
 
-
-
+       
         <ControlTemplate x:Key="ExpanderControlTemplate2" TargetType="{x:Type Expander}">
             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" SnapsToDevicePixels="True">
                 <DockPanel>
@@ -125,7 +207,8 @@
                                   Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontStyle="{TemplateBinding FontStyle}" 
                                   FontStretch="{TemplateBinding FontStretch}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" 
                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                  IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Margin="0" MinWidth="0" MinHeight="0" 
+                                  IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                  Margin="0" MinWidth="0" MinHeight="0" 
                                   Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                         <ToggleButton.FocusVisualStyle>
                             <Style>
@@ -154,7 +237,8 @@
                                                     <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" 
                                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Left" Margin="0" 
                                                                       RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
-                                                    <Path x:Name="PlusSign" Data="M 8 0 L 12 0 L 12 8 L 20 8 L 20 12 L 12 12 L 12 20 L 8 20 L 8 12 L 0 12 L 0 8 L 8 8 Z" Fill="{StaticResource WhiteTranslucent}"/>
+                                                    <Path Margin="2,2,0,0" x:Name="PlusSign" Data="M 8 0 L 12 0 L 12 8 L 20 8 L 20 12 L 12 12 L 12 20 L 8 20 L 8 12 L 0 12 L 0 8 L 8 8 Z" 
+                                                          Fill="{StaticResource WhiteTranslucent}" Stroke="Black" StrokeThickness="2"/>
                                                 </Grid>
                                             </Border>
                                             <ControlTemplate.Triggers>
@@ -166,6 +250,7 @@
                                                     <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>-->
                                                     <!--<Setter Property="Stroke" TargetName="arrow" Value="Black"/>-->
                                                     <Setter Property="Fill" TargetName="PlusSign" Value="White"/>
+                                                    <Setter Property="Stroke" TargetName="PlusSign" Value="{StaticResource DownloadBrushTranslucent}"/>
                                                 </Trigger>
                                                 <Trigger Property="IsPressed" Value="True">
                                                     <!--<Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
@@ -380,6 +465,7 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
+ 
                         <Border>
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -388,14 +474,15 @@
                                 </Grid.RowDefinitions>
 
 
-
-                                <Expander Margin="0,0,0,0" HorizontalAlignment="Left" Background="{StaticResource DownloadBrush}" 
+                                <Expander HorizontalAlignment="Left" Background="{StaticResource DownloadBrush}" 
                                           Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsPresenter}}}"
                                           x:Name="EpisodeExpander" Grid.Row="0"
-                                          VerticalAlignment="Center" 
+                                          VerticalAlignment="Center" Padding="0,0,0,0" Margin="0,0,0,0"
                                           Foreground="Black" BorderThickness="0"
-                                          HorizontalContentAlignment="Stretch" Template="{DynamicResource ExpanderControlTemplate2}"
-                                          IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}">
+                                          HorizontalContentAlignment="Stretch" Template="{DynamicResource ExpanderControlTemplate2}">
+
+                                    <!--IsExpanded="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"-->
+
                                     <!--IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, 
                                     RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"-->
                                     <Expander.Header>
@@ -433,10 +520,19 @@
                                                     </Image.Source>
                                                 </Image>
 
-                                                <Image x:Name="ShowImage" Grid.Row="0" Grid.Column="0">
+                                                <!--<Image x:Name="ShowImage" Grid.Row="0" Grid.Column="0">
                                                     <Image.Source>
                                                         <BitmapImage DecodePixelWidth="100" DecodePixelHeight="100" 
-                                                 UriSource="{Binding ShowInfo.ImageUri}">
+                                                 UriSource="{Binding ImageUri}">
+                                                        </BitmapImage>
+                                                    </Image.Source>
+                                                </Image>-->
+
+                                                <!--<Image x:Name="ShowImage" Grid.Row="0" Grid.Column="0" Stretch="Fill" Source="{Binding ShowInfo.ImageUri, Converter={StaticResource UriToThumbnail}}">-->
+                                                <Image x:Name="ShowImage" Grid.Row="0" Grid.Column="0">
+                                                    <Image.Source>
+                                                        <BitmapImage
+                                                            UriSource="{Binding ShowInfo.ImageUri}" DecodePixelHeight="100" DecodePixelWidth="100"  >
                                                         </BitmapImage>
                                                     </Image.Source>
                                                 </Image>
@@ -503,8 +599,9 @@
                                                             <TextBlock Text="{Binding Summary}" TextTrimming="WordEllipsis" VerticalAlignment="Stretch"
                                                                        Grid.Row="1" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" MaxHeight="32"/>
                                                             <!--</DockPanel>-->
-                                                            <DockPanel Grid.Column="0" Grid.Row="3" VerticalAlignment="Top" Margin="0,5,0,5">
+                                                            <DockPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Top" Margin="0,5,0,5">
                                                                 <Button Style="{StaticResource PlayButton}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                                                <Button Style="{StaticResource DeleteButton}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                                             </DockPanel>
                                                             <!--</WrapPanel>-->
                                                         </Grid>
@@ -574,11 +671,14 @@
             <!--<Setter Property="Width" Value="150"></Setter>-->
             <Setter Property="OverridesDefaultStyle" Value="true"/>
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="Border" Background="White" BorderBrush="Black" BorderThickness="0,0,0,1" CornerRadius="0">
-                            <ContentPresenter x:Name="ListBoxContent"/>
+                        <Border Name="Border" Background="{StaticResource DownloadBrush}" BorderBrush="White" BorderThickness="0,0,0,1" CornerRadius="0">
+                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
                         </Border>
                         <!--<ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="true">
@@ -594,8 +694,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
             <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
             </EventSetter>
         </Style>
@@ -617,7 +715,7 @@
 
         <ListBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource EpisodeListStyle}" ItemsSource="{Binding Podcasts}"
                  ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemContainerStyle="{StaticResource ShowItems}"
-                 SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         </ListBox>
 
 

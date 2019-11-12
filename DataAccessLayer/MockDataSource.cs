@@ -45,6 +45,43 @@ namespace DataAccessLayer
         //    return mockList;
         //}
 
+        public List<Podcast> GetDownloadedPodcasts()
+        {
+            List<Show> showList = new List<Show>();
+            showList = GetAllShows();
+            List<Episode> episodeList = new List<Episode>();
+
+            DateTime now = DateTime.Now;
+            Episode episode = new Episode
+            {
+                Title = "Neue Show Selected",
+                PublishDate = now,
+                Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
+                Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called " +
+                "'StandUP!with Pete Dominick' available on Apple Podcasts.",
+            };
+            episodeList.Add(episode);
+            episodeList.Add(episode);
+            episodeList.Add(episode);
+            episodeList.Add(episode);
+            episodeList.Add(episode);
+            episodeList.Add(episode);
+            episodeList.Add(episode);
+
+            List<Podcast> allDownloadedPodcasts = new List<Podcast>();
+
+            foreach (var item in showList)
+            {
+                Podcast podcast = new Podcast();
+                podcast.ShowInfo = item;
+                podcast.EpisodeList = episodeList;
+                allDownloadedPodcasts.Add(podcast);
+            }
+            return allDownloadedPodcasts;
+        }
+
+
+
         public List<Show> GetAllShows()
         {
             List<Show> mockList = new List<Show>();

@@ -21,7 +21,7 @@ namespace PresentationLayer.ViewModel
         #endregion Services
 
         #region Properties
-        private DownloadsView _dopwnloadsUi { get; set; }
+        private IView _downloadsUi { get; set; }
         private IView _podcastUi { get; set; }
         private IView _settingsUi { get; set; }
         private IView _userNavigationUi { get; set; }
@@ -82,7 +82,8 @@ namespace PresentationLayer.ViewModel
 
         private void InitializeDownloadsUi()
         {
-            _dopwnloadsUi = new DownloadsView();
+            IViewModel viewModel = new DownloadsViewModel(_businessAccessService);
+            _downloadsUi = new DownloadsView(viewModel);
         }
 
         private void DecideCurrentContent()
@@ -126,6 +127,7 @@ namespace PresentationLayer.ViewModel
                 }
                 CurrentContent = _podcastUi;
             }
+
             else
             {
                 //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -143,10 +145,20 @@ namespace PresentationLayer.ViewModel
 
         private void SwitchToDownloads()
         {
-            if (CurrentContent != _dopwnloadsUi)
+            if (CurrentContent != _downloadsUi)
             {
-                InitializeDownloadsUi();
-                CurrentContent = _dopwnloadsUi;
+                if (_downloadsUi != null)
+                {
+                    CurrentContent = _downloadsUi;
+                    //_downloadsUi.ViewModelType = null;
+                    //_downloadsUi = null;
+                }
+                else
+                {
+                    InitializeDownloadsUi();
+                    CurrentContent = _downloadsUi;
+                }
+
             }
         }
 
@@ -156,7 +168,6 @@ namespace PresentationLayer.ViewModel
         {
             _podcastUi.ViewModelType = null;
             _podcastUi = null;
-
             InitializePodcastUi();
         }
 

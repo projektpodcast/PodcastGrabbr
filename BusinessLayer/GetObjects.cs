@@ -37,5 +37,12 @@ namespace BusinessLayer
             return null;
             
         }
+
+        public List<Podcast> GetMockDownloadedPodcasts()
+        {
+            MockDataSource dal = new MockDataSource();
+
+            return dal.GetDownloadedPodcasts();
+        }
     }
 }

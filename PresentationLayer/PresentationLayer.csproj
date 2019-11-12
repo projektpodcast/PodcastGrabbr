@@ -68,6 +68,7 @@
     <Compile Include="Services\IUserConfigService.cs" />
     <Compile Include="Services\OnConfigChanged.cs" />
     <Compile Include="Services\UserConfigService.cs" />
+    <Compile Include="ViewModel\DownloadsViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Services\InizializerService.cs" />
     <Compile Include="OnNavigationChanged.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="View\PodcastView.xaml.cs">
       <DependentUpon>PodcastView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UriToCachedImageConverter.cs" />
     <Compile Include="View\UserNavigationView.xaml.cs">
       <DependentUpon>UserNavigationView.xaml</DependentUpon>
     </Compile>
