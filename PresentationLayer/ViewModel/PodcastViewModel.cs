@@ -24,6 +24,13 @@ namespace PresentationLayer.ViewModel
             set { _visibilitySearchBar = value; OnPropertyChanged("VisibilitySearchBar"); }
         }
 
+        private List<string> _filterOptions { get; set; }
+        public List<string> FilterOptions
+        {
+            get { return _filterOptions; }
+            set { _filterOptions = value; OnPropertyChanged("FilterOptions"); }
+        }
+
         private IBusinessAccessService _businessAccess { get; set; }
         private Show _selectedShow { get; set; }
         public Show SelectedShow
@@ -42,6 +49,14 @@ namespace PresentationLayer.ViewModel
 
             AllShows = new ObservableCollection<Show>();
             EpisodesCollection = new ObservableCollection<Episode>();
+
+
+            FilterOptions = new List<string>();
+            FilterOptions.Add("Show");
+            FilterOptions.Add("Episode");
+
+
+
 
             SetList();
             FillEpisodeListWithMockData();
