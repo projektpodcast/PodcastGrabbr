@@ -17,6 +17,7 @@
     <Page.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         <local:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibility"/>
+        <local:NullToVisibilityConverter x:Key="NullToVisibility"/>
 
         <SolidColorBrush x:Key="SearchButtonStroke" Color="#FF5A5193" Opacity="1"/>
         <SolidColorBrush x:Key="WindowBackground" Color="#FF5A5193" Opacity="1"/>
@@ -1064,6 +1065,8 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>-->
 
+
+        
         <ControlTemplate x:Key="ComboBoxControlTemplate2" TargetType="{x:Type ComboBox}">
             <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
                 <Grid.ColumnDefinitions>
@@ -1210,9 +1213,8 @@
                                     <Condition Property="IsMouseOver" Value="True"/>
                                     <Condition Property="IsKeyboardFocused" Value="False"/>
                                 </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd" Value="red"/>
-                                <!--<Setter Property="Background" TargetName="Bd" Value="#1F26A0DA"/>-->
-                                <!--<Setter Property="BorderBrush" TargetName="Bd" Value="white"/>-->
+                                <Setter Property="Background" TargetName="Bd" Value="#3DDADADA"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="White"/>
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -1385,34 +1387,23 @@
                     </Border>
 
 
-                    <!--<Border BorderBrush="White" BorderThickness="0,2,0,2" Grid.Column="1" Width="350" Margin="0,0,0,0" Visibility="{Binding VisibilitySearchBar}">-->
-                    <!--<Rectangle Grid.Column="1" Width="auto" HorizontalAlignment="Stretch" Height="20" Fill="White" Margin="0,0,0,0"></Rectangle>-->
-
                     <DockPanel  HorizontalAlignment="Stretch" Background="White" VerticalAlignment="Stretch"
-                                Grid.Column="1" Width="350" Margin="0,0,0,0">
-                        <!--<ComboBox Width="100" Text="Ich suche:" Template="{DynamicResource ComboBoxControlTemplate1}"
-                                  Foreground="White">
-                            <ComboBoxItem Content="Show"/>
-                            <ComboBoxItem Content="Episode"/>
-                        </ComboBox>-->
-                        <ComboBox Width="100" Text="Ich suche:" ItemsSource="{Binding FilterOptions}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
-                                  Foreground="White" Template="{DynamicResource ComboBoxControlTemplate2}">
-                            <!--<ComboBoxItem Content="{Binding}" Template="{DynamicResource ComboBoxItemControlTemplate1}"/>-->
-                            <!--<ComboBoxItem Content="Episode" Template="{DynamicResource ComboBoxItemControlTemplate1}"/>-->
-                            <!--<ComboBoxItem Template="{DynamicResource ComboBoxItemControlTemplate1}" ></ComboBoxItem>-->
+                                Grid.Column="1" Width="350" Margin="0,0,0,0" Visibility="{Binding VisibilitySearchBar}">
+                       
+
+                        <ComboBox x:Name="FilterComboBox" Width="100" ItemsSource="{Binding FilterOptions}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
+                                  Foreground="White" Template="{DynamicResource ComboBoxControlTemplate2}" HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True"
+                                  SelectedItem="{Binding TypeFilter}">
                         </ComboBox>
-                        <TextBox Width="250" Template="{StaticResource TextBoxControlTemplate1}" VerticalContentAlignment="Center"/>
+                        <TextBox Width="250" Template="{StaticResource TextBoxControlTemplate1}" VerticalContentAlignment="Center" 
+                                 Text="{Binding TextFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox.InputBindings>
+                                <KeyBinding Command="{Binding SearchFilter}" Key="Enter"/>
+                            </TextBox.InputBindings>
+                        </TextBox>
+                        
                     </DockPanel>
 
-                    <!--<TextBox x:Name="SearchBox" HorizontalAlignment="Stretch" Background="White" VerticalAlignment="Stretch"
-                                 BorderBrush="White" BorderThickness="0,2,0,2" Grid.Column="1" Width="350" Margin="0,0,0,0" Visibility="{Binding VisibilitySearchBar}"
-                                 VerticalContentAlignment="Center" Template="{DynamicResource TextBoxControlTemplate1}"></TextBox>-->
-                    <!--</Border>-->
-                    <!--<Popup x:Name="ChoicePopup" PlacementTarget="{Binding ElementName=SearchBox}" IsOpen="True" Placement="Bottom" Width="200">
-                        <Border BorderBrush="Red" Background="White">
-                            <RadioButton Content="a"></RadioButton>
-                        </Border>
-                    </Popup>-->
                 </Grid>
 
 

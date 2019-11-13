@@ -39,7 +39,6 @@ namespace PresentationLayer.ViewModel
             };
         }
 
-
         private bool _canSwitchToSettings { get; set; }
         private bool _canSwitchToPodcast { get; set; }
         private bool _canSwitchToDownloads { get; set; }

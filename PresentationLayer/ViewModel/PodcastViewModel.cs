@@ -31,6 +31,24 @@ namespace PresentationLayer.ViewModel
             set { _filterOptions = value; OnPropertyChanged("FilterOptions"); }
         }
 
+        private string _typeFilter { get; set; }
+        public string TypeFilter
+        {
+            get { return _typeFilter; }
+            set { _typeFilter = value; OnPropertyChanged("TypeFilter"); }
+        }
+
+        private string _textFilter { get; set; }
+        public string TextFilter
+        {
+            get { return _textFilter; }
+            set { _textFilter = value.ToLower(); OnPropertyChanged("TextFilter"); }
+        }
+
+
+
+
+
         private IBusinessAccessService _businessAccess { get; set; }
         private Show _selectedShow { get; set; }
         public Show SelectedShow
@@ -49,11 +67,8 @@ namespace PresentationLayer.ViewModel
 
             AllShows = new ObservableCollection<Show>();
             EpisodesCollection = new ObservableCollection<Episode>();
-
-
             FilterOptions = new List<string>();
-            FilterOptions.Add("Show");
-            FilterOptions.Add("Episode");
+
 
 
 
@@ -61,6 +76,11 @@ namespace PresentationLayer.ViewModel
             SetList();
             FillEpisodeListWithMockData();
 
+
+
+
+            FilterOptions.Add("Show");
+            FilterOptions.Add("Episode");
         }
 
 
@@ -77,6 +97,50 @@ namespace PresentationLayer.ViewModel
                         p => this.ExecuteDeleteSelectedShow());
                 }
                 return _deleteAllPodcasts;
+            }
+        }
+
+        private ICommand _searchFilter;
+        public ICommand SearchFilter
+        {
+            get
+            {
+                if (_searchFilter == null)
+                {
+                    _searchFilter = new RelayCommand(
+                        p => this.AreFiltersSet(),
+                        p => this.ExecuteSearchFilter());
+                }
+                return _searchFilter;
+            }
+        }
+
+        private bool AreFiltersSet()
+        {
+            if (TypeFilter != null && !string.IsNullOrWhiteSpace(TextFilter))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void ExecuteSearchFilter()
+        {
+            if (TypeFilter == "Show")
+            {
+                var showsToKeep = AllShows.Where(x => !x.PodcastTitle.ToLower().Contains(TextFilter)).ToList();
+                foreach (var item in showsToKeep)
+                {
+                    AllShows.Remove(item);
+                }
+            }
+            else
+            {
+                var showsToKeep = EpisodesCollection.Where(x => !x.Title.ToLower().Contains(TextFilter)).ToList();
+                foreach (var item in showsToKeep)
+                {
+                    EpisodesCollection.Remove(item);
+                }
             }
         }
 

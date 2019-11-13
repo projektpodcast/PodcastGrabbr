@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="View\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="View\IView.cs" />
+    <Compile Include="View\NullToVisibilityConverter.cs" />
     <Compile Include="View\PodcastView.xaml.cs">
       <DependentUpon>PodcastView.xaml</DependentUpon>
     </Compile>
