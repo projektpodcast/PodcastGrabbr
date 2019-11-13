@@ -463,7 +463,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="Border" Background="{StaticResource DownloadBrush}" BorderBrush="White" BorderThickness="0,0,0,1" CornerRadius="0">
+                        <Border Name="Border" Background="{StaticResource DownloadBrush}" BorderBrush="Black" BorderThickness="0,0,0,1" CornerRadius="0">
                             <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
                         </Border>
                         <!--<ControlTemplate.Triggers>
@@ -764,16 +764,6 @@
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
-
-
-                                        <!--HIER EPISODENSAMMLUNG DARSTELLEN
-                                                                HIER EPISODENSAMMLUNG DARSTELLEN-->
-
-
-                                        <!--HIER EPISODENSAMMLUNG DARSTELLEN
-                                                                HIER EPISODENSAMMLUNG DARSTELLEN-->
-                                        <!--HIER EPISODENSAMMLUNG DARSTELLEN
-                                                                HIER EPISODENSAMMLUNG DARSTELLEN-->
 
 
                                     </Expander.Content>

@@ -17,6 +17,13 @@ namespace PresentationLayer.ViewModel
 {
     public class PodcastViewModel : BaseViewModel
     {
+        private Visibility _visibilitySearchBar = Visibility.Collapsed;
+        public Visibility VisibilitySearchBar
+        {
+            get { return _visibilitySearchBar; }
+            set { _visibilitySearchBar = value; OnPropertyChanged("VisibilitySearchBar"); }
+        }
+
         private IBusinessAccessService _businessAccess { get; set; }
         private Show _selectedShow { get; set; }
         public Show SelectedShow
@@ -57,6 +64,44 @@ namespace PresentationLayer.ViewModel
                 return _deleteAllPodcasts;
             }
         }
+
+        private ICommand _toggleSearchBarVisibility;
+        public ICommand ToggleSearchBarVisibility
+        {
+            get
+            {
+                if (_toggleSearchBarVisibility == null)
+                {
+                    _toggleSearchBarVisibility = new RelayCommand(
+                        p => this.CanToggle(),
+                        p => this.DecideVisibilityProperty());
+                }
+                return _toggleSearchBarVisibility;
+            }
+        }
+
+        private bool CanToggle()
+        {
+            return true;
+        }
+
+        public void DecideVisibilityProperty()
+        {
+            switch (VisibilitySearchBar)
+            {
+                case Visibility.Visible:
+                    this.VisibilitySearchBar = Visibility.Collapsed;
+                    break;
+                case Visibility.Collapsed:
+                    this.VisibilitySearchBar = Visibility.Visible;
+                    break;
+                default:
+                    this.VisibilitySearchBar = Visibility.Collapsed;
+                    break;
+            }
+        }
+
+
 
         private ICommand _refreshSelectedPodcast;
         public ICommand RefreshSelectedPodcast

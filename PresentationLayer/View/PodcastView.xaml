@@ -17,7 +17,7 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"></BooleanToVisibilityConverter>
         <local:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibility"></local:InvertedBoolToVisibilityConverter>
 
-
+        <SolidColorBrush x:Key="SearchButtonStroke" Color="#FF5A5193" Opacity="1"/>
         <SolidColorBrush x:Key="WindowBackground" Color="#FF5A5193" Opacity="1"/>
         <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
         <SolidColorBrush x:Key="DownloadBrushTranslucent" Color="#FF311855" Opacity="0.7"/>
@@ -52,6 +52,38 @@
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Background" Value="Black"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SearchButton" TargetType="{x:Type Button}">
+            <Setter Property="SnapsToDevicePixels" Value="True"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" BorderBrush="{StaticResource DownloadBrush}" BorderThickness="2,2,0,2" CornerRadius="2,0,0,2">
+                            <Grid Height="20" Width="20" SnapsToDevicePixels="True">
+                                <!--<Rectangle Fill="{StaticResource DownloadBrush}" Width="20" Height="20" RadiusX="2" RadiusY="2"></Rectangle>-->
+                                <Rectangle x:Name="BackgroundFiller" Fill="{StaticResource DownloadBrush}" Width="20" Height="20" RadiusX="0" RadiusY="0"></Rectangle>
+                                <Ellipse x:Name="Circle" Stroke="White" StrokeThickness="3" Height="14" Width="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1,1,0,0" SnapsToDevicePixels="True"/>
+                                <Line x:Name="Line" Stroke="White" StrokeThickness="3" X1="17" Y1="19" X2="11" Y2="12" SnapsToDevicePixels="True"></Line>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <!--<Setter TargetName="Circle" Property="Stroke" Value="{StaticResource DownloadBrush}"/>
+                                <Setter TargetName="Line" Property="Stroke" Value="Black"/>-->
+                                <Setter TargetName="BackgroundFiller" Property="Fill" Value="{StaticResource WindowBackground}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource WindowBackground}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Circle" Property="Opacity" Value="0.8"/>
+                                <Setter TargetName="Line" Property="Opacity" Value="0.8"/>
+                                <!--<Setter TargetName="BackgroundFiller" Property="Fill" Value="{StaticResource WindowBackground}"/>-->
+                                <!--<Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource WindowBackground}"/>-->
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -118,7 +150,7 @@
             <ControlTemplate.Triggers>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
         <LinearGradientBrush
     x:Key="TransparentGradient"
     StartPoint="0.5,0"
@@ -763,6 +795,22 @@
             </Style.Triggers>-->
 
         </Style>
+        <ControlTemplate x:Key="TextBoxControlTemplate1" TargetType="{x:Type TextBox}">
+            <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource WindowBackground}"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource WindowBackground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
 
     </Page.Resources>
 
@@ -771,14 +819,71 @@
             <RowDefinition Height="40*" MaxHeight="350" MinHeight="200"></RowDefinition>
             <RowDefinition Height="50*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Rectangle Grid.RowSpan="2"  Fill="#FF5A5193" />
-        <Grid Grid.Row="0" ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+
+
+
+        <Rectangle Grid.RowSpan="2" Grid.Column="1"  Fill="#FF5A5193" />
+        <Grid Grid.Row="0" Grid.Column="1"  ShowGridLines="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="20*" MinHeight="100"></RowDefinition>
                 <RowDefinition Height="5"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0" Margin="0,5,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <!--<Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="1" Width="auto" Height="20" Fill="White" HorizontalAlignment="Stretch" Margin="-2,0,0,0"></Rectangle>
+                    <Ellipse Grid.Column="1" Height="20" Width="20"/>
+                    <Button Grid.Column="0" HorizontalAlignment="Left" Style="{StaticResource SearchButton}"/>
+                </Grid>-->
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="20"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,0">
+                        <Button  Style="{StaticResource SearchButton}" HorizontalAlignment="Right" Margin="0,0,0,0" Width="21"
+                            Command="{Binding ToggleSearchBarVisibility}"/>
+
+                    </Border>
+
+                    <!--<Border BorderBrush="White" BorderThickness="0,2,0,2" Grid.Column="1" Width="350" Margin="0,0,0,0" Visibility="{Binding VisibilitySearchBar}">-->
+                    <!--<Rectangle Grid.Column="1" Width="auto" HorizontalAlignment="Stretch" Height="20" Fill="White" Margin="0,0,0,0"></Rectangle>-->
+                    <TextBox HorizontalAlignment="Stretch" Background="White" VerticalAlignment="Stretch"
+                                 BorderBrush="White" BorderThickness="0,2,0,2" Grid.Column="1" Width="350" Margin="0,0,0,0" Visibility="{Binding VisibilitySearchBar}"
+                                 VerticalContentAlignment="Center" Template="{DynamicResource TextBoxControlTemplate1}"></TextBox>
+                    <!--</Border>-->
+
+                </Grid>
+
+
+
+
+
+
+
+            </Grid>
+
+
+
             <!--<Button Style="{StaticResource BurgerButton}" Grid.Row="0" Width="30" Height="30" Margin="2,10,0,0"
                     HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
             <ListBox Name="showViewList" Grid.Row="1" BorderThickness="0" HorizontalAlignment="Stretch"
@@ -836,7 +941,7 @@
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyleNonresizeable}" AllowsColumnReorder="False">
 
                     <GridViewColumn Width="30">
-                        
+
                         <GridViewColumnHeader Style="{StaticResource HeaderStyleNonresizeable}"/>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -854,7 +959,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
                     <GridViewColumn>
                         <GridViewColumnHeader Content="Titel" Style="{StaticResource HeaderStyleNonresizeable}"/>
                         <GridViewColumn.CellTemplate>

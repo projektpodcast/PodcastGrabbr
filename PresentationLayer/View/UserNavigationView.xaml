@@ -13,6 +13,7 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
+        <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
         <SolidColorBrush x:Key="MenueBrush" Color="White" Opacity="0.3"/>
         <SolidColorBrush x:Key="MenueBrushPurple" Color="#463574" Opacity="1"/>
         <SolidColorBrush x:Key="ButtonActiveHighlight" Color="#FFA27DFF" />
@@ -74,7 +75,7 @@
                                         <ColumnDefinition Width="50*"/>
                                         <ColumnDefinition Width="25*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Rectangle x:Name="Background" Fill="#463574" Grid.RowSpan="7" Grid.ColumnSpan="3" RadiusX="40" RadiusY="50"></Rectangle>
+                                    <Rectangle x:Name="Background" Fill="{StaticResource DownloadBrush}" Grid.RowSpan="7" Grid.ColumnSpan="3" RadiusX="40" RadiusY="50"></Rectangle>
                                     <Rectangle Grid.Row="2" Grid.Column="0" Fill="Transparent" Height="2"></Rectangle>
                                     <Rectangle x:Name="Burger1" Grid.Row="1" Grid.Column="1" Fill="White"  Height="3" HorizontalAlignment="Stretch"></Rectangle>
                                     <Rectangle Grid.Row="2" Grid.Column="2" Fill="Transparent" Height="2"></Rectangle>
