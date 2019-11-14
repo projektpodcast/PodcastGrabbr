@@ -13,6 +13,27 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
+
+        <Color x:Key="SecondaryColorRes">#FFF9AA33</Color>
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryDark" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryLight" Color="#FF4A6572"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="Tertiary" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TertiaryDark" Color="#FFE1E9F0"/>
+        <SolidColorBrush x:Key="PrimaryColorTranslucent07" Opacity="0.7" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryColorTranslucent09" Opacity="0.9" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryDarkTranslucent07" Opacity="0.7" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryDarkTranslucent09" Opacity="0.9" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryLightTranslucent07" Opacity="0.7" Color="#FF4A6572"/>
+        <SolidColorBrush x:Key="SecondaryColorTranslucent07" Opacity="0.7" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="TertiaryTranslucent07" Opacity="0.7" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
+
+
+
+
+
         <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
         <SolidColorBrush x:Key="MenueBrush" Color="White" Opacity="0.3"/>
         <SolidColorBrush x:Key="MenueBrushPurple" Color="#463574" Opacity="1"/>
@@ -28,7 +49,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="32"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Fill="Transparent"/>
                                 <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="Menüpunkt 1" Foreground="White" Margin="4,0,0,0"></TextBlock>-->
@@ -45,7 +66,7 @@
                             </Trigger>
 
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ButtonActiveHighlight}"></Setter>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryLight}"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -54,36 +75,46 @@
         </Style>
 
         <Style x:Key="BurgerButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#FFBFAAF5"/>
+            <!--<Setter Property="Background" Value="#FFBFAAF5"/>-->
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <DockPanel>
-                            <Border x:Name="Bd" SnapsToDevicePixels="True">
-                                <Grid>
+                            <Border x:Name="Bd" SnapsToDevicePixels="True" Background="{StaticResource SecondaryColor}" CornerRadius="6">
+                                <StackPanel Margin="3,4,3,4">
+                                    <Rectangle Fill="{StaticResource PrimaryDark}" Height="4"/>
+                                    <Rectangle Fill="Transparent" Height="2"/>
+                                    <Rectangle Fill="{StaticResource PrimaryDark}" Height="4"/>
+                                    <Rectangle Fill="Transparent" Height="2"/>
+                                    <Rectangle Fill="{StaticResource PrimaryDark}" Height="4"/>
+                                </StackPanel>
+                                <!--<Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="3*"/>
                                         <RowDefinition Height="2*"/>
-                                        <RowDefinition Height="3"/>
-                                        <RowDefinition Height="2"/>
-                                        <RowDefinition Height="3"/>
-                                        <RowDefinition Height="2"/>
-                                        <RowDefinition Height="3"/>
+                                        <RowDefinition Height="3*"/>
                                         <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="4*"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="25*"/>
-                                        <ColumnDefinition Width="50*"/>
-                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="2*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Rectangle x:Name="Background" Fill="{StaticResource DownloadBrush}" Grid.RowSpan="7" Grid.ColumnSpan="3" RadiusX="40" RadiusY="50"></Rectangle>
-                                    <Rectangle Grid.Row="2" Grid.Column="0" Fill="Transparent" Height="2"></Rectangle>
-                                    <Rectangle x:Name="Burger1" Grid.Row="1" Grid.Column="1" Fill="White"  Height="3" HorizontalAlignment="Stretch"></Rectangle>
-                                    <Rectangle Grid.Row="2" Grid.Column="2" Fill="Transparent" Height="2"></Rectangle>
-                                    <Rectangle x:Name="Burger2" Grid.Row="3" Grid.Column="1" Fill="White"  Height="3" HorizontalAlignment="Stretch"></Rectangle>
-                                    <Rectangle Grid.Row="4" Grid.Column="4" Fill="Transparent" Height="2"></Rectangle>
-                                    <Rectangle x:Name="Burger3" Grid.Row="5" Grid.Column="1" Fill="White" Height="3" HorizontalAlignment="Stretch"></Rectangle>
-                                    <Rectangle Grid.Row="6" Grid.Column="6" Fill="Transparent" Height="2"></Rectangle>
-                                </Grid>
+                                    -->
+                                <!--<Rectangle x:Name="Background" Fill="{StaticResource SecondaryColor}" Grid.RowSpan="7" Grid.ColumnSpan="3" RadiusX="7" RadiusY="7"></Rectangle>-->
+                                <!--
+                                    <Rectangle Grid.Row="2" Grid.Column="0" Fill="Transparent" Height="auto"></Rectangle>
+                                    <Rectangle x:Name="Burger1" Grid.Row="1" Grid.Column="1" Fill="{StaticResource PrimaryDark}"  Height="auto" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="2" Grid.Column="2" Fill="Transparent" Height="auto"></Rectangle>
+                                    <Rectangle x:Name="Burger2" Grid.Row="3" Grid.Column="1" Fill="{StaticResource PrimaryDark}" Height="auto" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="4" Grid.Column="4" Fill="Transparent" Height="auto"></Rectangle>
+                                    <Rectangle x:Name="Burger3" Grid.Row="5" Grid.Column="1" Fill="{StaticResource PrimaryDark}" Height="auto" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="6" Grid.Column="6" Fill="Transparent" Height="auto"></Rectangle>
+                                </Grid>-->
                             </Border>
                         </DockPanel>
                         <ControlTemplate.Triggers>
@@ -94,10 +125,11 @@
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.4"/>
                             </Trigger>-->
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Fill" TargetName="Background" Value="#FFBFAAF5"/>
-                                <Setter Property="Fill" TargetName="Burger1" Value="#463574"/>
+                                <!--<Setter Property="Fill" TargetName="Background" Value="#FFBFAAF5"/>-->
+                                <!--<Setter Property="Fill" TargetName="Burger1" Value="#463574"/>
                                 <Setter Property="Fill" TargetName="Burger2" Value="#463574"/>
-                                <Setter Property="Fill" TargetName="Burger3" Value="#463574"/>
+                                <Setter Property="Fill" TargetName="Burger3" Value="#463574"/>-->
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.8"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="false">
                                 <!--<Setter TargetName="Bd" Property="Opacity" Value="0.4"/>-->
@@ -114,47 +146,238 @@
             </Setter>
         </Style>
 
+        <Style x:Key="BurgerButton2" TargetType="{x:Type Button}">
+            <!--<Setter Property="Background" Value="#FFBFAAF5"/>-->
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <DockPanel>
+                            <Border x:Name="Bd" SnapsToDevicePixels="True" Background="Transparent">
+                                <StackPanel Margin="3,4,3,4">
+                                    <Rectangle Fill="{StaticResource PrimaryDark}" Height="4"/>
+                                    <Rectangle Fill="Transparent" Height="2"/>
+                                    <Rectangle Fill="{StaticResource PrimaryDark}" Height="4"/>
+                                    <Rectangle Fill="Transparent" Height="2"/>
+                                    <Rectangle Fill="{StaticResource PrimaryDark}" Height="4"/>
+                                </StackPanel>
+                                <!--<Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="3*"/>
+                                        <RowDefinition Height="4*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="10*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    -->
+                                <!--<Rectangle x:Name="Background" Fill="{StaticResource SecondaryColor}" Grid.RowSpan="7" Grid.ColumnSpan="3" RadiusX="7" RadiusY="7"></Rectangle>-->
+                                <!--
+                                    <Rectangle Grid.Row="2" Grid.Column="0" Fill="Transparent" Height="auto"></Rectangle>
+                                    <Rectangle x:Name="Burger1" Grid.Row="1" Grid.Column="1" Fill="{StaticResource PrimaryDark}"  Height="auto" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="2" Grid.Column="2" Fill="Transparent" Height="auto"></Rectangle>
+                                    <Rectangle x:Name="Burger2" Grid.Row="3" Grid.Column="1" Fill="{StaticResource PrimaryDark}" Height="auto" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="4" Grid.Column="4" Fill="Transparent" Height="auto"></Rectangle>
+                                    <Rectangle x:Name="Burger3" Grid.Row="5" Grid.Column="1" Fill="{StaticResource PrimaryDark}" Height="auto" HorizontalAlignment="Stretch"></Rectangle>
+                                    <Rectangle Grid.Row="6" Grid.Column="6" Fill="Transparent" Height="auto"></Rectangle>
+                                </Grid>-->
+                            </Border>
+                        </DockPanel>
+                        <ControlTemplate.Triggers>
+                            <!--<Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Bd" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="false">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.4"/>
+                            </Trigger>-->
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <!--<Setter Property="Fill" TargetName="Background" Value="#FFBFAAF5"/>-->
+                                <!--<Setter Property="Fill" TargetName="Burger1" Value="#463574"/>
+                                <Setter Property="Fill" TargetName="Burger2" Value="#463574"/>
+                                <Setter Property="Fill" TargetName="Burger3" Value="#463574"/>-->
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="false">
+                                <!--<Setter TargetName="Bd" Property="Opacity" Value="0.4"/>-->
+                            </Trigger>
+                            <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource myBrush}"/>
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="Black"/>-->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
+        <LinearGradientBrush x:Key="TransparentGradient" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="White" Offset="0.91"/>
+            <GradientStop Color="Transparent" Offset="1"/>
+        </LinearGradientBrush>
 
     </UserControl.Resources>
     <Grid>
-        <Grid ShowGridLines="False" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Grid ShowGridLines="False">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="35"/>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="40" x:Name="BurgerButtonColumn"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
-                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="32" x:Name="BurgerButtonColumn"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
+                <RowDefinition Height="32"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
+            <Rectangle x:Name="BurgerButtonBackground" Fill="{StaticResource SecondaryColor}" Grid.Row="0" Width="Auto"></Rectangle>
+            <Rectangle x:Name="MenueBackground" Fill="{StaticResource PrimaryColor}" Grid.Row="1" Width="Auto" Grid.RowSpan="6"></Rectangle>
+            <Button x:Name="BurgerButton" Style="{StaticResource BurgerButton2}" Height="25" Width="25" Grid.Row="0" Grid.Column="0" SnapsToDevicePixels="True"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" Command="{Binding ToggleMenueVisibility}" Margin="0" Padding="0"
+                    />
 
-            <Rectangle x:Name="MenueBackground" Fill="#FF5A5193" Grid.Row="0" Width="Auto" Grid.RowSpan="7"></Rectangle>
-            <Button x:Name="BurgerButton" Style="{StaticResource BurgerButton}" Height="30" Width="30" Grid.Row="0" Grid.Column="0" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ToggleMenueVisibility}"
-                    Margin="2,10,0,0"></Button>
+
+            <!--<Rectangle Height="32" VerticalAlignment="Center" Width="35" Fill="red"></Rectangle>
+                <Rectangle Height="29" VerticalAlignment="Top" Width="35" Fill="Blue"></Rectangle>
+                <Rectangle Height="22" Width="22" Fill="Green" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0"></Rectangle>-->
+            <!--<Grid Grid.Column="0" Grid.Row="1" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0">
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 11 2 L 20 12 L 20 20 L 14 20 L 14 12 L 8 12 L 8 20 L 2 20 L 2 12 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+
+            </Grid>-->
+
+            <Grid Grid.Column="0" Grid.Row="1">
+                <StackPanel Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
+                    <StackPanel.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </StackPanel.RenderTransform>
+                    <Path Fill="{StaticResource SecondaryColor}" Data="M 15 0 L 30 17 L 30 30 L 20 30 L 20 20 L 10 20 L 10 30 L 0 30 L 0 17 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Center"></Path>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.Row="2" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 12 30 L 12 0 L 18 0 L 18 30 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 0 12 L 30 12 L 30 18 L 0 18 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 1.5 25 L 25 1.5 L 28.5 6 L 6 28.5"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 3 5 L 6 2 L 28 24 L 25 27 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Ellipse Fill="{StaticResource SecondaryColor}" Width="22" Height="22"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Ellipse Fill="{StaticResource PrimaryColor}" Width="14" Height="14"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.Row="3" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 9 2 L 9 13 L 13 13 L 13 2 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+                <!--<Path Fill="{StaticResource SecondaryColor}" Data="M 4 10 L 11 15 L 18 10 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>-->
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 0 30 L 30 30 L 30 22 L 26 22 L 26 26 L 4 26 L 4 22 L 0 22 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+            </Grid>
+
+            <!--<Grid Grid.Column="0" Grid.Row="3" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0">
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 9 2 L 9 13 L 13 13 L 13 2 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 4 10 L 11 15 L 18 10 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 2 20 L 20 20 L 20 15 L 17 15 L 17 17 5 17 L 5 15 L 2 15 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+            </Grid>-->
+
+            <Grid Grid.Column="0" Grid.Row="4" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0">
+                <!--<Ellipse Fill="{StaticResource SecondaryColor}" Width="20" Height="20"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                -->
+                <!--<Ellipse Fill="{StaticResource PrimaryColor}" Width="14" Height="14"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                <!--
+                <Path Fill="{StaticResource PrimaryColor}" Data="M 0 9 L 8 9 L 8 13 L 0 13 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Path Fill="{StaticResource PrimaryColor}" Data="M 7 3 L 16 11 L 7 19 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+            </Grid>
 
 
-            <Grid x:Name="MenueItemsGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" Visibility="{Binding Visible}">
-                  <!--Visibility="{Binding Visible}"-->
+
+            <Grid Grid.Column="0" Grid.Row="5" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+
+                    <Ellipse Width="18" Height="18" Grid.Row="1"
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Ellipse.Fill>
+                            <LinearGradientBrush StartPoint="0.4,0.8" EndPoint="0.7,0.95">
+                                <GradientStop Color="{StaticResource SecondaryColorRes}" Offset="0.80"/>
+                                <GradientStop Color="Transparent" Offset="0.80"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Ellipse Fill="{StaticResource PrimaryColor}" Grid.Row="1" Width="10" Height="10"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Path Grid.Row="1" Fill="{StaticResource SecondaryColor}" Data="M 19 2 L 19 12 L 12 12"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+                </Grid>
+                <Grid Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                </Grid>
+
+
+            </Grid>
+
+
+
+
+
+            <Grid x:Name="MenueItemsGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" >
+                <!--Visibility="{Binding Visible}"-->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="{Binding ElementName=BurgerButtonColumn, Path=Height}"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="2"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
+                    <RowDefinition Height="32"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Rectangle x:Name="TestMenue" Fill="#FF5A5193" Opacity="1" Width="120" Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"></Rectangle>
+                <Rectangle x:Name="BurgerButtonExtension" Width="auto" Fill="{StaticResource SecondaryColor}"></Rectangle>
+                <Rectangle x:Name="TestMenue" Fill="{StaticResource PrimaryColor}" Opacity="1" Width="120" Grid.Column="0" Grid.Row="1" Grid.RowSpan="7"></Rectangle>
                 <!--<Button Grid.Row="1" Style="{StaticResource MenueButton}" Width="auto" Content="Startseite" Command="{Binding SwitchPageToHome}"/>
                 <Button Grid.Row="2" Style="{StaticResource MenueButton}" Width="auto" Content="Einstellungen" Command="{Binding SwitchPageToSettings}"/>
                 <Button Grid.Row="3" Style="{StaticResource MenueButton}" Width="auto" Content="Meine Downloads"/>

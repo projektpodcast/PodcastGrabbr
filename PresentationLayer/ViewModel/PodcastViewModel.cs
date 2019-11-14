@@ -42,7 +42,7 @@ namespace PresentationLayer.ViewModel
         public string TextFilter
         {
             get { return _textFilter; }
-            set { _textFilter = value.ToLower(); OnPropertyChanged("TextFilter"); }
+            set { _textFilter = value; OnPropertyChanged("TextFilter"); }
         }
 
 
@@ -128,7 +128,7 @@ namespace PresentationLayer.ViewModel
         {
             if (TypeFilter == "Show")
             {
-                var showsToKeep = AllShows.Where(x => !x.PodcastTitle.ToLower().Contains(TextFilter)).ToList();
+                var showsToKeep = AllShows.Where(x => !x.PodcastTitle.ToLower().Contains(TextFilter.ToLower())).ToList();
                 foreach (var item in showsToKeep)
                 {
                     AllShows.Remove(item);
@@ -136,7 +136,7 @@ namespace PresentationLayer.ViewModel
             }
             else
             {
-                var showsToKeep = EpisodesCollection.Where(x => !x.Title.ToLower().Contains(TextFilter)).ToList();
+                var showsToKeep = EpisodesCollection.Where(x => !x.Title.ToLower().Contains(TextFilter.ToLower())).ToList();
                 foreach (var item in showsToKeep)
                 {
                     EpisodesCollection.Remove(item);
