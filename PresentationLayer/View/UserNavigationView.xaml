@@ -27,6 +27,7 @@
         <SolidColorBrush x:Key="PrimaryDarkTranslucent09" Opacity="0.9" Color="#FF232F34"/>
         <SolidColorBrush x:Key="PrimaryLightTranslucent07" Opacity="0.7" Color="#FF4A6572"/>
         <SolidColorBrush x:Key="SecondaryColorTranslucent07" Opacity="0.7" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="SecondaryColorTranslucent04" Opacity="0.4" Color="#FFF9AA33"/>
         <SolidColorBrush x:Key="TertiaryTranslucent07" Opacity="0.7" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
 
@@ -54,7 +55,64 @@
                                 <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Fill="Transparent"/>
                                 <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="Menüpunkt 1" Foreground="White" Margin="4,0,0,0"></TextBlock>-->
                                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="{TemplateBinding Content}" Foreground="White" Margin="6,0,0,0"></TextBlock>
-                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Column="0" Fill="{StaticResource MenueBrush}" Height="1" Margin="0,0,0,0"/>
+                                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Column="0" Fill="{StaticResource PrimaryDark}" Height="1" Margin="0,0,0,0"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColorTranslucent04}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryLight}"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MenueNavigationButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="35"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="32"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+
+                                <Grid Grid.Column="0" Grid.Row="0">
+                                    <StackPanel Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
+                                        <StackPanel.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </StackPanel.RenderTransform>
+                                        <Path Fill="{StaticResource SecondaryColor}" Data="M 15 0 L 30 17 L 30 30 L 20 30 L 20 20 L 10 20 L 10 30 L 0 30 L 0 17 Z"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center"></Path>
+                                    </StackPanel>
+                                </Grid>
+
+
+                                <Grid Grid.Column="1">
+                                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Fill="Transparent"/>
+                                    <!--<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="Menüpunkt 1" Foreground="White" Margin="4,0,0,0"></TextBlock>-->
+                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Text="{TemplateBinding Content}" Foreground="White" Margin="6,0,0,0"></TextBlock>
+                                    <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Column="0" Fill="{StaticResource MenueBrush}" Height="1" Margin="0,0,0,0"/>
+                                </Grid>
+
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -139,6 +197,134 @@
                                     <Setter Property="BorderBrush" TargetName="Bd" Value="Black"/>-->
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="HomeButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="35" Height="32" Background="Transparent"
+                                BorderBrush="{StaticResource PrimaryDark}" BorderThickness="0,0,0,1">
+                            <StackPanel Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
+                                <StackPanel.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </StackPanel.RenderTransform>
+                                <Path Fill="{StaticResource SecondaryColor}" Data="M 15 0 L 30 17 L 30 30 L 20 30 L 20 20 L 10 20 L 10 30 L 0 30 L 0 17 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Center"></Path>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColorTranslucent04}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryLight}"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SettingsButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="35" Height="32" Background="Transparent"
+                                BorderBrush="{StaticResource PrimaryDark}" BorderThickness="0,0,0,1">
+                            <Grid Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.RenderTransform>
+                                <Path Fill="{StaticResource SecondaryColor}" Data="M 12 30 L 12 0 L 18 0 L 18 30 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <Path Fill="{StaticResource SecondaryColor}" Data="M 0 12 L 30 12 L 30 18 L 0 18 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <Path Fill="{StaticResource SecondaryColor}" Data="M 1.5 23.8 L 23.7 1.5 L 28 5.8 L 5.7 28"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <Path Fill="{StaticResource SecondaryColor}" Data="M 2 5.7 L 6.2 1.5 L 28.5 23.7 L 24.2 28 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                <Ellipse Fill="{StaticResource SecondaryColor}" Width="22" Height="22"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Ellipse x:Name="InnerCircle1" Fill="{StaticResource PrimaryColor}" Width="14" Height="14"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Ellipse x:Name="InnerCircle2" Fill="{StaticResource PrimaryColor}" Width="14" Height="14"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColorTranslucent04}"/>
+                                <Setter TargetName="InnerCircle1" Property="Fill" Value="{StaticResource PrimaryColor}"/>
+                                <Setter TargetName="InnerCircle2" Property="Fill" Value="{StaticResource SecondaryColorTranslucent04}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryLight}"></Setter>
+                                <Setter TargetName="InnerCircle1" Property="Fill" Value="{StaticResource PrimaryLight}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DownloadsButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="35" Height="32" Background="Transparent"
+                                BorderBrush="{StaticResource PrimaryDark}" BorderThickness="0,0,0,1">
+                            <Grid Grid.Column="0" Grid.Row="3" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0.5,1,0,0" RenderTransformOrigin="0.5,0.5">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.87" ScaleY="0.87"/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <Path Fill="{StaticResource SecondaryColor}" Data="M 12 2 L 12 20 L 18 20 L 18 2 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+                                    <Path Fill="{StaticResource SecondaryColor}" Data="M 9 12 L 15 19 L 21 12 L 27 12 L 15 25 L 3 12"/>
+                                    <!--<Path Fill="{StaticResource SecondaryColor}" Data="M 4 10 L 11 15 L 18 10 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>-->
+                                    <Path Fill="{StaticResource SecondaryColor}" Data="M 0 30 L 30 30 L 30 22 L 26 22 L 26 26 L 4 26 L 4 22 L 0 22 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+                                </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColorTranslucent04}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource PrimaryLight}"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -257,7 +443,8 @@
             </Grid>-->
 
             <Grid Grid.Column="0" Grid.Row="1">
-                <StackPanel Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
+                <Button Style="{StaticResource HomeButton}" Command="{Binding SwitchPageToHome}"/>
+                <!--<StackPanel Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
                     <StackPanel.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
@@ -268,11 +455,12 @@
                     </StackPanel.RenderTransform>
                     <Path Fill="{StaticResource SecondaryColor}" Data="M 15 0 L 30 17 L 30 30 L 20 30 L 20 20 L 10 20 L 10 30 L 0 30 L 0 17 Z"
                       HorizontalAlignment="Left" VerticalAlignment="Center"></Path>
-                </StackPanel>
+                </StackPanel>-->
             </Grid>
 
-            <Grid Grid.Column="0" Grid.Row="2" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
-                <Grid.RenderTransform>
+            <Grid Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+                <Button Style="{StaticResource SettingsButton}" Command="{Binding SwitchPageToSettings}"/>
+                <!--<Grid.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
                         <SkewTransform/>
@@ -284,23 +472,33 @@
                       HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Path Fill="{StaticResource SecondaryColor}" Data="M 0 12 L 30 12 L 30 18 L 0 18 Z"
                       HorizontalAlignment="Left" VerticalAlignment="Top" />
-                <Path Fill="{StaticResource SecondaryColor}" Data="M 1.5 25 L 25 1.5 L 28.5 6 L 6 28.5"
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 1.5 23.8 L 23.7 1.5 L 28 5.8 L 5.7 28"
                       HorizontalAlignment="Left" VerticalAlignment="Top" />
-                <Path Fill="{StaticResource SecondaryColor}" Data="M 3 5 L 6 2 L 28 24 L 25 27 Z"
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 2 5.7 L 6.2 1.5 L 28.5 23.7 L 24.2 28 Z"
                       HorizontalAlignment="Left" VerticalAlignment="Top" />
                 <Ellipse Fill="{StaticResource SecondaryColor}" Width="22" Height="22"
                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Ellipse Fill="{StaticResource PrimaryColor}" Width="14" Height="14"
-                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
             </Grid>
 
-            <Grid Grid.Column="0" Grid.Row="3" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
-                <Path Fill="{StaticResource SecondaryColor}" Data="M 9 2 L 9 13 L 13 13 L 13 2 Z"
+            <Grid Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Button Style="{StaticResource DownloadsButton}" Command="{Binding SwitchPageToDownloads}"></Button>
+                <!--<Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.85" ScaleY="0.85"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 12 2 L 12 20 L 18 20 L 18 2 Z"
                       HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
-                <!--<Path Fill="{StaticResource SecondaryColor}" Data="M 4 10 L 11 15 L 18 10 Z"
-                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>-->
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 9 12 L 15 19 L 21 12 L 27 12 L 15 25 L 3 12"/>
+                --><!--<Path Fill="{StaticResource SecondaryColor}" Data="M 4 10 L 11 15 L 18 10 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>--><!--
                 <Path Fill="{StaticResource SecondaryColor}" Data="M 0 30 L 30 30 L 30 22 L 26 22 L 26 26 L 4 26 L 4 22 L 0 22 Z"
-                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
+                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>-->
             </Grid>
 
             <!--<Grid Grid.Column="0" Grid.Row="3" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0">
@@ -312,7 +510,38 @@
                       HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
             </Grid>-->
 
-            <Grid Grid.Column="0" Grid.Row="4" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0">
+            <Grid Grid.Column="0" Grid.Row="4" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0" RenderTransformOrigin="0.5,0.5">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 0 26 L 12 26 L 12 22 L 0 22"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 4 18 L 4 30 L 8 30 L 8 18"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <!--<Path Fill="{StaticResource SecondaryColor}" Data="M 0 27 L 10 27 L 10 23 L 0 23"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 3 20 L 3 30 L 7 30 L 7 20"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
+
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 9 17 L 21 17 L 21 13 L 9 13"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 13 9 L 13 21 L 17 21 L 17 9"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 18 8 L 30 8 L 30 4 L 18 4"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 22 0 L 22 12 L 26 12 L 26 0"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+                <!--<Path Fill="{StaticResource SecondaryColor}" Data="M 12 30 L 12 0 L 18 0 L 18 30 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 0 12 L 30 12 L 30 18 L 0 18 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />-->
                 <!--<Ellipse Fill="{StaticResource SecondaryColor}" Width="20" Height="20"
                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 -->
@@ -327,41 +556,22 @@
 
 
 
-            <Grid Grid.Column="0" Grid.Row="5" Width="22" Height="22" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="5"/>
-                    </Grid.RowDefinitions>
+            <Grid Grid.Column="0" Grid.Row="5" Width="30" Height="30" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,1,0,0">
 
-                    <Ellipse Width="18" Height="18" Grid.Row="1"
-                      HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Ellipse.Fill>
-                            <LinearGradientBrush StartPoint="0.4,0.8" EndPoint="0.7,0.95">
-                                <GradientStop Color="{StaticResource SecondaryColorRes}" Offset="0.80"/>
-                                <GradientStop Color="Transparent" Offset="0.80"/>
-                            </LinearGradientBrush>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <Ellipse Fill="{StaticResource PrimaryColor}" Grid.Row="1" Width="10" Height="10"
+                <Ellipse Fill="{StaticResource SecondaryColor}" Width="22" Height="22"
                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                    <Path Grid.Row="1" Fill="{StaticResource SecondaryColor}" Data="M 19 2 L 19 12 L 12 12"
-                      HorizontalAlignment="Left" VerticalAlignment="Top"></Path>
-                </Grid>
-                <Grid Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center">
-
-                </Grid>
-
-
+                <Ellipse Fill="{StaticResource PrimaryColor}" Width="14" Height="14"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Path Fill="{StaticResource PrimaryColor}" Data="M 1 5.7 L 6.2 1.5 L 28.5 23.7 L 24.2 28 Z"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 0 11 L 9 9 L 12 16"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Path Fill="{StaticResource SecondaryColor}" Data="M 30 21 L 21 21 L 18 14"
+                      HorizontalAlignment="Left" VerticalAlignment="Top" />
             </Grid>
 
 
-
-
-
-            <Grid x:Name="MenueItemsGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" >
+            <Grid x:Name="MenueItemsGrid" Grid.Row="0" Grid.Column="1" Grid.RowSpan="7" Visibility="{Binding Visible}">
                 <!--Visibility="{Binding Visible}"-->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
@@ -393,6 +603,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
             </Grid>
 
         </Grid>
