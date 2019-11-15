@@ -80,6 +80,13 @@ namespace PresentationLayer.ViewModel
             SetUpSubscriber(viewModel);
         }
 
+        //private void InitializeUserNavigationUi()
+        //{
+        //    UserNavigationViewModel viewModel = new UserNavigationViewModel();
+        //    UserNavigationUi = new TestView(viewModel);
+        //    SetUpSubscriber(viewModel);
+        //}
+
         private void InitializeDownloadsUi()
         {
             IViewModel viewModel = new DownloadsViewModel(_businessAccessService);
