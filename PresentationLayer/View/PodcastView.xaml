@@ -32,6 +32,7 @@
         <SolidColorBrush x:Key="PrimaryDarkTranslucent09" Opacity="0.9" Color="#FF232F34"/>
         <SolidColorBrush x:Key="PrimaryLightTranslucent07" Opacity="0.7" Color="#FF4A6572"/>
         <SolidColorBrush x:Key="SecondaryColorTranslucent07" Opacity="0.7" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="SecondaryColorTranslucent04" Opacity="0.4" Color="#FFF9AA33"/>
         <SolidColorBrush x:Key="TertiaryTranslucent07" Opacity="0.7" Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
 
@@ -46,6 +47,7 @@
         <SolidColorBrush x:Key="myBrush3" Color="#FFD3B9F1" Opacity="1"/>
         <SolidColorBrush x:Key="DownloadBrushHighlight" Color="#FF6F509C" Opacity="1"/>
         <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
+        <SolidColorBrush x:Key="RedBrush2" Color="Red" Opacity="0.65"/>
         <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
         <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
         <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
@@ -84,9 +86,10 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
-                        <Grid>
+                        <Grid x:Name="GridButton">
 
-                            <Rectangle x:Name="ButtonRectangle" Fill="{StaticResource PrimaryDark}" Width="15" Height="100"></Rectangle>
+                            <Rectangle x:Name="RectangleBackground" Fill="{StaticResource PrimaryColor}" Width="15" Height="100"/>
+                            <Rectangle x:Name="ButtonRectangle" Fill="Transparent" Width="15" Height="100"/>
                             <Path x:Name="Arrow" Fill="{StaticResource SecondaryColor}" Data="M 3.5 50 L 10.5 40 L 10.5 60 Z" RenderTransformOrigin="0.5,0.5" >
                                 <Path.RenderTransform>
                                     <TransformGroup>
@@ -101,9 +104,10 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonRectangle" Property="Opacity" Value="0.8"/>
+                                <Setter TargetName="ButtonRectangle" Property="Fill" Value="{StaticResource SecondaryColorTranslucent04}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonRectangle" Property="Opacity" Value="0.8"/>
                                 <Setter TargetName="Arrow" Property="Opacity" Value="0.8"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
@@ -121,15 +125,19 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
                         <Grid>
-                            <Rectangle x:Name="ButtonRectangle" Fill="{StaticResource PrimaryDark}" Width="15" Height="100"></Rectangle>
+                            <Rectangle x:Name="RectangleBackground" Fill="{StaticResource PrimaryColor}" Width="15" Height="100"/>
+                            <Rectangle x:Name="ButtonRectangle" Fill="Transparent" Width="15" Height="100"/>
                             <Path x:Name="Arrow" Fill="{StaticResource SecondaryColor}" Data="M 3.5 50 L 10.5 40 L 10.5 60 Z"></Path>
                         </Grid>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonRectangle" Property="Opacity" Value="0.8"/>
+                                <!--<Setter TargetName="ButtonRectangle" Property="Opacity" Value="0.8"/>-->
+
+                                <Setter TargetName="ButtonRectangle" Property="Fill" Value="{StaticResource SecondaryColorTranslucent04}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonRectangle" Property="Opacity" Value="0.8"/>
                                 <Setter TargetName="Arrow" Property="Opacity" Value="0.8"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
@@ -156,18 +164,25 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
+
+
+                                <Setter TargetName="Circle" Property="Opacity" Value="0.8"/>
+                                <Setter TargetName="Line" Property="Opacity" Value="0.8"/>
+
+                                <!--<Setter TargetName="BackgroundFiller" Property="Opacity" Value="0.8"/>-->
+
                                 <!--<Setter TargetName="Circle" Property="Stroke" Value="{StaticResource DownloadBrush}"/>
                                 <Setter TargetName="Line" Property="Stroke" Value="Black"/>-->
                                 <!--<Setter TargetName="BackgroundFiller" Property="Fill" Value="{StaticResource PrimaryDark}"/>
                                 <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource PrimaryDark}"/>-->
                                 <!--<Setter TargetName="Circle" Property="Stroke" Value="{StaticResource SecondaryColor}"/>
                                 <Setter TargetName="Line" Property="Stroke" Value="{StaticResource SecondaryColor}"/>-->
-                                <Setter TargetName="BackgroundFiller" Property="Opacity" Value="0.8"/>
-                                <Setter TargetName="Bd" Property="Opacity" Value="0.8"/>
+
+                                <!--<Setter TargetName="Bd" Property="Opacity" Value="0.8"/>-->
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Circle" Property="Opacity" Value="0.8"/>
-                                <Setter TargetName="Line" Property="Opacity" Value="0.8"/>
+                                <Setter TargetName="Circle" Property="Opacity" Value="0.6"/>
+                                <Setter TargetName="Line" Property="Opacity" Value="0.6"/>
                                 <!--<Setter TargetName="BackgroundFiller" Property="Fill" Value="{StaticResource WindowBackground}"/>-->
                                 <!--<Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource WindowBackground}"/>-->
                             </Trigger>
@@ -290,7 +305,7 @@
                                                     </GeometryGroup>
                                                 </GeometryDrawing.Geometry>
                                                 <GeometryDrawing.Pen>
-                                                    <Pen Thickness="4" Brush="{StaticResource RedBrush}" />
+                                                    <Pen Thickness="4" Brush="{StaticResource RedBrush2}" />
                                                 </GeometryDrawing.Pen>
                                             </GeometryDrawing>
                                         </DrawingImage.Drawing>
@@ -318,7 +333,7 @@
                         </Grid>
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}, Path=IsSelected}" Value="True">
-                                <Setter TargetName="ShowNamePanel" Property="Background" Value="{StaticResource PrimaryColorTranslucent09}"/>
+                                <Setter TargetName="ShowNamePanel" Property="Background" Value="{StaticResource PrimaryDarkTranslucent09}"/>
                             </DataTrigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
@@ -511,7 +526,7 @@
                                 <Setter TargetName="Border" Property="Opacity" Value="1"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="false">
-                                <Setter TargetName="Border" Property="Opacity" Value="0.8"/>
+                                <Setter TargetName="Border" Property="Opacity" Value="0.9"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -1275,7 +1290,7 @@
                                                 <!--<Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
                                                 <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource SecondaryColor}"/>-->
                                                 <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
-                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
+                                                <!--<Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>-->
                                                 <!--<Setter TargetName="templateRoot" Property="Background" Value="{StaticResource WindowBackground}"/>
                                                 <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource WindowBackground}"/>
                                             
@@ -1536,7 +1551,6 @@
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,0">
                     <Button Style="{StaticResource SearchButton}" HorizontalAlignment="Right" Margin="0,0,0,0" Width="21"
                             Command="{Binding ToggleSearchBarVisibility}"/>
-
                 </Border>
 
 
@@ -1575,12 +1589,13 @@
         <Grid Grid.Row="1" Grid.Column="1"  ShowGridLines="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="20*" MinHeight="100"/>
+                <RowDefinition Height="93*" MinHeight="100"/>
+                <RowDefinition Height="37*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
 
-            
+
 
 
 
@@ -1589,11 +1604,11 @@
             <ListBox x:Name="showViewList" Grid.Row="1" BorderThickness="0" HorizontalAlignment="Stretch"
                      VerticalAlignment="Center" ItemContainerStyle="{StaticResource ShowItems}" 
                      Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}"
-                     SelectedItem="{Binding SelectedShow}"/>
+                     SelectedItem="{Binding SelectedShow}" Margin="0,15" Grid.RowSpan="2"/>
             <!--<Rectangle Grid.Row="0" Fill="Black" Height="20"></Rectangle>-->
             <!--ShowViewList-->
             <Rectangle Grid.Row="3" Fill="{StaticResource PrimaryColor}"/>
-            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="10*"/>
@@ -1666,7 +1681,7 @@
                                 <TextBlock Margin="0,5,0,0" TextAlignment="Left" VerticalAlignment="Center" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Text="{Binding Title}" Foreground="Black"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                        <GridViewColumnHeader Content="Titel" Style="{StaticResource HeaderStyleNonresizeable}"/>
+                        <GridViewColumnHeader Margin="5,0,0,0" Content="Titel" Style="{StaticResource HeaderStyleNonresizeable}"/>
                     </GridViewColumn>
                     <GridViewColumn Width="auto">
                         <GridViewColumn.CellTemplate>

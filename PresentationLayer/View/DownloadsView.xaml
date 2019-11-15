@@ -10,6 +10,23 @@
 
     <Page.Resources>
 
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryDark" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryLight" Color="#FF4A6572"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="Tertiary" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TertiaryDark" Color="#FFE1E9F0"/>
+        <SolidColorBrush x:Key="PrimaryColorTranslucent07" Opacity="0.7" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryColorTranslucent09" Opacity="0.9" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryDarkTranslucent07" Opacity="0.7" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryDarkTranslucent09" Opacity="0.9" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryLightTranslucent07" Opacity="0.7" Color="#FF4A6572"/>
+        <SolidColorBrush x:Key="SecondaryColorTranslucent07" Opacity="0.7" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="SecondaryColorTranslucent04" Opacity="0.4" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="TertiaryTranslucent07" Opacity="0.7" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
+
+
         <SolidColorBrush x:Key="WindowBackground" Color="#FF5A5193" Opacity="1"/>
         <SolidColorBrush x:Key="WindowBackgroundTranslucent" Color="#FF5A5193" Opacity="0.3"/>
         <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
@@ -597,7 +614,7 @@
 
 
         <Style x:Key="ShowListStyle" TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="{StaticResource WindowBackground}"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Margin" Value="0,0,0,0"/>
             <Setter Property="Padding" Value="0,0,0,0"/>
@@ -615,7 +632,7 @@
                                 </Grid.RowDefinitions>
 
 
-                                <Expander HorizontalAlignment="Left" Background="{StaticResource DownloadBrush}" 
+                                <Expander HorizontalAlignment="Left" Background="{StaticResource PrimaryDark}" 
                                           Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsPresenter}}}"
                                           x:Name="EpisodeExpander" Grid.Row="0"
                                           VerticalAlignment="Center" Padding="0,0,0,0" Margin="0,0,0,0"
@@ -627,7 +644,7 @@
                                     <!--IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, 
                                     RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"-->
                                     <Expander.Header>
-                                        <WrapPanel Grid.Row="0" Background="{StaticResource DownloadBrush}" x:Name="ShowPanel">
+                                        <WrapPanel Grid.Row="0" Background="{StaticResource PrimaryDark}" x:Name="ShowPanel">
 
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -707,7 +724,7 @@
                                                  ItemContainerStyle="{StaticResource EpisodeItems}" Template="{DynamicResource ListBoxControlTemplate1}"
                                                  SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"></ListBox>-->
 
-                                        <ItemsControl ItemsSource="{Binding EpisodeList}" Background="White" Grid.Column="0" 
+                                        <ItemsControl ItemsSource="{Binding EpisodeList}" Background="{StaticResource TertiaryDark}" Grid.Column="0" 
                                                       HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True" Margin="4,0,0,0">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
@@ -786,6 +803,35 @@
         </Style>
 
 
+        <Style x:Key="SearchButton" TargetType="{x:Type Button}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" BorderBrush="{StaticResource SecondaryColor}" BorderThickness="1,1,0,1" CornerRadius="2,0,0,2">
+                            <Grid Height="20" Width="20" SnapsToDevicePixels="True">
+                                <!--<Rectangle Fill="{StaticResource DownloadBrush}" Width="20" Height="20" RadiusX="2" RadiusY="2"></Rectangle>-->
+                                <Rectangle x:Name="BackgroundFiller" Fill="{StaticResource SecondaryColor}" Width="20" Height="20" RadiusX="0" RadiusY="0"/>
+                                <Ellipse x:Name="Circle" Stroke="{StaticResource PrimaryDark}" StrokeThickness="3" Height="14" Width="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1,1,0,0" SnapsToDevicePixels="True"/>
+                                <Line x:Name="Line" Stroke="{StaticResource PrimaryDark}" StrokeThickness="3" X1="17" Y1="19" X2="11" Y2="12" SnapsToDevicePixels="True"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Circle" Property="Opacity" Value="0.8"/>
+                                <Setter TargetName="Line" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Circle" Property="Opacity" Value="0.6"/>
+                                <Setter TargetName="Line" Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
     </Page.Resources>
 
     <Grid>
@@ -794,12 +840,27 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="32"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
+            <!--<RowDefinition Height="10"></RowDefinition>-->
         </Grid.RowDefinitions>
-        <Rectangle Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource WindowBackground}"></Rectangle>
-        <Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource WindowBackground}"></Rectangle>
+        <Rectangle Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource TertiaryDark}"></Rectangle>
+        <!--<Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Fill="{DynamicResource TertiaryDark}"></Rectangle>-->
+        <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Fill="{StaticResource PrimaryLight}"/>
+
+
+
+        <Grid Grid.Row="0" Grid.Column="1" Margin="0,5,0,5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0,0,0,0">
+                <Button Style="{StaticResource SearchButton}" HorizontalAlignment="Right" Margin="0,0,0,0" Width="21"
+                            Command="{Binding ToggleSearchBarVisibility}"/>
+            </Border>
+        </Grid>
 
         <ListBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource ShowListStyle}" ItemsSource="{Binding Podcasts}"
                  ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" ItemContainerStyle="{StaticResource ShowItems}"
