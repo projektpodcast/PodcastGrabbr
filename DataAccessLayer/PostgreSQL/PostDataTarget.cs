@@ -188,6 +188,5 @@ namespace DataAccessLayer.PostgreSQL
 
         #endregion
 
-
     }
 }

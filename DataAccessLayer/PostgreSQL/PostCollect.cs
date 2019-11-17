@@ -15,6 +15,8 @@ namespace DataAccessLayer.PostgreSQL
             // new Object to connect with Postgres
             PostDataTarget myConnection = new PostDataTarget();
 
+            PostDataSource myConnectionRead = new PostDataSource();
+
 
             // dadaBase Name
             string dbName = "test";
@@ -44,6 +46,7 @@ namespace DataAccessLayer.PostgreSQL
                 Console.WriteLine("The db ist already to use");
             }
 
+
             //read values from Shows
             string _PublisherName = a.ShowInfo.PublisherName;
             string _PodcastTitle = a.ShowInfo.PodcastTitle;
@@ -56,26 +59,38 @@ namespace DataAccessLayer.PostgreSQL
             string ImageUri = a.ShowInfo.ImageUri;
             string _Categorie = "new";
 
-            // inster values in shows
-            myConnection.InsertValuesShows(dbName, _PublisherName, _Description, _PublisherName, _Categorie, _Language, ImageUri, LastUpdated, LastBuildDate);
-
-
-
-            // read episodios
-            foreach (var Episode in a.EpisodeList)
+            // if the episode exist dont make nothing
+            // TODO read   SHOW id
+            if ( myConnectionRead.CheckShow("1", dbName) == false)
             {
-                string _Title = Episode.Title;
-                _Title = _Title.Replace("'", "''");
-                DateTime _PublishDate = Episode.PublishDate;
-                string _Summary = Episode.Summary;
-                _Summary = _Summary.Replace("'", "''");
-                string _Keywords = Episode.Keywords;
-                string _ImageUri = Episode.ImageUri;
-                string _FileDetails = Episode.FileDetails.SourceUri;
+                // inster values in shows
+                myConnection.InsertValuesShows(dbName, _PublisherName, _Description, _PublisherName, _Categorie, _Language, ImageUri, LastUpdated, LastBuildDate);
+                
+                // read episodios
+                foreach (var Episode in a.EpisodeList)
+                {
+                    string _Title = Episode.Title;
+                    _Title = _Title.Replace("'", "''");
+                    DateTime _PublishDate = Episode.PublishDate;
+                    string _Summary = Episode.Summary;
+                    _Summary = _Summary.Replace("'", "''");
+                    string _Keywords = Episode.Keywords;
+                    string _ImageUri = Episode.ImageUri;
+                    string _FileDetails = Episode.FileDetails.SourceUri;
 
-                // inser values in each episode
-                myConnection.InsertValuesEpisodes(dbName, _Title, _PublishDate, _Summary, _Keywords, _ImageUri, _FileDetails);
+                    // inser values in each episode
+                    myConnection.InsertValuesEpisodes(dbName, _Title, _PublishDate, _Summary, _Keywords, _ImageUri, _FileDetails);
+                }
             }
+
+
+            myConnectionRead.getShows(dbName);
+            myConnectionRead.getAllEpisodes(dbName);
+            
+
+
+
+
 
         }
     }
