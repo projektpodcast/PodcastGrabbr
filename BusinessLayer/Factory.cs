@@ -20,7 +20,7 @@ namespace BusinessLayer
                     dataTargetInstance = new XmlDataTarget();
                     break;
                 case 2:
-                    dataTargetInstance = new MySQLDataTarget();
+                    dataTargetInstance = null;
                     break;
                 case 3:
                     dataTargetInstance = null;
@@ -40,7 +40,7 @@ namespace BusinessLayer
                     dataSourceInstance = new XmlDataSource();
                     break;
                 case 2:
-                    dataSourceInstance = new MySQLDataSource();
+                    dataSourceInstance = null;
                     break;
                 case 3:
                     dataSourceInstance = null;
