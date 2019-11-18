@@ -19,7 +19,7 @@ namespace DataAccessLayer
 
         static void Connection()
         {
-            MySQLDataTarget.Adapter = new DBAdapter(DatabaseType.MySql,Instance.NewInstance,"10.194.9.130",3306,"pdocastmanager","root","iec9bei0weex7baShieg","logfile.txt");
+            MySQLDataTarget.Adapter = new DBAdapter(DatabaseType.MySql, Instance.NewInstance, "10.194.9.130", 3306, "pdocastmanager", "root", "iec9bei0weex7baShieg", "logfile.txt");
 
             MySQLDataTarget.Adapter.Adapter.LogFile = true;
             MySQLDataTarget.Adapter.Adapter.CheckConnectionState();
@@ -46,7 +46,7 @@ namespace DataAccessLayer
         }
         public void InsertEpisodes(Podcast newPodcast)
         {
-
+            var unbekannteEpisode = MySQLDataTarget.Adapter.Adapter.InsertParameters()
             throw new NotImplementedException();
         }
 
@@ -54,10 +54,11 @@ namespace DataAccessLayer
         {
             throw new NotImplementedException();
         }
-        private List<Parameter> getEpisondeParameters(Podcast newPodcast)
+        private List<Parameter> getEpisodeParameters(Podcast newPodcast)
         {
             List<Parameter> paramList = new List<Parameter>();
-            
+            Parameter episodeName = new Parameter("@name", newPodcast.EpisodeList)
+
 
             return paramList;
         }
@@ -87,10 +88,47 @@ namespace DataAccessLayer
         public string CreatePodacstInsert()
         {
             String sql = "INSERT INTO shows VALUES(@showName, @description, @publisher, @category, @language, @imageUri, @lastUpdated, @lastBuild)";
+
             return sql;
         }
         public string CreateEpisodeInsert(Podcast newPodcast)
         {
+            String sql = "";
+            List<Parameter> paramList = new List<Parameter>();
+            int showID = newPodcast.ShowInfo.ShowID;
+
+
+            foreach (Episode item in newPodcast.EpisodeList)
+            {
+                Episode e = item;
+                sql = "INSERT INTO episodes VALUES(@showID, @title, @description, @publishDate, @duration, @sizeOfFile, @author, @imageUrl, @fileUrl, @copyright)";
+                    //add parameter... e.podcasttitle
+                Parameter showId = new Parameter("@showID", showID);
+                Parameter title = new Parameter("@title", e.Title);
+                Parameter description = new Parameter("@description", e.Description);
+                Parameter publishDate = new Parameter("@publishDate", e.PublishDate);
+                Parameter duration = new Parameter("@duration", e.FileDetails.Duration);
+                Parameter fileSize = new Parameter("@sizeOfFile", e.FileDetails.FileSize);
+                Parameter author = new Parameter("@author", newPodcast.ShowInfo.PublisherName);
+                Parameter imageUrl = new Parameter("@imageUrl", e.ImageUri);
+                Parameter fileUrl = new Parameter("@fileUrl", e.FileDetails.SourceUri);
+                Parameter copyright = new Parameter("@copyright", e.FileDetails.Copyright);
+
+                paramList.Add(showId);
+                paramList.Add(title);
+                paramList.Add(description);
+                paramList.Add(publishDate);
+                paramList.Add(fileSize);
+                paramList.Add(author);
+                paramList.Add(imageUrl);
+                paramList.Add(fileUrl);
+                paramList.Add(copyright);
+                    
+            }
+
+
+
+
             return "";
         }
     }
