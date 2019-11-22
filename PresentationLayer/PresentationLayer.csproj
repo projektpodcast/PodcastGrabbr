@@ -62,12 +62,14 @@
     <Compile Include="AppConfigManager.cs" />
     <Compile Include="Models\ButtonModel.cs" />
     <Compile Include="OnCurrentContentChanged.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\FileDialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\IInitializerService.cs" />
     <Compile Include="Services\IUserConfigService.cs" />
     <Compile Include="Services\OnConfigChanged.cs" />
     <Compile Include="Services\UserConfigService.cs" />
+    <Compile Include="Services\UserConfigurationService.cs" />
     <Compile Include="ViewModel\DownloadsViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Services\InizializerService.cs" />

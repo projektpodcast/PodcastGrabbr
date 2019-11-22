@@ -42,10 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataType.cs" />
+    <Compile Include="DatenArt.cs" />
     <Compile Include="DateTimeParser.cs" />
     <Compile Include="Episode.cs" />
     <Compile Include="FileInformation.cs" />
     <Compile Include="GlobalConfigService.cs" />
+    <Compile Include="IDatenArt.cs" />
     <Compile Include="ISettingsManager.cs" />
     <Compile Include="Podcast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
-﻿using PresentationLayer.Services;
+﻿using CommonTypes;
+using PresentationLayer.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -268,5 +269,63 @@ namespace PresentationLayer.ViewModel
         { get { return _dbPassword; }
           set { _dbPassword = value; OnPropertyChanged("DbPassword"); }
         }
+
+
+
+
+
+
+
+
+
+
+        private DatenArt _selectedData { get; set; }
+        public DatenArt SelectedData
+        {
+            get { return _selectedData; }
+            set
+            {
+                _selectedData = value;
+                OnPropertyChanged("SelectedData");
+            }
+        }
+
+        private DatenArt _configData { get; set; }
+        public DatenArt ConfigData
+        {
+            get { return _configData; }
+            set
+            {
+                _configData = value;
+                OnPropertyChanged("SelectedData");
+            }
+        }
+
+        private void GetConfigData()
+        {
+            //erweitern: service
+        }
+
+        private void GetSelectedData()
+        {
+            //passiert im DataBinding, überflüssig
+        }
+
+        private void SetConfigData()
+        {
+            //erweitern: service
+        }
+
+        private void SyncConfigAndSelectedData()
+        {
+            //prinzip: selecteddata = configdata
+        }
+
+
+
+
+
+
+
     }
 }
