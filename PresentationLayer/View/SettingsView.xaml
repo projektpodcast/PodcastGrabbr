@@ -6,10 +6,35 @@
       xmlns:local="clr-namespace:PresentationLayer.View"
       xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="PresentationLayer.View.SettingsView"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="768" d:DesignWidth="800"
       Title="SettingsView"
+    xmlns:controls="clr-namespace:PresentationLayer.View"
       >
     <Page.Resources>
+
+
+
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryDark" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryLight" Color="#FF4A6572"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="Tertiary" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TertiaryDark" Color="#FFE1E9F0"/>
+        <SolidColorBrush x:Key="PrimaryColorTranslucent07" Opacity="0.7" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryColorTranslucent09" Opacity="0.9" Color="#FF344955"/>
+        <SolidColorBrush x:Key="PrimaryDarkTranslucent07" Opacity="0.7" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryDarkTranslucent09" Opacity="0.9" Color="#FF232F34"/>
+        <SolidColorBrush x:Key="PrimaryLightTranslucent07" Opacity="0.7" Color="#FF4A6572"/>
+        <SolidColorBrush x:Key="SecondaryColorTranslucent07" Opacity="0.7" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="SecondaryColorTranslucent04" Opacity="0.4" Color="#FFF9AA33"/>
+        <SolidColorBrush x:Key="TertiaryTranslucent07" Opacity="0.7" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
+
+
+        <SolidColorBrush x:Key="ButtonHover" Color="#FFFABB47"/>
+
+        <SolidColorBrush x:Key="ButtonPrimaryHover" Color="#FF837047"/>
+
         <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
         <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
         <SolidColorBrush x:Key="myBrush" Color="#FFBFAAF5" Opacity="0.4"/>
@@ -19,6 +44,26 @@
         <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
         <SolidColorBrush x:Key="HeadlineBrush" Color="White" Opacity="1"/>
         <SolidColorBrush x:Key="DetailBrush" Color="White" Opacity="0.7"/>
+        <SolidColorBrush x:Key="SearchButtonStroke" Color="#FF5A5193" Opacity="1"/>
+        <SolidColorBrush x:Key="WindowBackground" Color="#FF5A5193" Opacity="1"/>
+        <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
+        <SolidColorBrush x:Key="DownloadBrushTranslucent" Color="#FF311855" Opacity="0.7"/>
+        <SolidColorBrush x:Key="myBrush2" Color="#FFBFAAF5" Opacity="0.7"/>
+        <SolidColorBrush x:Key="myBrush3" Color="#FFD3B9F1" Opacity="1"/>
+        <SolidColorBrush x:Key="DownloadBrushHighlight" Color="#FF6F509C" Opacity="1"/>
+        <SolidColorBrush x:Key="RedBrush2" Color="Red" Opacity="0.65"/>
+        <SolidColorBrush x:Key="GreenBrushPlay" Color="#FF1BA61B" Opacity="1"/>
+        <SolidColorBrush x:Key="GreenBrushPlayTranslucent" Color="Green" Opacity="0.8"/>
+
+
+
+
+
+
+
+
+
+
         <Style x:Key="HeadlineTb" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{StaticResource HeadlineBrush}"/>
             <Setter Property="VerticalAlignment" Value="Bottom"/>
@@ -71,25 +116,365 @@
             </Setter>
         </Style>
 
+        <Style x:Key="StandardButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="Bd" BorderBrush="{StaticResource PrimaryDark}" BorderThickness="1" Background="{StaticResource PrimaryLight}" CornerRadius="3">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" MinWidth="20" MinHeight="10"
+                                  >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <!--<ColumnDefinition Width="*"/>-->
+                                </Grid.ColumnDefinitions>
+                                <TextBlock FontWeight="SemiBold" Text="{TemplateBinding Content}" Padding="4,0" Style="{StaticResource HeadlineTb}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonPrimaryHover}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.5"/>
+                                <Setter TargetName="Bd" Property="Background" Value="gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
 
 
 
+        <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+
+                        <Border x:Name="border" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="{TemplateBinding BorderThickness}" 
+                                 SnapsToDevicePixels="True" Background="{StaticResource PrimaryColor}">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
+                                              />
+                                <Label Content="{TemplateBinding Tag}" Visibility="Collapsed" Focusable="False" IsHitTestVisible="False" Foreground="{StaticResource PrimaryLight}"
+                                       Background="Transparent" x:Name="SearchWatermark" Height="{Binding ActualHeight, ElementName=PART_ContentHost}"
+                                       FontSize="{Binding FontSize,ElementName=PART_ContentHost}" Padding="2,0,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="False" />
+                                    <Condition Property="Text" Value="" />
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter Property="Visibility" TargetName="SearchWatermark"
+                                        Value="Visible" />
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
 
 
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryDark}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryDark}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--<Border x:Name="border" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="{TemplateBinding BorderThickness}" 
+                                 SnapsToDevicePixels="True" Background="{StaticResource PrimaryColor}">-->
+
+        <Style x:Key="PasswordTest" TargetType="{x:Type PasswordBox}">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="{StaticResource SecondaryColor}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource PrimaryColor}" SnapsToDevicePixels="True">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <!--<MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="False" />
+                                    -->
+                            <!--<Condition Property="" Value="" />-->
+                            <!--
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter Property="Visibility" TargetName="SearchWatermark"
+                                        Value="Visible" />
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>-->
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryDark}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryDark}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
 
+        <ControlTemplate x:Key="ComboBoxControlTemplate2" TargetType="{x:Type ComboBox}">
+            <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Popup x:Name="PART_Popup" AllowsTransparency="True" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                       Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
+                    <Themes:SystemDropShadowChrome x:Name="shadow" Color="Transparent" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=templateRoot}">
+                        <Border x:Name="DropDownBorder" BorderBrush="{StaticResource SecondaryColor}" BorderThickness="1" Background="{StaticResource SecondaryColor}">
+                            <ScrollViewer x:Name="DropDownScrollViewer">
+                                <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                        <Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=DropDownBorder}" Height="{Binding ActualHeight, ElementName=DropDownBorder}" Width="{Binding ActualWidth, ElementName=DropDownBorder}"/>
+                                    </Canvas>
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </Border>
+                    </Themes:SystemDropShadowChrome>
+                </Popup>
+                <ToggleButton x:Name="toggleButton" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                            <Setter Property="IsTabStop" Value="False"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="ClickMode" Value="Press"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border x:Name="templateRoot" Background="{StaticResource PrimaryColor}" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" UseLayoutRounding="True" d:DesignUseLayoutRounding="True">
+                                            <!--<Border.Background>
+                                                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                                    <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>-->
+
+                                            <Border x:Name="splitBorder" BorderBrush="{StaticResource SecondaryColor}" BorderThickness="3" HorizontalAlignment="Right" Margin="0,-1,-1,-1" SnapsToDevicePixels="True" 
+                                                    UseLayoutRounding="True" Width="17" d:DesignUseLayoutRounding="True" Background="{StaticResource SecondaryColor}">
+                                                <Path x:Name="arrow" Data="M 2.5 2.5 L 7 10.5 L 11.5 2.5 Z" Fill="{StaticResource PrimaryDark}" HorizontalAlignment="Center" Margin="0" UseLayoutRounding="True" 
+                                                      VerticalAlignment="Center" d:DesignUseLayoutRounding="True"/>
+                                            </Border>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <!--<Setter Property="Background" TargetName="templateRoot" Value="White"/>
+                                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FFABADB3"/>
+                                                <Setter Property="Background" TargetName="splitBorder" Value="Transparent"/>
+                                                <Setter Property="BorderBrush" TargetName="splitBorder" Value="Transparent"/>-->
+
+                                                <!--<Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>-->
+                                            </MultiDataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ButtonPrimaryHover}"/>
+
+                                            </Trigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="false"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ButtonPrimaryHover}"/>
+                                                <!--<Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>-->
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <!--<Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>-->
+                                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ButtonPrimaryHover}"/>
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                            </MultiDataTrigger>
+
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                                    <!--<Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="true"/>-->
+                                                </MultiDataTrigger.Conditions>
+                                                <!--<Setter TargetName="arrow" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="splitBorder" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="splitBorder" Property="Opacity" Value="0.8"/>-->
+                                            </MultiDataTrigger>
+                                        </ControlTemplate.Triggers>
+
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+                <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="False" Margin="{TemplateBinding Padding}" 
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="True">
+                    <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
+                    <Setter Property="Color" TargetName="shadow" Value="#71000000"/>
+                </Trigger>
+                <Trigger Property="HasItems" Value="False">
+                    <Setter Property="Height" TargetName="DropDownBorder" Value="95"/>
+                </Trigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsGrouping" Value="True"/>
+                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="False"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                </MultiTrigger>
+                <Trigger Property="CanContentScroll" SourceName="DropDownScrollViewer" Value="False">
+                    <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}"/>
+                    <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsKeyboardFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <!--<Setter Property="Opacity" TargetName="Bd" Value="0.8"/>-->
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColor}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource SecondaryColor}"/>-->
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="False"/>
+                                    <Condition Property="IsKeyboardFocused" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <!--<Setter Property="Opacity" TargetName="Bd" Value="0.8"/>-->
+                                <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColor}"/>-->
+                                <!--<Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>-->
+                                <!--<Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>-->
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Tertiary}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Tertiary}"/>
+
+                                <!--<Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                                -->
+                                <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColor}"/>-->
+                                <!--
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Tertiary}"/>-->
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsMouseOver" Value="False"/>
+                                    <Condition Property="IsKeyboardFocused" Value="False"/>
+                                </MultiTrigger.Conditions>
+
+                                <!--<Setter Property="Background" TargetName="Bd" Value="red"/>-->
+                                <!--<Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>-->
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Tertiary}"/>
+                                <!--<Setter Property="Background" TargetName="Bd" Value="#3DDADADA"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource DownloadBrush}"/>-->
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                    <Condition Property="IsMouseOver" Value="False"/>
+                                    <Condition Property="IsKeyboardFocused" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <!--<Setter Property="Background" TargetName="Bd" Value="#3DDADADA"/>-->
+                                <!--<Setter Property="BorderBrush" TargetName="Bd" Value="White"/>-->
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="False"/>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsKeyboardFocused" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                <!--<Setter Property="Opacity" TargetName="Bd" Value="0.8"/>-->
+                                <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColor}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource SecondaryColor}"/>-->
+                                <!--<Setter Property="Background" TargetName="Bd" Value="#3DDADADA"/>-->
+                                <!--<Setter Property="BorderBrush" TargetName="Bd" Value="White"/>-->
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
 
     </Page.Resources>
     <!--<Grid>-->
 
 
-
+    <!--<ScrollViewer>-->
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -100,24 +485,34 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Rectangle Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="2" Fill="#FF5A5193" />
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Fill="{StaticResource PrimaryLight}"></Rectangle>
+        <Rectangle Grid.Row="1" Grid.RowSpan="6" Grid.Column="0" Grid.ColumnSpan="2" Fill="{StaticResource TertiaryDark}" />
+
+
+
+        <!--Datenbankserver Steuerelemente-->
+
+
+
+
+        <Grid Grid.Row="2" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="1*" MinHeight="40"/>
                 <RowDefinition Height="auto" MinHeight="60"/>
-                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="2*" MinHeight="20"/>
             </Grid.RowDefinitions>
-            <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
-            <Rectangle Grid.Row="2" Fill="#463574"/>
+            <Rectangle Grid.Row="0" Fill="{StaticResource PrimaryColor}" />
+            <Rectangle Grid.Row="1" Grid.RowSpan="2" Fill="{StaticResource PrimaryLight}" />
+            <Rectangle Grid.Row="4" Fill="{StaticResource TertiaryDark}"/>
 
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Konfiguration der Datenquelle" Style="{StaticResource HeadlineTb}"/>
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Konfiguration der Datenquelle" Margin="5,0,0,0" Style="{StaticResource HeadlineTb}" VerticalAlignment="Center"/>
 
-            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*" MinWidth="50"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10" MaxHeight="30"/>
@@ -125,27 +520,87 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="10" MaxHeight="30"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"/>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="{StaticResource PrimaryLight}"/>
 
-                <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
-                    <Grid>
+
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MaxWidth="300"/>
+                        <!--<ColumnDefinition Width="*"/>-->
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="10,0,0,0" Grid.Column="0" Grid.Row="0">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MinWidth="0" MaxWidth="100"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Datenziel" Style="{StaticResource DetailTb}" Margin="0,0,10,0"/>
-                        <ComboBox Grid.Column="1" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="True" IsEnabled="True" Width="150" 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Text="Datenziel" Style="{StaticResource DetailTb}" Margin="0,0,10,0" Grid.Row="0"/>
+                        <ComboBox x:Name="DataTypeComboBox" Grid.Column="1" Grid.Row="0"
                                   ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding SelectedDataType}" Text="{Binding Path=ConfigDataType.Value, Mode=OneWay}"
-                                  DisplayMemberPath="Value">
-                            <!--<ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Value}"></TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>-->                       
+                                  DisplayMemberPath="Value" Template="{StaticResource ComboBoxControlTemplate2}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                  ItemContainerStyle="{StaticResource ComboBoxItemStyle}" Foreground="White" VerticalContentAlignment="Center">
                         </ComboBox>
+
+
+                        <!--<ComboBox x:Name="FilterComboBox" Width="100" ItemsSource="{Binding FilterOptions}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
+                                  Template="{DynamicResource ComboBoxControlTemplate2}" HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True"
+                                  SelectedItem="{Binding TypeFilter}" Foreground="White">-->
                     </Grid>
 
-                    <!--<DockPanel Margin="10,0,0,0" FlowDirection="RightToLeft">
+                    <Grid Margin="10,0,0,0" Grid.Column="0" Grid.Row="1" Visibility="{Binding Visible}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" MinWidth="20" MaxWidth="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+
+
+
+                        <Rectangle  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="7" Opacity="0.1" Fill="{StaticResource Tertiary}" RadiusX="10" RadiusY="10"
+                                    Margin="-5,0,0,-5"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="Server IP" Style="{StaticResource DetailTb}" Margin="0,5,10,0" />
+                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="1" Grid.Column="1" Foreground="White" Tag="00.000.0.000" Margin="0,5,5,0"></TextBox>
+
+
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="Port" Style="{StaticResource DetailTb}" Margin="0,5,10,0" />
+                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="2" Grid.Column="1" Foreground="White" Tag="0000" Margin="0,5,5,0"></TextBox>
+
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Datenbank" Style="{StaticResource DetailTb}" Margin="0,5,10,5" />
+                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="3" Grid.Column="1" Foreground="White" Tag="MeineDatenbank" Margin="0,5,5,0"></TextBox>
+
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="User ID" Style="{StaticResource DetailTb}" Margin="0,5,10,0" />
+                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="4" Grid.Column="1" Foreground="White" Tag="root" Margin="0,5,5,0"></TextBox>
+
+                        <TextBlock Grid.Column="0" Grid.Row="5" Text="Passwort" Style="{StaticResource DetailTb}" Margin="0,5,10,0"/>
+                        <!--<TextBox Style="{StaticResource SearchTextBox}" Grid.Row="4" Grid.Column="1" Foreground="White" Tag="0000"></TextBox>-->
+
+                        <!--<PasswordBox x:Name="DbPassword" Grid.Row="4" Grid.Column="1" Margin="0,5,5,0" Style="{StaticResource PasswordTest}" PasswordChanged="PasswordBox_PasswordChanged"></PasswordBox>-->
+                        <controls:PasswordBoxUserControl Grid.Row="5" Grid.Column="1" EncryptedPassword="{Binding DbPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                         Margin="0,5,5,0"></controls:PasswordBoxUserControl>
+
+                    </Grid>
+                    <Button Style="{StaticResource StandardButton}" Height="30" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" 
+                            Content="ÄNDERUNG SPEICHERN" Margin="0,10,0,0" Command="{Binding PersistDbData}"></Button>
+                </Grid>
+
+                <!--<DockPanel Margin="10,0,0,0" FlowDirection="RightToLeft">
                         <ComboBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Text="itte auswählen" Width="150" MinWidth="50">
                             <ComboBoxItem>Datenbank: MySQL</ComboBoxItem>
                             <ComboBoxItem>Datenbank: PostgreSQL</ComboBoxItem>
@@ -153,7 +608,7 @@
                         </ComboBox>
                         <TextBlock Margin="5,0,0,0" Text="Datenziel" Style="{StaticResource DetailTb}"></TextBlock>
                     </DockPanel>-->
-                    <!--<DockPanel Margin="10,0,0,0">
+                <!--<DockPanel Margin="10,0,0,0">
                         <TextBlock Text="Datenziel:" Style="{StaticResource DetailTb}"
                        TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"></TextBlock>
                         <ComboBox Margin="5,0,0,0" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" IsEditable="False" Text="itte auswählen" Width="150" MinWidth="50">
@@ -162,22 +617,24 @@
                             <ComboBoxItem>Lokal: XML</ComboBoxItem>
                         </ComboBox>
                     </DockPanel>-->
-                </WrapPanel>
+
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="3" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="1*" MinHeight="40"/>
                 <RowDefinition Height="auto" MinHeight="60"/>
-                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="2*" MinHeight="20"/>
             </Grid.RowDefinitions>
-            <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
-            <Rectangle Grid.Row="2" Fill="#463574"/>
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Massenimport" Style="{StaticResource HeadlineTb}"/>
+            <Rectangle Grid.Row="0" Fill="{StaticResource PrimaryColor}" />
+            <Rectangle Grid.Row="1" Grid.RowSpan="2" Fill="{StaticResource PrimaryLight}" />
+            <Rectangle Grid.Row="4" Fill="{StaticResource TertiaryDark}"/>
 
-            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Import / Export" Style="{StaticResource HeadlineTb}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*" MinWidth="50"/>
                     <ColumnDefinition Width="1*"/>
@@ -188,7 +645,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="10" MaxHeight="30"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="#FF311855" Opacity="0.5"/>
+
 
                 <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <DockPanel>
@@ -232,18 +689,20 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="3" Grid.Column="1">
+        <Grid Grid.Row="4" Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="1*" MinHeight="40"/>
                 <RowDefinition Height="auto" MinHeight="60"/>
-                <RowDefinition Height="2*" MinHeight="10"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="2*" MinHeight="20"/>
             </Grid.RowDefinitions>
-            <Rectangle Grid.Row="0" Grid.RowSpan="4" Fill="#FF5A5193" />
-            <Rectangle Grid.Row="2" Fill="#463574"/>
-            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Text="Podcast Optionen" Style="{StaticResource HeadlineTb}"/>
+            <Rectangle Grid.Row="0" Fill="{StaticResource PrimaryColor}" />
+            <Rectangle Grid.Row="1" Grid.RowSpan="2" Fill="{StaticResource PrimaryLight}" />
+            <Rectangle Grid.Row="4" Fill="{StaticResource TertiaryDark}"/>
 
-            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="Podcast Optionen" Style="{StaticResource HeadlineTb}" Margin="5,0,0,0" VerticalAlignment="Center"/>
+
+            <Grid Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*" MinWidth="50"/>
                     <ColumnDefinition Width="1*"/>
@@ -254,7 +713,6 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="10" MaxHeight="30"/>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="2" Grid.RowSpan="4" Fill="#FF311855" Opacity="0.5"/>
 
                 <WrapPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="10,0,0,0">
                     <DockPanel>
@@ -279,7 +737,6 @@
                     </DockPanel>
 
                 </WrapPanel>
-
             </Grid>
         </Grid>
 
@@ -288,7 +745,7 @@
     </Grid>
 
 
-
+    <!--</ScrollViewer>-->
 
 
 

@@ -170,7 +170,6 @@ namespace PresentationLayer.ViewModel
         }
 
 
-
         private void ReloadPodcastUi()
         {
             _podcastUi.ViewModelType = null;

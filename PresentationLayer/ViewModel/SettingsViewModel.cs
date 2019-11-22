@@ -78,7 +78,37 @@ namespace PresentationLayer.ViewModel
                 return _deleteAllDownloads;
             }
         }
+
+        private ICommand _persistDbData { get; set; }
+        public ICommand PersistDbData
+        {
+            get
+            {
+                if (_persistDbData == null)
+                {
+                    _persistDbData = new RelayCommand(
+                        p => CheckDbData(),
+                        p => this.ExecutePersistDbData());
+                }
+                return _persistDbData;
+            }
+        }
         #endregion ICommand Properties
+
+        private bool CheckDbData()
+        {
+            if (SelectedDataType.Key != ConfigDataType.Key)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void ExecutePersistDbData()
+        {
+            MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
+            SetConnectionType2();
+        }
 
         #region ICommand Methods
         private bool IsDataTypeSelected()
@@ -115,11 +145,21 @@ namespace PresentationLayer.ViewModel
             {
                 var configValue = PossibleTypes.First(p => p.Key == currentValue);
                 ConfigDataType = configValue;
+                if (currentValue == 1)
+                {
+                    Visible = Visibility.Collapsed;
+                }
+                else
+                {
+                    Visible = Visibility.Visible;
+                }
             }
             else
             {
                 KeyValuePair<int, string> a = new KeyValuePair<int, string>(currentValue, "Bitte wählen");
                 ConfigDataType = a;
+                Visible = Visibility.Collapsed;
+
             }
         }
 
@@ -142,8 +182,16 @@ namespace PresentationLayer.ViewModel
         {
             if (SelectedDataType.Key != ConfigDataType.Key)
             {
-                MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
-                SetConnectionType2();
+
+
+                if (SelectedDataType.Key == 1)
+                {
+                    Visible = Visibility.Collapsed;
+                }
+                else
+                {
+                    Visible = Visibility.Visible;
+                }
             }
         }
 
@@ -176,5 +224,49 @@ namespace PresentationLayer.ViewModel
         //    }
         //}
 
+        private Visibility _visibility { get; set; }
+        public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible"); } }
+
+        //private ICommand _toggleVisibility { get; set; }
+        //public ICommand ToggleVisibility
+        //{
+        //    get
+        //    {
+        //        if (_toggleVisibility == null)
+        //        {
+        //            _toggleVisibility = new RelayCommand(
+        //                p => this.IsDataTypeSelected(),
+        //                p => this.ExecuteVisibilityToggle());
+        //        }
+        //        return _toggleVisibility;
+        //    }
+        //}
+
+        private void ExecuteVisibilityToggle()
+        {
+            switch (Visible)
+            {
+                case Visibility.Visible:
+                    this.Visible = Visibility.Collapsed;
+                    break;
+                case Visibility.Collapsed:
+                    this.Visible = Visibility.Visible;
+                    break;
+                default:
+                    this.Visible = Visibility.Collapsed;
+                    break;
+            }
+        }
+
+        private void GetConfig()
+        {
+
+        }
+
+        private string _dbPassword { get; set; }
+        public string DbPassword
+        { get { return _dbPassword; }
+          set { _dbPassword = value; OnPropertyChanged("DbPassword"); }
+        }
     }
 }

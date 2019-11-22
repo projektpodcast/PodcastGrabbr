@@ -28,5 +28,11 @@ namespace PresentationLayer.View
             ViewModelType = viewModel;
             this.DataContext = ViewModelType;
         }
+
+        //private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        //{
+        //    string rijndaelEncryptedPassword = SecurityLibrary.StringCipher.Encrypt(DbPassword.Password);
+
+        //}
     }
 }

@@ -21,15 +21,22 @@ namespace MockPresentationLayer
     {
         static void Main(string[] args)
         {
-            DeserializingManager deserializer = new DeserializingManager();
+
+            string password = "#H1a!l@l^oMeinPasswortIstSuperLang";
+            //string encryptionString = "asd123asd123";
+            string encryptedPassword = SecurityLibrary.StringCipher.Encrypt(password);
+
+            string decryptedPassword = SecurityLibrary.StringCipher.Decrypt(encryptedPassword);
+
+            //DeserializingManager deserializer = new DeserializingManager();
 
             ////Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
             ////Podcast a = deserializer.DeserializeRssXml("http://podcast.wdr.de/quarks.xml");
             ////Podcast a = deserializer.DeserializeRssXml("http://web.ard.de/radiotatort/rss/podcast.xml");
-            Podcast a = deserializer.DeserializeRssXml("https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast");
+            //Podcast a = deserializer.DeserializeRssXml("https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast");
             ////Podcast a = deserializer.DeserializeRssXml("http://www1.swr.de/podcast/xml/swr2/forum.xml");
 
-            PostgresData PostDbInstance = new PostgresData();
+            //PostgresData PostDbInstance = new PostgresData();
             //call postdb
             //PostDB(a);
         }

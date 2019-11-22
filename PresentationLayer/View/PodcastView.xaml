@@ -240,7 +240,7 @@
                               HorizontalAlignment="Left"
                 Command="ScrollBar.LineLeftCommand" Margin="0" Padding="0"/>
 
-                <ScrollContentPresenter Margin="5,5,5,5"
+                <ScrollContentPresenter Margin="5,0,5,0"
                 Grid.Column="1"
                 CanContentScroll="{TemplateBinding CanContentScroll}" />
 
@@ -259,6 +259,8 @@
             <GradientStop Color="White" Offset="0.71"/>
             <GradientStop Color="Transparent" Offset="0.71"/>
         </LinearGradientBrush>
+
+
 
 
         <Style x:Key="HorizontalStyle" TargetType="{x:Type ListBox}">
@@ -702,14 +704,14 @@
                                             <Setter Property="Width" Value="18"/>
                                             <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent}}"/>
                                             <Setter Property="Padding" Value="7"/>
-                                            <Setter Property="Background">
+                                            <!--<Setter Property="Background">
                                                 <Setter.Value>
                                                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                                                         <GradientStop Color="#FFBFAAF5" Offset="0"/>
                                                         <GradientStop Color="#FFBFAAF5" Offset="1"/>
                                                     </LinearGradientBrush>
                                                 </Setter.Value>
-                                            </Setter>
+                                            </Setter>-->
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
@@ -781,6 +783,8 @@
         </Style>
 
         <Style x:Key="HeaderStyleNonresizeable" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="IsEnabled" Value="False"/>
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -790,16 +794,16 @@
                 <Setter.Value>
                     <ControlTemplate x:Name="CustomColumnHeaderControl" TargetType="{x:Type GridViewColumnHeader}">
                         <Grid>
-                            <Border x:Name="HeaderBorder" BorderBrush="#FF5A5193" BorderThickness="0" Background="#FF5A5193">
+                            <Border x:Name="HeaderBorder" BorderThickness="0">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
+
                                     </Grid.RowDefinitions>
-                                    <Rectangle x:Name="UpperHighlight" Fill="#FFBFAAF5" Visibility="Visible"/>
-                                    <Rectangle Fill="{StaticResource PrimaryColor}" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" Margin="-10,0,0,0"/>
-                                    <Rectangle Fill="{StaticResource PrimaryColor}" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" Margin="0,-10,0,0"/>
-                                    <Border Padding="0" Grid.RowSpan="2">
+                                    <!--<Rectangle x:Name="UpperHighlight" Fill="#FFBFAAF5" Visibility="Visible"/>-->
+                                    <Rectangle Fill="{StaticResource PrimaryColor}" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" Margin="-10,0,0,0" Height="30"/>
+                                    <Rectangle Fill="{StaticResource PrimaryColor}" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" Margin="0,-10,0,0" Height="30"/>
+                                    <Border Padding="0" BorderThickness="0">
                                         <ContentPresenter x:Name="HeaderContent" 
                                                           ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}" 
@@ -811,7 +815,7 @@
                                     </Border>
                                 </Grid>
                             </Border>
-                            <Border x:Name="HeaderHoverBorder" BorderThickness="0" Margin="0"/>
+                            <!--<Border x:Name="HeaderHoverBorder" BorderThickness="0" Margin="0"/>
                             <Border x:Name="HeaderPressBorder" BorderThickness="0" Margin="0"/>
                             <Canvas>
                                 <Thumb x:Name="PART_HeaderGripper">
@@ -841,7 +845,7 @@
                                         </Style>
                                     </Thumb.Style>
                                 </Thumb>
-                            </Canvas>
+                            </Canvas>-->
                         </Grid>
                         <ControlTemplate.Triggers>
 
@@ -875,8 +879,11 @@
                                         </LinearGradientBrush>-->
                                     </Setter.Value>
                                 </Setter>
-                                <Setter Property="BorderBrush" TargetName="HeaderHoverBorder" Value="#FFBFAAF5"/>
-                                <Setter Property="BorderBrush" TargetName="HeaderPressBorder" Value="#FFBFAAF5"/>
+
+
+                                <!--<Setter Property="BorderBrush" TargetName="HeaderHoverBorder" Value="#FFBFAAF5"/>
+                                <Setter Property="BorderBrush" TargetName="HeaderPressBorder" Value="#FFBFAAF5"/>-->
+
                                 <!--<Setter Property="Visibility" TargetName="UpperHighlight" Value="Visible"/>
                                 <Setter Property="Fill" TargetName="UpperHighlight" Value="#FFBFAAF5"/>-->
                                 <!--<Setter Property="Visibility" TargetName="PART_HeaderGripper" Value="Hidden"/>-->
@@ -913,6 +920,8 @@
 
 
         <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="{StaticResource SecondaryColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
@@ -1445,7 +1454,7 @@
             </Setter>
         </Style>
 
-
+      
 
 
         <!--<ControlTemplate x:Key="ComboBoxItemControlTemplate1" TargetType="{x:Type ComboBoxItem}">
@@ -1586,7 +1595,7 @@
 
 
         <!--<Rectangle Grid.RowSpan="2" Grid.Column="1"  Fill="{StaticResource TertiaryDark}" />-->
-        <Grid Grid.Row="1" Grid.Column="1"  ShowGridLines="False">
+        <Grid Grid.Row="1" Grid.Column="1"  ShowGridLines="False" SnapsToDevicePixels="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="93*" MinHeight="100"/>
@@ -1604,10 +1613,10 @@
             <ListBox x:Name="showViewList" Grid.Row="1" BorderThickness="0" HorizontalAlignment="Stretch"
                      VerticalAlignment="Center" ItemContainerStyle="{StaticResource ShowItems}" 
                      Style="{StaticResource HorizontalStyle}" ItemsSource="{Binding AllShows, Mode=OneWay}"
-                     SelectedItem="{Binding SelectedShow}" Margin="0,15" Grid.RowSpan="2"/>
+                     SelectedItem="{Binding SelectedShow}" Margin="0,10" Grid.RowSpan="2"/>
             <!--<Rectangle Grid.Row="0" Fill="Black" Height="20"></Rectangle>-->
             <!--ShowViewList-->
-            <Rectangle Grid.Row="3" Fill="{StaticResource PrimaryColor}"/>
+            <Rectangle Grid.Row="3" Fill="{StaticResource PrimaryColor}" Grid.RowSpan="2"/>
             <Grid Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
@@ -1623,7 +1632,7 @@
                     <!--<RowDefinition Height="15" MaxHeight="100"></RowDefinition>
                     <RowDefinition Height="20" MaxHeight="100"></RowDefinition>-->
                 </Grid.RowDefinitions>
-                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="{StaticResource PrimaryDark}" Opacity="1"/>
+                <Rectangle Grid.ColumnSpan="7" Grid.RowSpan="8" Fill="{StaticResource PrimaryColor}" Opacity="1" Margin="0,0,0,0"/>
                 <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource HeadlineTb}"><Run Text="Publisher"/></TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource DetailTb}" TextWrapping="NoWrap" Text="{Binding SelectedShow.PublisherName}"/>
                 <TextBlock Grid.Column="2" Grid.Row="0" Style="{StaticResource HeadlineTb}"><Run Text="Podcast-Titel"/></TextBlock>
@@ -1647,10 +1656,12 @@
 
         <Rectangle Grid.Row="1" Fill="{StaticResource TertiaryDark}"/>
         <!--<Button Style="{StaticResource DownloadButton}"></Button>-->
-        <ListView BorderThickness="0" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                  ItemContainerStyle="{StaticResource EpisodeListViewStyle}" BorderBrush="#FFBFAAF5" Foreground="Black"
-                  SizeChanged="HeaderContent_SizeChanged"  Background="{StaticResource TertiaryDark}"
-                  Loaded="ListView_Loaded" ItemsSource="{Binding EpisodesCollection}">
+        <Rectangle Height="30" HorizontalAlignment="Stretch" Fill="{StaticResource PrimaryColor}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" SnapsToDevicePixels="True"/>
+        
+        <ListView BorderThickness="0,0,0,0" BorderBrush="{StaticResource PrimaryColor}" SelectionMode="Single" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                  ItemContainerStyle="{StaticResource EpisodeListViewStyle}" Foreground="Black" SnapsToDevicePixels="True"
+                  SizeChanged="HeaderContent_SizeChanged"  Background="Transparent"
+                  Loaded="ListView_Loaded" ItemsSource="{Binding EpisodesCollection}" Margin="0" Padding="0">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderStyleNonresizeable}" AllowsColumnReorder="False">
 
