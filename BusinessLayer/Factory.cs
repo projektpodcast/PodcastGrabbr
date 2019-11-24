@@ -1,5 +1,6 @@
 ﻿using CommonTypes;
 using DataAccessLayer;
+using DataAccessLayer.PostgreSQL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace BusinessLayer
                     dataTargetInstance = new XmlDataTarget();
                     break;
                 case 2:
-                    dataTargetInstance = null;
+                    dataTargetInstance = new MySQLDataTarget();
                     break;
                 case 3:
-                    dataTargetInstance = null;
+                    dataTargetInstance = null; //impl.
                     break;
                 default:
                     throw new Exception(); //impl.
@@ -40,13 +41,14 @@ namespace BusinessLayer
                     dataSourceInstance = new XmlDataSource();
                     break;
                 case 2:
-                    dataSourceInstance = null;
+                    dataSourceInstance = new MySQLDataSource();
                     break;
                 case 3:
-                    dataSourceInstance = null;
+                    dataSourceInstance = new PostDataSource(); //impl.
                     break;
                 default:
-                    throw new Exception(); //impl.
+                    break;
+                    ; //impl.
             }
             return dataSourceInstance;
         }

@@ -9,7 +9,7 @@ using CommonTypes;
 
 namespace DataAccessLayer.PostgreSQL
 {
-    public class PostDataSource
+    public class PostDataSource : LocalDataSource, IDataSource
     {
         PostConnect myConecction = new PostConnect();
         public Boolean CheckShow(string id, string db)
@@ -27,31 +27,16 @@ namespace DataAccessLayer.PostgreSQL
             }
             catch (Exception)
             {
-
                 return check;
             }
             
 
         }
-        
-        public List<Show> getShows(string db)
-        {
-                string csql_create = "select * from shows";
-                NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect(db));
-                var reader = Command.ExecuteReader();
-                var list = new List<Show>();
 
-                while (reader.Read())
-                    list.Add(new Show { PodcastTitle = reader.GetString(1), PublisherName = reader.GetString(3)});
-                list.ToArray();
-                myConecction.DBDesConnect();
-                return list;
-        }
-
-        public List<Episode> getAllEpisodes(string db)
+        public List<Episode> getAllEpisodes()
         {
         string csql_create = "select * from episodes";
-            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect(db));
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnection());
             var reader = Command.ExecuteReader();
             var list = new List<Episode>();
 
@@ -62,6 +47,24 @@ namespace DataAccessLayer.PostgreSQL
             return list;
         }
 
+        public List<Show> GetAllShows()
+        {
+            string csql_create = "select * from shows";
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnection());
+            var reader = Command.ExecuteReader();
+            var list = new List<Show>();
 
+            while (reader.Read())
+                list.Add(new Show { PodcastTitle = reader.GetString(1), PublisherName = reader.GetString(3), ImageUri = "" });
+                
+            list.ToArray();
+            myConecction.DBDesConnect();
+            return list;
+        }
+
+        internal override string GetFolderName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

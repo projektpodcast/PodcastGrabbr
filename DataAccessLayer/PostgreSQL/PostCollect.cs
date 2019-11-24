@@ -84,8 +84,7 @@ namespace DataAccessLayer.PostgreSQL
             }
 
 
-            myConnectionRead.getShows(dbName);
-            myConnectionRead.getAllEpisodes(dbName);
+            myConnectionRead.getAllEpisodes();
             
 
 

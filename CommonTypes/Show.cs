@@ -19,7 +19,6 @@ namespace CommonTypes
         public virtual DateTime LastUpdated { get; set; }
         public virtual DateTime LastBuildDate { get; set; }
         public virtual string ImageUri { get; set; }
-
         public Show()
         {
         }

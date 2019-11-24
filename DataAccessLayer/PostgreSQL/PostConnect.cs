@@ -12,6 +12,9 @@ namespace DataAccessLayer.PostgreSQL
     class PostConnect
     {
         public static NpgsqlConnection con = new NpgsqlConnection();
+
+
+        //TODO set the db as constructor ??
         public NpgsqlConnection DBConnect(string db)
         {
             con.ConnectionString = @"User ID = postgres; password=soloyo;host=localhost;database=" + db + ";port=5432;commandtimeout=900";
@@ -24,6 +27,17 @@ namespace DataAccessLayer.PostgreSQL
         public NpgsqlConnection DBDesConnect()
         {
             con.Close();
+            return con;
+        }
+
+
+        // TODO the db name "test" is static
+        public NpgsqlConnection DBConnection()
+        {
+            con.ConnectionString = @"User ID = postgres; password=soloyo;host=localhost;database=test;port=5432;commandtimeout=900";
+
+            con.Open();
+
             return con;
         }
 

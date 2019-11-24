@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
+using CommonTypes;
 
 
 namespace DataAccessLayer.PostgreSQL
 {
-    public class PostDataTarget
+    public class PostDataTarget  : LocalDataTarget, IDataTarget 
     {
         PostConnect myConecction = new PostConnect();
 
@@ -184,6 +185,21 @@ namespace DataAccessLayer.PostgreSQL
             myConecction.DBDesConnect();
 
             return resp;
+        }
+
+        public void SavePodcast(Podcast podcastToSave)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override string GetFileName(Podcast podcast)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal override string GetFolderName()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
