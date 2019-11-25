@@ -181,10 +181,8 @@ namespace PresentationLayer.ViewModel
 
         private void CheckEqualitySelectedAndConfigDataType()
         {
-            if (SelectedDataType.Key != ConfigDataType.Key)
-            {
-
-
+            //if (SelectedDataType.Key != ConfigDataType.Key)
+            //{
                 if (SelectedDataType.Key == 1)
                 {
                     Visible = Visibility.Collapsed;
@@ -193,7 +191,7 @@ namespace PresentationLayer.ViewModel
                 {
                     Visible = Visibility.Visible;
                 }
-            }
+            //}
         }
 
         public void SetConnectionType2()
@@ -274,9 +272,7 @@ namespace PresentationLayer.ViewModel
 
 
 
-
-
-
+     
 
 
         private DatenArt _selectedData { get; set; }

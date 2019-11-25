@@ -543,14 +543,15 @@
                             <RowDefinition Height="30"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Text="Datenziel" Style="{StaticResource DetailTb}" Margin="0,0,10,0" Grid.Row="0"/>
-                        <ComboBox x:Name="DataTypeComboBox" Grid.Column="1" Grid.Row="0"
+                        <ComboBox x:Name="DataTypeComboBox" Grid.Column="1" IsEditable="False" IsReadOnly="False" Grid.Row="0" IsSynchronizedWithCurrentItem="True"
                                   ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding SelectedDataType}" Text="{Binding Path=ConfigDataType.Value, Mode=OneWay}"
-                                  DisplayMemberPath="Value" Template="{StaticResource ComboBoxControlTemplate2}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                  ItemContainerStyle="{StaticResource ComboBoxItemStyle}" Foreground="White" VerticalContentAlignment="Center">
+                                  DisplayMemberPath="Value" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="{StaticResource Tertiary}"
+                                   VerticalContentAlignment="Center" Template="{StaticResource ComboBoxControlTemplate2}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
                         </ComboBox>
 
 
-                        <!--<ComboBox x:Name="FilterComboBox" Width="100" ItemsSource="{Binding FilterOptions}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
+                        <!--<ComboBox x:Name="FilterComboBox" Width="100" 
+                        ItemsSource="{Binding FilterOptions}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
                                   Template="{DynamicResource ComboBoxControlTemplate2}" HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True"
                                   SelectedItem="{Binding TypeFilter}" Foreground="White">-->
                     </Grid>
