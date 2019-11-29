@@ -26,20 +26,20 @@ namespace DataAccessLayer
         }
         public void InsertPodcast(Podcast newPodcast)
         {
-
             Connection();
-
             var unbekannteZahl = MySQLDataTarget.Adapter.Adapter.InsertParameters(CreatePodacstInsert(), getShowParameters(newPodcast));
 
         }
         public void UpdatePodcast(Podcast oldPodcast, Podcast newPodcast)
         {
+            string stuff = oldPodcast.ShowInfo.ShowID;
+            var unbekannteZahl = MySQLDataTarget.Adapter.Adapter.InsertParameters(CreatePodcastUpdate(), getShowParameters(newPodcast));
             throw new NotImplementedException();
         }
         public void DeletePodcast(Podcast podcastToDelete)
         {
-
-            throw new NotImplementedException();
+            Connection();
+            var unbekannteZahl = MySQLDataTarget.Adapter.Adapter.InsertParameters(CreatePodcastDelete(), getShowParameters(podcastToDelete));
         }
         public void InsertEpisodes(Podcast newPodcast)
         {
@@ -70,7 +70,7 @@ namespace DataAccessLayer
             Parameter description = new Parameter("@description", e.Description);
             Parameter publishDate = new Parameter("@publishDate", e.PublishDate);
             Parameter duration = new Parameter("@duration", e.FileDetails.Duration);
-            Parameter fileSize = new Parameter("@sizeOfFile", e.FileDetails.FileSize);
+            Parameter fileSize = new Parameter("@fileSize", e.FileDetails.FileSize);
             Parameter author = new Parameter("@author", newPodcast.ShowInfo.PublisherName);
             Parameter imageUrl = new Parameter("@imageUrl", e.ImageUri);
             Parameter fileUrl = new Parameter("@fileUrl", e.FileDetails.SourceUri);
@@ -99,6 +99,7 @@ namespace DataAccessLayer
             Parameter imageUri = new Parameter("@imageUri", newPodcast.ShowInfo.ImageUri);
             Parameter lastUpdated = new Parameter("@lastUpdated", newPodcast.ShowInfo.LastUpdated);
             Parameter lastBuild = new Parameter("@lastBuild", newPodcast.ShowInfo.LastBuildDate);
+            Parameter feedUrl = new Parameter("@feedUrl", newPodcast.ShowInfo.FeedUrl);
 
             paramList.Add(showName);
             paramList.Add(description);
@@ -108,31 +109,77 @@ namespace DataAccessLayer
             paramList.Add(imageUri);
             paramList.Add(lastUpdated);
             paramList.Add(lastBuild);
+            paramList.Add(feedUrl);
 
             return paramList;
         }
         public string CreatePodacstInsert()
         {
-            String sql = "INSERT INTO shows VALUES(@sid, @showName, @description, @publisher, @category, @language, @imageUri, @lastUpdated, @lastBuild)";
+            String sql = "INSERT INTO shows VALUES(@sid, @showName, @description, @publisher, @category, @language, @imageUri, @lastUpdated, @lastBuild, @feedUrl)";
+
+            return sql;
+        }
+
+        public string CreatePodcastUpdate()
+        {
+            String sql = "";
+            sql = "UPDATE shows SET showName = @showName, description = @description, publisher = @publisher, category = @category, language = @language, imageUri = @imageUri, lastUpdated = @lastUpdated, lastBuild = @lastBuild, feedUrl = @feedUrl";
+            sql += " WHERE showID = @sid;";
+
+            return sql;
+        }
+        public string CreatePodcastDelete()
+        {
+            String sql = ""; // sid = @sid
+
+            sql = "DELETE FROM shows WHERE showName = '@showName'";
+            sql += " AND description = '@description'";
+            sql += " AND publisherName = '@publisher'";
+            sql += " AND category = '@category'";
+            sql += " AND language = '@language'";
+            sql += " AND imageUri = '@imgaeUri'";
+            sql += " AND lastUpdate = '@lastUpdated'";
+            sql += " AND lastBuild = '@lastBuild'";
 
             return sql;
         }
         public string CreateEpisodeInsert()
         {
             String sql = "";
-            sql = "INSERT INTO episodes VALUES(@episodeID, @showID, @downloadID, @title, @description, @publishDate, @duration, @sizeOfFile, @author, @imageUrl, @fileUrl, @copyright)";
+            sql = "INSERT INTO episodes VALUES(@episodeID, @showID, @downloadID, @title, @description, @publishDate, @duration, @fileSize, @author, @imageUrl, @fileUrl, @copyright)";
+
+            return sql;
+        }
+        public string CreateEpisodeUpdate()
+        {
+            String sql = "";
+            sql = "";
+
+            return sql;
+        }
+        public string CreateEpisodeDelete()
+        {
+            String sql = "";
+            sql = "DELETE FROM episodes  WHERE title = '@title'";
+            sql += " AND description = '@description'";
+            sql += " AND publishDate = '@publishDate'";
+            sql += " AND duration = '@duration'";
+            sql += " AND fileSize = '@fileSize'";
+            sql += " AND author = '@author'";
+            sql += " AND lastBuild = '@lastBuild'";
+            sql += " AND imageUrl = '@imageUrl'";
+            sql += " AND fileUrl = '@fileUrl'";
+            sql += " AND copyright = '@copyright'";
 
             return sql;
         }
 
-
-
-
-
-
-        public void SavePodcast(Podcast podcastToSave)
+        public string DeleteAllShowEpisodes()
         {
-            throw new NotImplementedException();
+            String sql = "";
+            sql = "DELETE FROM episodes WHERE showID = '@showID'";
+
+            return sql;
         }
     }
 }
