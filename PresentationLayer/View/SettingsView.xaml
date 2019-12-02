@@ -577,23 +577,26 @@
                                     Margin="-5,0,0,-5"/>
 
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="Server IP" Style="{StaticResource DetailTb}" Margin="0,5,10,0" />
-                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="1" Grid.Column="1" Foreground="White" Tag="00.000.0.000" Margin="0,5,5,0"></TextBox>
+                        <TextBox Style="{StaticResource SearchTextBox}" Text="{Binding ConfigData.Ip, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Foreground="White" Tag="00.000.0.000" Margin="0,5,5,0"></TextBox>
 
 
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="Port" Style="{StaticResource DetailTb}" Margin="0,5,10,0" />
-                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="2" Grid.Column="1" Foreground="White" Tag="0000" Margin="0,5,5,0"></TextBox>
+                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="2" Grid.Column="1" Foreground="White" Tag="0000" Margin="0,5,5,0"
+                                 Text="{Binding ConfigData.Port, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
 
                         <TextBlock Grid.Column="0" Grid.Row="3" Text="Datenbank" Style="{StaticResource DetailTb}" Margin="0,5,10,5" />
-                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="3" Grid.Column="1" Foreground="White" Tag="MeineDatenbank" Margin="0,5,5,0"></TextBox>
+                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="3" Grid.Column="1" Foreground="White" Tag="MeineDatenbank" Margin="0,5,5,0"
+                                 Text="{Binding ConfigData.DataBaseName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="User ID" Style="{StaticResource DetailTb}" Margin="0,5,10,0" />
-                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="4" Grid.Column="1" Foreground="White" Tag="root" Margin="0,5,5,0"></TextBox>
+                        <TextBox Style="{StaticResource SearchTextBox}" Grid.Row="4" Grid.Column="1" Foreground="White" Tag="root" Margin="0,5,5,0"
+                                 Text="{Binding ConfigData.UserName, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="Passwort" Style="{StaticResource DetailTb}" Margin="0,5,10,0"/>
                         <!--<TextBox Style="{StaticResource SearchTextBox}" Grid.Row="4" Grid.Column="1" Foreground="White" Tag="0000"></TextBox>-->
 
                         <!--<PasswordBox x:Name="DbPassword" Grid.Row="4" Grid.Column="1" Margin="0,5,5,0" Style="{StaticResource PasswordTest}" PasswordChanged="PasswordBox_PasswordChanged"></PasswordBox>-->
-                        <controls:PasswordBoxUserControl Grid.Row="5" Grid.Column="1" EncryptedPassword="{Binding DbPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <controls:PasswordBoxUserControl Grid.Row="5" Grid.Column="1" EncryptedPassword="{Binding ConfigData.EncryptedPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                          Margin="0,5,5,0"></controls:PasswordBoxUserControl>
 
                     </Grid>

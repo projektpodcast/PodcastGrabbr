@@ -34,7 +34,6 @@ namespace PresentationLayer.ViewModel
         }
         #endregion Ui Properties
 
-        #region ICommand Properties
         private ICommand _fileImport { get; set; }
         public ICommand FileImport
         {
@@ -80,36 +79,7 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private ICommand _persistDbData { get; set; }
-        public ICommand PersistDbData
-        {
-            get
-            {
-                if (_persistDbData == null)
-                {
-                    _persistDbData = new RelayCommand(
-                        p => CheckDbData(),
-                        p => this.ExecutePersistDbData());
-                }
-                return _persistDbData;
-            }
-        }
-        #endregion ICommand Properties
-
-        private bool CheckDbData()
-        {
-            if (SelectedDataType.Key != ConfigDataType.Key)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public void ExecutePersistDbData()
-        {
-            MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
-            SetConnectionType2();
-        }
+      
 
         #region ICommand Methods
         private bool IsDataTypeSelected()
@@ -176,7 +146,11 @@ namespace PresentationLayer.ViewModel
                 { 2, "Datenbank: MySQL" },
                 { 3, "Datenbank: PostgreSQL" }
             };
-            DoesItExist();
+            //DoesItExist();
+
+            _configurationService = new UserConfigurationService();
+            GetConfigData();
+            IsConfigurationSet();
         }
 
         private void CheckEqualitySelectedAndConfigDataType()
@@ -272,8 +246,10 @@ namespace PresentationLayer.ViewModel
 
 
 
-     
 
+
+
+        private IConfigurationService _configurationService { get; set; }
 
         private DatenArt _selectedData { get; set; }
         public DatenArt SelectedData
@@ -286,20 +262,21 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private DatenArt _configData { get; set; }
-        public DatenArt ConfigData
+        private IDatenArt _configData { get; set; }
+        public IDatenArt ConfigData
         {
             get { return _configData; }
             set
             {
                 _configData = value;
-                OnPropertyChanged("SelectedData");
+                OnPropertyChanged("ConfigData");
             }
         }
 
         private void GetConfigData()
         {
-            //erweitern: service
+            ConfigData = _configurationService.ConfigDatenArt;
+
         }
 
         private void GetSelectedData()
@@ -307,9 +284,12 @@ namespace PresentationLayer.ViewModel
             //passiert im DataBinding, überflüssig
         }
 
-        private void SetConfigData()
+        private void UpdateUserConfig()
         {
-            //erweitern: service
+            //ConfigData.EncryptedPassword = DbPassword;
+            ConfigData.DataType = SelectedDataType;
+            _configurationService.UpdateUserConfiguration(ConfigData);
+            ConfigData = SelectedData;
         }
 
         private void SyncConfigAndSelectedData()
@@ -318,10 +298,75 @@ namespace PresentationLayer.ViewModel
         }
 
 
+        private ICommand _persistDbData { get; set; }
+        public ICommand PersistDbData
+        {
+            get
+            {
+                if (_persistDbData == null)
+                {
+                    _persistDbData = new RelayCommand(
+                        p => CheckDbData(),
+                        p => this.ExecutePersistDbData());
+                }
+                return _persistDbData;
+            }
+        }
 
 
+        private bool CheckDbData()
+        {
+            if (SelectedDataType.Key != ConfigDataType.Key)
+            {
+                return true;
+            }
+            return false;
+        }
 
+        public void ExecutePersistDbData()
+        {
+            MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
+            SetDataType();
+        }
 
+        public void SetDataType()
+        {
+            if (SelectedDataType.Value != null)
+            {
+                UpdateUserConfig();
+            }
+        }
+
+        public void IsConfigurationSet()
+        {
+            //SelectedData = new DatenArt();
+
+            int currentValue = _configurationService.ConfigDatenArt.DataType.Key;
+            if (currentValue != 0)
+            {
+                var configValue = PossibleTypes.First(p => p.Key == currentValue);
+                //ConfigDataType = configValue;
+                //ConfigDataType = configValue;
+                //ConfigData.DataType = configValue;
+                if (currentValue == 1)
+                {
+                    Visible = Visibility.Collapsed;
+                }
+                else
+                {
+                    Visible = Visibility.Visible;
+                }
+            }
+            else
+            {
+                KeyValuePair<int, string> a = new KeyValuePair<int, string>(currentValue, "Bitte wählen");
+
+                ConfigData.DataType = a;
+                
+                Visible = Visibility.Collapsed;
+
+            }
+        }
 
     }
 }

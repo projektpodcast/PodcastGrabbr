@@ -68,6 +68,7 @@
     <Compile Include="Services\IInitializerService.cs" />
     <Compile Include="Services\IUserConfigService.cs" />
     <Compile Include="Services\OnConfigChanged.cs" />
+    <Compile Include="Services\OnDatenHaltungChanged.cs" />
     <Compile Include="Services\UserConfigService.cs" />
     <Compile Include="Services\UserConfigurationService.cs" />
     <Compile Include="ViewModel\DownloadsViewModel.cs" />

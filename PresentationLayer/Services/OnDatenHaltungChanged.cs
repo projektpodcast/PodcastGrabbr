@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace PresentationLayer.Services
 {
-    public interface IConfigurationService
+    public class OnDatenHaltungChanged : EventArgs
     {
-        IDatenArt ConfigDatenArt { get; set; }
-        void UpdateUserConfiguration(IDatenArt datenHaltung);
-        bool IsPropertySet();
+        public IDatenArt DatenHaltungTyp {get;set;}
     }
 }

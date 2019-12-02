@@ -11,6 +11,8 @@ namespace BusinessLayer
     public static class Factory
     {
         public static int TargetType { get; set; }
+
+        public static IDatenArt DatenHaltung { get; set; }
         public static IDataTarget CreateDataTarget()
         {
             IDataTarget dataTargetInstance = null; ;
