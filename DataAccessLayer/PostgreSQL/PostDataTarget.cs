@@ -12,7 +12,18 @@ namespace DataAccessLayer.PostgreSQL
 {
     public class PostDataTarget  : LocalDataTarget, IDataTarget 
     {
-        PostConnect myConecction = new PostConnect();
+        PostConnect myConecction;
+        NpgsqlConnection conexionOpen;
+
+
+
+        public PostDataTarget()
+        {
+            myConecction = new PostConnect();
+            
+        }
+
+
 
         #region check db, create db and create tables
         // check if the db exist
@@ -60,40 +71,39 @@ namespace DataAccessLayer.PostgreSQL
         public void CreateTable(string db)
         {
             string csql = @"CREATE TABLE shows (sid serial PRIMARY KEY,
-				podcastName VARCHAR(255) NOT NULL,
+                publishername VARCHAR(255) NOT NULL,
+				PodcastTitle VARCHAR(255) NOT NULL,
+				Subtitle VARCHAR(255),
 				description VARCHAR(2000),
-				publisherName VARCHAR(100),
+				Keywords VARCHAR(255),
 				category VARCHAR(100),
 				language VARCHAR(30),
 				imageUri VARCHAR(5000),
 				lastUpDATEd DATE,
 				lastBuild DATE
 				);
-
+                     
                 create table episodes (episodeID serial PRIMARY KEY,
 				showID serial REFERENCES shows(sid),
-				name VARCHAR(255) NOT NULL,
 				title VARCHAR(255) NOT NULL,
-				description VARCHAR(2000),
-				publishDATE DATE,
-				duration VARCHAR(10) NOT NULL, 
+				Summary VARCHAR(2000),
+				Keywords VARCHAR(255),
+				publishdate DATE,
+				duration VARCHAR(10), 
 				sizeOfFile VARCHAR(10),
+				filetyp VARCHAR(255),
 				author VARCHAR(255) NOT NULL,
 				subtitle VARCHAR(255),
 				imageUrl VARCHAR(500),
 				fileUrl VARCHAR(500) NOT NULL,
 				copyright VARCHAR(255),
-                downloadFilepath VARCHAR(255)
-				);";
+                isDownload BOOLEAN
+				)";
 
             NpgsqlCommand Command = new NpgsqlCommand(csql, myConecction.DBConnect(db));
             Command.ExecuteNonQuery();
             myConecction.DBDesConnect();
         }
-
-
-       
-
 
         #endregion
 
@@ -142,20 +152,34 @@ namespace DataAccessLayer.PostgreSQL
 
         #endregion
 
-        #region insert values shows
-        public Boolean InsertValuesShows(string db, string pName, string pDescr, string pPublName, string pCateg, string pLang, string pImage, DateTime pLUp, DateTime pLBuild)
+        #region insert values in show
+
+        public bool InsertValuesShows(Show newShow)
         {
-            Boolean resp = false;
+            conexionOpen = new NpgsqlConnection();
+            conexionOpen = myConecction.DBConnectionOpen();
 
-            string csql = @"INSERT INTO shows (sid, podcastname,description,publishername,category,language,imageuri,lastupdated,lastbuild)
-            VALUES (default, '" + pName + "', '" + pDescr + "','" + pPublName + "', '" + pCateg + "','" + pLang + "', '" + pImage + "','" + pLUp + "', '" + pLBuild + "'); ";
-
-            var insertCommand = new NpgsqlCommand(@"INSERT INTO shows VALUES (@podcastname, @publishername)");
-            insertCommand.Parameters.AddWithValue("podcastname", pName);
+            bool resp = false;
+            string category = "category";
 
 
+        string sql = @"INSERT INTO shows (sid, publishername, PodcastTitle, Subtitle, description, Keywords, category, language, imageuri, lastupdated, lastbuild) 
+                     VALUES (default, @publishername, @PodcastTitle, @Subtitle, @description, @Keywords, @category, @language, @imageuri, @lastupdated, @lastbuild)";
+            NpgsqlCommand Command = new NpgsqlCommand(sql, conexionOpen);
 
-            NpgsqlCommand Command = new NpgsqlCommand(csql, myConecction.DBConnect(db));
+            Command.Parameters.AddWithValue("publishername", newShow.PublisherName);
+            Command.Parameters.AddWithValue("PodcastTitle", newShow.PodcastTitle);
+            Command.Parameters.AddWithValue("Subtitle", "xxx");
+            Command.Parameters.AddWithValue("description", newShow.Description);
+            Command.Parameters.AddWithValue("Keywords", newShow.Keywords);
+            Command.Parameters.AddWithValue("category", category);
+            Command.Parameters.AddWithValue("language", newShow.Language);
+            Command.Parameters.AddWithValue("imageuri", newShow.ImageUri);
+            Command.Parameters.AddWithValue("lastupdated", newShow.LastUpdated);
+            Command.Parameters.AddWithValue("lastbuild", newShow.LastBuildDate);
+
+   
+
             Command.ExecuteNonQuery();
 
             myConecction.DBDesConnect();
@@ -166,26 +190,40 @@ namespace DataAccessLayer.PostgreSQL
         #endregion
 
         #region insert values episodes
-
-        public Boolean InsertValuesEpisodes(string db, string eTitle, DateTime ePubDate, string eDesc, string eKeyword, string eImage, string eDeta)
+        public bool InsertValuesEpisodes(Episode newEpisode)
         {
-            Boolean resp = false;
-            int showid = 1;
-            string eAuthor = "author";
-            string eSub = "subtitle";
-            string eCopyright = "copyright";
-            string path = "path";
+            conexionOpen = new NpgsqlConnection();
+            conexionOpen = myConecction.DBConnectionOpen();
 
-            string csql = @"INSERT INTO episodes (episodeid, showid , name, title,description,publishdate,duration,sizeoffile,author,subtitle,imageurl,fileurl,copyright,downloadfilepath)
-            VALUES (default, '" + showid + "','" + eTitle + "', '" + eTitle + "','" + eDesc + "', '" + ePubDate + "',12,12,'" + eAuthor + "','" + eSub + "', '" + eImage + "', '" + eDeta + "', '" + eCopyright + "', '" + path + "'); ";
+            bool resp = false;
 
-            NpgsqlCommand Command = new NpgsqlCommand(csql, myConecction.DBConnect(db));
+            string sql = @"INSERT INTO episodes (episodeid, showid , title, Summary, Keywords, publishdate, duration, sizeoffile, filetyp, author, subtitle, imageurl, fileurl, copyright, isDownload)
+            VALUES (default, 1 , @title, @Summary, @Keywords, @publishdate, @duration, @sizeoffile, @filetyp,  @author, @subtitle, @imageurl, @fileurl, @copyright, @isDownload)";
+  
+
+            NpgsqlCommand Command = new NpgsqlCommand(sql, conexionOpen);
+            //Command.Parameters.AddWithValue("showid", "aaaa");
+            Command.Parameters.AddWithValue("title", newEpisode.Title);
+            Command.Parameters.AddWithValue("Summary", newEpisode.Summary );
+            Command.Parameters.AddWithValue("Keywords", newEpisode.Keywords);
+            Command.Parameters.AddWithValue("publishdate", newEpisode.PublishDate);
+            Command.Parameters.AddWithValue("duration", newEpisode.FileDetails.Length);
+            Command.Parameters.AddWithValue("sizeoffile", "2222222");
+            Command.Parameters.AddWithValue("filetyp", newEpisode.FileDetails.FileType);
+            Command.Parameters.AddWithValue("author", "xxxx");
+            Command.Parameters.AddWithValue("subtitle", "yyyy");
+            Command.Parameters.AddWithValue("imageurl", newEpisode.ImageUri);
+            Command.Parameters.AddWithValue("fileurl", newEpisode.FileDetails.SourceUri );
+            Command.Parameters.AddWithValue("copyright", "cccc"); 
+            Command.Parameters.AddWithValue("isDownload", newEpisode.IsDownloaded);
             Command.ExecuteNonQuery();
 
             myConecction.DBDesConnect();
 
             return resp;
         }
+
+
 
         public void SavePodcast(Podcast podcastToSave)
         {
@@ -203,6 +241,14 @@ namespace DataAccessLayer.PostgreSQL
         }
 
         #endregion
+
+
+        #region delete DB
+
+
+        #endregion
+
+
 
     }
 }

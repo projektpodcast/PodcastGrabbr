@@ -12,6 +12,10 @@ namespace DataAccessLayer.PostgreSQL
     public class PostDataSource : LocalDataSource, IDataSource
     {
         PostConnect myConecction = new PostConnect();
+        NpgsqlConnection conexionOpen;
+
+
+
         public Boolean CheckShow(string id, string db)
         {
             Boolean check = false;
@@ -35,13 +39,16 @@ namespace DataAccessLayer.PostgreSQL
 
         public List<Episode> getAllEpisodes()
         {
-        string csql_create = "select * from episodes";
-            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnection());
+            conexionOpen = new NpgsqlConnection();
+            conexionOpen = myConecction.DBConnectionOpen();
+
+            string csql_create = "select * from episodes";
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, conexionOpen);
             var reader = Command.ExecuteReader();
             var list = new List<Episode>();
 
             while (reader.Read())
-                list.Add(new Episode { Title = reader.GetString(2), PublishDate = reader.GetDateTime(5) });
+                list.Add(new Episode { IsDownloaded = false, Summary = reader.GetString(4), ImageUri = reader.GetString(10),   Title = reader.GetString(2), PublishDate = reader.GetDateTime(5) });
             list.ToArray();
             myConecction.DBDesConnect();
             return list;
@@ -49,13 +56,16 @@ namespace DataAccessLayer.PostgreSQL
 
         public List<Show> GetAllShows()
         {
+            conexionOpen = new NpgsqlConnection();
+            conexionOpen = myConecction.DBConnectionOpen();
+
             string csql_create = "select * from shows";
-            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnection());
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, conexionOpen);
             var reader = Command.ExecuteReader();
             var list = new List<Show>();
 
             while (reader.Read())
-                list.Add(new Show { PodcastTitle = reader.GetString(1), PublisherName = reader.GetString(3), ImageUri = "" });
+                list.Add(new Show { Description = reader.GetString(2), Keywords="null",Language="null", PodcastTitle = reader.GetString(1), PublisherName = reader.GetString(3), ImageUri = "" });
                 
             list.ToArray();
             myConecction.DBDesConnect();

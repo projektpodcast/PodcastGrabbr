@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer.PostgreSQL;
 
 
 namespace MockPresentationLayer
@@ -21,16 +22,29 @@ namespace MockPresentationLayer
     {
         static void Main(string[] args)
         {
-            //    DeserializingManager deserializer = new DeserializingManager();
+                DeserializingManager deserializer = new DeserializingManager();
 
-            //    ////Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
-            //    ////Podcast a = deserializer.DeserializeRssXml("http://podcast.wdr.de/quarks.xml");
-            //    ////Podcast a = deserializer.DeserializeRssXml("http://web.ard.de/radiotatort/rss/podcast.xml");
-            //    Podcast a = deserializer.DeserializeRssXml("https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast");
-            //    ////Podcast a = deserializer.DeserializeRssXml("http://www1.swr.de/podcast/xml/swr2/forum.xml");
+            ////Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
+            ////Podcast a = deserializer.DeserializeRssXml("http://podcast.wdr.de/quarks.xml");
+            ////Podcast a = deserializer.DeserializeRssXml("http://web.ard.de/radiotatort/rss/podcast.xml");
+            Podcast a = deserializer.DeserializeRssXml("https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast");
+            ////Podcast a = deserializer.DeserializeRssXml("http://www1.swr.de/podcast/xml/swr2/forum.xml");
 
-            //    PostgresData PostDbInstance = new PostgresData();
-            //    //call postdb
+            PostCollect collect = new PostCollect();
+
+            collect.PodcastRead(a);
+
+
+            //PostDataSource PostDbInstance = new PostDataSource();
+            //MockDataSource MockList = new MockDataSource();
+            //List<Episode> y = PostDbInstance.getAllEpisodes();
+            //List<Show> x = MockList.GetAllShows();
+
+            Console.WriteLine("make sure you have pgAdmin open");
+
+            Console.ReadLine();
+
+            //call postdb
             //    //PostDB(a);
             //}
 
