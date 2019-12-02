@@ -54,7 +54,7 @@ namespace PresentationLayer.ViewModel
         public Show SelectedShow
         {
             get { return _selectedShow; }
-            set { _selectedShow = value; OnPropertyChanged("SelectedShow"); AddNewEpisode(); }
+            set { _selectedShow = value; OnPropertyChanged("SelectedShow"); GetEpisodes(); }
         }
 
         public ObservableCollection<Episode> EpisodesCollection { get; set; }
@@ -74,7 +74,7 @@ namespace PresentationLayer.ViewModel
 
 
             SetList();
-            FillEpisodeListWithMockData();
+            //FillEpisodeListWithMockData();
 
 
 
@@ -303,28 +303,39 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private void AddNewEpisode()
+        private void GetEpisodes()
         {
-            DateTime now = DateTime.Now;
-            this.EpisodesCollection.Add(new Episode()
+            //DateTime now = DateTime.Now;
+            //this.EpisodesCollection.Add(new Episode()
+            //{
+            //    Title = "Neue Show Selected",
+            //    PublishDate = now,
+            //    ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg",
+            //    Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
+            //    Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called 'StandUP!with Pete Dominick' available on Apple Podcasts.",
+            //});
+
+            List<Episode> episodes = _businessAccess.Get.GetEpisodes(SelectedShow);
+            EpisodesCollection.Clear();
+
+            foreach (var item in episodes)
             {
-                Title = "Neue Show Selected",
-                PublishDate = now,
-                ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg",
-                Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
-                Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called 'StandUP!with Pete Dominick' available on Apple Podcasts.",
-            });
+                EpisodesCollection.Add(item);
+            }
+
+
+            //EpisodesCollection = new ObservableCollection<Episode>(episodes);
         }
 
-        private void FillEpisodeListWithMockData()
-        {
-            DateTime now = DateTime.Now;
-            for (int i = 0; i < 4; i++)
-            {
-                EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = false });
-                EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = true });
-            }
-        }
+        //private void FillEpisodeListWithMockData()
+        //{
+        //    DateTime now = DateTime.Now;
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = false });
+        //        EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = true });
+        //    }
+        //}
         #endregion Mockdata
     }
 }

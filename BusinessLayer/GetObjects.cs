@@ -44,5 +44,11 @@ namespace BusinessLayer
 
             return dal.GetDownloadedPodcasts();
         }
+
+        public List<Episode> GetEpisodes(Show selectedShow)
+        {
+            IDataSource dataSource = Factory.CreateDataSource();
+            return dataSource.getAllEpisodes(selectedShow);
+        }
     }
 }

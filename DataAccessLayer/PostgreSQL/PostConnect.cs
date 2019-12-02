@@ -70,7 +70,7 @@ namespace DataAccessLayer.PostgreSQL
 
         {
 
-            con.ConnectionString = @"User ID = postgres; password=soloyo;host=localhost;database=test3;port=5432;commandtimeout=900";
+            con.ConnectionString = @"User ID = postgres; password=soloyo;host=localhost;database=test6;port=5432;commandtimeout=900";
 
 
 

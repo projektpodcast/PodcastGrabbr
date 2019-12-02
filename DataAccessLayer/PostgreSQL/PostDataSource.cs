@@ -76,7 +76,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-        public List<Episode> getAllEpisodes()
+        public List<Episode> getAllEpisodes(Show selectedShow)
 
         {
 
@@ -84,7 +84,7 @@ namespace DataAccessLayer.PostgreSQL
 
             conexionOpen = myConecction.DBConnectionOpen();
 
-
+            
 
             string csql_create = "select * from episodes";
 

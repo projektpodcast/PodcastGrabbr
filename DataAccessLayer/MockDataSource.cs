@@ -136,10 +136,9 @@ namespace DataAccessLayer
             return mockList;
         }
 
-
-
-
-
-
+        public List<Episode> getAllEpisodes(Show selectedShow)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
