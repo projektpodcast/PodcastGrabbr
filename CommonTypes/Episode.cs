@@ -8,6 +8,7 @@ namespace CommonTypes
 {
     public class Episode
     {
+        public virtual int EpisodeId { get; set; }
         public virtual string Title { get; set; }
         public DateTime PublishDate { get; set; }
         public string Summary { get; set; }

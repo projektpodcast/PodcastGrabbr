@@ -8,6 +8,7 @@ namespace CommonTypes
 {
     public class Show
     {
+        public virtual int ShowId { get; set; }
         public virtual string PublisherName { get; set; }
         public virtual string PodcastTitle { get; set; }
         public virtual List<string> Category { get; set; }

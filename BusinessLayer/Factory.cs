@@ -1,5 +1,6 @@
 ﻿using CommonTypes;
 using DataAccessLayer;
+using DataAccessLayer.PostgreSQL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,11 @@ namespace BusinessLayer
         public static IDatenArt DatenHaltung { get; set; }
         public static IDataTarget CreateDataTarget()
         {
+
+            int manfredoDb = 3;
+
             IDataTarget dataTargetInstance = null; ;
-            switch (TargetType)
+            switch (manfredoDb)
             {
                 case 1:
                     dataTargetInstance = new XmlDataTarget();
@@ -25,7 +29,7 @@ namespace BusinessLayer
                     dataTargetInstance = new MySQLDataTarget();
                     break;
                 case 3:
-                    dataTargetInstance = null; //impl.
+                    dataTargetInstance = new PostDataTarget();
                     break;
                 default:
                     throw new Exception(); //impl.
@@ -35,8 +39,10 @@ namespace BusinessLayer
 
         public static IDataSource CreateDataSource()
         {
+            int manfredoDb = 3;
+
             IDataSource dataSourceInstance = null; ;
-            switch (TargetType)
+            switch (manfredoDb)
             {
                 case 1:
                     dataSourceInstance = new XmlDataSource();
@@ -45,7 +51,7 @@ namespace BusinessLayer
                     dataSourceInstance = new MySQLDataSource();
                     break;
                 case 3:
-                    dataSourceInstance = null; //impl.
+                    dataSourceInstance = new PostDataSource();
                     break;
                 default:
                     throw new Exception(); //impl.

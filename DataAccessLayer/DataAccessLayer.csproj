@@ -70,6 +70,10 @@
     <Compile Include="MockDataSource.cs" />
     <Compile Include="MySQL\MySQLDataSource.cs" />
     <Compile Include="MySQL\MySQLDataTarget.cs" />
+    <Compile Include="PostgreSQL\PostCollect.cs" />
+    <Compile Include="PostgreSQL\PostConnect.cs" />
+    <Compile Include="PostgreSQL\PostDataSource.cs" />
+    <Compile Include="PostgreSQL\PostDataTarget.cs" />
     <Compile Include="PostgreSQL\PostgresData.cs" />
     <Compile Include="Local\XmlDataSource.cs" />
     <Compile Include="Local\XmlDataTarget.cs" />

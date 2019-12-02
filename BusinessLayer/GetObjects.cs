@@ -14,13 +14,13 @@ namespace BusinessLayer
         { }
         public List<Show> GetShowList()
         {
-            //IDataSource dataSource = Factory.CreateDataSource();
-            //return dataSource.GetAllShows();
+            IDataSource dataSource = Factory.CreateDataSource();
+            return dataSource.GetAllShows();
 
-            MockDataSource dal = new MockDataSource();
+            //MockDataSource dal = new MockDataSource();
 
-            List<Show> a = dal.GetAllShows();
-            return a;
+            //List<Show> a = dal.GetAllShows();
+            //return a;
 
         }
 
