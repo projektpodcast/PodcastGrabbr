@@ -68,6 +68,7 @@
     <Compile Include="Local\MediaDataSource.cs" />
     <Compile Include="Local\MediaDataTarget.cs" />
     <Compile Include="MockDataSource.cs" />
+    <Compile Include="MockDataTarget.cs" />
     <Compile Include="MySQL\MySQLDataSource.cs" />
     <Compile Include="MySQL\MySQLDataTarget.cs" />
     <Compile Include="PostgreSQL\PostCollect.cs" />

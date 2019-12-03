@@ -29,11 +29,6 @@ namespace DataAccessLayer.PostgreSQL
         NpgsqlConnection conexionOpen;
 
 
-
-
-
-
-
         public Boolean CheckShow(string id, string db)
 
         {
