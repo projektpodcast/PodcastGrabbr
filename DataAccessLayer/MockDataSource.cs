@@ -52,21 +52,22 @@ namespace DataAccessLayer
             List<Episode> episodeList = new List<Episode>();
 
             DateTime now = DateTime.Now;
-            Episode episode = new Episode
+            for (int i = 0; i < 10; i++)
             {
-                Title = "Neue Show Selected",
-                PublishDate = now,
-                Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
-                Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called " +
+                Episode episode = new Episode
+                {
+                    EpisodeId = i,
+                    Title = "Neue Show Selected",
+                    PublishDate = now,
+                    Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
+                    Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called " +
                 "'StandUP!with Pete Dominick' available on Apple Podcasts.",
-            };
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
+                };
+                episodeList.Add(episode);
+            }
+
+
+
 
             List<Podcast> allDownloadedPodcasts = new List<Podcast>();
 

@@ -43,35 +43,37 @@ namespace PresentationLayer.View
             }
             e.Handled = true;
         }
-        private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateColumnsWidth(sender as ListView);
-        }
 
-        private void UpdateColumnsWidth(ListView listView)
-        {
-            int columnToResize = (listView.View as GridView).Columns.Count - 3;
 
-            double remainingSpace = listView.ActualWidth - 29;
-            for (int i = 0; i < (listView.View as GridView).Columns.Count; i++)
-            {
-                if (i != columnToResize)
-                {
-                    var columnWidth = (listView.View as GridView).Columns[i].ActualWidth;
-                    remainingSpace -= columnWidth;
-                    if (remainingSpace <= 70)
-                    {
-                        remainingSpace = 70;
-                    }
-                }
-                     (listView.View as GridView).Columns[columnToResize].Width = remainingSpace >= 0 ? remainingSpace : 0;
-            }
-        }
+        //private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
+        //{
+        //    UpdateColumnsWidth(sender as ListView);
+        //}
 
-        private void ListView_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateColumnsWidth(sender as ListView);
-        }
+        //private void UpdateColumnsWidth(ListView listView)
+        //{
+        //    //int columnToResize = (listView.View as GridView).Columns.Count - 3;
+
+        //    //double remainingSpace = listView.ActualWidth - 29;
+        //    //for (int i = 0; i < (listView.View as GridView).Columns.Count; i++)
+        //    //{
+        //    //    if (i != columnToResize)
+        //    //    {
+        //    //        var columnWidth = (listView.View as GridView).Columns[i].ActualWidth;
+        //    //        remainingSpace -= columnWidth;
+        //    //        if (remainingSpace <= 70)
+        //    //        {
+        //    //            remainingSpace = 70;
+        //    //        }
+        //    //    }
+        //    //         (listView.View as GridView).Columns[columnToResize].Width = remainingSpace >= 0 ? remainingSpace : 0;
+        //    //}
+        //}
+
+        //private void ListView_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    UpdateColumnsWidth(sender as ListView);
+        //}
 
 
     }
