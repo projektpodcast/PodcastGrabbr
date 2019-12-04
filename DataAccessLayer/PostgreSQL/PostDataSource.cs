@@ -76,7 +76,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-        public List<Episode> getAllEpisodes(Show selectedShow)
+        public List<Episode> GetAllEpisodes(Show selectedShow)
 
         {
 

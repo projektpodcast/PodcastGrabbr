@@ -39,7 +39,7 @@ namespace BusinessLayer
 
         public static IDataSource CreateDataSource()
         {
-            int manfredoDb = 3;
+            int manfredoDb = 4;
 
             IDataSource dataSourceInstance = null; ;
             switch (manfredoDb)
@@ -52,6 +52,9 @@ namespace BusinessLayer
                     break;
                 case 3:
                     dataSourceInstance = new PostDataSource();
+                    break;
+                case 4:
+                    dataSourceInstance = new MockDataSource();
                     break;
                 default:
                     throw new Exception(); //impl.
