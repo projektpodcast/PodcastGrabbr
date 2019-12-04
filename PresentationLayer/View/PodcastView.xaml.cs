@@ -43,10 +43,11 @@ namespace PresentationLayer.View
             }
             e.Handled = true;
         }
-                private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateColumnsWidth(sender as ListView);
         }
+
         private void UpdateColumnsWidth(ListView listView)
         {
             int columnToResize = (listView.View as GridView).Columns.Count - 3;
@@ -65,8 +66,6 @@ namespace PresentationLayer.View
                 }
                      (listView.View as GridView).Columns[columnToResize].Width = remainingSpace >= 0 ? remainingSpace : 0;
             }
-
-
         }
 
         private void ListView_Loaded(object sender, RoutedEventArgs e)

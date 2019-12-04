@@ -54,7 +54,7 @@ namespace PresentationLayer.ViewModel
             };
 
             _configurationService = configService;
-            GetConfigData();
+            MapConfigData();
             IsConfigurationSet();
         }
 
@@ -172,7 +172,7 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private void GetConfigData()
+        private void MapConfigData()
         {
             ConfigData = new DatenArt
             {
@@ -196,15 +196,11 @@ namespace PresentationLayer.ViewModel
 
         public void IsConfigurationSet()
         {
-            //ConfigData = _configurationService.ConfigDatenArt;
-
-
             if (ConfigData.DataType.Key != 0)
             {
                 KeyValuePair<int, string> parsedConfigValue = PossibleTypes.First(p => p.Key == ConfigData.DataType.Key);
                 ConfigData.DataType = parsedConfigValue;
                 SelectedDataType = parsedConfigValue;
-
             }
 
             else

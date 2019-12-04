@@ -16,8 +16,8 @@ namespace PresentationLayer.ViewModel
     {
         #region Services
         //private IUserConfigService _configService { get; set; }
-        private IConfigurationService _configurationService { get; set; }
         private IDependencyService _initializerService { get; set; }
+        private IConfigurationService _configurationService { get; set; }
         private IBusinessAccessService _businessAccessService { get; set; }
         #endregion Services
 
@@ -42,16 +42,14 @@ namespace PresentationLayer.ViewModel
         #endregion Properties
         public MainViewModel(/*IInitializerService initializerService*/)
         {
+            //Services initialisieren
             _initializerService = new DependencyService();
+            _configurationService = _initializerService.InitializeConfigService();
             _businessAccessService = _initializerService.InitializeBusinessLayer();
-            //_configService = _initializerService.InitializeConfigService();
 
-
-            _configurationService = new UserConfigurationService();
-
+            //Benutzeroberfläche initialisieren
             InitializeUserNavigationUi();
             InitializeCurrentContent();
-            //CurrentContent = new DownloadsView();
         }
 
         private void InitializeCurrentContent()

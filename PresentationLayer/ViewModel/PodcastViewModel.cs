@@ -17,6 +17,8 @@ namespace PresentationLayer.ViewModel
 {
     public class PodcastViewModel : BaseViewModel
     {
+        private IBusinessAccessService _businessAccess { get; set; }
+
         private Visibility _visibilitySearchBar = Visibility.Collapsed;
         public Visibility VisibilitySearchBar
         {
@@ -45,11 +47,6 @@ namespace PresentationLayer.ViewModel
             set { _textFilter = value; OnPropertyChanged("TextFilter"); }
         }
 
-
-
-
-
-        private IBusinessAccessService _businessAccess { get; set; }
         private Show _selectedShow { get; set; }
         public Show SelectedShow
         {
@@ -67,22 +64,14 @@ namespace PresentationLayer.ViewModel
 
             AllShows = new ObservableCollection<Show>();
             EpisodesCollection = new ObservableCollection<Episode>();
-            FilterOptions = new List<string>();
-
-
-
-
+            FilterOptions = new List<string>
+            {
+                "Show",
+                "Episode"
+            };
 
             SetList();
-            //FillEpisodeListWithMockData();
-
-
-
-
-            FilterOptions.Add("Show");
-            FilterOptions.Add("Episode");
         }
-
 
         #region ICommand Properties
         private ICommand _deleteAllPodcasts;
@@ -231,11 +220,12 @@ namespace PresentationLayer.ViewModel
 
         private bool IsShowSelected()
         {
-            if (SelectedShow != null)
-            {
-                return true;
-            }
-            return false;
+            return SelectedShow != null ? true : false;
+            //if (SelectedShow != null)
+            //{
+            //    return true;
+            //}
+            //return false;
         }
 
         private void ExecutePlayMedia()

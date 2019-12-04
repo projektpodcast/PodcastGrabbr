@@ -16,7 +16,7 @@ namespace SecurityLibrary
         private const int Keysize = 256;
         private const string passPhrase = "t1Aqdfsa@§3tgaawe";
         // This constant determines the number of iterations for the password bytes generation function.
-        private const int DerivationIterations = 1000;
+        private const int DerivationIterations = 6000;
 
         public static string Encrypt(string plainText)
         {
