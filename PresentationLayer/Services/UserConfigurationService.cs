@@ -9,19 +9,19 @@ namespace PresentationLayer.Services
 {
     public class UserConfigurationService : IConfigurationService
     {
-        public Guid guid { get; set; }
+        //public Guid guid { get; set; }
 
 
         private IDatenArt _configDatenArt { get; set; }
         public IDatenArt ConfigDatenArt {
             get { return _configDatenArt; }
-            set { _configDatenArt = value; SyncFactory(); OnDatenHaltungChange(ConfigDatenArt); }
+            private set { _configDatenArt = value; SyncFactory(); OnDatenHaltungChange(ConfigDatenArt); }
         }
 
         public UserConfigurationService()
         {
             ConfigDatenArt = new DatenArt();
-            guid = Guid.NewGuid();
+            //guid = Guid.NewGuid();
             GetUserConfiguration();
         }
 
@@ -37,6 +37,7 @@ namespace PresentationLayer.Services
 
         public void UpdateUserConfiguration(IDatenArt datenHaltung)
         {
+            ConfigDatenArt = datenHaltung;
             Properties.Settings.Default.DataType = ConfigDatenArt.DataType.Key;
             if (ConfigDatenArt.DataType.Key != 1)
             {
@@ -45,7 +46,14 @@ namespace PresentationLayer.Services
                 Properties.Settings.Default.Port = ConfigDatenArt.Port;
                 Properties.Settings.Default.UserName = ConfigDatenArt.UserName;
                 Properties.Settings.Default.EncryptedPassword = ConfigDatenArt.EncryptedPassword;
-
+            }
+            else
+            {
+                Properties.Settings.Default.DataBaseName = null;
+                Properties.Settings.Default.Ip = null;
+                Properties.Settings.Default.Port = 0;
+                Properties.Settings.Default.UserName = null;
+                Properties.Settings.Default.EncryptedPassword = null;
             }
             Properties.Settings.Default.Save();
         }

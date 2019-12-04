@@ -35,9 +35,9 @@ namespace PresentationLayer.Services
             return viewType;
         }
 
-        public IUserConfigService InitializeConfigService()
+        public IConfigurationService InitializeConfigService()
         {
-            IUserConfigService configService = new UserConfigService();
+            IConfigurationService configService = new UserConfigurationService();
             return configService;
         }
 

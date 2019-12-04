@@ -51,7 +51,7 @@ namespace DataAccessLayer
             return showList;
         }
 
-        public List<Episode> getAllEpisodes(Show selectedShow)
+        public List<Episode> GetAllEpisodes(Show selectedShow)
         {
             throw new NotImplementedException();
         }

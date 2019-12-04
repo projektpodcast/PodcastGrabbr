@@ -11,16 +11,11 @@ namespace BusinessLayer
 {
     public static class Factory
     {
-        public static int TargetType { get; set; }
-
-        public static IDatenArt DatenHaltung { get; set; }
-        public static IDataTarget CreateDataTarget()
+        public static IDatenArt DatenHaltung { private get; set; }
+        internal static IDataTarget CreateDataTarget()
         {
-
-            int manfredoDb = 3;
-
-            IDataTarget dataTargetInstance = null; ;
-            switch (manfredoDb)
+            IDataTarget dataTargetInstance = null;
+            switch (DatenHaltung.DataType.Key)
             {
                 case 1:
                     dataTargetInstance = new XmlDataTarget();
@@ -37,12 +32,10 @@ namespace BusinessLayer
             return dataTargetInstance;
         }
 
-        public static IDataSource CreateDataSource()
+        internal static IDataSource CreateDataSource()
         {
-            int manfredoDb = 3;
-
-            IDataSource dataSourceInstance = null; ;
-            switch (manfredoDb)
+            IDataSource dataSourceInstance = null;
+            switch (DatenHaltung.DataType.Key)
             {
                 case 1:
                     dataSourceInstance = new XmlDataSource();
@@ -52,6 +45,9 @@ namespace BusinessLayer
                     break;
                 case 3:
                     dataSourceInstance = new PostDataSource();
+                    break;
+                case 4:
+                    dataSourceInstance = new MockDataSource();
                     break;
                 default:
                     throw new Exception(); //impl.
