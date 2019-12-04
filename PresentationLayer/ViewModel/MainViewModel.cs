@@ -15,7 +15,8 @@ namespace PresentationLayer.ViewModel
     public class MainViewModel : BaseViewModel, IViewModel
     {
         #region Services
-        private IUserConfigService _configService { get; set; }
+        //private IUserConfigService _configService { get; set; }
+        private IConfigurationService _configurationService { get; set; }
         private IDependencyService _initializerService { get; set; }
         private IBusinessAccessService _businessAccessService { get; set; }
         #endregion Services
@@ -43,8 +44,10 @@ namespace PresentationLayer.ViewModel
         {
             _initializerService = new DependencyService();
             _businessAccessService = _initializerService.InitializeBusinessLayer();
-            _configService = _initializerService.InitializeConfigService();
+            //_configService = _initializerService.InitializeConfigService();
 
+
+            _configurationService = new UserConfigurationService();
 
             InitializeUserNavigationUi();
             InitializeCurrentContent();
@@ -68,7 +71,7 @@ namespace PresentationLayer.ViewModel
 
         private void InitializeSettingsUi()
         {
-            IViewModel viewModel = new SettingsViewModel(_configService);
+            IViewModel viewModel = new SettingsViewModel(_configurationService);
             _settingsUi = _initializerService.InitializeView(viewModel);
             SetUpSubscriber(viewModel);
         }
@@ -95,10 +98,12 @@ namespace PresentationLayer.ViewModel
 
         private void DecideCurrentContent()
         {
-            bool dataTargetIsSet = _configService.IsPropertySet();
+            //bool dataTargetIsSet = _configService.IsPropertySet();
 
-            //bool dataTargetIsSet = GlobalUserCfgService.IsPropertySet();
-            if (dataTargetIsSet == true)
+
+            //bool dataTargetIsSet = _configurationService.IsPropertySet();
+
+            if (CanSwitchOffSettings())
             {
                 CurrentContent = _podcastUi;
             }
@@ -123,9 +128,17 @@ namespace PresentationLayer.ViewModel
         //    }
         //}
 
+        private bool CanSwitchOffSettings()
+        {
+            return _configurationService.IsPropertySet();
+        }
+
         private void SwitchToPodcastUi()
         {
-            if (_configService.IsPropertySet() == true)
+            //CanSwitchOffSettings() == true ? CurrentContent = _settingsUi : CurrentContent = _podcastUi;
+            //CurrentContent = CanSwitchOffSettings() == true ? _settingsUi : _podcastUi;
+
+            if (CanSwitchOffSettings())
             {
                 if (_settingsUi != null)
                 {
@@ -138,7 +151,25 @@ namespace PresentationLayer.ViewModel
             else
             {
                 //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Bitte Datenziel konfigurieren und speichern", "Fehlende Einstellungen", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+
+
+
+            //if (_configService.IsPropertySet() == true)
+            //{
+            //    if (_settingsUi != null)
+            //    {
+            //        _settingsUi.ViewModelType = null;
+            //        _settingsUi = null;
+            //    }
+            //    CurrentContent = _podcastUi;
+            //}
+
+            //else
+            //{
+            //    //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
+            //}
         }
 
         private void SwitchToSettingsUi()
@@ -152,20 +183,20 @@ namespace PresentationLayer.ViewModel
 
         private void SwitchToDownloads()
         {
-            if (CurrentContent != _downloadsUi)
+            if (CanSwitchOffSettings())
             {
-                if (_downloadsUi != null)
+                if (_settingsUi != null)
                 {
-                    CurrentContent = _downloadsUi;
-                    //_downloadsUi.ViewModelType = null;
-                    //_downloadsUi = null;
+                    _settingsUi.ViewModelType = null;
+                    _settingsUi = null;
                 }
-                else
-                {
-                    InitializeDownloadsUi();
-                    CurrentContent = _downloadsUi;
-                }
+                InitializeDownloadsUi();
+                CurrentContent = _downloadsUi;
+            }
 
+            else
+            {
+                MessageBox.Show("Bitte Datenziel konfigurieren und speichern", "Fehlende Einstellungen", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -184,7 +215,7 @@ namespace PresentationLayer.ViewModel
             {
                 case "ToSettings":
                     SwitchToSettingsUi();
-                        break;
+                    break;
                 case "ToPodcast":
                     SwitchToPodcastUi();
                     break;
