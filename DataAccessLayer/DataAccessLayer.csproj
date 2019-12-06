@@ -79,11 +79,16 @@
     <Compile Include="Local\XmlDataTarget.cs" />
     <Compile Include="IDataTarget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlAsDb\XmlAsDataSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonTypes\CommonTypes.csproj">
       <Project>{D042B04C-579A-40C9-8870-C2DABC168DB1}</Project>
       <Name>CommonTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RssFeedProcessor\RssFeedProcessor.csproj">
+      <Project>{725C78C2-BB58-4908-B81E-D1C418E26B99}</Project>
+      <Name>RssFeedProcessor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

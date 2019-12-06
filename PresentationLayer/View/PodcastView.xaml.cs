@@ -45,6 +45,10 @@ namespace PresentationLayer.View
         }
 
 
+
+
+
+
         //private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
         //{
         //    UpdateColumnsWidth(sender as ListView);

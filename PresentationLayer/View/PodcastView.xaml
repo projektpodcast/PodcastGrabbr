@@ -21,6 +21,7 @@
         <local:NullToVisibilityConverter x:Key="NullToVisibility"/>
         <helper:ValidationRules x:Key="Validation"/>
 
+        <SolidColorBrush x:Key="MouseOverPrimary" Color="#FF5F563E" Opacity="1"/>
         <SolidColorBrush x:Key="OpacityEffect" Color="Black" Opacity="0.2"/>
         <SolidColorBrush x:Key="PrimaryColor" Color="#FF344955"/>
         <SolidColorBrush x:Key="PrimaryDark" Color="#FF232F34"/>
@@ -535,9 +536,16 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Opacity" TargetName="Figure1" Value="0.7"/>
+                                <!--<Setter Property="Opacity" TargetName="Figure1" Value="0.7"/>
                                 <Setter Property="Opacity" TargetName="Figure2" Value="0.7"/>
-                                <Setter Property="Opacity" TargetName="Figure3" Value="0.7"/>
+                                <Setter Property="Opacity" TargetName="Figure3" Value="0.7"/>-->
+
+                                <Setter Property="Fill" TargetName="Figure1" Value="{StaticResource MouseOverPrimary}"/>
+                                <Setter Property="Fill" TargetName="Figure2" Value="{StaticResource MouseOverPrimary}"/>
+                                <Setter Property="Fill" TargetName="Figure3" Value="{StaticResource MouseOverPrimary}"/>
+
+
+                           
                                 <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource ButtonHover}"/>-->
                                 <!--<Setter Property="Opacity" TargetName="Triangle" Value=""/>-->
                             </Trigger>
@@ -1970,13 +1978,19 @@
         <Rectangle Grid.Row="1" Fill="{StaticResource TertiaryDark}"/>
         <!--<Button Style="{StaticResource DownloadButton}"></Button>-->
         <!--<Rectangle Height="30" HorizontalAlignment="Stretch" Fill="{StaticResource PrimaryColor}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" SnapsToDevicePixels="True"/>-->
-
-        <ListView BorderThickness="0,0,0,0" BorderBrush="{StaticResource PrimaryColor}" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+        <ListView BorderThickness="0,0,0,0" BorderBrush="{StaticResource PrimaryColor}" x:Name="EpisodeList" Grid.Row="0" 
                   Foreground="Black" SnapsToDevicePixels="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
                   Background="{StaticResource TertiaryDark}" ItemContainerStyle="{StaticResource TestEpisodeItems}" ScrollViewer.CanContentScroll="False"
-                  ItemsSource="{Binding EpisodesCollection}" Margin="0" SelectionMode="Single" Template="{DynamicResource ListViewControlTemplate1}">
+                  ItemsSource="{Binding EpisodesCollection}" Margin="0" SelectionMode="Single" Template="{DynamicResource ListViewControlTemplate1}" 
+                  SourceUpdated="EpisodeList_SourceUpdated">
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    
                     <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
@@ -2052,6 +2066,7 @@
             </ListView.ItemTemplate>
            
         </ListView>
-
+            <Button Grid.Row="1" Height="15" Command="{Binding NextPage}"></Button>
+        </Grid>
     </Grid>
 </Page>

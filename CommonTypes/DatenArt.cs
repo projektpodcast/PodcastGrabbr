@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommonTypes
 {
-    public class DatenArt : IDatenArt
+    public class DataStorageType : IDataStorageType
     {
         public KeyValuePair<int, string> DataType { get; set; }
         public string Ip { get; set; }

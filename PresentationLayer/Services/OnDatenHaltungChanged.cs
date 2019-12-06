@@ -9,6 +9,6 @@ namespace PresentationLayer.Services
 {
     public class OnDatenHaltungChanged : EventArgs
     {
-        public IDatenArt DatenHaltungTyp {get;set;}
+        public IDataStorageType DatenHaltungTyp {get;set;}
     }
 }

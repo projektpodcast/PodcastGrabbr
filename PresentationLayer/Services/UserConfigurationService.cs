@@ -12,15 +12,15 @@ namespace PresentationLayer.Services
         //public Guid guid { get; set; }
 
 
-        private IDatenArt _configDatenArt { get; set; }
-        public IDatenArt ConfigDatenArt {
+        private IDataStorageType _configDatenArt { get; set; }
+        public IDataStorageType ConfigDatenArt {
             get { return _configDatenArt; }
             private set { _configDatenArt = value; SyncFactory(); OnDatenHaltungChange(ConfigDatenArt); }
         }
 
         public UserConfigurationService()
         {
-            ConfigDatenArt = new DatenArt();
+            ConfigDatenArt = new DataStorageType();
             //guid = Guid.NewGuid();
             GetUserConfiguration();
         }
@@ -35,7 +35,7 @@ namespace PresentationLayer.Services
             return isSet;
         }
 
-        public void UpdateUserConfiguration(IDatenArt datenHaltung)
+        public void UpdateUserConfiguration(IDataStorageType datenHaltung)
         {
             ConfigDatenArt = datenHaltung;
             Properties.Settings.Default.DataType = ConfigDatenArt.DataType.Key;
@@ -82,7 +82,7 @@ namespace PresentationLayer.Services
 
         public event EventHandler<OnDatenHaltungChanged> DatenHaltungChanged;
 
-        public void OnDatenHaltungChange(IDatenArt datenHaltungsTyp)
+        public void OnDatenHaltungChange(IDataStorageType datenHaltungsTyp)
         {
             if (DatenHaltungChanged != null)
             {

@@ -2,7 +2,7 @@
 
 namespace CommonTypes
 {
-    public interface IDatenArt
+    public interface IDataStorageType
     {
         string DataBaseName { get; set; }
         KeyValuePair<int, string> DataType { get; set; }

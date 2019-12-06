@@ -22,15 +22,21 @@ namespace MockPresentationLayer
         static void Main(string[] args)
         {
 
-            string password = "#H1a!l@l^oMeinPasswortIstSuperLang";
-            //string encryptionString = "asd123asd123";
-            string encryptedPassword = SecurityLibrary.StringCipher.Encrypt(password);
+            //string password = "#H1a!l@l^oMeinPasswortIstSuperLang";
+            ////string encryptionString = "asd123asd123";
+            //string encryptedPassword = SecurityLibrary.StringCipher.Encrypt(password);
 
-            string decryptedPassword = SecurityLibrary.StringCipher.Decrypt(encryptedPassword);
+            //string decryptedPassword = SecurityLibrary.StringCipher.Decrypt(encryptedPassword);
 
             //DeserializingManager deserializer = new DeserializingManager();
 
-            ////Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
+            //Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
+
+            ////deserializer.SerializeIt(a);
+
+            //LocalRssTest test = new LocalRssTest();
+            //test.Test();
+
             ////Podcast a = deserializer.DeserializeRssXml("http://podcast.wdr.de/quarks.xml");
             ////Podcast a = deserializer.DeserializeRssXml("http://web.ard.de/radiotatort/rss/podcast.xml");
             //Podcast a = deserializer.DeserializeRssXml("https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast");
@@ -39,7 +45,8 @@ namespace MockPresentationLayer
             //PostgresData PostDbInstance = new PostgresData();
             //call postdb
             //PostDB(a);
-        }
+
+       }
 
         //static void PostDB(Podcast a)
         //{
@@ -110,5 +117,5 @@ namespace MockPresentationLayer
         //    }
 
 
-        }
+    }
     }

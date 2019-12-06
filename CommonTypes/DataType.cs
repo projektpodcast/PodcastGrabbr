@@ -12,7 +12,12 @@ namespace CommonTypes
 
         public DataType()
         {
-
+            Dictionary<int, string> possibleTypes = new Dictionary<int, string>
+            {
+                { 0, "Lokal: Xml" },
+                { 1, "Datenbank: MySQL" },
+                { 2, "Datenbank: PostgreSQL" }
+            };
         }
 
         public Dictionary<int, string> GetPossibleDataTypes()

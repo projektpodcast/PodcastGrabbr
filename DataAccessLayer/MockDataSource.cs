@@ -56,7 +56,7 @@ namespace DataAccessLayer
             {
                 Episode episode = new Episode
                 {
-                    EpisodeId = i,
+                    EpisodeId = i.ToString(),
                     Title = "Neue Show Selected",
                     PublishDate = now,
                     Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",

@@ -93,9 +93,9 @@ namespace RssFeedProcessor
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(ShowDeserializer));
 
-            ShowDeserializer serializedShow = new ShowDeserializer();
-            serializedShow = (ShowDeserializer)deserializer.Deserialize(xmlStream);
-            DeserializedShowData = serializedShow.DeserializedShowData;
+            ShowDeserializer deserializedShow = new ShowDeserializer();
+            deserializedShow = (ShowDeserializer)deserializer.Deserialize(xmlStream);
+            DeserializedShowData = deserializedShow.DeserializedShowData;
         }
 
         /// <summary>
