@@ -304,7 +304,7 @@ namespace PresentationLayer.ViewModel
             //}
 
             //AllShows = new ObservableCollection<Show>(test);
-            Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
+            //Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
         }
 
         private void AddMoreMockData()

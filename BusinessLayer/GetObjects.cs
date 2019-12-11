@@ -1,6 +1,7 @@
 ﻿using CommonTypes;
 using DataAccessLayer;
 using DataAccessLayer.XmlAsDb;
+using RssFeedProcessor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace BusinessLayer
             //IDataSource dataSource = Factory.CreateDataSource();
             //return dataSource.GetAllShows();
 
+            LocalRssTest rss = new LocalRssTest();
+            rss.ProcessNewPodcast();
             XmlAsDataSource dal = new XmlAsDataSource();
+            
             return dal.GetAllShows();
         }
 

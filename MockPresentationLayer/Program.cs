@@ -33,9 +33,13 @@ namespace MockPresentationLayer
             //Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
 
             ////deserializer.SerializeIt(a);
-
+            ///
+            //string url2 = "http://podcast.wdr.de/quarks.xml";
+            ////string url2 = "http://joeroganexp.joerogan.libsynpro.com/rss";
+            ////string url2 = "http://www1.swr.de/podcast/xml/swr2/forum.xml";
+            ////string url2 = "http://web.ard.de/radiotatort/rss/podcast.xml";
             //LocalRssTest test = new LocalRssTest();
-            //test.Test();
+            //test.ProcessNewPodcast(url2);
 
             ////Podcast a = deserializer.DeserializeRssXml("http://podcast.wdr.de/quarks.xml");
             ////Podcast a = deserializer.DeserializeRssXml("http://web.ard.de/radiotatort/rss/podcast.xml");
@@ -46,7 +50,7 @@ namespace MockPresentationLayer
             //call postdb
             //PostDB(a);
 
-       }
+        }
 
         //static void PostDB(Podcast a)
         //{

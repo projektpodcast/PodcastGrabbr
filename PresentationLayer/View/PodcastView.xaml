@@ -1985,9 +1985,9 @@
             </Grid.RowDefinitions>
         <ListView BorderThickness="0,0,0,0" BorderBrush="{StaticResource PrimaryColor}" x:Name="EpisodeList" Grid.Row="0" 
                   Foreground="Black" SnapsToDevicePixels="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
-                  Background="{StaticResource TertiaryDark}" ItemContainerStyle="{StaticResource TestEpisodeItems}" ScrollViewer.CanContentScroll="False"
+                  Background="{StaticResource TertiaryDark}" ItemContainerStyle="{StaticResource TestEpisodeItems}" ScrollViewer.CanContentScroll="True"
                   ItemsSource="{Binding EpisodesCollection}" Margin="0" SelectionMode="Single" Template="{DynamicResource ListViewControlTemplate1}" 
-                  SourceUpdated="EpisodeList_SourceUpdated">
+                  >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     
@@ -2066,7 +2066,23 @@
             </ListView.ItemTemplate>
            
         </ListView>
-            <Button Grid.Row="1" Height="15" Command="{Binding NextPage}"></Button>
+            <!--<Grid Grid.Row="1" Height="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                <Button Width="15" Height="15" Command="{Binding}"></Button>
+                    <Label>Seite</Label>
+                    <Label>1</Label>
+                    <Label>von</Label>
+                    <Label>4</Label>
+                    <Button Width="15" Height="15" Command="{Binding NextPage}"></Button>
+                </StackPanel>
+                <Frame></Frame>
+            </Grid>-->
+
         </Grid>
     </Grid>
 </Page>

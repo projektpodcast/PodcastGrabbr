@@ -4,7 +4,7 @@
 >
   <xsl:output method="xml" indent="yes"/>
 
-  <xsl:param name="fileName" select="'sampleData.xml'" />
+  <xsl:param name="fileName" />
   <xsl:param name="updates" select="document($fileName)" />
   <xsl:variable name="updateShows" select="$updates/podcasts/show" />
   <xsl:variable name="updateIds" select="$updates/podcasts" />

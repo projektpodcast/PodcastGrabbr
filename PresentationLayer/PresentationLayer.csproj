@@ -61,6 +61,7 @@
     </ApplicationDefinition>
     <Compile Include="AppConfigManager.cs" />
     <Compile Include="Models\ButtonModel.cs" />
+    <Compile Include="Models\PagingModel.cs" />
     <Compile Include="OnCurrentContentChanged.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\FileDialogService.cs" />
