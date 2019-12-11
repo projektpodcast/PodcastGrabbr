@@ -18,7 +18,7 @@ namespace BusinessLayer
             switch (DatenHaltung.DataType.Key)
             {
                 case 1:
-                    dataTargetInstance = new XmlDataTarget();
+                    dataTargetInstance = new XmlAsDataTarget();
                     break;
                 case 2:
                     dataTargetInstance = new MySQLDataTarget();
@@ -38,7 +38,7 @@ namespace BusinessLayer
             switch (DatenHaltung.DataType.Key)
             {
                 case 1:
-                    dataSourceInstance = new XmlDataSource();
+                    dataSourceInstance = new XmlAsDataSource();
                     break;
                 case 2:
                     dataSourceInstance = new MySQLDataSource();

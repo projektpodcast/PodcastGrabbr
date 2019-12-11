@@ -89,20 +89,20 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private ICommand _nextPage;
-        public ICommand NextPage
-        {
-            get
-            {
-                if (_nextPage == null)
-                {
-                    _nextPage = new RelayCommand(
-                        p => true,
-                        p => this.ExecuteNextPage());
-                }
-                return _nextPage;
-            }
-        }
+        //private ICommand _nextPage;
+        //public ICommand NextPage
+        //{
+        //    get
+        //    {
+        //        if (_nextPage == null)
+        //        {
+        //            _nextPage = new RelayCommand(
+        //                p => true,
+        //                p => this.ExecuteNextPage());
+        //        }
+        //        return _nextPage;
+        //    }
+        //}
 
         private ICommand _searchFilter;
         public ICommand SearchFilter
@@ -234,21 +234,21 @@ namespace PresentationLayer.ViewModel
         #endregion ICommand Properties
 
 
-        private void ExecuteNextPage()
-        {
-            GetNextEpisodes(EpisodesCollection.Last());
-        }
+        //private void ExecuteNextPage()
+        //{
+        //    GetNextEpisodes(EpisodesCollection.Last());
+        //}
 
-        private void GetNextEpisodes(Episode episode)
-        {
-            EpisodesCollection.Clear();
-            var a = _businessAccess.Get.GetNextEpisodes(SelectedShow, episode);
-            foreach (var item in a)
-            {
-                EpisodesCollection.Add(item);
-            }
-            //EpisodesCollection = ;
-        }
+        //private void GetNextEpisodes(Episode episode)
+        //{
+        //    EpisodesCollection.Clear();
+        //    var a = _businessAccess.Get.GetNextEpisodes(SelectedShow, episode);
+        //    foreach (var item in a)
+        //    {
+        //        EpisodesCollection.Add(item);
+        //    }
+        //    //EpisodesCollection = ;
+        //}
 
         private bool IsShowSelected()
         {

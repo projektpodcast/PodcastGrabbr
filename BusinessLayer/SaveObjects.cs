@@ -1,5 +1,6 @@
 ﻿using CommonTypes;
 using DataAccessLayer;
+using RssFeedProcessor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,12 @@ namespace BusinessLayer
             Podcast selectedPodcastData = new Podcast() { ShowInfo = selectedShow, EpisodeList = new List<Episode> { selectedEpisode } };
 
             mediaTarget.SavePodcast(selectedPodcastData);
+        }
+
+        public void SaveRssPodcast(string rssUri)
+        {
+            LocalRssTest rss = new LocalRssTest();
+            rss.ProcessNewPodcast(rssUri);
         }
     }
 }

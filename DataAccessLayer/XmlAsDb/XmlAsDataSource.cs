@@ -4,28 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommonTypes;
+using LocalStorage;
 using RssFeedProcessor;
 
-namespace DataAccessLayer.XmlAsDb
+namespace DataAccessLayer
 {
     public class XmlAsDataSource : IDataSource
     {
+        public XmlAsDataSource()
+        {
+            ////string rssUri = "http://podcast.wdr.de/quarks.xml";
+            //string rssUri = "http://joeroganexp.joerogan.libsynpro.com/rss";
+            string rssUri = "http://www1.swr.de/podcast/xml/swr2/forum.xml";
+            ////string rssUri = "http://web.ard.de/radiotatort/rss/podcast.xml";
+            XmlStorage.Instance.ProcessNewPodcast(rssUri);
+        }
         public List<Episode> GetAllEpisodes(Show selectedShow)
         {
-            LocalRssTest local = new LocalRssTest();
-            return local.GetEpisodes(selectedShow);
+            return XmlStorage.Instance.GetEpisodes(selectedShow);
+            //LocalRssTest local = new LocalRssTest();
+            //return local.GetEpisodes(selectedShow);
         }
 
         public List<Show> GetAllShows()
         {
-            LocalRssTest local = new LocalRssTest();
-            return local.GetShows();
+            return XmlStorage.Instance.GetShows(); 
+            //LocalRssTest local = new LocalRssTest();
+            //return local.GetShows();
         }
 
-        public List<Episode> GetNext(Show selectedShow, Episode lastEpisode)
-        {
-            LocalRssTest local = new LocalRssTest();
-            return local.GetNext(selectedShow, lastEpisode);
-        }
     }
 }

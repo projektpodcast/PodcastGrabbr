@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonTypes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,23 +7,22 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Xsl;
 using System.Xml.Linq;
-using CommonTypes;
-using System.Xml.XPath;
-using System.Configuration;
+using System.Xml.Xsl;
 
-namespace RssFeedProcessor
+namespace LocalStorage
 {
-    public class LocalRssTest
+    public sealed class XmlStorage
     {
-        private static XDocument _dbXDoc { get; set; }
+        #region Singleton
+        private static readonly XmlStorage instance = new XmlStorage();
 
-        private readonly string _newPodcastPath;
-        private readonly string _dbXmlPath;
-        private readonly string _dbXmlTempPath;
+        static XmlStorage()
+        {
 
-        public LocalRssTest()
+        }
+
+        private XmlStorage()
         {
             var config = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var localDir = Directory.CreateDirectory($"{config}\\podcastgrabbr_podcasts");
@@ -35,6 +35,35 @@ namespace RssFeedProcessor
                 _dbXDoc = XDocument.Load(_dbXmlPath);
             }
         }
+
+        public static XmlStorage Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+        #endregion Singleton
+
+        private static XDocument _dbXDoc { get; set; }
+
+        private readonly string _newPodcastPath;
+        private readonly string _dbXmlPath;
+        private readonly string _dbXmlTempPath;
+
+        //public XmlStorage()
+        //{
+        //    var config = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        //    var localDir = Directory.CreateDirectory($"{config}\\podcastgrabbr_podcasts");
+        //    this._dbXmlPath = $"{localDir.FullName}\\dbXml.xml";
+        //    this._dbXmlTempPath = $"{localDir.FullName}\\dbXml.tmp";
+        //    this._newPodcastPath = $"{localDir.FullName}\\latestPodcast.xml";
+
+        //    if (File.Exists(_dbXmlPath))
+        //    {
+        //        _dbXDoc = XDocument.Load(_dbXmlPath);
+        //    }
+        //}
 
         public void ProcessNewPodcast(string rssUri)
         {
@@ -90,13 +119,14 @@ namespace RssFeedProcessor
         {
             XslCompiledTransform xslt = new XslCompiledTransform();
             IEnumerable<string> xsltStreamPath;
+            var a = Assembly.GetExecutingAssembly().GetManifestResourceNames();
             if (settings != null)
             {
                 xsltStreamPath = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(r => r.Contains("XmlMerger.xslt"));
             }
             else
             {
-                xsltStreamPath = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(r => r.Contains("TransformRssToLocalXml.xslt"));
+                xsltStreamPath = Assembly.GetExecutingAssembly().GetManifestResourceNames().Where(r => r.Contains("TransformRssToXml.xslt"));
             }
             XmlReader xmlReader = XmlReader.Create(Assembly.GetExecutingAssembly().GetManifestResourceStream(xsltStreamPath.First()));
             xslt.Load(xmlReader, settings, new XmlUrlResolver());
@@ -140,7 +170,7 @@ namespace RssFeedProcessor
                     .Where(x => x.Attribute("sid").Value == _idToReplace).First();
 
                 dBXmlShow.ReplaceWith(updatedPodcast);
-                _dbXDoc.Save(_dbXmlPath);            
+                _dbXDoc.Save(_dbXmlPath);
             }
             else
             {
@@ -176,11 +206,6 @@ namespace RssFeedProcessor
             var episodes3 = _dbXDoc.Descendants("episode")
                 .Where(x => x.Parent.Parent.Attribute("sid").Value == show.ShowId);
 
-            //var episodesFilter = episodes3.Take(30);
-            //var episodesFilter = episodes3;
-
-            //int count = (episodes3.Count() + 30 - 1) / 30;
-
             List<Episode> allEpisodes = new List<Episode>();
             foreach (var item in episodes3)
             {
@@ -197,35 +222,26 @@ namespace RssFeedProcessor
             return allEpisodes;
         }
 
+        //public List<Episode> GetNext(Show selectedShow, Episode lastEpisode)
+        //{
 
+        //    var episodes3 = _dbXDoc.Descendants("episode")
+        //        .Where(x => x.Parent.Parent.Attribute("sid").Value == selectedShow.ShowId && int.Parse(x.Attribute("eid").Value) < int.Parse(lastEpisode.EpisodeId));
 
-        public List<Episode> GetNext(Show selectedShow, Episode lastEpisode)
-        {
+        //    List<Episode> allEpisodes = new List<Episode>();
+        //    foreach (var item in episodes3)
+        //    {
+        //        Episode epToAdd = new Episode();
+        //        epToAdd.FileDetails = new FileInformation();
+        //        epToAdd.Summary = item.Element("summary").Value;
+        //        epToAdd.FileDetails.SourceUri = item.Element("url").Value;
+        //        epToAdd.Title = item.Element("title").Value;
+        //        epToAdd.EpisodeId = item.Attribute("eid").Value;
 
-            var episodes3 = _dbXDoc.Descendants("episode")
-                .Where(x => x.Parent.Parent.Attribute("sid").Value == selectedShow.ShowId && int.Parse(x.Attribute("eid").Value) < int.Parse(lastEpisode.EpisodeId))
-                //.OrderBy(x => int.Parse(x.Attribute("eid").Value))
-                //orderby int.Parse(x.Attribute("eid").Value)
-                ;
-
-            //var episodesFilter = episodes3.Take(30);
-            //var episodesFilter = episodes3;
-
-            List<Episode> allEpisodes = new List<Episode>();
-            foreach (var item in episodes3)
-            {
-                Episode epToAdd = new Episode();
-                epToAdd.FileDetails = new FileInformation();
-                //epToAdd.EpisodeId = item.Attribute("eid").Value
-                epToAdd.Summary = item.Element("summary").Value;
-                epToAdd.FileDetails.SourceUri = item.Element("url").Value;
-                epToAdd.Title = item.Element("title").Value;
-                epToAdd.EpisodeId = item.Attribute("eid").Value;
-
-                allEpisodes.Add(epToAdd);
-            }
-            return allEpisodes;
-        }
+        //        allEpisodes.Add(epToAdd);
+        //    }
+        //    return allEpisodes;
+        //}
 
     }
 }
