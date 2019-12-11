@@ -14,6 +14,7 @@ namespace LocalStorage
 {
     public sealed class XmlStorage
     {
+        public Guid Id = Guid.NewGuid();
         #region Singleton
         private static readonly XmlStorage instance = new XmlStorage();
 
@@ -156,9 +157,14 @@ namespace LocalStorage
                 .Elements("title")
                 .FirstOrDefault().Value;
 
+            string encodedXml = newShowElement.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;").Replace("&#34;", "&quot;").Replace("'", "&apos;");
+
             string matchingShowElement = _dbXDoc.Descendants("show")
-                .Where(x => x.Element("title").Value.Equals(newShowElement))
+                .Where(x => x.Element("title").Value.Equals(encodedXml) || x.Element("title").Value.Equals(newShowElement))
                 .Select(y => (string)y.Attribute("sid").Value).FirstOrDefault();
+
+
+
 
             if (!string.IsNullOrWhiteSpace(matchingShowElement))
             {
