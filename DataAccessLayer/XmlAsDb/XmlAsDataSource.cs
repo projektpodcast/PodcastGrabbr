@@ -16,9 +16,9 @@ namespace DataAccessLayer
             ////string rssUri = "http://podcast.wdr.de/quarks.xml";
             //string rssUri = "http://joeroganexp.joerogan.libsynpro.com/rss";
             //string rssUri = "http://www1.swr.de/podcast/xml/swr2/forum.xml";
-            ////string rssUri = "http://web.ard.de/radiotatort/rss/podcast.xml";
+            string rssUri = "http://web.ard.de/radiotatort/rss/podcast.xml";
 
-            string rssUri = "https://feeds.br.de/das-computermagazin/feed.xml";
+            //string rssUri = "https://feeds.br.de/das-computermagazin/feed.xml";
             //string rssUri = "http://www.deutschlandfunk.de/podcast-feature.1383.de.podcast.xml";
             //string rssUri = "http://podcast.wdr.de/quarks.xml";
             //string rssUri = "http://www1.swr.de/podcast/xml/swr2/wissen.xml";

@@ -77,6 +77,7 @@ namespace LocalStorage
             if (_dbXDoc != null)
             {
                 ReplaceOrInsertShow();
+                DbXmlReload();
             }
             else
             {

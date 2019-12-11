@@ -50,7 +50,8 @@ namespace BusinessLayer
                     dataSourceInstance = new MockDataSource();
                     break;
                 default:
-                    throw new Exception(); //impl.
+                    break;
+                    //throw new Exception(); //impl.
             }
             return dataSourceInstance;
         }
