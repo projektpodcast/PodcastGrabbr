@@ -35,12 +35,22 @@ namespace BusinessLayer
         //    mediaTarget.SavePodcast(selectedPodcastData);
         //}
 
-        public void SaveEpisodeAsLocalMedia(Show show, Episode episode)
+        //public void SaveEpisodeAsLocalMedia(Show show, Episode episode)
+        //{
+        //    ILocalMediaTarget target = Factory.CreateLocalMediaTarget();
+        //    target.DownloadEpisode(show, episode);
+        //}
+
+        public async Task SaveEpisodeAsLocalMedia(Show show, Episode episode)
         {
             ILocalMediaTarget target = Factory.CreateLocalMediaTarget();
-            target.DownloadEpisode(show, episode);
-            
+            await target.DownloadEpisode(show, episode);
         }
+
+        //public void SaveEpisodeAsLocalMedia(Show show, Episode episode)
+        //{
+
+        //}
 
         public void SaveRssPodcast(string rssUri)
         {

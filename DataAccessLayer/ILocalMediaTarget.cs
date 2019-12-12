@@ -9,6 +9,6 @@ namespace DataAccessLayer
 {
     public interface ILocalMediaTarget
     {
-        void DownloadEpisode(Show show, Episode episode);
+        Task DownloadEpisode(Show show, Episode episode);
     }
 }

@@ -21,12 +21,12 @@ namespace LocalStorage
             _downloadPath = localDir.FullName;
         }
 
-        public void InitializeMediaDownload(Show show, Episode episode)
+        public async Task InitializeMediaDownload(Show show, Episode episode)
         {
             DownloadUri = new Uri(episode.FileDetails.SourceUri);
             string fileName = CreateFileName(episode);
             DirectoryInfo fullDir = CreateFullDirectory(show, fileName);
-            ExecuteEpisodeDownload(fullDir, fileName);
+            await ExecuteEpisodeDownload(fullDir, fileName);
         }
 
         private string CreateFileName(Episode episode)
@@ -56,12 +56,13 @@ namespace LocalStorage
             return Directory.CreateDirectory($"{_downloadPath}\\{sanitizedFolderName}\\");
         }
 
-        private void ExecuteEpisodeDownload(DirectoryInfo dir, string fileName)
+        private async Task ExecuteEpisodeDownload(DirectoryInfo dir, string fileName)
         {
             try
             {
                 WebClient webClient = new WebClient();
-                webClient.DownloadFile(DownloadUri, $"{dir.FullName}{fileName}");
+                //webClient.DownloadFile(DownloadUri, $"{dir.FullName}{fileName}");
+                await webClient.DownloadFileTaskAsync(DownloadUri, $"{dir.FullName}{fileName}");
             }
             catch (Exception ex)
             {

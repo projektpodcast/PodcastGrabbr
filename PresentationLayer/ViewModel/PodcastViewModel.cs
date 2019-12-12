@@ -216,6 +216,36 @@ namespace PresentationLayer.ViewModel
             }
         }
 
+        //private ICommand _downloadMedia;
+        //public ICommand DownloadMedia
+        //{
+        //    get
+        //    {
+        //        if (_downloadMedia == null)
+        //        {
+        //            _downloadMedia = new RelayCommand(
+        //                p => true,
+        //                param => this.ExecuteDownloadMedia((Episode)param));
+        //        }
+        //        return _downloadMedia;
+        //    }
+        //}
+
+        //private ICommand _downloadMedia;
+        //public ICommand DownloadMedia
+        //{
+        //    get
+        //    {
+        //        if (_downloadMedia == null)
+        //        {
+        //            _downloadMedia = new RelayCommand(
+        //                p => true,
+        //                param => this.ExecuteDownloadMedia((Episode)param));
+        //        }
+        //        return _downloadMedia;
+        //    }
+        //}
+
         private ICommand _downloadMedia;
         public ICommand DownloadMedia
         {
@@ -223,12 +253,17 @@ namespace PresentationLayer.ViewModel
             {
                 if (_downloadMedia == null)
                 {
-                    _downloadMedia = new RelayCommand(
-                        p => true,
-                        param => this.ExecuteDownloadMedia((Episode)param));
+                    _downloadMedia = new AsyncRelayCommand<Episode>(ExecuteMediaDownloadAsync, CanExecuteSubmit);
                 }
                 return _downloadMedia;
             }
+        }
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { _isBusy = value; }
         }
 
         private bool Yes()
@@ -271,12 +306,42 @@ namespace PresentationLayer.ViewModel
             //BusinessLayer-Zugriff um (Property) DownloadPath der Episode aufzulösen und abzuspielen.
         }
 
-        private void ExecuteDownloadMedia(Episode param)
+        private async Task ExecuteMediaDownloadAsync(Episode episode)
         {
-            _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param);
-            //throw new NotImplementedException();
-            //BusinessLayer-Zugriff um LocalMedia anzusteuern und Episode anhand des DownloadPath runterzuladen.
+            try
+            {
+                IsBusy = true;
+                await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
+
+        private bool CanExecuteSubmit(Episode episode)
+        {
+            return !IsBusy;
+        }
+
+        private async Task ExecuteDownloadMedia()
+        {
+            List<Task<bool>> tasks = new List<Task<bool>>();
+
+            //tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
+
+            var done = await Task.WhenAll(tasks);
+
+        }
+        //private async Task<List<bool>> ExecuteDownloadMedia(Episode param)
+        //{
+        //    List<Task<bool>> tasks = new List<Task<bool>>();
+
+        //    tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
+
+        //    var done = await Task.WhenAll(tasks);
+        //    return new List<bool>(done);
+        //}
 
         private void ExecuteDeleteSelectedShow()
         {
