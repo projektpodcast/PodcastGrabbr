@@ -93,5 +93,15 @@ namespace DataAccessLayer
         {
             return "";
         }
+
+        public void InsertDownloadPath(Show show, Episode episode, string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDataTarget.InsertDownloadPath(Show show, Episode episode, string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
