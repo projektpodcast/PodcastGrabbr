@@ -201,6 +201,7 @@ namespace LocalStorage
                                 Description = s.Element("description").Value,
                                 LastBuildDate = dateParser.ConvertStringToDateTime(s.Element("lastbuilddate").Value),
                                 LastUpdated = dateParser.ConvertStringToDateTime(s.Element("lastupdated").Value),
+                                PublisherName = s.Element("publisher").Value
                             };
                 a = query.ToList();
             }
