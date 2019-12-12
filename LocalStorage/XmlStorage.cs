@@ -209,9 +209,34 @@ namespace LocalStorage
                 epToAdd.PublishDate = dateParser.ConvertStringToDateTime(item.Element("pubdate").Value);
                 epToAdd.FileDetails = new FileInformation();
                 epToAdd.FileDetails.SourceUri = item.Element("url").Value;
+                epToAdd.IsDownloaded = item.Element("localpath").Value != "" ? true : false;
                 allEpisodes.Add(epToAdd);
             }
             return allEpisodes;
+        }
+
+        public void SetDownloadPath(Show show, Episode episode, string path)
+        {
+            XElement targetedEpisode = _dbXDoc.Descendants("episode")
+                .Where(x => x.Parent.Parent.Attribute("sid").Value == show.ShowId && x.Attribute("eid").Value == episode.EpisodeId)
+                .FirstOrDefault();
+
+            targetedEpisode.Element("localpath").Value = path;
+            _dbXDoc.Save(_dbXmlPath);
+            DbXmlReload();
+
+            //List<Episode> allEpisodes = new List<Episode>();
+            //foreach (var item in episodes3)
+            //{
+            //    Episode epToAdd = new Episode();
+            //    epToAdd.FileDetails = new FileInformation();
+            //    epToAdd.Summary = item.Element("summary").Value;
+            //    epToAdd.FileDetails.SourceUri = item.Element("url").Value;
+            //    epToAdd.Title = item.Element("title").Value;
+            //    epToAdd.EpisodeId = item.Attribute("eid").Value;
+
+            //    allEpisodes.Add(epToAdd);
+            //}
         }
 
 

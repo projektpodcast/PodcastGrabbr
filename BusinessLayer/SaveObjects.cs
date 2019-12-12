@@ -44,7 +44,14 @@ namespace BusinessLayer
         public async Task SaveEpisodeAsLocalMedia(Show show, Episode episode)
         {
             ILocalMediaTarget target = Factory.CreateLocalMediaTarget();
-            await target.DownloadEpisode(show, episode);
+            //await target.DownloadEpisode(show, episode);
+            InsertDownloadPathInEpisode(show, episode, await target.DownloadEpisode(show, episode));
+        }
+
+        public void InsertDownloadPathInEpisode(Show show, Episode episode, string path)
+        {
+            IDataTarget target = Factory.CreateDataTarget();
+            target.InsertDownloadPath(show, episode, path);
         }
 
         //public void SaveEpisodeAsLocalMedia(Show show, Episode episode)

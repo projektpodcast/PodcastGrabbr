@@ -12,10 +12,10 @@ namespace DataAccessLayer
 {
     public class MediaDataTarget : ILocalMediaTarget
     {
-        public async Task DownloadEpisode(Show show, Episode episode)
+        public async Task<string> DownloadEpisode(Show show, Episode episode)
         {
             MediaStorage mediaDl = new MediaStorage();
-            await mediaDl.InitializeMediaDownload(show, episode);
+            return await mediaDl.InitializeMediaDownload(show, episode);
         }
 
     }

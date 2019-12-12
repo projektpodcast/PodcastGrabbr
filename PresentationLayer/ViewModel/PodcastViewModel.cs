@@ -312,6 +312,15 @@ namespace PresentationLayer.ViewModel
             {
                 IsBusy = true;
                 await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
+                episode.IsDownloaded = true;
+                
+                //GetEpisodes();
+                //EpisodesCollection.Clear();
+                //foreach (Episode item in updatedEpisodes)
+                //{
+                //    updatedEpisodes.Add(item);
+                //}
+
             }
             finally
             {

@@ -21,12 +21,14 @@ namespace LocalStorage
             _downloadPath = localDir.FullName;
         }
 
-        public async Task InitializeMediaDownload(Show show, Episode episode)
+        public async Task<string> InitializeMediaDownload(Show show, Episode episode)
         {
             DownloadUri = new Uri(episode.FileDetails.SourceUri);
             string fileName = CreateFileName(episode);
             DirectoryInfo fullDir = CreateFullDirectory(show, fileName);
-            await ExecuteEpisodeDownload(fullDir, fileName);
+            string downloadPath = $"{fullDir.FullName}{fileName}";
+            await ExecuteEpisodeDownload(downloadPath);
+            return downloadPath;
         }
 
         private string CreateFileName(Episode episode)
@@ -56,13 +58,14 @@ namespace LocalStorage
             return Directory.CreateDirectory($"{_downloadPath}\\{sanitizedFolderName}\\");
         }
 
-        private async Task ExecuteEpisodeDownload(DirectoryInfo dir, string fileName)
+        private async Task ExecuteEpisodeDownload(string downloadPath)
         {
             try
             {
                 WebClient webClient = new WebClient();
-                //webClient.DownloadFile(DownloadUri, $"{dir.FullName}{fileName}");
-                await webClient.DownloadFileTaskAsync(DownloadUri, $"{dir.FullName}{fileName}");
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                await webClient.DownloadFileTaskAsync(DownloadUri, downloadPath);
             }
             catch (Exception ex)
             {

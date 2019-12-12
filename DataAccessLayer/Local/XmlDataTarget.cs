@@ -11,6 +11,11 @@ namespace DataAccessLayer
 {
     public class XmlDataTarget : LocalDataTarget, IDataTarget 
     {
+        public void InsertDownloadPath(Show show, Episode episode, string path)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SavePodcast(Podcast podcastToSave)
         {
             string fileName = GetFileName(podcastToSave);
@@ -32,6 +37,11 @@ namespace DataAccessLayer
         {
             string xmlFolderName = "Xml\\";
             return xmlFolderName;
+        }
+
+        void IDataTarget.InsertDownloadPath(Show show, Episode episode, string path)
+        {
+            throw new NotImplementedException();
         }
 
         private void SerializePodcast(Podcast podcast, DirectoryInfo folderPath, string fileName)
