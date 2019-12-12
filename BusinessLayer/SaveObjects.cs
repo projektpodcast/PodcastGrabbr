@@ -24,15 +24,22 @@ namespace BusinessLayer
             IDataTarget fileTarget = Factory.CreateDataTarget();
         }
 
-        public void SavePodcastAsMediaFile(Podcast podcast)//rework (interface, umschreiben(episode list hier nicht festlegen, kommt aus interface)
+        //public void SavePodcastAsMediaFile(Podcast podcast)//rework (interface, umschreiben(episode list hier nicht festlegen, kommt aus interface)
+        //{
+        //    MediaDataTarget mediaTarget = new MediaDataTarget();
+
+        //    Episode selectedEpisode = podcast.EpisodeList[0];
+        //    Show selectedShow = podcast.ShowInfo;
+        //    Podcast selectedPodcastData = new Podcast() { ShowInfo = selectedShow, EpisodeList = new List<Episode> { selectedEpisode } };
+
+        //    mediaTarget.SavePodcast(selectedPodcastData);
+        //}
+
+        public void SaveEpisodeAsLocalMedia(Show show, Episode episode)
         {
-            MediaDataTarget mediaTarget = new MediaDataTarget();
-
-            Episode selectedEpisode = podcast.EpisodeList[0];
-            Show selectedShow = podcast.ShowInfo;
-            Podcast selectedPodcastData = new Podcast() { ShowInfo = selectedShow, EpisodeList = new List<Episode> { selectedEpisode } };
-
-            mediaTarget.SavePodcast(selectedPodcastData);
+            ILocalMediaTarget target = Factory.CreateLocalMediaTarget();
+            target.DownloadEpisode(show, episode);
+            
         }
 
         public void SaveRssPodcast(string rssUri)

@@ -25,8 +25,8 @@ namespace LocalStorage
 
         private XmlStorage()
         {
-            var config = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var localDir = Directory.CreateDirectory($"{config}\\podcastgrabbr_podcasts");
+            string localAppPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            DirectoryInfo localDir = Directory.CreateDirectory($"{localAppPath}\\podcastgrabbr_podcasts");
             this._dbXmlPath = $"{localDir.FullName}\\dbXml.xml";
             this._dbXmlTempPath = $"{localDir.FullName}\\dbXml.tmp";
             this._newPodcastPath = $"{localDir.FullName}\\latestPodcast.xml";
@@ -52,26 +52,10 @@ namespace LocalStorage
         private readonly string _dbXmlPath;
         private readonly string _dbXmlTempPath;
 
-        //public XmlStorage()
-        //{
-        //    var config = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        //    var localDir = Directory.CreateDirectory($"{config}\\podcastgrabbr_podcasts");
-        //    this._dbXmlPath = $"{localDir.FullName}\\dbXml.xml";
-        //    this._dbXmlTempPath = $"{localDir.FullName}\\dbXml.tmp";
-        //    this._newPodcastPath = $"{localDir.FullName}\\latestPodcast.xml";
 
-        //    if (File.Exists(_dbXmlPath))
-        //    {
-        //        _dbXDoc = XDocument.Load(_dbXmlPath);
-        //    }
-        //}
 
         public void ProcessNewPodcast(string rssUri)
         {
-            ////string rssUri = "http://podcast.wdr.de/quarks.xml";
-            //string rssUri = "http://joeroganexp.joerogan.libsynpro.com/rss";
-            ////string rssUri = "http://www1.swr.de/podcast/xml/swr2/forum.xml";
-            ////string rssUri = "http://web.ard.de/radiotatort/rss/podcast.xml";
 
             RssToNewPodcastXml(rssUri);
             if (_dbXDoc != null)
@@ -188,7 +172,7 @@ namespace LocalStorage
         public List<Show> GetShows()
         {
             DateTimeParser dateParser = new DateTimeParser();
-            List<Show> a = new List<Show>();
+            List<Show> allShowsList = new List<Show>();
             if (_dbXDoc != null)
             {
                 var query = from s in _dbXDoc.Descendants("show")
@@ -201,10 +185,11 @@ namespace LocalStorage
                                 Description = s.Element("description").Value,
                                 LastBuildDate = dateParser.ConvertStringToDateTime(s.Element("lastbuilddate").Value),
                                 LastUpdated = dateParser.ConvertStringToDateTime(s.Element("lastupdated").Value),
+                                PublisherName = s.Element("publisher").Value
                             };
-                a = query.ToList();
+                allShowsList = query.ToList();
             }
-            return a;
+            return allShowsList;
         }
 
         public List<Episode> GetEpisodes(Show show)
@@ -228,6 +213,21 @@ namespace LocalStorage
             }
             return allEpisodes;
         }
+
+
+        //public XmlStorage()
+        //{
+        //    var config = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        //    var localDir = Directory.CreateDirectory($"{config}\\podcastgrabbr_podcasts");
+        //    this._dbXmlPath = $"{localDir.FullName}\\dbXml.xml";
+        //    this._dbXmlTempPath = $"{localDir.FullName}\\dbXml.tmp";
+        //    this._newPodcastPath = $"{localDir.FullName}\\latestPodcast.xml";
+
+        //    if (File.Exists(_dbXmlPath))
+        //    {
+        //        _dbXDoc = XDocument.Load(_dbXmlPath);
+        //    }
+        //}
 
         //public List<Episode> GetNext(Show selectedShow, Episode lastEpisode)
         //{

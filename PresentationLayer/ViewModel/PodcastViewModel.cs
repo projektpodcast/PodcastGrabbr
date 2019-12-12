@@ -209,7 +209,7 @@ namespace PresentationLayer.ViewModel
                 if (_playMedia == null)
                 {
                     _playMedia = new RelayCommand(
-                        p => this.IsShowSelected(),
+                        p => true,
                         p => this.ExecutePlayMedia());
                 }
                 return _playMedia;
@@ -224,11 +224,16 @@ namespace PresentationLayer.ViewModel
                 if (_downloadMedia == null)
                 {
                     _downloadMedia = new RelayCommand(
-                        p => this.IsShowSelected(),
-                        p => this.ExecuteDownloadMedia());
+                        p => true,
+                        param => this.ExecuteDownloadMedia((Episode)param));
                 }
-                return _deleteAllPodcasts;
+                return _downloadMedia;
             }
+        }
+
+        private bool Yes()
+        {
+            return true;
         }
 
         #endregion ICommand Properties
@@ -266,9 +271,10 @@ namespace PresentationLayer.ViewModel
             //BusinessLayer-Zugriff um (Property) DownloadPath der Episode aufzulösen und abzuspielen.
         }
 
-        private void ExecuteDownloadMedia()
+        private void ExecuteDownloadMedia(Episode param)
         {
-            throw new NotImplementedException();
+            _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param);
+            //throw new NotImplementedException();
             //BusinessLayer-Zugriff um LocalMedia anzusteuern und Episode anhand des DownloadPath runterzuladen.
         }
 

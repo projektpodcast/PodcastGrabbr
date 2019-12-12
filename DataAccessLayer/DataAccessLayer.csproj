@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILocalMediaSource.cs" />
+    <Compile Include="ILocalMediaTarget.cs" />
     <Compile Include="Local\FileDataGeneral.cs" />
     <Compile Include="IDataSource.cs" />
     <Compile Include="Local\LocalDataSource.cs" />

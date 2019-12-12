@@ -55,5 +55,15 @@ namespace BusinessLayer
             }
             return dataSourceInstance;
         }
+
+        internal static ILocalMediaSource CreateLocalMediaSource()
+        {
+            return new MediaDataSource();
+        }
+
+        internal static ILocalMediaTarget CreateLocalMediaTarget()
+        {
+            return new MediaDataTarget();
+        }
     }
 }
