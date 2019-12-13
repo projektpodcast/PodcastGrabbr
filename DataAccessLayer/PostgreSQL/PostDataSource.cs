@@ -29,21 +29,11 @@ namespace DataAccessLayer.PostgreSQL
         NpgsqlConnection conexionOpen;
 
 
-
-
-
-
-
         public Boolean CheckShow(string id, string db)
-
         {
-
             Boolean check = false;
-
             try
-
             {
-
                 string csql_create = "select sid from shows WHERE sid = " + id + "";
 
                 NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect(db));
@@ -76,7 +66,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-        public List<Episode> GetAllEpisodes(Show selectedShow)
+        public List<Episode> getAllEpisodes(Show selectedShow)
 
         {
 

@@ -16,8 +16,6 @@ using CommonTypes;
 
 
 
-
-
 namespace DataAccessLayer.PostgreSQL
 
 {
@@ -25,31 +23,28 @@ namespace DataAccessLayer.PostgreSQL
     public class PostDataTarget : LocalDataTarget, IDataTarget
 
     {
-
         PostConnect myConecction;
 
         NpgsqlConnection conexionOpen;
-
-
-
-
-
-
-
         public PostDataTarget()
-
         {
-
             myConecction = new PostConnect();
-
-
-
         }
 
+        public void PodcastLoad(Podcast myPodcast)
+        {
+            myConecction = new PostConnect();
 
+            InsertValuesShows(myPodcast.ShowInfo);
 
+            foreach (Episode thisEpi in myPodcast.EpisodeList)
+            {
+                Console.WriteLine( "Insert episode: " + thisEpi.Title);
+                InsertValuesEpisodes(thisEpi);
+            }
 
-
+            Console.ReadKey();
+        }
 
 
         #region check db, create db and create tables
@@ -57,9 +52,7 @@ namespace DataAccessLayer.PostgreSQL
         // check if the db exist
 
         public Boolean CheckDatenBank(string db)
-
         {
-
             Boolean checkDb = false;
 
             // check if the DB exist
@@ -69,8 +62,6 @@ namespace DataAccessLayer.PostgreSQL
             try
 
             {
-
-
 
                 NpgsqlCommand Command = new NpgsqlCommand(csql, myConecction.DBConnect(""));
 
@@ -105,9 +96,6 @@ namespace DataAccessLayer.PostgreSQL
             try
 
             {
-
-
-
                 string csql_create = "CREATE DATABASE " + db + "";
 
                 NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect(""));
@@ -127,9 +115,6 @@ namespace DataAccessLayer.PostgreSQL
             catch (Exception)
 
             {
-
-
-
                 return resp;
 
             }
@@ -170,7 +155,7 @@ namespace DataAccessLayer.PostgreSQL
 
                 create table episodes (episodeID serial PRIMARY KEY,
 
-				showID serial REFERENCES shows(sid),
+				showID serial REFERENCES shows(sid) ON DELETE CASCADE ON UPDATE CASCADE,
 
 				title VARCHAR(255) NOT NULL,
 
@@ -325,16 +310,13 @@ namespace DataAccessLayer.PostgreSQL
             string category = "category";
 
 
-
-
-
             string sql = @"INSERT INTO shows (sid, publishername, PodcastTitle, Subtitle, description, Keywords, category, language, imageuri, lastupdated, lastbuild) 
 
-                     VALUES (default, @publishername, @PodcastTitle, @Subtitle, @description, @Keywords, @category, @language, @imageuri, @lastupdated, @lastbuild)";
+                     VALUES (@sid, @publishername, @PodcastTitle, @Subtitle, @description, @Keywords, @category, @language, @imageuri, @lastupdated, @lastbuild)";
 
             NpgsqlCommand Command = new NpgsqlCommand(sql, conexionOpen);
 
-
+            Command.Parameters.AddWithValue("sid", newShow.ShowId);
 
             Command.Parameters.AddWithValue("publishername", newShow.PublisherName);
 
@@ -355,11 +337,6 @@ namespace DataAccessLayer.PostgreSQL
             Command.Parameters.AddWithValue("lastupdated", newShow.LastUpdated);
 
             Command.Parameters.AddWithValue("lastbuild", newShow.LastBuildDate);
-
-
-
-
-
 
 
             Command.ExecuteNonQuery();
@@ -446,12 +423,6 @@ namespace DataAccessLayer.PostgreSQL
 
         }
 
-
-
-
-
-
-
         public void SavePodcast(Podcast podcastToSave)
 
         {
@@ -490,16 +461,47 @@ namespace DataAccessLayer.PostgreSQL
 
         #region delete DB
 
+        private bool DeleteShow(Show myShow)
+        {
+            bool resp = false;
 
+            conexionOpen = new NpgsqlConnection();
 
+            conexionOpen = myConecction.DBConnectionOpen();
 
+            string sql = "delete from shows where shows.showID =" + myShow.ShowId+"";
+
+            NpgsqlCommand Command = new NpgsqlCommand(sql, conexionOpen);
+
+            var reader = Command.ExecuteReader();
+
+            sql = "delete from episodes where episodes.showID = " + myShow.ShowId + "";
+
+            myConecction.DBDesConnect();
+
+            return resp;
+        }
 
         #endregion
 
+        #region update DB
+        private bool UpdateShow(Show myShow)
+        {
+            bool resp = false;
 
+            // delte the show and episodes and then reload
+            DeleteShow(myShow);
 
+            // insert the show
+            InsertValuesShows(myShow);
 
+            
+            //InsertValuesEpisodes();
 
+            return resp;
+        }
+
+        #endregion
 
 
     }
