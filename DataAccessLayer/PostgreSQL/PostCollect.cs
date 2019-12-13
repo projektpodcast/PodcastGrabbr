@@ -1,90 +1,184 @@
 ﻿using System;
 
+
+
 using System.Collections.Generic;
+
+
 
 using System.Linq;
 
+
+
 using System.Text;
 
+
+
 using System.Threading.Tasks;
+
+
 
 using CommonTypes;
 
 
 
+
+
+
+
 namespace DataAccessLayer.PostgreSQL
+
+
 
 {
 
+
+
     public class PostCollect
+
+
 
     {
 
 
 
+
+
+
+
         public void PodcastRead(Podcast a)
+
+
 
         {
 
+
+
             // new Object to connect with Postgres
+
+
 
             PostDataTarget myConnectionTarget = new PostDataTarget();
 
 
 
+
+
+
+
             // dadaBase Name
+
+
 
             string dbName = "test3";
 
 
 
+
+
+
+
             // check if the DB exist
+
+
 
             Boolean dbExist = myConnectionTarget.CheckDatenBank(dbName);
 
+
+
             if (dbExist == false)
 
+
+
             {
+
+
 
                 // create db if not exist.
 
+
+
                 bool ifcreated = myConnectionTarget.Createdb(dbName);
+
+
 
                 if (ifcreated == false)
 
+
+
                 {
+
+
 
                     Console.WriteLine("ERROR:");
 
+
+
                     Console.WriteLine("make sure you have pgAdmin open");
+
+
 
                     System.Threading.Thread.Sleep(5000);
 
+
+
                     System.Environment.Exit(1);
 
+
+
                 }
+
+
 
                 else
 
+
+
                 {
+
+
 
                     myConnectionTarget.CreateTable(dbName);
 
+
+
                     Console.WriteLine("The db cas created");
+
+
 
                 }
 
 
 
+
+
+
+
             }
+
+
 
             else
 
+
+
             {
+
+
 
                 Console.WriteLine("The db ist already to use");
 
+
+
             }
+
+
+
+
+
+
+
+
 
 
 
@@ -96,7 +190,13 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
+
+
+
+
             // TODO read   SHOW id
+
+
 
             podcastShow.PublisherName = a.ShowInfo.PublisherName;
 
@@ -118,9 +218,19 @@ namespace DataAccessLayer.PostgreSQL
 
             podcastShow.ImageUri = a.ShowInfo.ImageUri;
 
+
+
             // category is a list, we need another table for this
 
+
+
             //podcastShow.Category = "new";
+
+
+
+
+
+
 
 
 
@@ -130,7 +240,17 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
+
+
+
+
             // if the episode exist dont make nothing
+
+
+
+
+
+
 
 
 
@@ -138,27 +258,53 @@ namespace DataAccessLayer.PostgreSQL
 
             // inster values in shows
 
+
+
             myConnectionTarget.InsertValuesShows(podcastShow);
+
+
+
+
 
 
 
             // read episodios
 
+
+
             Episode myEpisode = new Episode();
+
+
 
             foreach (var Episode in a.EpisodeList)
 
+
+
             {
+
+
 
                 myEpisode.Title = Episode.Title;
 
+
+
                 myEpisode.Summary = Episode.Summary;
+
+
 
                 myEpisode.Keywords = Episode.Keywords;
 
+
+
                 myEpisode.PublishDate = Episode.PublishDate;
 
+
+
                 myEpisode.ImageUri = Episode.ImageUri;
+
+
+
+
 
 
 
@@ -166,7 +312,15 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
+
+
+
+
                 myConnectionTarget.InsertValuesEpisodes(myEpisode);
+
+
+
+
 
 
 
@@ -180,8 +334,22 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
+
+
+
+
+
+
+
+
+
+
         }
 
+
+
     }
+
+
 
 }
