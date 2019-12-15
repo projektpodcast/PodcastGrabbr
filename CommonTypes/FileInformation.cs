@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CommonTypes
 {
+    /// <summary>
+    /// Eine Gruppierung an Informationen, die eine downloadbare Datei beschreiben
+    /// </summary>
     public class FileInformation
     {
         public int Length { get; set; }
@@ -15,6 +18,7 @@ namespace CommonTypes
         public FileInformation()
         {
         }
+
         public FileInformation(string _sourceUri, int _length, string _fileType)
         {
             this.SourceUri = _sourceUri;
