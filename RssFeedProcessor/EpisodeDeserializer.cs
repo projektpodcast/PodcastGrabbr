@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+
 /// <summary>
 /// Die Klasse EpisodeDeserializer besitzt drei Aufgaben:
 /// 1. Xml-Knoten, die Daten einer "Episode" enthalten, an Properties mappen.

@@ -84,13 +84,5 @@ namespace RssFeedProcessor
             List<Episode> deserializedEpisodeList = episodeDeserializer.XmlToDeserializedEpisode(memoryStream);
             return deserializedEpisodeList;
         }
-
-
-
-        public void SerializeIt(Podcast podcast)
-        {
-            LocalXmlSerializer localXmlSerializer = new LocalXmlSerializer();
-            localXmlSerializer.SerializePodcast(podcast);
-        }
     }
 }

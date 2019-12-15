@@ -19,11 +19,11 @@ namespace BusinessLayer
         /// Erhält eine Instanz in den DataAccessLayer von der Klasse Factory.
         /// Das implementierte Interface der Instanz legt die angesprochene Methode offen.
         /// </summary>
-        /// <param name="podcast">Podcast-Objekt besteht aus einer Show mit einer vielzahl Episoden</param>
-        public void SavePodcastAsXml(Podcast podcast)
+        /// <param name="rssUri">Rss Link eines Podcasts. Enthält eine Show mit vielen Episoden in Xml-Form</param>
+        public void SavePodcastAsXml(string rssUri)
         {
             IDataTarget fileTarget = Factory.Instance.CreateDataTarget();
-            fileTarget.SavePodcast(podcast);
+            fileTarget.SavePodcast(rssUri);
         }
 
         /// <summary>

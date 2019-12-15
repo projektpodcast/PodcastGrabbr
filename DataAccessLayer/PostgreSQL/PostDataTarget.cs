@@ -42,7 +42,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-    public class PostDataTarget : LocalDataTarget, IDataTarget
+    public class PostDataTarget : IDataTarget
 
 
 
@@ -848,7 +848,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-        public void SavePodcast(Podcast podcastToSave)
+        public void SavePodcast(string rssUri)
 
 
 
@@ -868,19 +868,6 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-        internal override string GetFileName(Podcast podcast)
-
-
-
-        {
-
-
-
-            throw new NotImplementedException();
-
-
-
-        }
 
 
 
@@ -888,19 +875,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-        internal override string GetFolderName()
-
-
-
-        {
-
-
-
-            throw new NotImplementedException();
-
-
-
-        }
+      
 
 
 

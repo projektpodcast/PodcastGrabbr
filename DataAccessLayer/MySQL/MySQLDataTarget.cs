@@ -23,7 +23,7 @@ namespace DataAccessLayer
             MySQLDataTarget.Adapter.Adapter.CheckConnectionState();
         }
 
-        public void SavePodcast(Podcast podcastToSave)
+        public void SavePodcast(string rssUri)
         {
             throw new NotImplementedException();
         }

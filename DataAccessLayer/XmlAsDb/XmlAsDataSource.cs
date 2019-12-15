@@ -9,6 +9,11 @@ using RssFeedProcessor;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// Als Datenbankalternative, soll es eine offline Option geben.
+    /// Lokal wird eine Xml-Datei gehalten die datenbankähnliche Funktionen erfüllen soll.
+    /// Die Methoden rufen jeweils die implementierte Klasse XmlStorage auf und stellen Lesebefehle dar.
+    /// </summary>
     public class XmlAsDataSource : IDataSource
     {
         public XmlAsDataSource()
@@ -26,19 +31,25 @@ namespace DataAccessLayer
             //string rssUri = "http://www.3sat.de/scobel/podcast/scobel_feed.xml";
             //XmlStorage.Instance.ProcessNewPodcast(rssUri);
         }
+        /// <summary>
+        /// Greift auf ein Datenziel zu um alle darin persistierten Shows zu erhalten
+        /// </summary>
+        /// <returns>Liste aller Shows</returns>
+        public List<Show> GetAllShows()
+        {
+            return XmlStorage.Instance.GetShows();
+        }
+
+        /// <summary>
+        /// Sucht alle zu einer übergebenen Show zugehörigen Episoden.
+        /// </summary>
+        /// <param name="selectedShow">Show, zu welcher die zugehörigen Episoden gesucht werden sollen.</param>
+        /// <returns>Lisste aller Episoden einer spezifischen Show</returns>
         public List<Episode> GetAllEpisodes(Show selectedShow)
         {
             return XmlStorage.Instance.GetEpisodes(selectedShow);
-            //LocalRssTest local = new LocalRssTest();
-            //return local.GetEpisodes(selectedShow);
         }
 
-        public List<Show> GetAllShows()
-        {
-            return XmlStorage.Instance.GetShows(); 
-            //LocalRssTest local = new LocalRssTest();
-            //return local.GetShows();
-        }
 
     }
 }

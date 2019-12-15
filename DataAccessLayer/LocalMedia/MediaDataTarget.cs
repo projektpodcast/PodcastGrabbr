@@ -10,8 +10,16 @@ using LocalStorage;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// Definiert Methoden, welche benötigt werden um Medien-Dateien zu persistieren.
+    /// </summary>
     public class MediaDataTarget : ILocalMediaTarget
     {
+        /// <summary>
+        /// Methode ist asynchron, da die Dauer des Downloads unbekannt ist und ansonsten die Anwendung auf unbestimmte Zeit absperrt.
+        /// </summary>
+        /// <param name="show">Benötigt um den Dateipfad zu bestimmen</param>
+        /// <param name="episode">Episode enthält Downloadlink, welcher heruntergeladen werden soll.</param>
         public async Task<string> DownloadEpisode(Show show, Episode episode)
         {
             MediaStorage mediaDl = new MediaStorage();
