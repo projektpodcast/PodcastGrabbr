@@ -19,6 +19,7 @@
         <helper:ValidationRules x:Key="Validation"/>
         <!--#endregion-->
 
+        
         <!--#region Definitionen für ShowListe horizontalen ScrollViewer-->
         <!--#region RepeatButtons für Horizontalen ScrollViewer-->
         <Style x:Key="ArrowButtonRight" TargetType="{x:Type RepeatButton}">
@@ -88,7 +89,6 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
         <!--#region ControlTemplate für horizontalen ScrollViewer-->
         <ControlTemplate x:Key="HorizontalScrollViewer" TargetType="{x:Type ScrollViewer}">
             <Grid>
@@ -136,7 +136,6 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
         <!--#region ListBoxItemStyle für ShowList-->
         <Style x:Key="ShowItems" TargetType="{x:Type ListBoxItem}">
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -193,7 +192,6 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
         <!--#region ComboBox Style für Suchelement-->
         <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
             <Setter Property="Template">
@@ -259,7 +257,6 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
         <!--#region ComboBox ControlTemplate für Suchelement-->
         <ControlTemplate x:Key="SearchBarComboBoxTemplate" TargetType="{x:Type ComboBox}">
             <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
@@ -395,7 +392,6 @@
             <!--#endregion-->
         </ControlTemplate>
         <!--#endregion-->
-
         <!--#region TextBox Style für Suchelement-->
         <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -482,7 +478,6 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
         <!--#region RefreshButton für ShowDetails Grid-->
         <LinearGradientBrush x:Key="TransparentGradient"
                              StartPoint="0.5,0"
@@ -558,7 +553,6 @@
             <!--#endregion-->
         </ControlTemplate>
         <!--#endregion-->
-
         <!--#region ListViewItems Style für EpisodeList-->
         <Style x:Key="EpisodeListViewStyle" TargetType="{x:Type ListViewItem}">
             <Setter Property="BorderBrush" Value="Black"/>
@@ -621,7 +615,6 @@
             <!--#endregion-->
         </Style>
         <!--#endregion-->
-
         <!--#region ListBoxItem Style für EpisodeList-->
         <Style x:Key="EpisodeItemContainerStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -653,7 +646,6 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
         <!--#region Expander Style (ListViewItem) für EpisodeList-->
         <ControlTemplate x:Key="EpisodeListExpanderTemplate" TargetType="{x:Type Expander}">
             <Border x:Name="ExpanderBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" SnapsToDevicePixels="True">
@@ -736,7 +728,6 @@
             <!--#endregion-->
         </ControlTemplate>
         <!--#endregion-->
-
         <!--#region DownloadButton Style für EpisodeList-->
         <Style x:Key="DownloadButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
@@ -779,7 +770,6 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
         <!--#region PlayButton Style für EpisodeList-->
         <Style x:Key="PlayButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
