@@ -86,7 +86,7 @@
       <DependentUpon>DownloadsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Helper\ValidationRules.cs" />
-    <Compile Include="InvertedBoolToVisibilityConverter.cs" />
+    <Compile Include="View\Helper\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="View\IView.cs" />
     <Compile Include="View\Helper\NullToVisibilityConverter.cs" />
     <Compile Include="View\PasswordBoxUserControl.xaml.cs">
