@@ -65,8 +65,7 @@ namespace PresentationLayer.ViewModel
 
         private void ExecutePlayMedia(object param)
         {
-            throw new NotImplementedException();
-            //
+            _businessAccess.Get.PlayMediaFile((Episode)param);
         }
 
         private void ExecuteDeleteEpisode()

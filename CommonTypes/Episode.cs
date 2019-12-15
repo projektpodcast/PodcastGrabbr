@@ -15,6 +15,7 @@ namespace CommonTypes
         public string Keywords { get; set; }
         public string ImageUri { get; set; }
         public FileInformation FileDetails { get; set; }
+        public string DownloadPath { get; set; }
         public bool IsDownloaded { get; set; }
 
         public Episode()

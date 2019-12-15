@@ -210,6 +210,7 @@ namespace LocalStorage
                 epToAdd.FileDetails = new FileInformation();
                 epToAdd.FileDetails.SourceUri = item.Element("url").Value;
                 epToAdd.IsDownloaded = item.Element("localpath").Value != "" ? true : false;
+                epToAdd.DownloadPath = item.Element("localpath").Value != "" ? item.Element("localpath").Value : "";
                 allEpisodes.Add(epToAdd);
             }
             return allEpisodes;

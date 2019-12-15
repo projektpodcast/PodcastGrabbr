@@ -209,8 +209,8 @@ namespace PresentationLayer.ViewModel
                 if (_playMedia == null)
                 {
                     _playMedia = new RelayCommand(
-                        p => true,
-                        p => this.ExecutePlayMedia());
+                        param => true,
+                        param => this.ExecutePlayMedia(param));
                 }
                 return _playMedia;
             }
@@ -300,9 +300,10 @@ namespace PresentationLayer.ViewModel
             //return false;
         }
 
-        private void ExecutePlayMedia()
+        private void ExecutePlayMedia(object episode)
         {
-            throw new NotImplementedException();
+            _businessAccess.Get.PlayMediaFile((Episode)episode);
+            //throw new NotImplementedException();
             //BusinessLayer-Zugriff um (Property) DownloadPath der Episode aufzulösen und abzuspielen.
         }
 
@@ -314,13 +315,14 @@ namespace PresentationLayer.ViewModel
                 await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
                 episode.IsDownloaded = true;
                 
+                //INotifyPropertyChanged implementieren für Episode IsDownloaded??
+
                 //GetEpisodes();
                 //EpisodesCollection.Clear();
                 //foreach (Episode item in updatedEpisodes)
                 //{
                 //    updatedEpisodes.Add(item);
                 //}
-
             }
             finally
             {

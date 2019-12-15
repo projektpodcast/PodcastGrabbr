@@ -22,6 +22,12 @@ namespace BusinessLayer
             //return dal.GetAllShows();
         }
 
+        public void PlayMediaFile(Episode episode)
+        {
+            MediaDataSource dataSource = new MediaDataSource();
+            dataSource.PlayLocalMedia(episode);
+        }
+
         public List<Episode> GetEpisodes(Show selectedShow)
         {
             IDataSource dataSource = Factory.CreateDataSource();

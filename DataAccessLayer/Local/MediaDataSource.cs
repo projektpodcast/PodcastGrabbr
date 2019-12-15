@@ -47,5 +47,12 @@ namespace DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public void PlayLocalMedia(Episode episode)
+        {
+            //File.Open(episode.DownloadPath, FileMode.Open);
+            System.Diagnostics.Process.Start(episode.DownloadPath);
+        }
+
     }
 }
