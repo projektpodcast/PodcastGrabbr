@@ -290,6 +290,52 @@ namespace LocalStorage
             DbXmlReload();
         }
 
+        public List<Podcast> GetDownloadedPodcasts()
+        {
+            List<Podcast> downloadedPodcasts = new List<Podcast>();
+            DateTimeParser dateParser = new DateTimeParser();
+            var showsWithDownloadedEpisode = _dbXDoc.Descendants("show")
+                .Where(x => x.Descendants("allepisodes").Descendants("episode").Elements("localpath").Any(y => !string.IsNullOrWhiteSpace(y.Value)));
+
+            foreach (var s in showsWithDownloadedEpisode)
+            {
+
+                List<Episode> episodesOfShow = new List<Episode>();
+                Show showToAdd = new Show()
+                {
+                    PodcastTitle = s.Element("title").Value,
+                    RssLink = s.Element("link").Value,
+                    ImageUri = s.Element("imageuri").Value != null ? s.Element("imageuri").Value : "https://lh3.googleusercontent.com/BQUYd1Th9Z_XI5wtklPQDHmiNkSOzBakOnpk-Ni8CBTyHb0E7UM5LpyjRW9BWs4fUuVD",
+                    ShowId = s.Attribute("sid").Value,
+                    Description = s.Element("description").Value,
+                    LastBuildDate = dateParser.ConvertStringToDateTime(s.Element("lastbuilddate").Value),
+                    LastUpdated = dateParser.ConvertStringToDateTime(s.Element("lastupdated").Value),
+                    PublisherName = s.Element("publisher").Value
+                };
+
+                var c = s.Descendants("allepisodes").Descendants("episode")
+                    .Where(x => x.Element("localpath").Value != "");
+
+                foreach (var item in c)
+                {
+                    Episode epToAdd = new Episode();
+                    epToAdd.Summary = item.Element("description") != null ? item.Element("description").Value : "";
+                    epToAdd.Title = item.Element("title").Value;
+                    epToAdd.EpisodeId = item.Attribute("eid").Value;
+                    epToAdd.IsDownloaded = item.Element("localpath").Value != "" ? true : false;
+                    epToAdd.PublishDate = dateParser.ConvertStringToDateTime(item.Element("pubdate").Value);
+                    epToAdd.FileDetails = new FileInformation();
+                    epToAdd.FileDetails.SourceUri = item.Element("url").Value;
+                    epToAdd.IsDownloaded = item.Element("localpath").Value != "" ? true : false;
+                    epToAdd.DownloadPath = item.Element("localpath").Value != "" ? item.Element("localpath").Value : "";
+                    episodesOfShow.Add(epToAdd);
+                }
+                downloadedPodcasts.Add(new Podcast(showToAdd, episodesOfShow));
+            }
+
+            return downloadedPodcasts;
+        }
+
 
         //public XmlStorage()
         //{
@@ -328,3 +374,69 @@ namespace LocalStorage
 
     }
 }
+
+
+
+
+//public List<Podcast> GetDownloadedPodcasts()
+//{
+//    var episodes = _dbXDoc.Descendants("episode").Where(x => x.Element("localpath").Value != "");
+
+//    var shows = _dbXDoc.Descendants("show").Where(x => x.Element("allepisodes").Value.Contains("a"));
+
+//    var showsWithDownloadedEpisode = _dbXDoc.Descendants("show")
+//        .Where(x => x.Descendants("allepisodes").Descendants("episode").Elements("localpath").Any(y => !string.IsNullOrWhiteSpace(y.Value)));
+
+//    List<Podcast> downloadedPodcasts = new List<Podcast>();
+
+//    foreach (var s in showsWithDownloadedEpisode)
+//    {
+//        DateTimeParser dateParser = new DateTimeParser();
+//        List<Episode> episodesOfShow = new List<Episode>();
+//        Show showToAdd = new Show()
+//        {
+//            PodcastTitle = s.Element("title").Value,
+//            RssLink = s.Element("link").Value,
+//            ImageUri = s.Element("imageuri").Value != null ? s.Element("imageuri").Value : "https://lh3.googleusercontent.com/BQUYd1Th9Z_XI5wtklPQDHmiNkSOzBakOnpk-Ni8CBTyHb0E7UM5LpyjRW9BWs4fUuVD",
+//            ShowId = s.Attribute("sid").Value,
+//            Description = s.Element("description").Value,
+//            LastBuildDate = dateParser.ConvertStringToDateTime(s.Element("lastbuilddate").Value),
+//            LastUpdated = dateParser.ConvertStringToDateTime(s.Element("lastupdated").Value),
+//            PublisherName = s.Element("publisher").Value
+//        };
+//        var c = s.Descendants("allepisodes").Descendants("episode")
+//            .Where(x => x.Element("localpath").Value != "");
+//        foreach (var item in c)
+//        {
+//            Episode epToAdd = new Episode();
+//            epToAdd.Summary = item.Element("description") != null ? item.Element("description").Value : "";
+//            epToAdd.Title = item.Element("title").Value;
+//            epToAdd.EpisodeId = item.Attribute("eid").Value;
+//            epToAdd.IsDownloaded = item.Element("localpath").Value != "" ? true : false;
+//            epToAdd.PublishDate = dateParser.ConvertStringToDateTime(item.Element("pubdate").Value);
+//            epToAdd.FileDetails = new FileInformation();
+//            epToAdd.FileDetails.SourceUri = item.Element("url").Value;
+//            epToAdd.IsDownloaded = item.Element("localpath").Value != "" ? true : false;
+//            epToAdd.DownloadPath = item.Element("localpath").Value != "" ? item.Element("localpath").Value : "";
+//            episodesOfShow.Add(epToAdd);
+//        }
+//        Podcast newPodcast = new Podcast(showToAdd, episodesOfShow);
+//        downloadedPodcasts.Add(newPodcast);
+//    }
+//    var b = showsWithDownloadedEpisode.Descendants("allepisodes").Descendants("episode")
+//        .Where(x => x.Element("localpath").Value != "");
+
+//    var test = _dbXDoc.Descendants("localpath")
+//        .Where(x => !string.IsNullOrWhiteSpace(x.Value))
+//        .SelectMany(x => x.Ancestors("show"))
+//        .ToList();
+
+//    var test2 = _dbXDoc.Descendants("localpath")
+//        .Where(x => x.Value.Contains("."))
+//        .SelectMany(x => x.Ancestors("episode"));
+
+
+//    //var query = from s in _dbXDoc.Descendants("show")
+//    //            select new Show
+//    return null;
+//}

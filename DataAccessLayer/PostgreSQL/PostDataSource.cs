@@ -128,11 +128,10 @@ namespace DataAccessLayer.PostgreSQL
 
         }
 
-
-
-
-
-
+        public List<Podcast> GetAllDownloadedPodcasts()
+        {
+            throw new NotImplementedException();
+        }
 
         public List<Episode> getAllEpisodes(Show selectedShow)
 

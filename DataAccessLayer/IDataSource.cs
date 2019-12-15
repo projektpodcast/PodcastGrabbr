@@ -24,5 +24,11 @@ namespace DataAccessLayer
         /// <param name="selectedShow">Show, zu welcher die zugehörigen Episoden gesucht werden sollen.</param>
         /// <returns>Lisste aller Episoden einer spezifischen Show</returns>
         List<Episode> GetAllEpisodes(Show selectedShow);
+
+        /// <summary>
+        /// Durchsucht das Datenziel nach Shows, die eine Episode enthalten, welche gedownloadet ist.
+        /// </summary>
+        /// <returns>Gruppiert alle gedownloadeten Episoden zu den zugehören Shows und schreibt sie in eine Liste</returns>
+        List<Podcast> GetAllDownloadedPodcasts();
     }
 }

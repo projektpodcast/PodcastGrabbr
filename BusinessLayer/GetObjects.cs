@@ -48,5 +48,16 @@ namespace BusinessLayer
             ILocalMediaSource dal = Factory.Instance.CreateLocalMediaSource();
             dal.PlayLocalMedia(episode);
         }
+
+        /// <summary>
+        /// Erhält eine Instanz in den DataAccessLayer von der Klasse Factory.
+        /// Der DataAccessLayer durchsucht die Datenquelle nach alles Shows, die eine gedownloadete Episode enthalten.
+        /// </summary>
+        /// <returns>Liste aller Podcasts aus der Datenquelle, die eine gedownloadete Episode enthalten</returns>
+        public List<Podcast> GetDownloadedPodcasts()
+        {
+            IDataSource dal = Factory.Instance.CreateDataSource();
+            return dal.GetAllDownloadedPodcasts();
+        }
     }
 }

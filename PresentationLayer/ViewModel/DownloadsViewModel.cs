@@ -22,7 +22,7 @@ namespace PresentationLayer.ViewModel
             set { _selectedEpisode = value; OnPropertyChanged("SelectedEpisode"); }
         }
 
-
+        #region ICommands und Plausenprüfung
         private ICommand _playEpisode { get; set; }
         public ICommand PlayEpisode
         {
@@ -63,24 +63,7 @@ namespace PresentationLayer.ViewModel
             return false;
         }
 
-        private void ExecutePlayMedia(object param)
-        {
-            _businessAccess.Get.PlayMediaFile((Episode)param);
-        }
-
-        private void ExecuteDeleteEpisode()
-        {
-            SelectedEpisode = null;
-            throw new NotImplementedException();
-            //
-        }
-
-        public DownloadsViewModel(IBusinessAccessService businessAccess)
-        {
-            this._businessAccess = businessAccess;
-        }
-
-        private ICommand _fileImport { get; set; }
+                private ICommand _fileImport { get; set; }
         public ICommand FileImport
         {
             get
@@ -98,6 +81,31 @@ namespace PresentationLayer.ViewModel
         private bool DataTrue()
         {
             return false;
+        }
+        #endregion
+
+        private void ExecutePlayMedia(object param)
+        {
+            _businessAccess.Get.PlayMediaFile((Episode)param);
+        }
+
+        private void ExecuteDeleteEpisode()
+        {
+            SelectedEpisode = null;
+            throw new NotImplementedException();
+            //
+        }
+
+        public DownloadsViewModel(IBusinessAccessService businessAccess)
+        {
+            Podcasts = new ObservableCollection<Podcast>();
+            this._businessAccess = businessAccess;
+            List<Podcast> podcastList = _businessAccess.Get.GetDownloadedPodcasts();
+
+            foreach (Podcast podcast in podcastList)
+            {
+                Podcasts.Add(podcast);
+            }
         }
 
         private void ExecuteImport()

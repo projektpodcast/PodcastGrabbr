@@ -13,7 +13,7 @@ namespace DataAccessLayer
     public interface ILocalMediaSource
     {
         /// <summary>
-        /// Methode ruft eine Methode auf um die übergebene Methode auf dem Gerät abzuspielen.
+        /// Methode ruft eine Methode auf um die übergebene Episode auf dem Gerät abzuspielen.
         /// </summary>
         /// <param name="episode">Enthält den zur Episode gehörigen Pfad, welcher abgespielt werden soll</param>
         void PlayLocalMedia(Episode episode);

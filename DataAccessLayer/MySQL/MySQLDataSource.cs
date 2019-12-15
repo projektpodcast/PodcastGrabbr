@@ -9,6 +9,11 @@ namespace DataAccessLayer
 {
     public class MySQLDataSource : IDataSource
     {
+        public List<Podcast> GetAllDownloadedPodcasts()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Episode> getAllEpisodes()
         {
             throw new NotImplementedException();

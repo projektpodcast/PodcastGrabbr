@@ -50,6 +50,13 @@ namespace DataAccessLayer
             return XmlStorage.Instance.GetEpisodes(selectedShow);
         }
 
-
+        /// <summary>
+        /// Durchsucht das Datenziel nach Shows, die eine Episode enthalten, welche gedownloadet ist.
+        /// </summary>
+        /// <returns>Gruppiert alle gedownloadeten Episoden zu den zugehören Shows und schreibt sie in eine Liste</returns>
+        public List<Podcast> GetAllDownloadedPodcasts()
+        {
+            return XmlStorage.Instance.GetDownloadedPodcasts();
+        }
     }
 }

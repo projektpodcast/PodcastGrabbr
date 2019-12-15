@@ -122,5 +122,10 @@ namespace DataAccessLayer
 
             return episodesList;
         }
+
+        public List<Podcast> GetAllDownloadedPodcasts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
