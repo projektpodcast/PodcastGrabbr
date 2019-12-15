@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace SecurityLibrary
 {
+    // Um das in der UI hintelegte Datenpasswort nicht im Klartext als Variable zu übergeben,
+    // kommt diese Klasse zur Encryption zum Einsatz.
+    // Die Rijndael-Encryption ist heute noch Basis für aktuelle Verschlüsselungsmethoden (z.B. AES)
+    // Verschlüsselung sollte nicht durch einen unvertrauten Entwickler implementiert werden,
+    // daher folgend die Quelle des Codes:
     // Quelle: https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
     public static class StringCipher
     {

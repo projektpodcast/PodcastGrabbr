@@ -78,33 +78,7 @@ namespace PresentationLayer.ViewModel
         public DownloadsViewModel(IBusinessAccessService businessAccess)
         {
             this._businessAccess = businessAccess;
-            //Mockdata
-            GetMockData();
         }
-
-        #region MockData
-        public void GetMockData()
-        {
-            List<Podcast> a = _businessAccess.Get.GetMockDownloadedPodcasts();
-
-            Episode extraEpisode = new Episode();
-            extraEpisode.IsDownloaded = true;
-            extraEpisode.Title = "Joe Rogan and the world. Now. ";
-            extraEpisode.Summary = "Joe Rogan and the world. Now. Joe Rogan and the world. Now. Joe Rogan and the world. Now. Joe Rogan and the world. Now. Joe Rogan and the world. Now. ";
-
-            a[0].EpisodeList.Add(extraEpisode);
-            Podcasts = new ObservableCollection<Podcast>(a);
-
-        }
-        #endregion MockData
-
-
-
-
-
-
-
-
 
         private ICommand _fileImport { get; set; }
         public ICommand FileImport

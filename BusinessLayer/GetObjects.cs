@@ -9,55 +9,44 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer
 {
+    /// <summary>
+    /// GetObjects verwaltet alle Methodenaufrufe um Daten aus einer Datenquelle des DataAccessLayers zu erhalten.
+    /// Fungiert als Zwischenstück zwischen PresentationLayer und DataAccessLayer.
+    /// </summary>
     public class GetObjects
     {
-        public GetObjects()
-        { }
+        /// <summary>
+        /// Erhält eine Instanz in den DataAccessLayer von der Klasse Factory.
+        /// Das implementierte Interface der Instanz legt die angesprochene Methode offen.
+        /// </summary>
+        /// <returns>Alle Show-Objekte im Datenziel</returns>
         public List<Show> GetShowList()
         {
-            IDataSource dataSource = Factory.CreateDataSource();
+            IDataSource dataSource = Factory.Instance.CreateDataSource();
             return dataSource.GetAllShows();
-
-            //XmlAsDataSource dal = new XmlAsDataSource();
-            //return dal.GetAllShows();
         }
 
-        public void PlayMediaFile(Episode episode)
-        {
-            MediaDataSource dataSource = new MediaDataSource();
-            dataSource.PlayLocalMedia(episode);
-        }
-
+        /// <summary>
+        /// Erhält eine Instanz in den DataAccessLayer von der Klasse Factory.
+        /// Das implementierte Interface der Instanz legt die angesprochene Methode offen.
+        /// </summary>
+        /// <param name="selectedShow">Für dieses Show-Objekt sollen die verwandten Episoden gesucht werden</param>
+        /// <returns>Episoden, die zu einer spezifischen Show gehören</returns>
         public List<Episode> GetEpisodes(Show selectedShow)
         {
-            IDataSource dataSource = Factory.CreateDataSource();
+            IDataSource dataSource = Factory.Instance.CreateDataSource();
             return dataSource.GetAllEpisodes(selectedShow);
-            //XmlAsDataSource dal = new XmlAsDataSource();
-            //return dal.GetAllEpisodes(selectedShow);
         }
 
-        public List<Show> GetLocalMedia() //umschreiben, gibt falschen Typ zurück
+        /// <summary>
+        /// Erhält eine Instanz in den DataAccessLayer von der Klasse Factory.
+        /// Das implementierte Interface der Instanz legt die angesprochene Methode offen.
+        /// </summary>
+        /// <param name="episode">Lokal persistierte Episode, die abgespielt werden soll</param>
+        public void PlayMediaFile(Episode episode)
         {
-            MediaDataSource dal = new MediaDataSource();
-
-            dal.GetAllShows();
-            return null;
-            
+            ILocalMediaSource dal = Factory.Instance.CreateLocalMediaSource();
+            dal.PlayLocalMedia(episode);
         }
-
-        public List<Podcast> GetMockDownloadedPodcasts()
-        {
-            MockDataSource dal = new MockDataSource();
-
-            return dal.GetDownloadedPodcasts();
-        }
-
-
-
-        //public List<Episode> GetNextEpisodes(Show selectedShow, Episode lastEpisode)
-        //{
-        //    XmlAsDataSource dal = new XmlAsDataSource();
-        //    return dal.GetNext(selectedShow, lastEpisode);
-        //}
     }
 }

@@ -43,7 +43,7 @@ namespace PresentationLayer.Services
 
         public IBusinessAccessService InitializeBusinessLayer()
         {
-            IBusinessAccessService businessLayer = new BusinessAccess();
+            IBusinessAccessService businessLayer = new BusinessAccessService();
             return businessLayer;
         }
 

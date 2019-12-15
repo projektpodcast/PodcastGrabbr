@@ -15,7 +15,7 @@ namespace PresentationLayer.Services
         private IDataStorageType _configDatenArt { get; set; }
         public IDataStorageType ConfigDatenArt {
             get { return _configDatenArt; }
-            private set { _configDatenArt = value; SyncFactory(); OnDatenHaltungChange(ConfigDatenArt); }
+            private set { _configDatenArt = value; OnDatenHaltungChange(ConfigDatenArt); }
         }
 
         public UserConfigurationService()
@@ -56,6 +56,7 @@ namespace PresentationLayer.Services
                 Properties.Settings.Default.EncryptedPassword = null;
             }
             Properties.Settings.Default.Save();
+            SyncFactory();
         }
 
         public void GetUserConfiguration()
@@ -71,12 +72,13 @@ namespace PresentationLayer.Services
                 ConfigDatenArt.UserName = Properties.Settings.Default.UserName;
                 ConfigDatenArt.EncryptedPassword = Properties.Settings.Default.EncryptedPassword;
             }
-
+            SyncFactory();
         }
 
         public void SyncFactory()
         {
-            BusinessLayer.Factory.DatenHaltung = ConfigDatenArt;
+            //BusinessLayer.Factory.Instance.DatenHaltung = ConfigDatenArt;
+            BusinessLayer.Factory.Instance.DatenHaltung = ConfigDatenArt;
         }
 
 
