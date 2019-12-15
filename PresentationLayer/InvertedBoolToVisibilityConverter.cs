@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace PresentationLayer.View.Helper
+namespace PresentationLayer.View
 {
 
     public class InvertedBoolToVisibilityConverter : IValueConverter

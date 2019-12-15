@@ -15,7 +15,7 @@
 
         <!--#region Converters-->
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
-        <helper:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibility"/>
+        <local:InvertedBoolToVisibilityConverter x:Key="InvertedBoolToVisibility"/>
         <helper:ValidationRules x:Key="Validation"/>
         <!--#endregion-->
 
