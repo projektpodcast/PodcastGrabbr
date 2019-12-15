@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace PresentationLayer
 {
+    /// <summary>
+    /// RelayCommand werden in ViewModels verwendet. Erlaubt es Buttons in der View an einen ausdefinierten ViewModel ICommand zu binden.
+    /// </summary>
     public class RelayCommand : ICommand
     {
         private Predicate<object> _canExecute;

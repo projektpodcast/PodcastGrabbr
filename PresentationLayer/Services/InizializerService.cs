@@ -11,10 +11,6 @@ namespace PresentationLayer.Services
 {
     public class DependencyService : IDependencyService
     {
-        public DependencyService()
-        {
-
-        }
         public IView InitializeView(IViewModel viewModel)
         {
             IView viewType;

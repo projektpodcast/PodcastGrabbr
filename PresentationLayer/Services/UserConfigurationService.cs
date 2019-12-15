@@ -9,15 +9,16 @@ namespace PresentationLayer.Services
 {
     public class UserConfigurationService : IConfigurationService
     {
-        //public Guid guid { get; set; }
-
 
         private IDataStorageType _configDatenArt { get; set; }
         public IDataStorageType ConfigDatenArt {
             get { return _configDatenArt; }
-            private set { _configDatenArt = value; OnDatenHaltungChange(ConfigDatenArt); }
+            private set { _configDatenArt = value;/* OnDatenHaltungChange(ConfigDatenArt);*/ }
         }
 
+        /// <summary>
+        /// Konstruktor liest die lokale UserConfig und setzt diese als Property.
+        /// </summary>
         public UserConfigurationService()
         {
             ConfigDatenArt = new DataStorageType();
@@ -25,6 +26,10 @@ namespace PresentationLayer.Services
             GetUserConfiguration();
         }
 
+        /// <summary>
+        /// Überprüft, ob der Benutzer über das SettingsViewModel/die SettingsView die UserConfig verändert hat.
+        /// </summary>
+        /// <returns></returns>
         public bool IsPropertySet()
         {
             bool isSet = false;
@@ -35,6 +40,10 @@ namespace PresentationLayer.Services
             return isSet;
         }
 
+        /// <summary>
+        /// Schreibt in die lokale UserConfig und synchronisiert die Property "ConfigDatenArt" mit den neuen Daten.
+        /// </summary>
+        /// <param name="datenHaltung"></param>
         public void UpdateUserConfiguration(IDataStorageType datenHaltung)
         {
             ConfigDatenArt = datenHaltung;
@@ -59,6 +68,9 @@ namespace PresentationLayer.Services
             SyncFactory();
         }
 
+        /// <summary>
+        /// Liest die lokale UserConfig und füllt die Property "ConfigDatenArt" mit dessen Werten.
+        /// </summary>
         public void GetUserConfiguration()
         {
             KeyValuePair<int, string> keyValuePair = new KeyValuePair<int, string>(Properties.Settings.Default.DataType, "");
@@ -75,22 +87,25 @@ namespace PresentationLayer.Services
             SyncFactory();
         }
 
+        /// <summary>
+        /// Synchronisiert die UserConfig mit der BusinessLayer.Factory.
+        /// Aufgerufen, nachdem sich die UserConfig geändert hat oder sie neu geladen wurde.
+        /// </summary>
         public void SyncFactory()
         {
-            //BusinessLayer.Factory.Instance.DatenHaltung = ConfigDatenArt;
             BusinessLayer.Factory.Instance.DatenHaltung = ConfigDatenArt;
         }
 
 
-        public event EventHandler<OnDatenHaltungChanged> DatenHaltungChanged;
+        //public event EventHandler<OnDatenHaltungChanged> DatenHaltungChanged;
 
-        public void OnDatenHaltungChange(IDataStorageType datenHaltungsTyp)
-        {
-            if (DatenHaltungChanged != null)
-            {
-                DatenHaltungChanged(this, new OnDatenHaltungChanged() { DatenHaltungTyp = ConfigDatenArt });
-            }
-        }
+        //public void OnDatenHaltungChange(IDataStorageType datenHaltungsTyp)
+        //{
+        //    if (DatenHaltungChanged != null)
+        //    {
+        //        DatenHaltungChanged(this, new OnDatenHaltungChanged() { DatenHaltungTyp = ConfigDatenArt });
+        //    }
+        //}
 
 
     }

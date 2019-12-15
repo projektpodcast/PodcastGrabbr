@@ -92,7 +92,7 @@ namespace LocalStorage
         /// und somit die Benutzeroberfläche über die Dauer des Downloads sperren würde.
         /// </summary>
         /// <param name="downloadPath">DownloadPfad einer Episode</param>
-        /// <returns></returns>
+        /// <returns>DownloadPfad, um in nach erfolgtem Download in einem Datenziel zu persistieren.</returns>
         private async Task ExecuteEpisodeDownload(string downloadPath)
         {
             try
