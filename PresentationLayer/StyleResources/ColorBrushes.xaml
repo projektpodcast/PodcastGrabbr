@@ -26,11 +26,12 @@
     
     <!--SolidColorBrushes für Buttons-->
     <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
-    <SolidColorBrush x:Key="RedBrush2" Color="Red" Opacity="0.65"/>
+    <SolidColorBrush x:Key="RedBrushBright2" Color="#FFB01B1B" Opacity="1"/>
     <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
     <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
     <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
     <SolidColorBrush x:Key="GreenBrushPlay" Color="#FF1BA61B" Opacity="1"/>
     <SolidColorBrush x:Key="GreenBrushPlayTranslucent" Color="Green" Opacity="0.8"/>
-    
+    <SolidColorBrush x:Key="WhiteTranslucent" Color="White" Opacity="0.8"/>
+
 </ResourceDictionary>

@@ -10,40 +10,8 @@
 
     <Page.Resources>
 
-        <SolidColorBrush x:Key="PrimaryColor" Color="#FF344955"/>
-        <SolidColorBrush x:Key="PrimaryDark" Color="#FF232F34"/>
-        <SolidColorBrush x:Key="PrimaryLight" Color="#FF4A6572"/>
-        <SolidColorBrush x:Key="SecondaryColor" Color="#FFF9AA33"/>
-        <SolidColorBrush x:Key="Tertiary" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="TertiaryDark" Color="#FFE1E9F0"/>
-        <SolidColorBrush x:Key="PrimaryColorTranslucent07" Opacity="0.7" Color="#FF344955"/>
-        <SolidColorBrush x:Key="PrimaryColorTranslucent09" Opacity="0.9" Color="#FF344955"/>
-        <SolidColorBrush x:Key="PrimaryDarkTranslucent07" Opacity="0.7" Color="#FF232F34"/>
-        <SolidColorBrush x:Key="PrimaryDarkTranslucent09" Opacity="0.9" Color="#FF232F34"/>
-        <SolidColorBrush x:Key="PrimaryLightTranslucent07" Opacity="0.7" Color="#FF4A6572"/>
-        <SolidColorBrush x:Key="SecondaryColorTranslucent07" Opacity="0.7" Color="#FFF9AA33"/>
-        <SolidColorBrush x:Key="SecondaryColorTranslucent04" Opacity="0.4" Color="#FFF9AA33"/>
-        <SolidColorBrush x:Key="TertiaryTranslucent07" Opacity="0.7" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
-
-
-        <SolidColorBrush x:Key="WindowBackground" Color="#FF5A5193" Opacity="1"/>
-        <SolidColorBrush x:Key="WindowBackgroundTranslucent" Color="#FF5A5193" Opacity="0.3"/>
-        <SolidColorBrush x:Key="DownloadBrush" Color="#FF311855" Opacity="1"/>
-        <SolidColorBrush x:Key="DownloadBrushTranslucent" Color="#FF311855" Opacity="0.7"/>
-        <SolidColorBrush x:Key="myBrush" Color="#FFBFAAF5" Opacity="1"/>
-        <SolidColorBrush x:Key="myBrush2" Color="#FFBFAAF5" Opacity="0.7"/>
-        <SolidColorBrush x:Key="myBrush3" Color="#FFD3B9F1" Opacity="1"/>
-        <SolidColorBrush x:Key="DownloadBrushHighlight" Color="#FF6F509C" Opacity="1"/>
-        <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
-        <SolidColorBrush x:Key="RedBrushBright2" Color="#FFB01B1B" Opacity="1"/>
-        <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
-        <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
-        <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
-        <SolidColorBrush x:Key="GreenBrushPlay" Color="#FF1BA61B" Opacity="1"/>
-        <SolidColorBrush x:Key="GreenBrushPlayTranslucent" Color="Green" Opacity="0.8"/>
-        <SolidColorBrush x:Key="WhiteTranslucent" Color="White" Opacity="0.8"/>
-
+        <!--#region Button Styles-->
+        <!--#region PlayButton-->
         <Style x:Key="PlayButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -59,15 +27,14 @@
                                 </Grid.RowDefinitions>
                                 <Rectangle x:Name="Circle" Fill="{StaticResource GreenBrushBright}" RadiusX="30" RadiusY="30" Width="20"></Rectangle>
                                 <Path x:Name="Triangle" Fill="White" Data="M 16 10 L 7 3 L 7 17 Z"/>
-                                <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
                                 <TextBlock x:Name="ButtonText" Grid.Column="1" Text="Abspielen" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource EpisodeTb}"></TextBlock>
                             </Grid>
                         </Border>
+                        <!--#region Triggers-->
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
                                 <Setter Property="Fill" TargetName="Circle" Value="{StaticResource GreenBrushPlay}"/>
                                 <Setter TargetName="ButtonText" Property="Foreground" Value="#FF4D4D4D"/>
-                                <!--<Setter Property="Opacity" TargetName="Triangle" Value=""/>-->
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
@@ -76,11 +43,13 @@
                                 <Setter Property="Visibility" Value="Hidden"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
+                        <!--#endregion-->
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <!--#endregion-->
+        <!--#region DeleteButton-->
         <Style x:Key="DeleteButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -102,6 +71,7 @@
                                 <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
                             </Grid>
                         </Border>
+                        <!--#region Triggers-->
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
                                 <Setter Property="Fill" TargetName="Circle" Value="{StaticResource RedBrushBright}"/>
@@ -114,49 +84,13 @@
                                 <Setter Property="Visibility" Value="Hidden"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
+                        <!--#endregion-->
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!--<Style x:Key="DeleteButton" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="Bd">
-                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Width="auto">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="15"></ColumnDefinition>
-                                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <Rectangle x:Name="WarningBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RadiusX="10" RadiusY="10" 
-                                           Height="15" Width="15" Fill="{StaticResource RedBrush}"></Rectangle>
-                                <Grid Width="11" Height="11">
-                                    <Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>
-                                    <Path Fill="White" Data="M 9 0 L 0 9 L 2 11 L 11 2 Z"/>
-                                </Grid>
-                                <TextBlock x:Name="ButtonDescription" Text="Show entfernen" Grid.Column="1" Style="{StaticResource HeadlineTb}" 
-                                           HorizontalAlignment="Left" VerticalAlignment="Center"
-                                           FontSize="13"></TextBlock>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Fill" TargetName="WarningBorder" Value="{StaticResource RedBrushBright}"/>
-                                <Setter Property="Opacity" TargetName="ButtonDescription" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Visibility" Value="Hidden"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-
+        <!--#endregion-->
+        <!--#region ExpandButton-->
         <Style x:Key="ExpandButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -168,6 +102,7 @@
                                 <!--<Path Fill="White" Data="M 9 11 L 0 2 L 2 0 L 11 9"/>-->
                             </Grid>
                         </Border>
+                        <!--#region Triggers-->
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
                                 <!--<Setter Property="Fill" TargetName="VerticalLine" Value="{StaticResource DownloadBrushTranslucent}"/>
@@ -183,12 +118,49 @@
                                 <Setter Property="Visibility" Value="Hidden"></Setter>
                             </Trigger>-->
                         </ControlTemplate.Triggers>
+                        <!--#endregion-->
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--#endregion-->
+        <!--#endregion-->
 
-        <ControlTemplate x:Key="ExpanderControlTemplate2" TargetType="{x:Type Expander}">
+
+        <!--#region Definitionen für ShowList-->
+        <!--#region ListBoxItem Style für ShowList-->
+        <Style x:Key="ShowItems" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="Border" Background="{StaticResource PrimaryColor}" BorderBrush="Black" BorderThickness="0,0,0,1" CornerRadius="0">
+                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
+                        </Border>
+                        <!--<ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="false">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
+            </EventSetter>
+        </Style>
+        <!--#endregion-->
+        <!--#region ShowExpanderTemplate für ShowList-->
+        <ControlTemplate x:Key="ShowExpanderTemplate" TargetType="{x:Type Expander}">
             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" SnapsToDevicePixels="True">
                 <DockPanel>
                     <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" DockPanel.Dock="Top" 
@@ -229,31 +201,24 @@
                                                           Fill="{StaticResource WhiteTranslucent}" Stroke="Black" StrokeThickness="2"/>
                                                 </Grid>
                                             </Border>
+                                            <!--#region Triggers-->
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsChecked" Value="True">
                                                     <Setter Property="Data" TargetName="PlusSign" Value="M 0 8 L 20 8 L 20 12 L 0 12 Z"/>
                                                 </Trigger>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <!--<Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>-->
-                                                    <!--<Setter Property="Stroke" TargetName="arrow" Value="Black"/>-->
+
                                                     <Setter Property="Fill" TargetName="PlusSign" Value="White"/>
-                                                    <Setter Property="Stroke" TargetName="PlusSign" Value="{StaticResource DownloadBrushTranslucent}"/>
+                                                    <Setter Property="Stroke" TargetName="PlusSign" Value="{StaticResource PrimaryColor}"/>
                                                 </Trigger>
                                                 <Trigger Property="IsPressed" Value="True">
-                                                    <!--<Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
-                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>-->
-                                                    <!--<Setter Property="Stroke" TargetName="arrow" Value="Black"/>-->
                                                     <Setter Property="Opacity" TargetName="PlusSign" Value="0.8"/>
                                                 </Trigger>
                                                 <Trigger Property="IsEnabled" Value="False">
-                                                    <!--<Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>-->
-                                                    <!--<Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>-->
                                                     <Setter Property="Fill" TargetName="PlusSign" Value="White"/>
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
+                                            <!--#endregion-->
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -266,244 +231,22 @@
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                 </DockPanel>
             </Border>
+            <!--#region Triggers-->
             <ControlTemplate.Triggers>
                 <Trigger Property="IsExpanded" Value="True">
                     <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
                 </Trigger>
-                <!--<Trigger Property="ExpandDirection" Value="Right">
-                    <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Right"/>
-                    <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Left"/>
-                    <Setter Property="Style" TargetName="HeaderSite">
-                        <Setter.Value>
-                            <Style TargetType="{x:Type ToggleButton}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                            <Border Padding="{TemplateBinding Padding}">
-                                                <Grid Background="Transparent" SnapsToDevicePixels="False">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="19"/>
-                                                        <RowDefinition Height="*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid>
-                                                        <Grid.LayoutTransform>
-                                                            <TransformGroup>
-                                                                <RotateTransform Angle="-90"/>
-                                                            </TransformGroup>
-                                                        </Grid.LayoutTransform>
-                                                        <Ellipse x:Name="circle" Fill="White" HorizontalAlignment="Center" Height="19" Stroke="#FF333333" VerticalAlignment="Center" Width="19"/>
-                                                        <Path x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="False" Stroke="#FF333333" StrokeThickness="2" VerticalAlignment="Center"/>
-                                                    </Grid>
-                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
-                                                </Grid>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsChecked" Value="True">
-                                                    <Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
-                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
-                                                </Trigger>
-                                                <Trigger Property="IsEnabled" Value="False">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="ExpandDirection" Value="Up">
-                    <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Top"/>
-                    <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Bottom"/>
-                    <Setter Property="Style" TargetName="HeaderSite">
-                        <Setter.Value>
-                            <Style TargetType="{x:Type ToggleButton}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                            <Border Padding="{TemplateBinding Padding}">
-                                                <Grid Background="Transparent" SnapsToDevicePixels="False">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="19"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid>
-                                                        <Grid.LayoutTransform>
-                                                            <TransformGroup>
-                                                                <RotateTransform Angle="180"/>
-                                                            </TransformGroup>
-                                                        </Grid.LayoutTransform>
-                                                        <Ellipse x:Name="circle" Fill="White" HorizontalAlignment="Center" Height="19" Stroke="#FF333333" VerticalAlignment="Center" Width="19"/>
-                                                        <Path x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="False" Stroke="#FF333333" StrokeThickness="2" VerticalAlignment="Center"/>
-                                                    </Grid>
-                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Left" Margin="4,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Center"/>
-                                                </Grid>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsChecked" Value="True">
-                                                    <Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
-                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
-                                                </Trigger>
-                                                <Trigger Property="IsEnabled" Value="False">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <Trigger Property="ExpandDirection" Value="Left">
-                    <Setter Property="DockPanel.Dock" TargetName="ExpandSite" Value="Left"/>
-                    <Setter Property="DockPanel.Dock" TargetName="HeaderSite" Value="Right"/>
-                    <Setter Property="Style" TargetName="HeaderSite">
-                        <Setter.Value>
-                            <Style TargetType="{x:Type ToggleButton}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                            <Border Padding="{TemplateBinding Padding}">
-                                                <Grid Background="Transparent" SnapsToDevicePixels="False">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="19"/>
-                                                        <RowDefinition Height="*"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid>
-                                                        <Grid.LayoutTransform>
-                                                            <TransformGroup>
-                                                                <RotateTransform Angle="90"/>
-                                                            </TransformGroup>
-                                                        </Grid.LayoutTransform>
-                                                        <Ellipse x:Name="circle" Fill="White" HorizontalAlignment="Center" Height="19" Stroke="#FF333333" VerticalAlignment="Center" Width="19"/>
-                                                        <Path x:Name="arrow" Data="M1,1.5L4.5,5 8,1.5" HorizontalAlignment="Center" SnapsToDevicePixels="False" Stroke="#FF333333" StrokeThickness="2" VerticalAlignment="Center"/>
-                                                    </Grid>
-                                                    <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" RecognizesAccessKey="True" SnapsToDevicePixels="True" VerticalAlignment="Top"/>
-                                                </Grid>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsChecked" Value="True">
-                                                    <Setter Property="Data" TargetName="arrow" Value="M1,4.5L4.5,1 8,4.5"/>
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF5593FF"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFF3F9FF"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FF3C77DD"/>
-                                                    <Setter Property="StrokeThickness" TargetName="circle" Value="1.5"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFD9ECFF"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="Black"/>
-                                                </Trigger>
-                                                <Trigger Property="IsEnabled" Value="False">
-                                                    <Setter Property="Stroke" TargetName="circle" Value="#FFBCBCBC"/>
-                                                    <Setter Property="Fill" TargetName="circle" Value="#FFE6E6E6"/>
-                                                    <Setter Property="Stroke" TargetName="arrow" Value="#FF707070"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>-->
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
+            <!--#endregion-->
         </ControlTemplate>
+        <!--#endregion-->
+        <!--#endregion-->
 
-        <Style x:Key="ShowItems" TargetType="{x:Type ListBoxItem}">
-            <!--<Setter Property="Width" Value="150"></Setter>-->
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="Border" Background="{StaticResource DownloadBrush}" BorderBrush="Black" BorderThickness="0,0,0,1" CornerRadius="0">
-                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
-                        </Border>
-                        <!--<ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="false">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>-->
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
-            </EventSetter>
-        </Style>
-
-
-        <Style x:Key="EpisodeItems" TargetType="{x:Type ListBoxItem}">
-            <!--<Setter Property="Width" Value="150"></Setter>-->
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0,0,0,0"/>
-            <Setter Property="Padding" Value="0,0,0,0"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border Name="Border" Background="White" BorderBrush="White" CornerRadius="0">
-                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
-                        </Border>
-                        <!--<ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="false">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>-->
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
-            </EventSetter>
-        </Style>
-
+        <!--#region Definitionen für EpisodeListBox-->
+        <!--#region EpisodeListBoxStyle für EpisodeListBox-->
         <Style x:Key="EpisodeListStyle" TargetType="{x:Type ListBox}">
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
@@ -552,13 +295,49 @@
 
                         <DataTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource WindowBackgroundTranslucent}"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
                             </Trigger>
                         </DataTemplate.Triggers>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--#endregion-->
+        <!--#region EpisodeItemStyle für ShowList-->
+        <Style x:Key="EpisodeItems" TargetType="{x:Type ListBoxItem}">
+            <!--<Setter Property="Width" Value="150"></Setter>-->
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Padding" Value="0,0,0,0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Name="Border" Background="White" BorderBrush="White" CornerRadius="0">
+                            <ContentPresenter x:Name="ListBoxContent" Margin="0"/>
+                        </Border>
+                        <!--<ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="false">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ListBoxContent" Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
+            </EventSetter>
+        </Style>
+        <!--#endregion-->
+        <!--#endregion-->
+
+        
 
 
 
@@ -594,7 +373,6 @@
             <Setter Property="ItemTemplate">
                 <Setter.Value>
                     <DataTemplate>
-
                         <Border>
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -608,12 +386,7 @@
                                           x:Name="EpisodeExpander" Grid.Row="0"
                                           VerticalAlignment="Center" Padding="0,0,0,0" Margin="0,0,0,0"
                                           Foreground="Black" BorderThickness="0"
-                                          HorizontalContentAlignment="Stretch" Template="{DynamicResource ExpanderControlTemplate2}">
-
-                                    <!--IsExpanded="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"-->
-
-                                    <!--IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, 
-                                    RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"-->
+                                          HorizontalContentAlignment="Stretch" Template="{DynamicResource ShowExpanderTemplate}">
                                     <Expander.Header>
                                         <WrapPanel Grid.Row="0" Background="{StaticResource PrimaryDark}" x:Name="ShowPanel">
 
@@ -690,11 +463,6 @@
                                         </WrapPanel>
                                     </Expander.Header>
                                     <Expander.Content>
-
-                                        <!--<ListBox Style="{StaticResource EpisodeListStyle}" ItemsSource="{Binding EpisodeList}" 
-                                                 ItemContainerStyle="{StaticResource EpisodeItems}" Template="{DynamicResource ListBoxControlTemplate1}"
-                                                 SelectedItem="{Binding SelectedEpisode, Mode=TwoWay}"></ListBox>-->
-
                                         <ItemsControl ItemsSource="{Binding EpisodeList}" Background="{StaticResource TertiaryDark}" Grid.Column="0" 
                                                       HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True" Margin="4,0,0,0">
                                             <ItemsControl.ItemTemplate>
@@ -732,9 +500,6 @@
                                                                 <Button Style="{StaticResource PlayButton}"
                                                                         Command="{Binding DataContext.PlayEpisode, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}" 
                                                                         CommandParameter="{Binding}"/>
-                                                                        
-                                                                        <!--Command="{Binding PlayEpisode}"
-                                                                        CommandParameter="{Binding}" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
                                                                 <Button Style="{StaticResource DeleteButton}" HorizontalAlignment="Left" VerticalAlignment="Top"
                                                                         Command="{Binding DataContext.DeleteEpisode, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}" 
                                                                         CommandParameter="{Binding}"/>
@@ -745,7 +510,7 @@
 
                                                     <DataTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource WindowBackgroundTranslucent}"/>
+                                                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
                                                         </Trigger>
                                                     </DataTemplate.Triggers>
 
@@ -759,18 +524,10 @@
 
                                 </Expander>
                             </Grid>
-
-
                         </Border>
-
-
-
-
-
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
 
 

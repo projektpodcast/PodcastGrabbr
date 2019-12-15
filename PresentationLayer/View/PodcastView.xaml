@@ -923,7 +923,7 @@
                                                     </GeometryGroup>
                                                 </GeometryDrawing.Geometry>
                                                 <GeometryDrawing.Pen>
-                                                    <Pen Thickness="4" Brush="{StaticResource RedBrush2}" />
+                                                    <Pen Thickness="4" Brush="{StaticResource RedBrush}" />
                                                 </GeometryDrawing.Pen>
                                             </GeometryDrawing>
                                         </DrawingImage.Drawing>

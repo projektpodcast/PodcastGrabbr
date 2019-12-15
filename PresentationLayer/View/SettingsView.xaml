@@ -12,8 +12,8 @@
       >
     <Page.Resources>
 
-        <!--#region Definitionen für Suchelement-->
-        <!--#region Button Style für Suchelement-->
+        <!--#region Definitionen für Datenquellen-Konfiguration-->
+        <!--#region Button Style für Datenhaltungselement-->
         <Style x:Key="SearchButton" TargetType="{x:Type Button}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Template">
@@ -43,8 +43,7 @@
             </Setter>
         </Style>
         <!--#endregion-->
-
-        <!--#region ComboBox Style für Suchelement-->
+        <!--#region ComboBox Style für Datenhaltungselement-->
         <Style x:Key="ComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -52,7 +51,6 @@
                         <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                             <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
-                        <!--#region Triggers-->
                         <ControlTemplate.Triggers>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -60,8 +58,9 @@
                                     <Condition Property="IsMouseOver" Value="True"/>
                                     <Condition Property="IsKeyboardFocused" Value="False"/>
                                 </MultiTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
-                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                                <!--<Setter Property="Opacity" TargetName="Bd" Value="0.8"/>-->
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -69,7 +68,6 @@
                                     <Condition Property="IsMouseOver" Value="False"/>
                                     <Condition Property="IsKeyboardFocused" Value="True"/>
                                 </MultiTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
                                 <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Tertiary}"/>
                             </MultiTrigger>
                             <MultiTrigger>
@@ -77,8 +75,8 @@
                                     <Condition Property="IsSelected" Value="True"/>
                                     <Condition Property="IsMouseOver" Value="True"/>
                                 </MultiTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Tertiary}"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Tertiary}"/>
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -86,6 +84,7 @@
                                     <Condition Property="IsMouseOver" Value="False"/>
                                     <Condition Property="IsKeyboardFocused" Value="False"/>
                                 </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Tertiary}"/>
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -100,18 +99,17 @@
                                     <Condition Property="IsMouseOver" Value="True"/>
                                     <Condition Property="IsKeyboardFocused" Value="True"/>
                                 </MultiTrigger.Conditions>
-                                <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
                             </MultiTrigger>
                         </ControlTemplate.Triggers>
-                        <!--#endregion-->
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <!--#endregion-->
-
-        <!--#region ComboBox ControlTemplate für Suchelement-->
-        <ControlTemplate x:Key="SearchBarComboBoxTemplate" TargetType="{x:Type ComboBox}">
+        <!--#region ComboBox ControlTemplate für Datenhaltungselement-->
+        <ControlTemplate x:Key="DataTypeControlTemplate" TargetType="{x:Type ComboBox}">
             <Grid x:Name="templateRoot" SnapsToDevicePixels="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -142,14 +140,20 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                        <Border x:Name="templateRoot" Background="{StaticResource SecondaryColor}" BorderBrush="{StaticResource SecondaryColor}" BorderThickness="0" SnapsToDevicePixels="True" UseLayoutRounding="True" d:DesignUseLayoutRounding="True">
-                                            <Border x:Name="splitBorder" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Right" Margin="0" SnapsToDevicePixels="True" 
-                                                    UseLayoutRounding="True" Width="17" d:DesignUseLayoutRounding="True">
+                                        <Border x:Name="templateRoot" Background="{StaticResource PrimaryColor}" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="1,1,1,1" SnapsToDevicePixels="True" UseLayoutRounding="True" d:DesignUseLayoutRounding="True">
+                                            <!--<Border.Background>
+                                                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                                                    <GradientStop Color="#FFE5E5E5" Offset="1"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>-->
+
+                                            <Border x:Name="splitBorder" BorderBrush="{StaticResource SecondaryColor}" BorderThickness="3" HorizontalAlignment="Right" Margin="0,-1,-1,-1" SnapsToDevicePixels="True" 
+                                                    UseLayoutRounding="True" Width="17" d:DesignUseLayoutRounding="True" Background="{StaticResource SecondaryColor}">
                                                 <Path x:Name="arrow" Data="M 2.5 2.5 L 7 10.5 L 11.5 2.5 Z" Fill="{StaticResource PrimaryDark}" HorizontalAlignment="Center" Margin="0" UseLayoutRounding="True" 
                                                       VerticalAlignment="Center" d:DesignUseLayoutRounding="True"/>
                                             </Border>
                                         </Border>
-                                        <!--#region templateRoot Triggers-->
                                         <ControlTemplate.Triggers>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
@@ -162,55 +166,50 @@
                                                 <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FFABADB3"/>
                                                 <Setter Property="Background" TargetName="splitBorder" Value="Transparent"/>
                                                 <Setter Property="BorderBrush" TargetName="splitBorder" Value="Transparent"/>-->
+
+                                                <!--<Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>-->
                                             </MultiDataTrigger>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <!--<Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
-                                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource SecondaryColor}"/>-->
-                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
-                                                <!--<Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>-->
-                                                <!--<Setter TargetName="templateRoot" Property="Background" Value="{StaticResource WindowBackground}"/>
-                                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource WindowBackground}"/>
-                                                <Setter Property="Fill" TargetName="arrow" Value="gold"/>-->
+                                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ButtonPrimaryHover}"/>
+
                                             </Trigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
                                                     <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="false"/>
                                                 </MultiDataTrigger.Conditions>
-                                                <!--<Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
-                                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource SecondaryColor}"/>-->
-                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
-                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
-                                                <!--<Setter Property="Background" TargetName="templateRoot">
-                                                    <Setter.Value>
-                                                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-                                                            <GradientStop Color="#FFECF4FC" Offset="0"/>
-                                                            <GradientStop Color="#FFDCECFC" Offset="1"/>
-                                                        </LinearGradientBrush>
-                                                    </Setter.Value>
-                                                </Setter>
-                                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF7EB4EA"/>-->
+                                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ButtonPrimaryHover}"/>
+                                                <!--<Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>-->
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
                                             </MultiDataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
                                                     <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="true"/>
                                                 </MultiDataTrigger.Conditions>
-                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
-                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
-                                                <!--<Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
-                                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource SecondaryColor}"/>-->
+                                                <!--<Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="templateRoot" Property="Opacity" Value="0.8"/>-->
+                                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ButtonPrimaryHover}"/>
+                                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ButtonHover}"/>
+                                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ButtonHover}"/>
                                             </MultiDataTrigger>
 
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
                                                     <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true"/>
-                                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="true"/>
+                                                    <!--<Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ComboBox}}}" Value="true"/>-->
                                                 </MultiDataTrigger.Conditions>
-                                                <Setter TargetName="arrow" Property="Opacity" Value="0.8"/>
+                                                <!--<Setter TargetName="arrow" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="splitBorder" Property="Opacity" Value="0.8"/>
+                                                <Setter TargetName="splitBorder" Property="Opacity" Value="0.8"/>-->
                                             </MultiDataTrigger>
                                         </ControlTemplate.Triggers>
-                                        <!--#endregion-->
+
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -218,10 +217,9 @@
                     </ToggleButton.Style>
                 </ToggleButton>
                 <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
-                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="True" Margin="{TemplateBinding Padding}" 
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="False" Margin="{TemplateBinding Padding}" 
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Grid>
-            <!--#region PopUp Triggers-->
             <ControlTemplate.Triggers>
                 <Trigger Property="HasDropShadow" SourceName="PART_Popup" Value="True">
                     <Setter Property="Margin" TargetName="shadow" Value="0,0,5,5"/>
@@ -242,17 +240,16 @@
                     <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
                 </Trigger>
             </ControlTemplate.Triggers>
-            <!--#endregion-->
         </ControlTemplate>
         <!--#endregion-->
-
-        <!--#region TextBox Style für Suchelement-->
+        <!--#region TextBox für Datenhaltungselement-->
         <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}">
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="CaretBrush" Value="{StaticResource SecondaryColor}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
+
                         <Border x:Name="border" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="{TemplateBinding BorderThickness}" 
                                  SnapsToDevicePixels="True" Background="{StaticResource PrimaryColor}">
                             <Grid>
@@ -263,36 +260,36 @@
                                        FontSize="{Binding FontSize,ElementName=PART_ContentHost}" Padding="2,0,0,0" VerticalContentAlignment="Center" HorizontalAlignment="Left"/>
                             </Grid>
                         </Border>
-                        <!--#region Triggers-->
+
                         <ControlTemplate.Triggers>
+
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
                                     <Condition Property="IsFocused" Value="False" />
                                     <Condition Property="Text" Value="" />
                                 </MultiTrigger.Conditions>
                                 <MultiTrigger.Setters>
-                                    <Setter Property="Visibility" TargetName="SearchWatermark" Value="Visible" />
+                                    <Setter Property="Visibility" TargetName="SearchWatermark"
+                                        Value="Visible" />
                                 </MultiTrigger.Setters>
                             </MultiTrigger>
+
+
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" TargetName="border" Value="0.56"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryDark}"/>
                             </Trigger>
                             <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryDark}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
-                        <!--#endregion-->
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <!--#endregion-->
-        <!--#endregion-->
-
-
-        <!--#region Definitionen für Datenquellen-Konfiguration-->
-
         <!--#endregion-->
 
 
@@ -458,7 +455,7 @@
                         <ComboBox x:Name="DataTypeComboBox" Grid.Column="1" IsEditable="False" IsReadOnly="False" Grid.Row="0" IsSynchronizedWithCurrentItem="True"
                                   ItemsSource="{Binding PossibleTypes}" SelectedItem="{Binding SelectedDataType}" Text="{Binding Path=ConfigData.DataType.Value, Mode=OneWay}"
                                   DisplayMemberPath="Value" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Foreground="{StaticResource Tertiary}"
-                                  VerticalContentAlignment="Center" Template="{StaticResource SearchBarComboBoxTemplate}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
+                                  VerticalContentAlignment="Center" Template="{StaticResource DataTypeControlTemplate}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}">
                         </ComboBox>
                     </Grid>
                     <!--#endregion-->
