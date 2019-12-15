@@ -9,6 +9,12 @@ namespace CommonTypes
 {
     public class DateTimeParser
     {
+        /// <summary>
+        /// Versucht einen String in ein DateTime-Objekt zu parsen.
+        /// Bei Misserfolg wird ein Default-Wert verwendet.
+        /// </summary>
+        /// <param name="dateTimeForParsing">Zeichenkette spiegelt ein Datum wieder. Dieser String geparsed werden</param>
+        /// <returns>Valid geparstes DateTime Objekt</returns>
         public DateTime ConvertStringToDateTime(string dateTimeForParsing)
         {
             string dateInput = dateTimeForParsing;
@@ -20,18 +26,18 @@ namespace CommonTypes
                    "MM/d/yyyy HH:mm:ss.ffffff", "ddd, dd MMM yyyy HH:mm:ss zzz" };
             DateTime parsedDate;
             DateTimeFormatInfo dtfi = CultureInfo.GetCultureInfo("en-US").DateTimeFormat;
-            //if (DateTime.TryParseExact(dateInput, "ddd, dd MMM yyyy HH':'mm':'ss zzz", dtfi, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal, out parsedDate))
-            //{
-            //    return parsedDate;
-            //}
+
+            // Versucht das in einem RSS-Feed meistverbreitete Datumformat zu parsen.
             if (DateTime.TryParseExact(dateInput, "ddd, dd MMM yyyy HH:mm:ss zzz", CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out parsedDate))
             {
                 return parsedDate;
             }
+            // Versucht anhand einem Array mit Datumsformaten die DateTime zu parsen.
             if (DateTime.TryParseExact(dateInput, formats, CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out parsedDate))
             {
                 return parsedDate;
             }
+            // Bei gescheitertem Parsing wird ein Default-Wert zurückgegeben.
             else
             {
                 return DateTime.Parse("1999-01-01 00:00:00");

@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataType.cs" />
-    <Compile Include="DatenArt.cs" />
+    <Compile Include="DataStorageType.cs" />
     <Compile Include="DateTimeParser.cs" />
     <Compile Include="Episode.cs" />
     <Compile Include="FileInformation.cs" />

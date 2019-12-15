@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace CommonTypes
 {
+    /// <summary>
+    /// Der Parent einer Episode ist eine Show.
+    /// Zu einer Show können eine Vielzahl an Episoden gehören.
+    /// </summary>
     public class Episode
     {
-        public virtual string EpisodeId { get; set; }
-        public virtual string Title { get; set; }
+        public string EpisodeId { get; set; }
+        public string Title { get; set; }
         public DateTime PublishDate { get; set; }
         public string Summary { get; set; }
         public string Keywords { get; set; }
@@ -18,8 +22,5 @@ namespace CommonTypes
         public string DownloadPath { get; set; }
         public bool IsDownloaded { get; set; }
 
-        public Episode()
-        {
-        }
     }
 }

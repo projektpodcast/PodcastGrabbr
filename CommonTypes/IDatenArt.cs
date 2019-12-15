@@ -2,6 +2,10 @@
 
 namespace CommonTypes
 {
+    /// <summary>
+    /// Enthält benötigte Informationen um eine Datenbank-Verbindung zu öffnen.
+    /// Das KeyValuePair enthält um welche Art von Datenziel es sich handelt.
+    /// </summary>
     public interface IDataStorageType
     {
         string DataBaseName { get; set; }
