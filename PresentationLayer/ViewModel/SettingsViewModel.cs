@@ -9,9 +9,14 @@ namespace PresentationLayer.ViewModel
 {
     public class SettingsViewModel : BaseViewModel
     {
-        //private IUserConfigService _configService { get; set; }
         #region Ui Properties
         private IConfigurationService _configurationService { get; set; }
+
+        /// <summary>
+        /// Gebunden an das SelectedItem einer ComboBox
+        /// Wenn ein neues Item ausgewählt wird, wird geprüft ob das DetailGrid 
+        /// in der Ui angezeigt werden soll oder nicht (Visibility Property an View gebunden)
+        /// </summary>
         private KeyValuePair<int, string> _selectedDataType { get; set; }
         public KeyValuePair<int, string> SelectedDataType
         {
@@ -29,10 +34,15 @@ namespace PresentationLayer.ViewModel
 
         public Dictionary<int, string> PossibleTypes { get; set; }
 
+        /// <summary>
+        /// Ui Property, welche die Sichtbarkeit eines Grids bestimmt.
+        /// </summary>
         private Visibility _dbDetailVisibility { get; set; }
         public Visibility DbDetailVisibility { get { return _dbDetailVisibility; } set { _dbDetailVisibility = value; OnPropertyChanged("DbDetailVisibility"); } }
 
-
+        /// <summary>
+        /// An eine PasswordBox in der View gebunden. Inhalt ist ein Encrypted Passwort. Passwort wird automatisch durch eine Custom PasswordBox encrypted.
+        /// </summary>
         private string _dbPassword { get; set; }
         public string DbPassword
         {
@@ -42,6 +52,11 @@ namespace PresentationLayer.ViewModel
 
         #endregion Ui Properties
 
+        /// <summary>
+        /// Initialisiert non-nullable Properties, setzt das Dictionary für die Datenbank-Combobox
+        /// und synchronisiert die UserConfiguration mit einer Klasseninternen Property.
+        /// </summary>
+        /// <param name="configService"></param>
         public SettingsViewModel(IConfigurationService configService)
         {
             SelectedDataType = new KeyValuePair<int, string>();
@@ -58,7 +73,7 @@ namespace PresentationLayer.ViewModel
             IsConfigurationSet();
         }
 
-        #region ICommand Properties
+        #region ICommand Properties und Plausenprüfung
         private ICommand _fileImport { get; set; }
         public ICommand FileImport
         {
@@ -118,14 +133,16 @@ namespace PresentationLayer.ViewModel
                 return _persistDbData;
             }
         }
-        #endregion ICommand Properties
-
 
         private bool IsDataTypeSelected()
         {
             return SelectedDataType.Key != 0 ? true : false;
         }
+        #endregion ICommand Properties
 
+        /// <summary>
+        /// Öffnet einen FileDialog, der durch das Interface IDialogService angeboten wird.
+        /// </summary>
         private void ExecuteFileImport()
         {
             IDialogService fileServe = new FileDialogService();
@@ -142,12 +159,15 @@ namespace PresentationLayer.ViewModel
             //bl..delete
         }
 
+        /// <summary>
+        /// Toggled die Ui-Property "Visibility" zwischen Collapsed und Visibility.
+        /// Wenn der SelectedDataType.Key 1 ist, wird die Sichtbarkeit ausgeblendet.
+        /// Ein Wert von 1 ist auf den DataType von Xml bezogen, dieser benötigt kein explizites setzen von Datenkbank-Informationen.
+        /// </summary>
         private void DecideVisibility()
         {
             DbDetailVisibility = SelectedDataType.Key <= 1 ? Visibility.Collapsed : Visibility.Visible;
         }
-
-
 
 
         private IDataStorageType _userManipulatedData { get; set; }
@@ -161,6 +181,11 @@ namespace PresentationLayer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Enthält Werte der gesetzten UserConfig.
+        /// Der Nutzer ändert diese Property mit seinen Nutzereingaben, 
+        /// welche durch den ICommand PersistDbData wiederum in die UserConfig geschrieben wird.
+        /// </summary>
         private IDataStorageType _configData { get; set; }
         public IDataStorageType ConfigData
         {
@@ -172,6 +197,10 @@ namespace PresentationLayer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Synchronisiert die Werte der UserConfiguration mit der Property ConfigDate.
+        /// Dies muss explizit geschehen, da es sonst Referenzprobleme zwischen der ConfigData und der UserConfiguration gibt.
+        /// </summary>
         private void MapConfigData()
         {
             ConfigData = new DataStorageType
@@ -185,7 +214,10 @@ namespace PresentationLayer.ViewModel
             };
         }
 
-
+        /// <summary>
+        /// Speichert die vom Nutzer hinterlegten Datenbank-Daten in die lokale UserConfiguration.
+        /// Löst ein Event aus um die Änderung anzuzeigen.
+        /// </summary>
         public void ExecutePersistDbData()
         {
             MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
@@ -193,6 +225,10 @@ namespace PresentationLayer.ViewModel
             ConfigurationHasChanged();
         }
 
+        /// <summary>
+        /// Überprüft, ob die UserConfiguration vom Nutzer verändert wurde.
+        /// Standardmäßig ist der Key in der UserConfig 0.
+        /// </summary>
         public void IsConfigurationSet()
         {
             if (ConfigData.DataType.Key != 0)
@@ -211,16 +247,22 @@ namespace PresentationLayer.ViewModel
         }
 
 
+        #region Events
+        public event System.EventHandler<OnConfigChanged> OnUserConfigChanged;
 
-        public event System.EventHandler<OnConfigChanged> OnUserCoinfigChanged;
-
+        /// <summary>
+        /// Veröffentlicht das OnUserConfigChanged Event.
+        /// Wenn es einen Event-Subscriber gibt, wird das in der UserConfig gesetzte KeyValuePair übertragen.
+        /// Das Event soll ausgelöst werden, wenn die UserConfiguration durch den Nutzer bearbeitet und abgespeichert wurde.
+        /// </summary>
         public void ConfigurationHasChanged()
         {
-            if (OnUserCoinfigChanged != null)
+            if (OnUserConfigChanged != null)
             {
-                OnUserCoinfigChanged(this, new OnConfigChanged() { SettingValue = ConfigData.DataType.Key, SettingProperty = ConfigData.DataType.Value });
+                OnUserConfigChanged(this, new OnConfigChanged() { SettingValue = ConfigData.DataType.Key, SettingProperty = ConfigData.DataType.Value });
             }
         }
+        #endregion
     }
 
 }

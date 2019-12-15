@@ -260,12 +260,12 @@ namespace PresentationLayer.ViewModel
             {
                 UserNavigationViewModel userVm = viewModel as UserNavigationViewModel;
                 this.ViewChanged += userVm.MainViewModel_OnTestChanged;
-                userVm.OnTestChanged += this.UserNavigationUi_OnTestChanged;
+                userVm.OnNavigationChanged += this.UserNavigationUi_OnTestChanged;
             }
             else if (viewModel.GetType().Equals(typeof(SettingsViewModel)))
             {
                 SettingsViewModel settingsVm = viewModel as SettingsViewModel;
-                settingsVm.OnUserCoinfigChanged += SettingsViewModel_OnUserConfigChanged;
+                settingsVm.OnUserConfigChanged += SettingsViewModel_OnUserConfigChanged;
             }
         }
 
