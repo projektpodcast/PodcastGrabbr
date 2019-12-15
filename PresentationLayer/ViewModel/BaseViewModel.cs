@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace PresentationLayer.ViewModel
 {
+    /// <summary>
+    /// Basis, die von allen ViewModel implementiert werden soll um das 
+    /// Interface IViewModel und INotifyPropertyChanged automatisch zu implementieren.
+    /// </summary>
     public class BaseViewModel : IViewModel , INotifyPropertyChanged
     {
         public string Name { get; set; }

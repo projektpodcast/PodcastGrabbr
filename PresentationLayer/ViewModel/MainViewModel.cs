@@ -12,15 +12,23 @@ using System.Windows.Input;
 
 namespace PresentationLayer.ViewModel
 {
+    /// <summary>
+    /// Das MainViewModel initialisiert verschiedene Views mit ihren ViewModels.
+    /// Es wird benötigt um multiple Views in einem Window (MainView) anzuzeigen.
+    /// To Do: Castle Windsow/MVVM Light etc. implementieren um eine saubere Dependency Injection zu erreichen.
+    /// </summary>
     public class MainViewModel : BaseViewModel, IViewModel
     {
         #region Services
-        //private IUserConfigService _configService { get; set; }
         private IDependencyService _initializerService { get; set; }
         private IConfigurationService _configurationService { get; set; }
         private IBusinessAccessService _businessAccessService { get; set; }
         #endregion Services
 
+        /// <summary>
+        /// Properties stellen mit ihren ViewModels initialisierten Views dar.
+        /// Dienen dazu, um der MainView bindbare Properties zu geben, um mehrere Views in einem Window anzuzeigen.
+        /// </summary>
         #region Properties
         private IView _downloadsUi { get; set; }
         private IView _podcastUi { get; set; }
@@ -32,14 +40,17 @@ namespace PresentationLayer.ViewModel
             private set { _userNavigationUi = value; OnPropertyChanged("UserNavigationUi"); }
         }
 
-        private object _currentContent { get; set; }
-        public object CurrentContent
+        /// <summary>
+        /// Der angezeigte Content im Mainframe der MainView
+        /// </summary>
+        private IView _currentContent { get; set; }
+        public IView CurrentContent
         {
             get { return _currentContent; }
-            private set { _currentContent = value; OnPropertyChanged("CurrentContent"); OnTest(_currentContent.ToString()); }
+            private set { _currentContent = value; OnPropertyChanged("CurrentContent"); OnViewChanged(_currentContent.ToString()); }
         }
-
         #endregion Properties
+
         public MainViewModel(/*IInitializerService initializerService*/)
         {
             //Services initialisieren
@@ -55,19 +66,20 @@ namespace PresentationLayer.ViewModel
         private void InitializeCurrentContent()
         {
             DecideCurrentContent();
-            //if (_podcastUi == null)
-            //{
-            //    InitializePodcastUi();
-            //}
-
         }
 
+        /// <summary>
+        /// Initialisiert die PodcastView mit dem zugehörigen ViewModel und stellt das Objekt als Property zur Verfügung.
+        /// </summary>
         private void InitializePodcastUi()
         {
             IViewModel viewModel = new PodcastViewModel(_businessAccessService);
             _podcastUi = _initializerService.InitializeView(viewModel);
         }
 
+        /// <summary>
+        /// Initialisiert die SettingsView mit dem zugehörigen ViewModel und stellt das Objekt als Property zur Verfügung.
+        /// </summary>
         private void InitializeSettingsUi()
         {
             IViewModel viewModel = new SettingsViewModel(_configurationService);
@@ -75,6 +87,9 @@ namespace PresentationLayer.ViewModel
             SetUpSubscriber(viewModel);
         }
 
+        /// <summary>
+        /// Initialisiert die UserNavigationView mit dem zugehörigen ViewModel und stellt das Objekt als Property zur Verfügung.
+        /// </summary>
         private void InitializeUserNavigationUi()
         {
             UserNavigationViewModel viewModel = new UserNavigationViewModel();
@@ -82,26 +97,21 @@ namespace PresentationLayer.ViewModel
             SetUpSubscriber(viewModel);
         }
 
-        //private void InitializeUserNavigationUi()
-        //{
-        //    UserNavigationViewModel viewModel = new UserNavigationViewModel();
-        //    UserNavigationUi = new TestView(viewModel);
-        //    SetUpSubscriber(viewModel);
-        //}
-
+        /// <summary>
+        /// Initialisiert die DownloadsView mit dem zugehörigen ViewModel und stellt das Objekt als Property zur Verfügung.
+        /// </summary>
         private void InitializeDownloadsUi()
         {
             IViewModel viewModel = new DownloadsViewModel(_businessAccessService);
             _downloadsUi = new DownloadsView(viewModel);
         }
 
+        /// <summary>
+        /// Plausenprüfung: Wenn in der UserConfig Datenbank-Werte hinterlegt sind,
+        /// dann kann erst von dieser View gewechselt werden. Setzt anschließend die angezeigte View.
+        /// </summary>
         private void DecideCurrentContent()
         {
-            //bool dataTargetIsSet = _configService.IsPropertySet();
-
-
-            //bool dataTargetIsSet = _configurationService.IsPropertySet();
-
             if (CanSwitchOffSettings())
             {
                 if (_podcastUi == null)
@@ -114,33 +124,24 @@ namespace PresentationLayer.ViewModel
             {
                 InitializeSettingsUi();
                 CurrentContent = _settingsUi;
-                //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
-        //private void SwitchCurrentContentTo()
-        //{
-        //    if (CurrentContent == _podcastUi)
-        //    {
-        //        InitializeSettingsUi();
-        //        CurrentContent = _settingsUi;
-        //    }
-        //    else
-        //    {
-        //        SwitchToPodcastUi();
-        //    }
-        //}
-
+        /// <summary>
+        /// Überprüft ob in der UserConfig Werte definiert sind, wenn ja wird true, wenn nein false returned.
+        /// </summary>
+        /// <returns></returns>
         private bool CanSwitchOffSettings()
         {
             return _configurationService.IsPropertySet();
         }
 
+        /// <summary>
+        /// Wechselt den momentan angezeigten Window-Inhalt (CurrentContent) zur PodcastView.
+        /// Falls keine Einstellung in der UserConfig gesetzt sind, dann wird die PodcastView nicht initialisiert.
+        /// </summary>
         private void SwitchToPodcastUi()
         {
-            //CanSwitchOffSettings() == true ? CurrentContent = _settingsUi : CurrentContent = _podcastUi;
-            //CurrentContent = CanSwitchOffSettings() == true ? _settingsUi : _podcastUi;
-
             if (CanSwitchOffSettings())
             {
                 if (_settingsUi != null)
@@ -153,28 +154,13 @@ namespace PresentationLayer.ViewModel
 
             else
             {
-                //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
                 MessageBox.Show("Bitte Datenziel konfigurieren und speichern", "Fehlende Einstellungen", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-
-
-
-            //if (_configService.IsPropertySet() == true)
-            //{
-            //    if (_settingsUi != null)
-            //    {
-            //        _settingsUi.ViewModelType = null;
-            //        _settingsUi = null;
-            //    }
-            //    CurrentContent = _podcastUi;
-            //}
-
-            //else
-            //{
-            //    //MessageBox.Show("Bitte Datenziel auswählen", "Fehlende Einstellung", System.Windows.MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}
         }
 
+        /// <summary>
+        /// Initialisiert die SettingsView, wenn diese nicht initialisiert ist und setzt sie als CurrentContent (angezeigter Frame im MainView)
+        /// </summary>
         private void SwitchToSettingsUi()
         {
             if (CurrentContent != _settingsUi)
@@ -184,6 +170,9 @@ namespace PresentationLayer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Initialisiert die DownloadsView, wenn diese nicht initialisiert ist und setzt sie als CurrentContent (angezeigter Frame im MainView)
+        /// </summary>
         private void SwitchToDownloads()
         {
             if (CanSwitchOffSettings())
@@ -203,7 +192,10 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-
+        /// <summary>
+        /// Lädt die PodcastView mit dem PodcastViewModel erneut um die darin enthaltenen Daten neuzuladen.
+        /// Wichtig ein erneutes Laden durchzufühen, wenn sich in der UserConfig die Datenbank-Daten geändert haben.
+        /// </summary>
         private void ReloadPodcastUi()
         {
             if (_podcastUi != null)
@@ -211,10 +203,16 @@ namespace PresentationLayer.ViewModel
                 _podcastUi.ViewModelType = null;
                 _podcastUi = null;
             }
-
             InitializePodcastUi();
         }
 
+        #region Events und Event-Subscriptions
+        /// <summary>
+        /// Subscribed zu einem Event des UserNavigationViewModels.
+        /// Anhand der übertragenen veröffentlichen EventProperty kann entschieden werden, welche View als CurrentContent angezeigt werden soll.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void UserNavigationUi_OnTestChanged(object sender, OnNavigationButtonClicked e)
         {
             //SwitchCurrentContentTo();
@@ -234,35 +232,55 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        public event EventHandler<OnCurrentContentChanged> OnTestChanged;
+        /// <summary>
+        /// Published ein Event, dass ausgelöst werden soll, wenn sich der CurrentContent ändert.
+        /// </summary>
+        public event EventHandler<OnCurrentContentChanged> ViewChanged;
 
-        public void OnTest(string property)
+        /// <summary>
+        /// Prüft ob es einen EventSubscriber gibt.
+        /// Wenn ja, wird daer im CurrentContent angezeigte ViewModel-Name übertragen.
+        /// </summary>
+        /// <param name="property"></param>
+        public void OnViewChanged(string property)
         {
-            if (OnTestChanged != null)
+            if (ViewChanged != null)
             {
-                OnTestChanged(this, new OnCurrentContentChanged() { ViewModelName = property });
+                ViewChanged(this, new OnCurrentContentChanged() { ViewModelName = property });
             }
         }
 
+        /// <summary>
+        /// Setzt dynamisch beim Initialisieren der ViewModels die publisher und subscriber von Events.
+        /// </summary>
+        /// <param name="viewModel"></param>
         private void SetUpSubscriber(IViewModel viewModel)
         {
             if (viewModel.GetType().Equals(typeof(UserNavigationViewModel)))
             {
                 UserNavigationViewModel userVm = viewModel as UserNavigationViewModel;
-                this.OnTestChanged += userVm.MainViewModel_OnTestChanged;
+                this.ViewChanged += userVm.MainViewModel_OnTestChanged;
                 userVm.OnTestChanged += this.UserNavigationUi_OnTestChanged;
             }
             else if (viewModel.GetType().Equals(typeof(SettingsViewModel)))
             {
                 SettingsViewModel settingsVm = viewModel as SettingsViewModel;
-                settingsVm.OnTestChanged += ViewModel_OnTestChanged;
+                settingsVm.OnUserCoinfigChanged += SettingsViewModel_OnUserConfigChanged;
             }
         }
 
-        private void ViewModel_OnTestChanged(object sender, OnConfigChanged e)
+        /// <summary>
+        /// Wenn sich die Datenbank-Informationen in UserConfiguration durch Nutzereingabe geändert hat,
+        /// dann wird das MainViewModel über dieses Event informiert.
+        /// Dadurch wird die PodcastView neu geladen und die korrekte Datenbank verwendet.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingsViewModel_OnUserConfigChanged(object sender, OnConfigChanged e)
         {
             ReloadPodcastUi();
         }
+        #endregion
     }
 }
 

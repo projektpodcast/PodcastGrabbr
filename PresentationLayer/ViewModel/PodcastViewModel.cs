@@ -17,8 +17,17 @@ namespace PresentationLayer.ViewModel
 {
     public class PodcastViewModel : BaseViewModel
     {
+        #region Services
+        /// <summary>
+        /// Instanz, die Zugriff auf Get und Save-Methoden des BusinessLayers ermöglicht.
+        /// </summary>
         private IBusinessAccessService _businessAccess { get; set; }
+        #endregion
 
+        #region Suchmenü Properties
+        /// <summary>
+        /// Wechselt die Sichtbarkeit des Suchmenüs
+        /// </summary>
         private Visibility _visibilitySearchBar = Visibility.Collapsed;
         public Visibility VisibilitySearchBar
         {
@@ -26,6 +35,9 @@ namespace PresentationLayer.ViewModel
             set { _visibilitySearchBar = value; OnPropertyChanged("VisibilitySearchBar"); }
         }
 
+        /// <summary>
+        /// Wahlmöglichkeiten/ItemSource der ComboBox im Suchmenü
+        /// </summary>
         private List<string> _filterOptions { get; set; }
         public List<string> FilterOptions
         {
@@ -33,6 +45,9 @@ namespace PresentationLayer.ViewModel
             set { _filterOptions = value; OnPropertyChanged("FilterOptions"); }
         }
 
+        /// <summary>
+        /// Gebunden an das ausgewählte Item der ComboBox im Suchmenü
+        /// </summary>
         private string _typeFilter { get; set; }
         public string TypeFilter
         {
@@ -40,13 +55,22 @@ namespace PresentationLayer.ViewModel
             set { _typeFilter = value; OnPropertyChanged("TypeFilter"); }
         }
 
+        /// <summary>
+        /// Gebunden an die TextBox im Suchmenü. Synchronisiert mit der Nutzereingabe.
+        /// </summary>
         private string _textFilter { get; set; }
         public string TextFilter
         {
             get { return _textFilter; }
             set { _textFilter = value; OnPropertyChanged("TextFilter"); }
         }
+        #endregion
 
+        #region Properties
+        /// <summary>
+        /// Property ist eine in der View ausgewählte Show.
+        /// Wenn eine Show ausgewählt wird, werden die darunter gruppierten Episoden geladen (EpisodesCollection) und dargestellt.
+        /// </summary>
         private Show _selectedShow { get; set; }
         public Show SelectedShow
         {
@@ -54,10 +78,35 @@ namespace PresentationLayer.ViewModel
             set { _selectedShow = value; OnPropertyChanged("SelectedShow"); GetEpisodes(); }
         }
 
+        /// <summary>
+        /// Implementiert ICollectionChanged um änderung der View mitzuteilen.
+        /// Ist eine Sammlung aller Episoden, die zu einer ausgewählten Episode gehören.
+        /// </summary>
         public ObservableCollection<Episode> EpisodesCollection { get; set; }
 
+        /// <summary>
+        /// Implementiert ICollectionChanged um änderung der View mitzuteilen.
+        /// Ist eine Sammlung aller in der Datenquelle verfügbarer Podcasts.
+        /// </summary>
         public ObservableCollection<Show> AllShows { get; set; }
 
+        /// <summary>
+        /// Wenn IsBusy = true ist, wird ein asynchroner Task ausgeführt.
+        /// </summary>
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { _isBusy = value; }
+        }
+        #endregion
+
+        #region Ctor
+        /// <summary>
+        /// Initialisiert non-nullable Properties, setzt die Filteroptionen in der Such-ComboBox
+        /// und fragt den BusinessLayer (->DataAccessLayer) ab um die ObservableCollection<Show> mit Shows des Datenziels zu füllen.
+        /// </summary>
+        /// <param name="businessAccess">Service, der Zugriff auf Get und Save-Methoden des BusinessLayers ermöglicht.</param>
         public PodcastViewModel(IBusinessAccessService businessAccess)
         {
             _businessAccess = businessAccess;
@@ -70,40 +119,41 @@ namespace PresentationLayer.ViewModel
                 "Episode"
             };
 
-            SetList();
+            GetShows();
         }
+        #endregion
 
-        #region ICommand Properties
-        private ICommand _deleteAllPodcasts;
+        #region ICommand Properties und Plausenprüfuing
+        /// <summary>
+        /// ICommand: löscht den ausgewählten Podcast aus dem Datenziel
+        /// </summary>
+        private ICommand _deleteSelectedPodcast;
         public ICommand DeleteSelectedPodcast
         {
             get
             {
-                if (_deleteAllPodcasts == null)
+                if (_deleteSelectedPodcast == null)
                 {
-                    _deleteAllPodcasts = new RelayCommand(
+                    _deleteSelectedPodcast = new RelayCommand(
                         p => this.IsShowSelected(),
                         p => this.ExecuteDeleteSelectedShow());
                 }
-                return _deleteAllPodcasts;
+                return _deleteSelectedPodcast;
             }
         }
 
-        //private ICommand _nextPage;
-        //public ICommand NextPage
-        //{
-        //    get
-        //    {
-        //        if (_nextPage == null)
-        //        {
-        //            _nextPage = new RelayCommand(
-        //                p => true,
-        //                p => this.ExecuteNextPage());
-        //        }
-        //        return _nextPage;
-        //    }
-        //}
+        /// <summary>
+        /// Überprüft ob eine Show vom Nutzer ausgewählt wurde.
+        /// </summary>
+        /// <returns></returns>
+        private bool IsShowSelected()
+        {
+            return SelectedShow != null ? true : false;
+        }
 
+        /// <summary>
+        /// ICommand: Aktiviert den im Suchmenü gesetzten Suchfilter
+        /// </summary>
         private ICommand _searchFilter;
         public ICommand SearchFilter
         {
@@ -119,6 +169,11 @@ namespace PresentationLayer.ViewModel
             }
         }
 
+        /// <summary>
+        /// Überprüft, ob die ComboBox und das Textfeld im Suchmenü gefüllt sind.
+        /// Wenn nicht, lässt sich der ICommand nicht ausführen.
+        /// </summary>
+        /// <returns></returns>
         private bool AreFiltersSet()
         {
             if (TypeFilter != null && !string.IsNullOrWhiteSpace(TextFilter))
@@ -128,6 +183,104 @@ namespace PresentationLayer.ViewModel
             return false;
         }
 
+        /// <summary>
+        /// ICommand: Zeigt / Blendet das Suchmenü auf Knopfdruck aus.
+        /// </summary>
+        private ICommand _toggleSearchBarVisibility;
+        public ICommand ToggleSearchBarVisibility
+        {
+            get
+            {
+                if (_toggleSearchBarVisibility == null)
+                {
+                    _toggleSearchBarVisibility = new RelayCommand(
+                        p => true,
+                        p => this.DecideVisibilityProperty());
+                }
+                return _toggleSearchBarVisibility;
+            }
+        }
+
+        /// <summary>
+        /// ICommand: Aktualisiert die ausgewählte Show im Datenziel und lädt die Daten erneut aus der Datenquelle.
+        /// </summary>
+        private ICommand _refreshSelectedPodcast;
+        public ICommand RefreshSelectedPodcast
+        {
+            get
+            {
+                if (_refreshSelectedPodcast == null)
+                {
+                    _refreshSelectedPodcast = new RelayCommand(
+                        p => this.IsShowSelected(),
+                        p => this.ExecuteRefreshSelectedShow());
+                }
+                return _refreshSelectedPodcast;
+            }
+        }
+
+        /// <summary>
+        /// ICommand: Play Button - spielt die heruntergeladene Mediendatei der ausgewählten Episode ab.
+        /// </summary>
+        private ICommand _playMedia;
+        public ICommand PlayMedia
+        {
+            get
+            {
+                if (_playMedia == null)
+                {
+                    _playMedia = new RelayCommand(
+                        param => true,
+                        param => this.ExecutePlayMedia(param));
+                }
+                return _playMedia;
+            }
+        }
+
+        /// <summary>
+        /// ICommand: Befehl um die ausgewählte Episode lokal herunterzuladen.
+        /// </summary>
+        private ICommand _downloadMedia;
+        public ICommand DownloadMedia
+        {
+            get
+            {
+                if (_downloadMedia == null)
+                {
+                    _downloadMedia = new AsyncRelayCommand<Episode>(ExecuteMediaDownloadAsync, CanExecuteSubmit);
+                }
+                return _downloadMedia;
+            }
+        }
+
+        private bool CanExecuteSubmit(Episode episode)
+        {
+            return !IsBusy;
+        }
+        #endregion ICommand Properties
+
+        #region Methoden
+        /// <summary>
+        /// Spricht den BusinessLayer an um eine Liste aller Shows aus der Datenquelle zu erhalten.
+        /// </summary>
+        public void GetShows()
+        {
+            List<Show> showList = _businessAccess.Get.GetShowList();
+            AllShows = new ObservableCollection<Show>(showList);
+        }
+
+        /// <summary>
+        /// ICommand-Methode... 
+        /// </summary>
+        private void ExecuteDeleteSelectedShow()
+        {
+            throw new NotImplementedException();
+            //BusinessLayer-Zugriff um Show(SelectedShow) + alle Episoden zu löschen.
+        }
+
+        /// <summary>
+        /// ICommand Methode... Filtert in der UI angezeigten Shows oder Episoden in Abhängigkeit des gesetzten Suchfilters
+        /// </summary>
         private void ExecuteSearchFilter()
         {
             if (TypeFilter == "Show")
@@ -148,26 +301,9 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private ICommand _toggleSearchBarVisibility;
-        public ICommand ToggleSearchBarVisibility
-        {
-            get
-            {
-                if (_toggleSearchBarVisibility == null)
-                {
-                    _toggleSearchBarVisibility = new RelayCommand(
-                        p => this.CanToggle(),
-                        p => this.DecideVisibilityProperty());
-                }
-                return _toggleSearchBarVisibility;
-            }
-        }
-
-        private bool CanToggle()
-        {
-            return true;
-        }
-
+        /// <summary>
+        /// ICommand Methode... Toggled/wechselt die Sichtbarkeit des Suchmenüs auf Collapsed/Visible
+        /// </summary>
         public void DecideVisibilityProperty()
         {
             switch (VisibilitySearchBar)
@@ -184,129 +320,32 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-
-
-        private ICommand _refreshSelectedPodcast;
-        public ICommand RefreshSelectedPodcast
+        /// <summary>
+        /// ICommand Methode... Aktualisiert die ausgewählte Show im Datenziel und lädt die Daten erneut aus der Datenquelle.
+        /// </summary>
+        private void ExecuteRefreshSelectedShow()
         {
-            get
-            {
-                if (_refreshSelectedPodcast == null)
-                {
-                    _refreshSelectedPodcast = new RelayCommand(
-                        p => this.IsShowSelected(),
-                        p => this.ExecuteRefreshSelectedShow());
-                }
-                return _refreshSelectedPodcast;
-            }
+            throw new NotImplementedException();
+            //BusinessLayer-Zugriff um XML der Show(SelectedShow) neu zu laden, zu deserialisieren und neue Episoden in die DB zu speichern.
         }
 
-        private ICommand _playMedia;
-        public ICommand PlayMedia
-        {
-            get
-            {
-                if (_playMedia == null)
-                {
-                    _playMedia = new RelayCommand(
-                        param => true,
-                        param => this.ExecutePlayMedia(param));
-                }
-                return _playMedia;
-            }
-        }
-
-        //private ICommand _downloadMedia;
-        //public ICommand DownloadMedia
-        //{
-        //    get
-        //    {
-        //        if (_downloadMedia == null)
-        //        {
-        //            _downloadMedia = new RelayCommand(
-        //                p => true,
-        //                param => this.ExecuteDownloadMedia((Episode)param));
-        //        }
-        //        return _downloadMedia;
-        //    }
-        //}
-
-        //private ICommand _downloadMedia;
-        //public ICommand DownloadMedia
-        //{
-        //    get
-        //    {
-        //        if (_downloadMedia == null)
-        //        {
-        //            _downloadMedia = new RelayCommand(
-        //                p => true,
-        //                param => this.ExecuteDownloadMedia((Episode)param));
-        //        }
-        //        return _downloadMedia;
-        //    }
-        //}
-
-        private ICommand _downloadMedia;
-        public ICommand DownloadMedia
-        {
-            get
-            {
-                if (_downloadMedia == null)
-                {
-                    _downloadMedia = new AsyncRelayCommand<Episode>(ExecuteMediaDownloadAsync, CanExecuteSubmit);
-                }
-                return _downloadMedia;
-            }
-        }
-
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get { return _isBusy; }
-            set { _isBusy = value; }
-        }
-
-        private bool Yes()
-        {
-            return true;
-        }
-
-        #endregion ICommand Properties
-
-
-        //private void ExecuteNextPage()
-        //{
-        //    GetNextEpisodes(EpisodesCollection.Last());
-        //}
-
-        //private void GetNextEpisodes(Episode episode)
-        //{
-        //    EpisodesCollection.Clear();
-        //    var a = _businessAccess.Get.GetNextEpisodes(SelectedShow, episode);
-        //    foreach (var item in a)
-        //    {
-        //        EpisodesCollection.Add(item);
-        //    }
-        //    //EpisodesCollection = ;
-        //}
-
-        private bool IsShowSelected()
-        {
-            return SelectedShow != null ? true : false;
-            //if (SelectedShow != null)
-            //{
-            //    return true;
-            //}
-            //return false;
-        }
-
+        /// <summary>
+        /// Steuert den BusinessLayer an um heruntergeladene Mediendatei der ausgewählten Episode (mit dem hinterlegten Standardprogramm) abzuspielen.
+        /// </summary>
+        /// <param name="episode"></param>
         private void ExecutePlayMedia(object episode)
         {
             _businessAccess.Get.PlayMediaFile((Episode)episode);
-            //throw new NotImplementedException();
-            //BusinessLayer-Zugriff um (Property) DownloadPath der Episode aufzulösen und abzuspielen.
         }
 
+        /// <summary>
+        /// Asynchrone Methode um den Mediendownload auszuführen.
+        /// Wenn eine Datei heruntergeladen wird, wird IsBusy = true gesetzt um anzuzeigen, dass bereits ein asynchroner Task ausgeführt wird.
+        /// Nachdem der Download erfolgt ist wird die Episodenliste der Show erneut geladen und IsBusy = false gesetzt
+        /// um anzuzeigen, dass der asynchrone Task abgeschlossen ist.
+        /// </summary>
+        /// <param name="episode">ausgewählte Episode, die heruntergeladen werden soll</param>
+        /// <returns></returns>
         private async Task ExecuteMediaDownloadAsync(Episode episode)
         {
             try
@@ -314,81 +353,17 @@ namespace PresentationLayer.ViewModel
                 IsBusy = true;
                 await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
                 episode.IsDownloaded = true;
-                
+                //NACHTRAGEN:::::::::::::::::
                 //INotifyPropertyChanged implementieren für Episode IsDownloaded??
-
-                //GetEpisodes();
-                //EpisodesCollection.Clear();
-                //foreach (Episode item in updatedEpisodes)
-                //{
-                //    updatedEpisodes.Add(item);
-                //}
             }
             finally
             {
                 IsBusy = false;
             }
         }
-
-        private bool CanExecuteSubmit(Episode episode)
-        {
-            return !IsBusy;
-        }
-
-        private async Task ExecuteDownloadMedia()
-        {
-            List<Task<bool>> tasks = new List<Task<bool>>();
-
-            //tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
-
-            var done = await Task.WhenAll(tasks);
-
-        }
-        //private async Task<List<bool>> ExecuteDownloadMedia(Episode param)
-        //{
-        //    List<Task<bool>> tasks = new List<Task<bool>>();
-
-        //    tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
-
-        //    var done = await Task.WhenAll(tasks);
-        //    return new List<bool>(done);
-        //}
-
-        private void ExecuteDeleteSelectedShow()
-        {
-            throw new NotImplementedException();
-            //BusinessLayer-Zugriff um Show(SelectedShow) + alle Episoden zu löschen.
-        }
-
-        private void ExecuteRefreshSelectedShow()
-        {
-            throw new NotImplementedException();
-            //BusinessLayer-Zugriff um XML der Show(SelectedShow) neu zu laden, zu deserialisieren und neue Episoden in die DB zu speichern.
-        }
+        #endregion
 
         #region Mockdata
-        public void SetList()
-        {
-            List<Show> showList = _businessAccess.Get.GetShowList();
-            AllShows = new ObservableCollection<Show>(showList);
-
-
-            //List<Show> test = new List<Show>();
-            //AllShows = new ObservableCollection<Show>();
-
-            //GetObjects bl = new GetObjects();
-
-            ////List<Show> showList = bl.GetShowList();
-
-            //foreach (var item in showList)
-            //{
-            //    test.Add(item);
-            //}
-
-            //AllShows = new ObservableCollection<Show>(test);
-            //Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
-        }
-
         private void AddMoreMockData()
         {
             for (int i = 0; i < 10; i++)
@@ -409,16 +384,6 @@ namespace PresentationLayer.ViewModel
 
         private void GetEpisodes()
         {
-            //DateTime now = DateTime.Now;
-            //this.EpisodesCollection.Add(new Episode()
-            //{
-            //    Title = "Neue Show Selected",
-            //    PublishDate = now,
-            //    ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg",
-            //    Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
-            //    Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called 'StandUP!with Pete Dominick' available on Apple Podcasts.",
-            //});
-
             List<Episode> episodes = _businessAccess.Get.GetEpisodes(SelectedShow);
             EpisodesCollection.Clear();
 
@@ -426,20 +391,7 @@ namespace PresentationLayer.ViewModel
             {
                 EpisodesCollection.Add(item);
             }
-
-
-            //EpisodesCollection = new ObservableCollection<Episode>(episodes);
         }
-
-        //private void FillEpisodeListWithMockData()
-        //{
-        //    DateTime now = DateTime.Now;
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = false });
-        //        EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = true });
-        //    }
-        //}
         #endregion Mockdata
     }
 }

@@ -186,7 +186,6 @@ namespace PresentationLayer.ViewModel
         }
 
 
-
         public void ExecutePersistDbData()
         {
             MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
@@ -213,13 +212,13 @@ namespace PresentationLayer.ViewModel
 
 
 
-        public event System.EventHandler<OnConfigChanged> OnTestChanged;
+        public event System.EventHandler<OnConfigChanged> OnUserCoinfigChanged;
 
         public void ConfigurationHasChanged()
         {
-            if (OnTestChanged != null)
+            if (OnUserCoinfigChanged != null)
             {
-                OnTestChanged(this, new OnConfigChanged() { SettingValue = ConfigData.DataType.Key, SettingProperty = ConfigData.DataType.Value });
+                OnUserCoinfigChanged(this, new OnConfigChanged() { SettingValue = ConfigData.DataType.Key, SettingProperty = ConfigData.DataType.Value });
             }
         }
     }
