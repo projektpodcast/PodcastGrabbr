@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 namespace PresentationLayer.View
 {
     [Obsolete]
+    //OBSOLETE//OBSOLETE//OBSOLETE//OBSOLETE//OBSOLETE//OBSOLETE
     public class UriToCachedImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

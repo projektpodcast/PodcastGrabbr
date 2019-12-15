@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace PresentationLayer.View
+namespace PresentationLayer.View.Helper
 {
     public class NullToVisibilityConverter : IValueConverter
     {
-        #region Implementation of IValueConverter
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -22,7 +21,5 @@ namespace PresentationLayer.View
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

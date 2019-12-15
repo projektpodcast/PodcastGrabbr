@@ -44,15 +44,6 @@
         <SolidColorBrush x:Key="GreenBrushPlayTranslucent" Color="Green" Opacity="0.8"/>
         <SolidColorBrush x:Key="WhiteTranslucent" Color="White" Opacity="0.8"/>
 
-        <Style x:Key="EpisodeTb" TargetType="{x:Type TextBlock}">
-            <Setter Property="Opacity" Value="1"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-            <Setter Property="FontSize" Value="10pt"></Setter>
-            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-        </Style>
-
         <Style x:Key="PlayButton" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -196,26 +187,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <Style x:Key="HeadlineTb" TargetType="{x:Type TextBlock}">
-            <Setter Property="Opacity" Value="1"></Setter>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="FontSize" Value="10pt"></Setter>
-            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-        </Style>
-
-
-
-        <Style x:Key="Episode2Tb" TargetType="{x:Type TextBlock}">
-            <Setter Property="Opacity" Value="1"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-            <Setter Property="FontSize" Value="10pt"></Setter>
-            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-        </Style>
-
 
         <ControlTemplate x:Key="ExpanderControlTemplate2" TargetType="{x:Type Expander}">
             <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" SnapsToDevicePixels="True">
