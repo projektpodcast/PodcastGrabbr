@@ -32,6 +32,7 @@
         <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
 
 
+        <SolidColorBrush x:Key="ButtonHover" Color="#FF837047"/>
 
 
 
@@ -326,7 +327,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource SecondaryColorTranslucent04}"/>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ButtonHover}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
                                 <Setter Property="Opacity" TargetName="Bd" Value="0.8"/>

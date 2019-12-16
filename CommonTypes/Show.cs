@@ -8,6 +8,7 @@ namespace CommonTypes
 {
     public class Show
     {
+        public virtual string ShowId { get; set; }
         public virtual string PublisherName { get; set; }
         public virtual string PodcastTitle { get; set; }
         public virtual List<string> Category { get; set; }
@@ -19,6 +20,7 @@ namespace CommonTypes
         public virtual DateTime LastUpdated { get; set; }
         public virtual DateTime LastBuildDate { get; set; }
         public virtual string ImageUri { get; set; }
+        public virtual string RssLink { get; set; }
         public Show()
         {
         }

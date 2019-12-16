@@ -5,76 +5,149 @@ using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
 using CommonTypes;
-
+using RssFeedProcessor;
 
 namespace DataAccessLayer.PostgreSQL
 {
-    public class PostDataSource : LocalDataSource, IDataSource
+
+    public class PostDataSource : IDataSource
+
     {
-        PostConnect myConecction = new PostConnect();
+        //initialize prozess target and conenection
+        PostConnect myConecction;
+        PostDataTarget myTarget;
         NpgsqlConnection conexionOpen;
+        
+        DeserializingManager deserializer = new DeserializingManager();
 
+        public static IDataStorageType dbData;
 
-
-        public Boolean CheckShow(string id, string db)
+        public PostDataSource(IDataStorageType storageData)
         {
-            Boolean check = false;
-            try
-            {
-                string csql_create = "select sid from shows WHERE sid = " + id + "";
-                NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect(db));
-                Command.ExecuteNonQuery();
-                myConecction.DBDesConnect();
-                // conect with the created db
-                check = true;
-                return check;
-            }
-            catch (Exception)
-            {
-                return check;
-            }
+            dbData = storageData;
+            //1. verbindung öffnen -> postgressconn das onjekt storagedata übergeben
+            //myConecction = new PostConnect(storageData);
+            myTarget = new PostDataTarget(dbData);
+
             
+            //String html = "https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast";
+            String html = "http://podcast.wdr.de/quarks.xml";
+
+            Podcast podcast = deserializer.DeserializeRssXml(html);
+
+            bool CheckPodcast = CheckInDB(podcast);
+
+            //if the podcast dont exist, it will be saved in the db
+            if (! CheckPodcast)
+            {
+                myTarget.SavePodcast(podcast);
+            }
+
 
         }
 
-        public List<Episode> getAllEpisodes()
+
+        private bool CheckInDB(Podcast thisPodcast)
         {
-            conexionOpen = new NpgsqlConnection();
-            conexionOpen = myConecction.DBConnectionOpen();
+            bool check = false;
+
+            myConecction = new PostConnect();
+
+            string csql_create = "select * from shows where podcasttitle = '" + thisPodcast.ShowInfo.PodcastTitle + "'";
+
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
+            var reader = Command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                check = true;
+            }
+            myConecction.DBDesConnect();
+            return check;
+        }
+
+        // collect the episodes
+        public List<Episode> GetAllEpisodes(Show selectedShow)
+        {
+            myConecction = new PostConnect();
 
             string csql_create = "select * from episodes";
-            NpgsqlCommand Command = new NpgsqlCommand(csql_create, conexionOpen);
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
             var reader = Command.ExecuteReader();
+
             var list = new List<Episode>();
 
             while (reader.Read())
-                list.Add(new Episode { IsDownloaded = false, Summary = reader.GetString(4), ImageUri = reader.GetString(10),   Title = reader.GetString(2), PublishDate = reader.GetDateTime(5) });
+               
+                
+            // return a list with all episodes 
+    
+
+            list.Add(new Episode
+            {
+                //EpisodeId = reader.GetString(0),
+                //showid = reader.GetString(1),
+                Title = reader.GetString(2),
+                PublishDate = reader.GetDateTime(3),
+                Summary = reader.GetString(4),
+                Keywords = reader.GetString(5),
+                ImageUri = reader.GetString(6),
+                //duration = reader.GetString(7),
+                //filetyp = reader.GetString(8),
+                //fileurl = reader.GetString(9),
+                //FileDetails = reader.GetString(10),
+                IsDownloaded = reader.GetBoolean(11),
+                LocalMediaPath = reader.GetString(12)
+            });
+
             list.ToArray();
+
             myConecction.DBDesConnect();
+
             return list;
         }
 
+        //Collect all shows 
         public List<Show> GetAllShows()
         {
-            conexionOpen = new NpgsqlConnection();
-            conexionOpen = myConecction.DBConnectionOpen();
+
+            myConecction = new PostConnect();
 
             string csql_create = "select * from shows";
-            NpgsqlCommand Command = new NpgsqlCommand(csql_create, conexionOpen);
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
+
             var reader = Command.ExecuteReader();
+
             var list = new List<Show>();
 
+
             while (reader.Read())
-                list.Add(new Show { Description = reader.GetString(2), Keywords="null",Language="null", PodcastTitle = reader.GetString(1), PublisherName = reader.GetString(3), ImageUri = "" });
-                
-            list.ToArray();
+
+                list.Add(new Show {
+                    //ShowId = reader.GetString(0),
+                    PublisherName = reader.GetString(1),
+                    PodcastTitle = reader.GetString(2),
+                    //Category = reader.GetString(3),
+                    Keywords = reader.GetString(4),
+                    Subtitle = reader.GetString(5),
+                    Language = reader.GetString(6),
+                    Description = reader.GetString(7),
+                    LastUpdated = reader.GetDateTime(8),
+                    LastBuildDate = reader.GetDateTime(9),
+                    ImageUri = reader.GetString(10),
+                    RssLink = reader.GetString(11)
+                });
+
+            list.ToArray();            
             myConecction.DBDesConnect();
+
             return list;
+
         }
 
-        internal override string GetFolderName()
-        {
-            throw new NotImplementedException();
-        }
+
     }
+
+
+
 }

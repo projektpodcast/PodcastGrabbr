@@ -52,21 +52,22 @@ namespace DataAccessLayer
             List<Episode> episodeList = new List<Episode>();
 
             DateTime now = DateTime.Now;
-            Episode episode = new Episode
+            for (int i = 0; i < 10; i++)
             {
-                Title = "Neue Show Selected",
-                PublishDate = now,
-                Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
-                Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called " +
+                Episode episode = new Episode
+                {
+                    EpisodeId = i.ToString(),
+                    Title = "Neue Show Selected",
+                    PublishDate = now,
+                    Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
+                    Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called " +
                 "'StandUP!with Pete Dominick' available on Apple Podcasts.",
-            };
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
+                };
+                episodeList.Add(episode);
+            }
+
+
+
 
             List<Podcast> allDownloadedPodcasts = new List<Podcast>();
 
@@ -136,10 +137,18 @@ namespace DataAccessLayer
             return mockList;
         }
 
+        public List<Episode> GetAllEpisodes(Show selectedShow)
+        {
+            List<Episode> episodesList = new List<Episode>();
 
+            DateTime now = DateTime.Now;
+            for (int i = 0; i < 4; i++)
+            {
+                episodesList.Add(new Episode() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = false });
+                episodesList.Add(new Episode() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = true });
+            }
 
-
-
-
+            return episodesList;
+        }
     }
 }

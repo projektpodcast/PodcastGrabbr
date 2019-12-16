@@ -66,6 +66,10 @@
       <Project>{725c78c2-bb58-4908-b81e-d1c418e26b99}</Project>
       <Name>RssFeedProcessor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SecurityLibrary\SecurityLibrary.csproj">
+      <Project>{a6f8af07-5d06-4593-84a2-4fd98e1fd146}</Project>
+      <Name>SecurityLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

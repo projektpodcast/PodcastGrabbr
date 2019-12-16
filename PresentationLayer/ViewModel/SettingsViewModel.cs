@@ -1,4 +1,5 @@
-﻿using PresentationLayer.Services;
+﻿using CommonTypes;
+using PresentationLayer.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -8,8 +9,9 @@ namespace PresentationLayer.ViewModel
 {
     public class SettingsViewModel : BaseViewModel
     {
-        private IUserConfigService _configService { get; set; }
+        //private IUserConfigService _configService { get; set; }
         #region Ui Properties
+        private IConfigurationService _configurationService { get; set; }
         private KeyValuePair<int, string> _selectedDataType { get; set; }
         public KeyValuePair<int, string> SelectedDataType
         {
@@ -17,21 +19,44 @@ namespace PresentationLayer.ViewModel
             set
             {
                 _selectedDataType = value;
-                OnPropertyChanged("SelectedDataType"); CheckEqualitySelectedAndConfigDataType();
+                OnPropertyChanged("SelectedDataType"); DecideVisibility();
+                if (ConfigData != null)
+                {
+                    ConfigData.DataType = value;
+                }
             }
         }
 
-        private KeyValuePair<int, string> _configDataType { get; set; }
-        public KeyValuePair<int, string> ConfigDataType
+        public Dictionary<int, string> PossibleTypes { get; set; }
+
+        private Visibility _dbDetailVisibility { get; set; }
+        public Visibility DbDetailVisibility { get { return _dbDetailVisibility; } set { _dbDetailVisibility = value; OnPropertyChanged("DbDetailVisibility"); } }
+
+
+        private string _dbPassword { get; set; }
+        public string DbPassword
         {
-            get { return _configDataType; }
-            set
-            {
-                _configDataType = value;
-                OnPropertyChanged("ConfigDataType");
-            }
+            get { return _dbPassword; }
+            set { _dbPassword = value; OnPropertyChanged("DbPassword"); }
         }
+
         #endregion Ui Properties
+
+        public SettingsViewModel(IConfigurationService configService)
+        {
+            SelectedDataType = new KeyValuePair<int, string>();
+
+            PossibleTypes = new Dictionary<int, string>
+            {
+                { 1, "Lokal: Xml" },
+                { 2, "Datenbank: MySQL" },
+                { 3, "Datenbank: PostgreSQL" }
+            };
+
+            _configurationService = configService;
+            MapConfigData();
+            IsConfigurationSet();
+        }
 
         #region ICommand Properties
         private ICommand _fileImport { get; set; }
@@ -78,16 +103,27 @@ namespace PresentationLayer.ViewModel
                 return _deleteAllDownloads;
             }
         }
+
+        private ICommand _persistDbData { get; set; }
+        public ICommand PersistDbData
+        {
+            get
+            {
+                if (_persistDbData == null)
+                {
+                    _persistDbData = new RelayCommand(
+                        p => IsDataTypeSelected(),
+                        p => this.ExecutePersistDbData());
+                }
+                return _persistDbData;
+            }
+        }
         #endregion ICommand Properties
 
-        #region ICommand Methods
+
         private bool IsDataTypeSelected()
         {
-            if (ConfigDataType.Key != 0)
-            {
-                return true;
-            }
-            return false;
+            return SelectedDataType.Key != 0 ? true : false;
         }
 
         private void ExecuteFileImport()
@@ -95,7 +131,6 @@ namespace PresentationLayer.ViewModel
             IDialogService fileServe = new FileDialogService();
             fileServe.StartFileDialog();
         }
-
 
         private void ExecuteDeleteAllDownloads()
         {
@@ -106,75 +141,123 @@ namespace PresentationLayer.ViewModel
         {
             //bl..delete
         }
-        #endregion ICommand Methods
 
-        public void DoesItExist()
+        private void DecideVisibility()
         {
-            int currentValue = _configService.ConfigValue;
-            if (currentValue != 0)
+            DbDetailVisibility = SelectedDataType.Key <= 1 ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+
+
+
+        private IDataStorageType _userManipulatedData { get; set; }
+        public IDataStorageType UserManipulatedData
+        {
+            get { return _userManipulatedData; }
+            set
             {
-                var configValue = PossibleTypes.First(p => p.Key == currentValue);
-                ConfigDataType = configValue;
+                _userManipulatedData = value;
+                OnPropertyChanged("UserManipulatedData");
             }
+        }
+
+        private IDataStorageType _configData { get; set; }
+        public IDataStorageType ConfigData
+        {
+            get { return _configData; }
+            set
+            {
+                _configData = value;
+                OnPropertyChanged("ConfigData");
+            }
+        }
+
+        private void MapConfigData()
+        {
+            ConfigData = new DataStorageType
+            {
+                DataType = _configurationService.ConfigDatenArt.DataType,
+                Ip = _configurationService.ConfigDatenArt.Ip,
+                Port = _configurationService.ConfigDatenArt.Port,
+                DataBaseName = _configurationService.ConfigDatenArt.DataBaseName,
+                UserName = _configurationService.ConfigDatenArt.UserName,
+                EncryptedPassword = _configurationService.ConfigDatenArt.EncryptedPassword
+            };
+        }
+
+
+
+        public void ExecutePersistDbData()
+        {
+            MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
+            _configurationService.UpdateUserConfiguration(ConfigData);
+            ConfigurationHasChanged();
+        }
+
+        public void IsConfigurationSet()
+        {
+            if (ConfigData.DataType.Key != 0)
+            {
+                KeyValuePair<int, string> parsedConfigValue = PossibleTypes.First(p => p.Key == ConfigData.DataType.Key);
+                ConfigData.DataType = parsedConfigValue;
+                SelectedDataType = parsedConfigValue;
+            }
+
             else
             {
-                KeyValuePair<int, string> a = new KeyValuePair<int, string>(currentValue, "Bitte wählen");
-                ConfigDataType = a;
+                KeyValuePair<int, string> noDataTypeSelected = new KeyValuePair<int, string>(ConfigData.DataType.Key, "Bitte wählen");
+                ConfigData.DataType = noDataTypeSelected;
+                SelectedDataType = noDataTypeSelected;
             }
         }
 
-        public Dictionary<int, string> PossibleTypes { get; set; }
-        public SettingsViewModel(IUserConfigService configService)
-        {
-            _configService = configService;
-            SelectedDataType = new KeyValuePair<int, string>();
 
-            PossibleTypes = new Dictionary<int, string>
-            {
-                { 1, "Lokal: Xml" },
-                { 2, "Datenbank: MySQL" },
-                { 3, "Datenbank: PostgreSQL" }
-            };
-            DoesItExist();
-        }
-
-        private void CheckEqualitySelectedAndConfigDataType()
-        {
-            if (SelectedDataType.Key != ConfigDataType.Key)
-            {
-                MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
-                SetConnectionType2();
-            }
-        }
-
-        public void SetConnectionType2()
-        {
-            if (SelectedDataType.Value != null)
-            {
-                _configService.ConfigValue = SelectedDataType.Key;
-                ConfigDataType = SelectedDataType;
-                OnTest();
-            }
-        }
 
         public event System.EventHandler<OnConfigChanged> OnTestChanged;
 
-        public void OnTest()
+        public void ConfigurationHasChanged()
         {
             if (OnTestChanged != null)
             {
-                OnTestChanged(this, new OnConfigChanged());
+                OnTestChanged(this, new OnConfigChanged() { SettingValue = ConfigData.DataType.Key, SettingProperty = ConfigData.DataType.Value });
             }
         }
-
-        //public void SetConnectionType()
-        //{
-        //    if (SelectedDataType.Value != null)
-        //    {
-        //        GlobalUserCfgService.TestValue = SelectedDataType.Key;
-        //        ConfigDataType = SelectedDataType;
-        //    }
-        //}
-
     }
+
 }
+
+
+
+//public event System.EventHandler<OnConfigChanged> OnTestChanged;
+
+//public void OnTest()
+//{
+//    if (OnTestChanged != null)
+//    {
+//        OnTestChanged(this, new OnConfigChanged());
+//    }
+//}
+
+
+//private ICommand _toggleVisibility { get; set; }
+//public ICommand ToggleVisibility
+//{
+//    get
+//    {
+//        if (_toggleVisibility == null)
+//        {
+//            _toggleVisibility = new RelayCommand(
+//                p => this.IsDataTypeSelected(),
+//                p => this.ExecuteVisibilityToggle());
+//        }
+//        return _toggleVisibility;
+//    }
+//}
+//public void SetConnectionType()
+//{
+//    if (SelectedDataType.Value != null)
+//    {
+//        GlobalUserCfgService.TestValue = SelectedDataType.Key;
+//        ConfigDataType = SelectedDataType;
+//    }
+//}

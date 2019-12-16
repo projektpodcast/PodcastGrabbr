@@ -60,20 +60,25 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppConfigManager.cs" />
+    <Compile Include="AsyncRelayCommand.cs" />
+    <Compile Include="IAsyncCommand.cs" />
+    <Compile Include="IErrorHandler.cs" />
     <Compile Include="Models\ButtonModel.cs" />
+    <Compile Include="Models\PagingModel.cs" />
     <Compile Include="OnCurrentContentChanged.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\FileDialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\IInitializerService.cs" />
-    <Compile Include="Services\IUserConfigService.cs" />
     <Compile Include="Services\OnConfigChanged.cs" />
-    <Compile Include="Services\UserConfigService.cs" />
+    <Compile Include="Services\OnDatenHaltungChanged.cs" />
+    <Compile Include="Services\UserConfigurationService.cs" />
+    <Compile Include="TaskUtilities.cs" />
     <Compile Include="ViewModel\DownloadsViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Services\InizializerService.cs" />
     <Compile Include="OnNavigationChanged.cs" />
     <Compile Include="RelayCommand.cs" />
-    <Compile Include="Services\GlobalUserCfgService.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\PodcastViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -83,9 +88,13 @@
     <Compile Include="View\DownloadsView.xaml.cs">
       <DependentUpon>DownloadsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Helper\ValidationRules.cs" />
     <Compile Include="View\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="View\IView.cs" />
     <Compile Include="View\NullToVisibilityConverter.cs" />
+    <Compile Include="View\PasswordBoxUserControl.xaml.cs">
+      <DependentUpon>PasswordBoxUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PodcastView.xaml.cs">
       <DependentUpon>PodcastView.xaml</DependentUpon>
     </Compile>
@@ -112,6 +121,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\PasswordBoxUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PodcastView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,6 +172,10 @@
     <ProjectReference Include="..\CommonTypes\CommonTypes.csproj">
       <Project>{D042B04C-579A-40C9-8870-C2DABC168DB1}</Project>
       <Name>CommonTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecurityLibrary\SecurityLibrary.csproj">
+      <Project>{a6f8af07-5d06-4593-84a2-4fd98e1fd146}</Project>
+      <Name>SecurityLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

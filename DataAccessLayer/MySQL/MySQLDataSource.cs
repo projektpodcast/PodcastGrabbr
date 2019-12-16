@@ -9,6 +9,21 @@ namespace DataAccessLayer
 {
     public class MySQLDataSource : IDataSource
     {
+        public List<Episode> getAllEpisodes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Episode> GetAllEpisodes(Show selectedShow)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Show> GetAllShows(Show selectedShow)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Show> GetAllShows()
         {
             throw new NotImplementedException();

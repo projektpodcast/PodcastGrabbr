@@ -11,6 +11,6 @@ namespace DataAccessLayer
     {
         List<Show> GetAllShows();
 
-
+        List<Episode> GetAllEpisodes(Show selectedShow);
     }
 }

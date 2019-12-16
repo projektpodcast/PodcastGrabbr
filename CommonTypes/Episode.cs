@@ -8,6 +8,7 @@ namespace CommonTypes
 {
     public class Episode
     {
+        public virtual string EpisodeId { get; set; }
         public virtual string Title { get; set; }
         public DateTime PublishDate { get; set; }
         public string Summary { get; set; }
@@ -15,6 +16,8 @@ namespace CommonTypes
         public string ImageUri { get; set; }
         public FileInformation FileDetails { get; set; }
         public bool IsDownloaded { get; set; }
+
+        public string LocalMediaPath { get; set; }
 
         public Episode()
         {

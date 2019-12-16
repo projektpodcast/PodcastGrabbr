@@ -17,6 +17,8 @@ namespace PresentationLayer.ViewModel
 {
     public class PodcastViewModel : BaseViewModel
     {
+        private IBusinessAccessService _businessAccess { get; set; }
+
         private Visibility _visibilitySearchBar = Visibility.Collapsed;
         public Visibility VisibilitySearchBar
         {
@@ -45,16 +47,11 @@ namespace PresentationLayer.ViewModel
             set { _textFilter = value; OnPropertyChanged("TextFilter"); }
         }
 
-
-
-
-
-        private IBusinessAccessService _businessAccess { get; set; }
         private Show _selectedShow { get; set; }
         public Show SelectedShow
         {
             get { return _selectedShow; }
-            set { _selectedShow = value; OnPropertyChanged("SelectedShow"); AddNewEpisode(); }
+            set { _selectedShow = value; OnPropertyChanged("SelectedShow"); GetEpisodes(); }
         }
 
         public ObservableCollection<Episode> EpisodesCollection { get; set; }
@@ -67,22 +64,14 @@ namespace PresentationLayer.ViewModel
 
             AllShows = new ObservableCollection<Show>();
             EpisodesCollection = new ObservableCollection<Episode>();
-            FilterOptions = new List<string>();
-
-
-
-
+            FilterOptions = new List<string>
+            {
+                "Show",
+                "Episode"
+            };
 
             SetList();
-            FillEpisodeListWithMockData();
-
-
-
-
-            FilterOptions.Add("Show");
-            FilterOptions.Add("Episode");
         }
-
 
         #region ICommand Properties
         private ICommand _deleteAllPodcasts;
@@ -99,6 +88,21 @@ namespace PresentationLayer.ViewModel
                 return _deleteAllPodcasts;
             }
         }
+
+        //private ICommand _nextPage;
+        //public ICommand NextPage
+        //{
+        //    get
+        //    {
+        //        if (_nextPage == null)
+        //        {
+        //            _nextPage = new RelayCommand(
+        //                p => true,
+        //                p => this.ExecuteNextPage());
+        //        }
+        //        return _nextPage;
+        //    }
+        //}
 
         private ICommand _searchFilter;
         public ICommand SearchFilter
@@ -205,12 +209,42 @@ namespace PresentationLayer.ViewModel
                 if (_playMedia == null)
                 {
                     _playMedia = new RelayCommand(
-                        p => this.IsShowSelected(),
+                        p => true,
                         p => this.ExecutePlayMedia());
                 }
                 return _playMedia;
             }
         }
+
+        //private ICommand _downloadMedia;
+        //public ICommand DownloadMedia
+        //{
+        //    get
+        //    {
+        //        if (_downloadMedia == null)
+        //        {
+        //            _downloadMedia = new RelayCommand(
+        //                p => true,
+        //                param => this.ExecuteDownloadMedia((Episode)param));
+        //        }
+        //        return _downloadMedia;
+        //    }
+        //}
+
+        //private ICommand _downloadMedia;
+        //public ICommand DownloadMedia
+        //{
+        //    get
+        //    {
+        //        if (_downloadMedia == null)
+        //        {
+        //            _downloadMedia = new RelayCommand(
+        //                p => true,
+        //                param => this.ExecuteDownloadMedia((Episode)param));
+        //        }
+        //        return _downloadMedia;
+        //    }
+        //}
 
         private ICommand _downloadMedia;
         public ICommand DownloadMedia
@@ -219,23 +253,51 @@ namespace PresentationLayer.ViewModel
             {
                 if (_downloadMedia == null)
                 {
-                    _downloadMedia = new RelayCommand(
-                        p => this.IsShowSelected(),
-                        p => this.ExecuteDownloadMedia());
+                    _downloadMedia = new AsyncRelayCommand<Episode>(ExecuteMediaDownloadAsync, CanExecuteSubmit);
                 }
-                return _deleteAllPodcasts;
+                return _downloadMedia;
             }
+        }
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { _isBusy = value; }
+        }
+
+        private bool Yes()
+        {
+            return true;
         }
 
         #endregion ICommand Properties
 
+
+        //private void ExecuteNextPage()
+        //{
+        //    GetNextEpisodes(EpisodesCollection.Last());
+        //}
+
+        //private void GetNextEpisodes(Episode episode)
+        //{
+        //    EpisodesCollection.Clear();
+        //    var a = _businessAccess.Get.GetNextEpisodes(SelectedShow, episode);
+        //    foreach (var item in a)
+        //    {
+        //        EpisodesCollection.Add(item);
+        //    }
+        //    //EpisodesCollection = ;
+        //}
+
         private bool IsShowSelected()
         {
-            if (SelectedShow != null)
-            {
-                return true;
-            }
-            return false;
+            return SelectedShow != null ? true : false;
+            //if (SelectedShow != null)
+            //{
+            //    return true;
+            //}
+            //return false;
         }
 
         private void ExecutePlayMedia()
@@ -244,11 +306,51 @@ namespace PresentationLayer.ViewModel
             //BusinessLayer-Zugriff um (Property) DownloadPath der Episode aufzulösen und abzuspielen.
         }
 
-        private void ExecuteDownloadMedia()
+        private async Task ExecuteMediaDownloadAsync(Episode episode)
         {
-            throw new NotImplementedException();
-            //BusinessLayer-Zugriff um LocalMedia anzusteuern und Episode anhand des DownloadPath runterzuladen.
+            try
+            {
+                IsBusy = true;
+                await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
+                episode.IsDownloaded = true;
+                
+                //GetEpisodes();
+                //EpisodesCollection.Clear();
+                //foreach (Episode item in updatedEpisodes)
+                //{
+                //    updatedEpisodes.Add(item);
+                //}
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
+
+        private bool CanExecuteSubmit(Episode episode)
+        {
+            return !IsBusy;
+        }
+
+        private async Task ExecuteDownloadMedia()
+        {
+            List<Task<bool>> tasks = new List<Task<bool>>();
+
+            //tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
+
+            var done = await Task.WhenAll(tasks);
+
+        }
+        //private async Task<List<bool>> ExecuteDownloadMedia(Episode param)
+        //{
+        //    List<Task<bool>> tasks = new List<Task<bool>>();
+
+        //    tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
+
+        //    var done = await Task.WhenAll(tasks);
+        //    return new List<bool>(done);
+        //}
 
         private void ExecuteDeleteSelectedShow()
         {
@@ -265,19 +367,8 @@ namespace PresentationLayer.ViewModel
         #region Mockdata
         public void SetList()
         {
-            try
-            {
-                List<Show> showList = _businessAccess.Get.GetShowList();
-                AllShows = new ObservableCollection<Show>(showList);
-            }
-            catch (Exception)
-            {
-
-                
-            }
-
-     
-      
+            List<Show> showList = _businessAccess.Get.GetShowList();
+            AllShows = new ObservableCollection<Show>(showList);
 
 
             //List<Show> test = new List<Show>();
@@ -293,7 +384,7 @@ namespace PresentationLayer.ViewModel
             //}
 
             //AllShows = new ObservableCollection<Show>(test);
-            Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
+            //Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
         }
 
         private void AddMoreMockData()
@@ -314,28 +405,39 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private void AddNewEpisode()
+        private void GetEpisodes()
         {
-            DateTime now = DateTime.Now;
-            this.EpisodesCollection.Add(new Episode()
+            //DateTime now = DateTime.Now;
+            //this.EpisodesCollection.Add(new Episode()
+            //{
+            //    Title = "Neue Show Selected",
+            //    PublishDate = now,
+            //    ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg",
+            //    Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
+            //    Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called 'StandUP!with Pete Dominick' available on Apple Podcasts.",
+            //});
+
+            List<Episode> episodes = _businessAccess.Get.GetEpisodes(SelectedShow);
+            EpisodesCollection.Clear();
+
+            foreach (var item in episodes)
             {
-                Title = "Neue Show Selected",
-                PublishDate = now,
-                ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg",
-                Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
-                Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called 'StandUP!with Pete Dominick' available on Apple Podcasts.",
-            });
+                EpisodesCollection.Add(item);
+            }
+
+
+            //EpisodesCollection = new ObservableCollection<Episode>(episodes);
         }
 
-        private void FillEpisodeListWithMockData()
-        {
-            DateTime now = DateTime.Now;
-            for (int i = 0; i < 4; i++)
-            {
-                EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = false });
-                EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = true });
-            }
-        }
+        //private void FillEpisodeListWithMockData()
+        //{
+        //    DateTime now = DateTime.Now;
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian RedbanRedbanRedb anRedbanRedbanRedbanRedba nRedbanRedbanRed banRedbanRedban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = false });
+        //        EpisodesCollection.Add(new Episode() { Title = "#1364 - Brian Redban", PublishDate = now, ImageUri = "http://static.libsyn.com/p/assets/9/7/4/9/97497ae393125526/JRE1364.jpg", Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364", Summary = "Brian Redban is a comedian and the founder of the Deathsquad podcast network. Also look for him on “Kill Tony” available on Apple Podcasts & YouTube: https://www.youtube.com/channel/UCwzCMiicL-hBUzyjWiJaseg", IsDownloaded = true });
+        //    }
+        //}
         #endregion Mockdata
     }
 }

@@ -31,8 +31,8 @@ namespace PresentationLayer.ViewModel
                 if (_playEpisode == null)
                 {
                     _playEpisode = new RelayCommand(
-                        param => this.IsEpisodeSelected(param), 
-                        param => this.ExecutePlayMedia());
+                        param => true, 
+                        param => this.ExecutePlayMedia(param));
                 }
                 return _playEpisode;
             }
@@ -63,7 +63,7 @@ namespace PresentationLayer.ViewModel
             return false;
         }
 
-        private void ExecutePlayMedia()
+        private void ExecutePlayMedia(object param)
         {
             throw new NotImplementedException();
             //

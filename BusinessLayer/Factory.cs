@@ -11,20 +11,20 @@ namespace BusinessLayer
 {
     public static class Factory
     {
-        public static int TargetType { get; set; }
-        public static IDataTarget CreateDataTarget()
+        public static IDataStorageType DatenHaltung { private get; set; }
+        internal static IDataTarget CreateDataTarget()
         {
-            IDataTarget dataTargetInstance = null; ;
-            switch (TargetType)
+            IDataTarget dataTargetInstance = null;
+            switch (DatenHaltung.DataType.Key)
             {
                 case 1:
-                    dataTargetInstance = new XmlDataTarget();
+                    dataTargetInstance = new XmlAsDataTarget();
                     break;
                 case 2:
                     dataTargetInstance = new MySQLDataTarget();
                     break;
                 case 3:
-                    dataTargetInstance = null; //impl.
+                    dataTargetInstance = new PostDataTarget(DatenHaltung);
                     break;
                 default:
                     throw new Exception(); //impl.
@@ -32,25 +32,38 @@ namespace BusinessLayer
             return dataTargetInstance;
         }
 
-        public static IDataSource CreateDataSource()
+        internal static IDataSource CreateDataSource()
         {
-            IDataSource dataSourceInstance = null; ;
-            switch (TargetType)
+            IDataSource dataSourceInstance = null;
+            switch (DatenHaltung.DataType.Key)
             {
                 case 1:
-                    dataSourceInstance = new XmlDataSource();
+                    dataSourceInstance = new XmlAsDataSource();
                     break;
                 case 2:
                     dataSourceInstance = new MySQLDataSource();
                     break;
                 case 3:
-                    dataSourceInstance = new PostDataSource(); //impl.
+                    dataSourceInstance = new PostDataSource(DatenHaltung);
+                    break;
+                case 4:
+                    dataSourceInstance = new MockDataSource();
                     break;
                 default:
                     break;
-                    ; //impl.
+                    //throw new Exception(); //impl.
             }
             return dataSourceInstance;
+        }
+
+        internal static ILocalMediaSource CreateLocalMediaSource()
+        {
+            return new MediaDataSource();
+        }
+
+        internal static ILocalMediaTarget CreateLocalMediaTarget()
+        {
+            return new MediaDataTarget();
         }
     }
 }

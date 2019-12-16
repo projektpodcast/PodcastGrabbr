@@ -1,5 +1,6 @@
 ﻿using CommonTypes;
 using DataAccessLayer;
+using RssFeedProcessor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,28 +15,19 @@ namespace BusinessLayer
         { }
         public List<Show> GetShowList()
         {
-            try
-            {
-                IDataSource dataSource = Factory.CreateDataSource();
-                return dataSource.GetAllShows();
+            IDataSource dataSource = Factory.CreateDataSource();
+            return dataSource.GetAllShows();
 
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
- 
-            //MockDataSource dal = new MockDataSource();
-
-            //List<Show> a = dal.GetAllShows();
-            //return a;
-
+            //XmlAsDataSource dal = new XmlAsDataSource();
+            //return dal.GetAllShows();
         }
 
-        public void Test()
+        public List<Episode> GetEpisodes(Show selectedShow)
         {
-            IDataTarget fileTarget = Factory.CreateDataTarget();
+            IDataSource dataSource = Factory.CreateDataSource();
+            return dataSource.GetAllEpisodes(selectedShow);
+            //XmlAsDataSource dal = new XmlAsDataSource();
+            //return dal.GetAllEpisodes(selectedShow);
         }
 
         public List<Show> GetLocalMedia() //umschreiben, gibt falschen Typ zurück
@@ -53,5 +45,13 @@ namespace BusinessLayer
 
             return dal.GetDownloadedPodcasts();
         }
+
+
+
+        //public List<Episode> GetNextEpisodes(Show selectedShow, Episode lastEpisode)
+        //{
+        //    XmlAsDataSource dal = new XmlAsDataSource();
+        //    return dal.GetNext(selectedShow, lastEpisode);
+        //}
     }
 }
