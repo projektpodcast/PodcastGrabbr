@@ -16,7 +16,6 @@ namespace DataAccessLayer.PostgreSQL
         //initialize prozess target and conenection
         PostConnect myConecction;
         PostDataTarget myTarget;
-        NpgsqlConnection conexionOpen;
         
         DeserializingManager deserializer = new DeserializingManager();
 
@@ -25,16 +24,14 @@ namespace DataAccessLayer.PostgreSQL
         public PostDataSource(IDataStorageType storageData)
         {
             dbData = storageData;
-            //1. verbindung öffnen -> postgressconn das onjekt storagedata übergeben
-            //myConecction = new PostConnect(storageData);
-            myTarget = new PostDataTarget(dbData);
 
+            myTarget = new PostDataTarget(dbData);
             
-            //String html = "https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast";
             String html = "http://podcast.wdr.de/quarks.xml";
 
             Podcast podcast = deserializer.DeserializeRssXml(html);
 
+            //check if the podcast exist
             bool CheckPodcast = CheckInDB(podcast);
 
             //if the podcast dont exist, it will be saved in the db
@@ -45,7 +42,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
         }
-
+        
 
         private bool CheckInDB(Podcast thisPodcast)
         {
