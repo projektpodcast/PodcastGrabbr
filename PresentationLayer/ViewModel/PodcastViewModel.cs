@@ -348,18 +348,29 @@ namespace PresentationLayer.ViewModel
         /// <returns></returns>
         private async Task ExecuteMediaDownloadAsync(Episode episode)
         {
+
+            IsBusy = true;
             try
             {
-                IsBusy = true;
                 await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
                 episode.IsDownloaded = true;
-                //NACHTRAGEN:::::::::::::::::
-                //INotifyPropertyChanged implementieren für Episode IsDownloaded??
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Fehler beim Herunterladen" +"\n" + ex.ToString(), "Fehler beim Download der Episode " + episode.Title);
+                throw;
             }
             finally
             {
                 IsBusy = false;
+                GetEpisodes();
             }
+
+
+            //NACHTRAGEN:::::::::::::::::
+            //INotifyPropertyChanged implementieren für Episode IsDownloaded??
+            //Progressbar mit IProgress<T>?
+
         }
         #endregion
 

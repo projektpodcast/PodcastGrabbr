@@ -22,8 +22,16 @@ namespace DataAccessLayer
         /// <param name="episode">Episode enthält Downloadlink, welcher heruntergeladen werden soll.</param>
         public async Task<string> DownloadEpisode(Show show, Episode episode)
         {
-            MediaStorage mediaDl = new MediaStorage();
-            return await mediaDl.InitializeMediaDownload(show, episode);
+            try
+            {
+                MediaStorage mediaDl = new MediaStorage();
+                return await mediaDl.InitializeMediaDownload(show, episode);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

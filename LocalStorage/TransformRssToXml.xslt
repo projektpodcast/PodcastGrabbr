@@ -128,21 +128,16 @@
       </xsl:element>
 
       <xsl:element name="description">
-
         <xsl:choose>
           <xsl:when test="description != ''">
             <xsl:apply-templates select="description"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:if test="not(normalize-space(itunes1:summary)='')">
-              <xsl:element name="publisher">
-                <xsl:value-of select="itunes1:author"/>
-              </xsl:element>
+                <xsl:value-of select="itunes1:summary"/>
             </xsl:if>
             <xsl:if test="not(normalize-space(itunes2:summary)='')">
-              <xsl:element name="publisher">
-                <xsl:value-of select="itunes2:author"/>
-              </xsl:element>
+                <xsl:value-of select="itunes2:summary"/>
             </xsl:if>
           </xsl:otherwise>
         </xsl:choose>

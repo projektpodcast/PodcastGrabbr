@@ -43,10 +43,18 @@ namespace LocalStorage
         {
             DownloadUri = new Uri(episode.FileDetails.SourceUri);
             string fileName = CreateFileName(episode);
-            DirectoryInfo fullDir = CreateFullDirectory(show);
-            string downloadPath = $"{fullDir.FullName}{fileName}";
-            await ExecuteEpisodeDownload(downloadPath);
-            return downloadPath;
+
+            try
+            {
+                DirectoryInfo fullDir = CreateFullDirectory(show);
+                string downloadPath = $"{fullDir.FullName}{fileName}";
+                await ExecuteEpisodeDownload(downloadPath);
+                return downloadPath;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -72,7 +80,6 @@ namespace LocalStorage
                 string sanitizedPath = string.Join(" ", unsanitizedPath.Split(Path.GetInvalidFileNameChars()));
                 return sanitizedPath;
             }
-
         }
 
         /// <summary>
@@ -102,11 +109,10 @@ namespace LocalStorage
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 await webClient.DownloadFileTaskAsync(DownloadUri, downloadPath);
             }
-            catch (Exception ex)
-            {
-                ex.ToString();
+            catch (Exception)
+            {   
+                throw;
             }
-
         }
 
     }

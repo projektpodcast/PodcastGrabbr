@@ -67,7 +67,7 @@ namespace BusinessLayer
         private readonly ILocalMediaTarget _mediaTarget;
         private IDataSource _dataSource { get; set; }
         private IDataTarget _dataTarget { get; set; }
-
+        #endregion
         /// <summary>
         /// Es gibt drei verschiedene Datenziele & -quellen
         /// Der Key des Dictionary entscheidet welche Art des DataAccessLayers initialisiert werden soll.
@@ -93,7 +93,6 @@ namespace BusinessLayer
                     //throw new Exception(); //impl.
             }
         }
-        #endregion
 
         internal IDataTarget CreateDataTarget()
         {
