@@ -17,10 +17,11 @@ namespace LocalStorage
     public class MediaStorage
     {
         /// <summary>
-        /// Ordner, an welchem die Downloads erfolgen sollen.
+        /// Zielpfad des vorzunehmenden Downloads
         /// </summary>
         private readonly string _downloadPath;
         private Uri DownloadUri { get; set; }
+        public IProgress<int> Progress { get; set; }
 
         /// <summary>
         /// Bei Klasseninitialisierung wird der relative Pfad "..\AppData\Local" festgestellt.
@@ -39,8 +40,9 @@ namespace LocalStorage
         /// <param name="show">Show, zu welcher die Episode gehört. Benötigt um einen Sammelordner für alle Episoden dieser Show festzulegen</param>
         /// <param name="episode">Episode, welche heruntergeladen werden soll. Enthält den Downloadlink</param>
         /// <returns>Der erstellte Downloadpfad wird zurückgegeben um diesen später in das Datenziel zu schreiben</returns>
-        public async Task<string> InitializeMediaDownload(Show show, Episode episode)
+        public async Task<string> InitializeMediaDownload(Show show, Episode episode, IProgress<int> progress)
         {
+            Progress = progress;
             DownloadUri = new Uri(episode.FileDetails.SourceUri);
             string fileName = CreateFileName(episode);
 
@@ -105,6 +107,7 @@ namespace LocalStorage
             try
             {
                 WebClient webClient = new WebClient();
+                webClient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
                 ServicePointManager.Expect100Continue = true;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 await webClient.DownloadFileTaskAsync(DownloadUri, downloadPath);
@@ -115,5 +118,9 @@ namespace LocalStorage
             }
         }
 
+        private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            Progress.Report(e.ProgressPercentage);
+        }
     }
 }

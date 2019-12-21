@@ -20,12 +20,12 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="show">Benötigt um den Dateipfad zu bestimmen</param>
         /// <param name="episode">Episode enthält Downloadlink, welcher heruntergeladen werden soll.</param>
-        public async Task<string> DownloadEpisode(Show show, Episode episode)
+        public async Task<string> DownloadEpisode(Show show, Episode episode, IProgress<int> progress)
         {
             try
             {
                 MediaStorage mediaDl = new MediaStorage();
-                return await mediaDl.InitializeMediaDownload(show, episode);
+                return await mediaDl.InitializeMediaDownload(show, episode, progress);
             }
             catch (Exception)
             {

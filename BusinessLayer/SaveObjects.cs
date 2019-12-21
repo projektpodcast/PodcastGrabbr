@@ -33,12 +33,12 @@ namespace BusinessLayer
         /// <param name="show">Show, welche die Episode beinhalten. Benötigt um die Episode im Datenziel schneller zu finden</param>
         /// <param name="episode">Episode, die heruntergeladen werden soll. Enthält die Download-Uri und den zu speichernden Downloadpfad</param>
         /// <returns></returns>
-        public async Task SaveEpisodeAsLocalMedia(Show show, Episode episode)
+        public async Task SaveEpisodeAsLocalMedia(Show show, Episode episode, IProgress<int> progress)
         {
             ILocalMediaTarget target = Factory.Instance.CreateLocalMediaTarget();
             try
             {
-                InsertDownloadPathInEpisode(show, episode, await target.DownloadEpisode(show, episode));
+                InsertDownloadPathInEpisode(show, episode, await target.DownloadEpisode(show, episode, progress));
             }
             catch (Exception)
             {

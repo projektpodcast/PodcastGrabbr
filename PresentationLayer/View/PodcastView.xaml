@@ -19,7 +19,7 @@
         <helper:ValidationRules x:Key="Validation"/>
         <!--#endregion-->
 
-        
+
         <!--#region Definitionen für ShowListe horizontalen ScrollViewer-->
         <!--#region RepeatButtons für Horizontalen ScrollViewer-->
         <Style x:Key="ArrowButtonRight" TargetType="{x:Type RepeatButton}">
@@ -817,6 +817,18 @@
                 <AdornedElementPlaceholder />
             </Grid>
         </ControlTemplate>
+
+        <Style x:Key="EpisodeProgressBarStyle" TargetType="{x:Type ProgressBar}">
+            <Setter Property="Background" Value="{DynamicResource PrimaryLight}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryColor}" />
+
+
+          
+
+        </Style>
+
+       
+
         <!--#endregion-->
 
     </Page.Resources>
@@ -1037,11 +1049,12 @@
                                                        Visibility="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1},
                                                        Converter={StaticResource BoolToVisibility}}"
                                                        Fill="{StaticResource TertiaryDark}"/>-->
-                                            <ProgressBar
-                                                Visibility="{Binding Path=IsDownloading, Converter={StaticResource BoolToVisibility}}"/>
-                                            <!--<ProgressBar
-                                                Visibility="{Binding IsDownloading, Converter={StaticResource BoolToVisibility}}"/>-->
-                                            <!--<ProgressBar Width="30" Height="30" Visibility="{Binding DataContext.IsBusy, Converter={StaticResource BoolToVisibility}}"/>-->
+                                            <ProgressBar Width="30" Height="33"
+                                                         Visibility="{Binding Path=IsDownloading, Converter={StaticResource BoolToVisibility}}"
+                                                         Value="{Binding DataContext.EpisodeDownloadProgress, UpdateSourceTrigger=PropertyChanged,
+                                                         RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}" 
+                                                         Style="{DynamicResource EpisodeProgressBarStyle}" HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                                                         BorderThickness="0" />
                                         </Grid>
 
                                         <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -1078,5 +1091,5 @@
 
     </Grid>
     <!--#endregion-->
-    
+
 </Page>

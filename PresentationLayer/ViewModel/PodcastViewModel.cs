@@ -101,11 +101,27 @@ namespace PresentationLayer.ViewModel
             set { _isBusy = value; OnPropertyChanged("IsBusy"); }
         }
 
+        /// <summary>
+        /// Diese Property ist an die "IsEnabled"-Eigenschaft des Episoden-DownloadButtons in der Ui gebunden.
+        /// Zeigt der Ui ob es momentan einen aktiven Download-Prozess gibt.
+        /// Wenn true = DownloadButtons sind enabled, wenn false = DownloadButtons sind disabled
+        /// </summary>
         private bool _isNotDownloading;
         public bool IsNotDownloading
         {
             get { return _isNotDownloading; }
             set { _isNotDownloading = value; OnPropertyChanged("IsNotDownloading"); }
+        }
+
+        /// <summary>
+        /// Diese Properts ist an die "Value"-Eigenschaft der Episoden-ProgressBar in der Ui gebunden.
+        /// Der Wert (0-100) zeigt der Ui den Fortschritt des Downloads an.
+        /// </summary>
+        private int _episodeDownloadProgress;
+        public int EpisodeDownloadProgress
+        {
+            get { return _episodeDownloadProgress; }
+            set { _episodeDownloadProgress = value; OnPropertyChanged("EpisodeDownloadProgress"); }
         }
         #endregion
 
@@ -346,6 +362,9 @@ namespace PresentationLayer.ViewModel
             _businessAccess.Get.PlayMediaFile((Episode)episode);
         }
 
+
+
+
         /// <summary>
         /// Asynchrone Methode um den Mediendownload auszuführen.
         /// Wenn eine Datei heruntergeladen wird, wird IsBusy = true gesetzt um anzuzeigen, dass bereits ein asynchroner Task ausgeführt wird.
@@ -360,8 +379,16 @@ namespace PresentationLayer.ViewModel
             IsBusy = true;
             try
             {
+                //Variable, die den DownloadProgress kennt, an die Property EpisodeDownloadProgress synchronisieren.
+                IProgress<int> downloadProgress = new Progress<int>((result) =>
+                {
+                    EpisodeDownloadProgress = result;
+                });
+                //Downloadstart der Ui mitteilen
                 episode.IsDownloading = true;
-                await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
+                //Download über BL starten
+                await Task.Run(() => _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode, downloadProgress));
+                //Ui über fertiggestellten Download der Episode informieren
                 episode.IsDownloaded = true;
             }
             catch (Exception ex)
@@ -372,8 +399,8 @@ namespace PresentationLayer.ViewModel
             finally
             {
                 IsNotDownloading = true;
-                episode.IsDownloading = false;
                 IsBusy = false;
+                episode.IsDownloading = false;
                 GetEpisodes();
             }
 

@@ -18,6 +18,6 @@ namespace DataAccessLayer
         /// <param name="show">Benötigt um den Dateipfad zu bestimmen</param>
         /// <param name="episode">Episode enthält Downloadlink, welcher heruntergeladen werden soll.</param>
         /// <returns></returns>
-        Task<string> DownloadEpisode(Show show, Episode episode);
+        Task<string> DownloadEpisode(Show show, Episode episode, IProgress<int> progress);
     }
 }
