@@ -761,7 +761,7 @@
                                 <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Visibility" Value="Hidden"/>
+                                <Setter Property="Opacity" TargetName="Bd" Value="0.6"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                         <!--#endregion-->
@@ -1025,13 +1025,23 @@
                                                     Command="{Binding DataContext.DownloadMedia, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}"
                                                     CommandParameter="{Binding}"
                                                     Visibility="{Binding IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}" 
-                                                    Style="{StaticResource DownloadButton}"/>
+                                                    Style="{StaticResource DownloadButton}"
+                                                    IsEnabled="{Binding DataContext.IsNotDownloading, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}"
+                                                    />
                                             <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Play" 
                                                     Command="{Binding DataContext.PlayMedia, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}"
                                                     CommandParameter="{Binding}"
                                                     Visibility="{Binding IsDownloaded, Converter={StaticResource BoolToVisibility}}" 
                                                     Style="{StaticResource PlayButton}"/>
-                                            <!--<ProgressBar Width="30" Height="30" Visibility="{Binding IsDownloading, Converter={StaticResource BoolToVisibility}}"/>-->
+                                            <!--<Rectangle Width="20" Height="20" 
+                                                       Visibility="{Binding DataContext.IsBusy, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1},
+                                                       Converter={StaticResource BoolToVisibility}}"
+                                                       Fill="{StaticResource TertiaryDark}"/>-->
+                                            <ProgressBar
+                                                Visibility="{Binding Path=IsDownloading, Converter={StaticResource BoolToVisibility}}"/>
+                                            <!--<ProgressBar
+                                                Visibility="{Binding IsDownloading, Converter={StaticResource BoolToVisibility}}"/>-->
+                                            <!--<ProgressBar Width="30" Height="30" Visibility="{Binding DataContext.IsBusy, Converter={StaticResource BoolToVisibility}}"/>-->
                                         </Grid>
 
                                         <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">

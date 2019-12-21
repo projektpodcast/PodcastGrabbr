@@ -63,6 +63,7 @@
     <Compile Include="Commands\IAsyncCommand.cs" />
     <Compile Include="Commands\IErrorHandler.cs" />
     <Compile Include="Models\ButtonModel.cs" />
+    <Compile Include="Models\EpisodeModel.cs" />
     <Compile Include="OnCurrentContentChanged.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\FileDialogService.cs" />

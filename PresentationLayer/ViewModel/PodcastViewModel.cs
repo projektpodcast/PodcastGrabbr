@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Configuration;
 using System.Windows.Media;
+using PresentationLayer.Models;
 
 namespace PresentationLayer.ViewModel
 {
@@ -82,7 +83,7 @@ namespace PresentationLayer.ViewModel
         /// Implementiert ICollectionChanged um änderung der View mitzuteilen.
         /// Ist eine Sammlung aller Episoden, die zu einer ausgewählten Episode gehören.
         /// </summary>
-        public ObservableCollection<Episode> EpisodesCollection { get; set; }
+        public ObservableCollection<EpisodeModel> EpisodesCollection { get; set; }
 
         /// <summary>
         /// Implementiert ICollectionChanged um änderung der View mitzuteilen.
@@ -97,7 +98,14 @@ namespace PresentationLayer.ViewModel
         public bool IsBusy
         {
             get { return _isBusy; }
-            set { _isBusy = value; }
+            set { _isBusy = value; OnPropertyChanged("IsBusy"); }
+        }
+
+        private bool _isNotDownloading;
+        public bool IsNotDownloading
+        {
+            get { return _isNotDownloading; }
+            set { _isNotDownloading = value; OnPropertyChanged("IsNotDownloading"); }
         }
         #endregion
 
@@ -110,9 +118,9 @@ namespace PresentationLayer.ViewModel
         public PodcastViewModel(IBusinessAccessService businessAccess)
         {
             _businessAccess = businessAccess;
-
+            IsNotDownloading = true;
             AllShows = new ObservableCollection<Show>();
-            EpisodesCollection = new ObservableCollection<Episode>();
+            EpisodesCollection = new ObservableCollection<EpisodeModel>();
             FilterOptions = new List<string>
             {
                 "Show",
@@ -247,7 +255,7 @@ namespace PresentationLayer.ViewModel
             {
                 if (_downloadMedia == null)
                 {
-                    _downloadMedia = new AsyncRelayCommand<Episode>(ExecuteMediaDownloadAsync, CanExecuteSubmit);
+                    _downloadMedia = new AsyncRelayCommand<EpisodeModel>(ExecuteMediaDownloadAsync, CanExecuteSubmit);
                 }
                 return _downloadMedia;
             }
@@ -346,12 +354,13 @@ namespace PresentationLayer.ViewModel
         /// </summary>
         /// <param name="episode">ausgewählte Episode, die heruntergeladen werden soll</param>
         /// <returns></returns>
-        private async Task ExecuteMediaDownloadAsync(Episode episode)
+        private async Task ExecuteMediaDownloadAsync(EpisodeModel episode)
         {
-
+            IsNotDownloading = false;
             IsBusy = true;
             try
             {
+                episode.IsDownloading = true;
                 await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
                 episode.IsDownloaded = true;
             }
@@ -362,6 +371,8 @@ namespace PresentationLayer.ViewModel
             }
             finally
             {
+                IsNotDownloading = true;
+                episode.IsDownloading = false;
                 IsBusy = false;
                 GetEpisodes();
             }
@@ -398,9 +409,10 @@ namespace PresentationLayer.ViewModel
             List<Episode> episodes = _businessAccess.Get.GetEpisodes(SelectedShow);
             EpisodesCollection.Clear();
 
-            foreach (var item in episodes)
+            foreach (Episode item in episodes)
             {
-                EpisodesCollection.Add(item);
+                EpisodeModel convertedEpisode = new EpisodeModel(item);
+                EpisodesCollection.Add(convertedEpisode);
             }
         }
         #endregion Mockdata
