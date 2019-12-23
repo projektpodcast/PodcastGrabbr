@@ -99,23 +99,14 @@ namespace DataAccessLayer.PostgreSQL
             // TODO read   SHOW id
 
             podcastShow.PublisherName = a.ShowInfo.PublisherName;
-
             podcastShow.PodcastTitle = a.ShowInfo.PodcastTitle;
-
             podcastShow.Subtitle = a.ShowInfo.Subtitle;
-
             podcastShow.Keywords = a.ShowInfo.Keywords;
-
             podcastShow.Subtitle = a.ShowInfo.Subtitle;
-
             podcastShow.Language = a.ShowInfo.Language;
-
             podcastShow.Description = a.ShowInfo.Description;
-
             podcastShow.LastUpdated = a.ShowInfo.LastUpdated;
-
             podcastShow.LastBuildDate = a.ShowInfo.LastBuildDate;
-
             podcastShow.ImageUri = a.ShowInfo.ImageUri;
 
             // category is a list, we need another table for this
