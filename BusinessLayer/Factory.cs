@@ -32,6 +32,7 @@ namespace BusinessLayer
         {
             _mediaSource = new MediaDataSource();
             _mediaTarget = new MediaDataTarget();
+            DatenHaltung = new DataStorageType();
         }
 
         public static Factory Instance
@@ -60,6 +61,7 @@ namespace BusinessLayer
                 }
             }
         }
+
 
         /// <summary>
         /// Die Properties enthalten die geöffneten Instanzen in den DataAccessLayer
