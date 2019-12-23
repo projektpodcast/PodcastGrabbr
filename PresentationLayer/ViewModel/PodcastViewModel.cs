@@ -299,7 +299,7 @@ namespace PresentationLayer.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show($"{ex.ToString()}");
-                throw;
+                //throw;
             }
 
         }
