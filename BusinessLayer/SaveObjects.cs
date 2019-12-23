@@ -20,10 +20,30 @@ namespace BusinessLayer
         /// Das implementierte Interface der Instanz legt die angesprochene Methode offen.
         /// </summary>
         /// <param name="rssUri">Rss Link eines Podcasts. Enthält eine Show mit vielen Episoden in Xml-Form</param>
-        public void SavePodcastAsXml(string rssUri)
+        public void SavePodcast(string rssUri)
         {
-            IDataTarget fileTarget = Factory.Instance.CreateDataTarget();
-            fileTarget.SavePodcast(rssUri);
+            try
+            {
+                IDataTarget fileTarget = Factory.Instance.CreateDataTarget();
+                fileTarget.SavePodcast(rssUri);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void BulkSavePodcast(List<string> rssLinks)
+        {
+            try
+            {
+                IDataTarget fileTarget = Factory.Instance.CreateDataTarget();
+                fileTarget.BulkCopyPodcasts(rssLinks);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -69,7 +89,15 @@ namespace BusinessLayer
 
             foreach (string uri in rssLinksToProcess)
             {
-                target.SavePodcast(uri);
+                try
+                {
+                    target.SavePodcast(uri);
+                }
+                catch (Exception)
+                {
+                    //throw;
+                }
+
             }
         }
 

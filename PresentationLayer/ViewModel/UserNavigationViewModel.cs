@@ -44,7 +44,7 @@ namespace PresentationLayer.ViewModel
             ButtonModel firstButton = new ButtonModel("Startseite", SwitchPageToHome);
             ButtonModel secondButton = new ButtonModel("Einstellungen", SwitchPageToSettings);
             ButtonModel thirdButton = new ButtonModel("Meine Downloads", SwitchPageToDownloads);
-            ButtonModel fourthButton = new ButtonModel("Show importieren", NotImplemented);
+            ButtonModel fourthButton = new ButtonModel("Show importieren", OpenWindowSingleRssImport);
             ButtonModel fifthButton = new ButtonModel("Shows aktualisieren", RefreshEpisodesOfAllShows);
             MenueOptions = new ObservableCollection<ButtonModel>
             {
@@ -57,20 +57,7 @@ namespace PresentationLayer.ViewModel
         }
 
         #region ICommands und Plausenprüfung
-        private ICommand _notImplemented;
-        public ICommand NotImplemented
-        {
-            get
-            {
-                if (_notImplemented == null)
-                {
-                    _notImplemented = new RelayCommand(
-                        p => true,
-                        p => this.Implement());
-                }
-                return _notImplemented;
-            }
-        }
+
 
         private ICommand _toggleMenueVisibility;
         public ICommand ToggleMenueVisibility
@@ -129,6 +116,21 @@ namespace PresentationLayer.ViewModel
                         p => this.NavigationChanged("ToDownloads"));
                 }
                 return _switchPageToDownloads;
+            }
+        }
+
+        private ICommand _openWindowSingleRssImport;
+        public ICommand OpenWindowSingleRssImport
+        {
+            get
+            {
+                if (_openWindowSingleRssImport == null)
+                {
+                    _openWindowSingleRssImport = new RelayCommand(
+                        p => this.CanClickButton(),
+                        p => this.NavigationChanged("ToImport"));
+                }
+                return _openWindowSingleRssImport;
             }
         }
 

@@ -37,7 +37,16 @@ namespace DataAccessLayer
         /// <returns>Liste aller Shows</returns>
         public List<Show> GetAllShows()
         {
-            return XmlStorage.Instance.GetShows();
+            try
+            {
+                return XmlStorage.Instance.GetShows();
+            }
+            catch (Exception)
+            {
+
+                //throw;
+            }
+            return null;
         }
 
         /// <summary>

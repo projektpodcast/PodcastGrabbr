@@ -228,6 +228,9 @@ namespace PresentationLayer.ViewModel
                 case "ToDownloads":
                     SwitchToDownloads();
                     break;
+                case "ToImport":
+                    OpenImportWindow();
+                    break;
                 default:
                     break;
             }
@@ -269,6 +272,24 @@ namespace PresentationLayer.ViewModel
                 settingsVm.OnUserConfigChanged += SettingsViewModel_OnUserConfigChanged;
                 settingsVm.OnPodcastsUpdated += SettingsVm_OnPodcastsUpdated;
             }
+            else if (viewModel.GetType().Equals(typeof(SingleRssImportViewModel)))
+            {
+                SingleRssImportViewModel importVm = viewModel as SingleRssImportViewModel;
+                importVm.OnPodcastsUpdated += ImportVm_OnPodcastsUpdated;
+            }
+        }
+
+        /// <summary>
+        /// Subscriber eines Events, dass im SingleRssImportViewMOdel gepublished wird.
+        /// Wird ausgelöst, wenn die Podcasts im Datenziel über das SingleRssImportViewMOdel verändert werden.
+        /// Um die Änderungen im Ui darzustellen, muss die PodcastView neugeladen werden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImportVm_OnPodcastsUpdated(object sender, OnPodcastsManipulated e)
+        {
+            this._singleRssImportUi.Close();
+            ReloadPodcastUi();
         }
 
         /// <summary>
@@ -295,6 +316,25 @@ namespace PresentationLayer.ViewModel
             ReloadPodcastUi();
         }
         #endregion
+
+
+
+        private SingleRssImportView _singleRssImportUi { get; set; }
+
+        public void OpenImportWindow()
+        {
+            IViewModel viewModel = new SingleRssImportViewModel(_businessAccessService);
+            _singleRssImportUi = new SingleRssImportView(viewModel);
+
+            SetUpSubscriber(viewModel);
+
+            _singleRssImportUi.ShowInTaskbar = false;
+            _singleRssImportUi.ShowActivated = true;
+            _singleRssImportUi.ShowDialog();
+        }
+
+        
+
     }
 }
 

@@ -26,5 +26,7 @@ namespace DataAccessLayer
         /// <param name="path">Downloadpfad der Episode, der geschrieben werden soll</param>
         void InsertDownloadPath(Show show, Episode episode, string path);
         ///weitere operations wie update, create, insert, select(suchparameter), ...
+        
+        void BulkCopyPodcasts(List<string> rssUriList);
     }
 }

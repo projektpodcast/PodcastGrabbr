@@ -21,7 +21,15 @@ namespace DataAccessLayer
         /// <param name="rssUri">Rss Link eines Podcasts. Enthält eine Show mit vielen Episoden in Xml-Form</param>
         public void SavePodcast(string rssUri)
         {
-            XmlStorage.Instance.ProcessNewPodcast(rssUri);
+            try
+            {
+                XmlStorage.Instance.ProcessNewPodcast(rssUri);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
         /// <summary>
@@ -35,6 +43,9 @@ namespace DataAccessLayer
             XmlStorage.Instance.SetDownloadPath(show, episode, path);
         }
 
-
+        public void BulkCopyPodcasts(List<string> rssUriList)
+        {
+            XmlStorage.Instance.MassImport(rssUriList);
+        }
     }
 }

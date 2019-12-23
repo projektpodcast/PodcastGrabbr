@@ -1,6 +1,8 @@
 ﻿using BusinessLayer;
 using CommonTypes;
+using LocalStorage;
 using PresentationLayer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -160,11 +162,23 @@ namespace PresentationLayer.ViewModel
             uriListToProcess = fileServe.StartFileDialog();
 
             Task.Run(() => { MessageBox.Show("Podcasts werden verarbeitet", "Bitte warten", MessageBoxButton.OK, MessageBoxImage.Information); });
+            //try
+            //{
+            XmlStorage.Instance.MassImport(uriListToProcess);
 
-            if (uriListToProcess.Count != 0)
-            {
-                _businessAccess.Save.ProcessRssList(uriListToProcess);
-            }
+                //for (int i = 0; i < uriListToProcess.Count; i++)
+                //{
+
+                //    _businessAccess.Save.ProcessRssList(uriListToProcess);
+
+                //}
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Bei der Verarbeitung ist ein Fehler aufgetreten." +
+            //        $"Ab folgendem Link hat keine weitere Verarbeitung mehr stattgefunden: \n  {ex.ToString()}");
+            //    //throw;
+            //}
             OnPodcastsInserted();
         }
 

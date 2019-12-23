@@ -103,5 +103,10 @@ namespace DataAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public void BulkCopyPodcasts(List<string> rssUriList)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

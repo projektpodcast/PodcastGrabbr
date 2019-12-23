@@ -289,8 +289,17 @@ namespace PresentationLayer.ViewModel
         /// </summary>
         public void GetShows()
         {
-            List<Show> showList = _businessAccess.Get.GetShowList();
-            AllShows = new ObservableCollection<Show>(showList);
+            try
+            {
+                List<Show> showList = _businessAccess.Get.GetShowList();
+                AllShows = new ObservableCollection<Show>(showList);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.ToString()}");
+                throw;
+            }
+
         }
 
         /// <summary>

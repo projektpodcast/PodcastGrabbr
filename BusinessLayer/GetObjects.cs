@@ -22,8 +22,17 @@ namespace BusinessLayer
         /// <returns>Alle Show-Objekte im Datenziel</returns>
         public List<Show> GetShowList()
         {
-            IDataSource dataSource = Factory.Instance.CreateDataSource();
-            return dataSource.GetAllShows();
+            try
+            {
+                IDataSource dataSource = Factory.Instance.CreateDataSource();
+                return dataSource.GetAllShows();
+            }
+            catch (Exception)
+            {
+                return null;
+                //throw;
+            }
+
         }
 
         /// <summary>

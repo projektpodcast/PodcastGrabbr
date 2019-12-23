@@ -20,6 +20,7 @@ namespace LocalStorage
     /// </summary>
     public sealed class XmlStorage
     {
+
         public Guid Id = Guid.NewGuid();
 
         /// <summary>
@@ -84,28 +85,16 @@ namespace LocalStorage
         /// <param name="rssUri">RSS-Feed Uri eines Podcasts</param>
         public void ProcessNewPodcast(string rssUri)
         {
-
-
-            try
+            RssToNewPodcastXml(rssUri);
+            if (_dbXDoc != null)
             {
-                RssToNewPodcastXml(rssUri);
-                if (_dbXDoc != null)
-                {
-                    UpdateOrInsertNewShow();
-                }
-                else
-                {
-                    MergeNewPodcastXmlWithDbXml();
-                }
-                DbXmlReload();
+                UpdateOrInsertNewShow();
             }
-            catch (Exception)
+            else
             {
-
-                //throw;
+                MergeNewPodcastXmlWithDbXml();
             }
-
-
+            DbXmlReload();
         }
 
         /// <summary>
@@ -122,8 +111,7 @@ namespace LocalStorage
             }
             catch (Exception)
             {
-
-
+                //throw;
             }
 
         }
@@ -133,8 +121,10 @@ namespace LocalStorage
         /// Falls die "Datenbank"-Xml nicht existiert, wird diese angelegt und das Xml hinzugefügt.
         /// Falls die "Datenbank"-Xml existiert, wird in diese um die neue Show ergänzt und überschrieben.
         /// </summary>
-        private void MergeNewPodcastXmlWithDbXml()
+        private void MergeNewPodcastXmlWithDbXml(string filePath = null)
         {
+            //try
+            //{
             XsltSettings settings = new XsltSettings(true, false);
             XslCompiledTransform xslt = LoadXslt(settings);
 
@@ -144,14 +134,26 @@ namespace LocalStorage
                 doc.LoadXml("<podcasts></podcasts>");
                 doc.Save(_dbXmlPath);
             }
-
-            File.Copy(_dbXmlPath, _dbXmlTempPath, true);
-            XsltArgumentList argList = new XsltArgumentList();
-            argList.AddParam("fileName", "", _dbXmlTempPath);
-            XmlWriter writer = XmlWriter.Create(_dbXmlPath, xslt.OutputSettings);
-            xslt.Transform(_newPodcastPath, argList, writer);
-            writer.Close();
-            File.Delete(_dbXmlTempPath);
+            if (filePath == null)
+            {
+                File.Copy(_dbXmlPath, _dbXmlTempPath, true);
+                XsltArgumentList argList = new XsltArgumentList();
+                argList.AddParam("fileName", "", _dbXmlTempPath);
+                XmlWriter writer = XmlWriter.Create(_dbXmlPath, xslt.OutputSettings);
+                xslt.Transform(_newPodcastPath, argList, writer);
+                writer.Close();
+                File.Delete(_dbXmlTempPath);
+            }
+            else
+            {
+                File.Copy(_dbXmlPath, _dbXmlTempPath, true);
+                XsltArgumentList argList = new XsltArgumentList();
+                argList.AddParam("fileName", "", _dbXmlTempPath);
+                XmlWriter writer = XmlWriter.Create(_dbXmlPath, xslt.OutputSettings);
+                xslt.Transform(filePath, argList, writer);
+                writer.Close();
+                File.Delete(_dbXmlTempPath);
+            }
         }
 
         /// <summary>
@@ -162,9 +164,19 @@ namespace LocalStorage
         /// wenn ja wird der betroffene Knoten der "Datenbank"-Xml mit (1) aktualisiert,
         /// wenn nein, wird die Xml (1) der Datenbank-Xml als neuen Knoten hinzugefügt.
         /// </summary>
-        private void UpdateOrInsertNewShow()
+        private void UpdateOrInsertNewShow(string filePath = null)
         {
-            XDocument newPodcast = XDocument.Load(_newPodcastPath);
+
+            XDocument newPodcast = new XDocument();
+
+            if (filePath == null)
+            {
+                newPodcast = XDocument.Load(_newPodcastPath);
+            }
+            else
+            {
+                newPodcast = XDocument.Load(filePath);
+            }
 
             string newShowElement = newPodcast.Element("podcasts")
                 .Elements("show")
@@ -193,6 +205,7 @@ namespace LocalStorage
             {
                 MergeNewPodcastXmlWithDbXml();
             }
+            newPodcast = null;
         }
 
         /// <summary>
@@ -220,6 +233,60 @@ namespace LocalStorage
         }
 
         /// <summary>
+        /// Kurzfristig einfügt... Kommentar Todo...
+        /// </summary>
+        /// <param name="links"></param>
+        public void MassImport(List<string> links)
+        {
+            string localAppPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            DirectoryInfo localDir = Directory.CreateDirectory($"{localAppPath}\\podcastgrabbr_podcasts\\bulkcopy\\");
+            var path = $"{localDir.FullName}";
+
+            foreach (var item in links)
+            {
+                var name = string.Join("", item.Split(Path.GetInvalidFileNameChars()));
+                name.Replace('/', ' ');
+                string path2 = path + name + ".xml";
+                string path3 = path + name + "copy.xml";
+
+                try
+                {
+                    XslCompiledTransform xslt = LoadXslt();
+                    XmlWriterSettings settings = new XmlWriterSettings();
+                    settings.Indent = true;
+                    using (var xmlWriter = XmlWriter.Create(path2))
+                    {
+                        xslt.Transform(item, XmlWriter.Create(xmlWriter, settings));
+                    }
+
+                    if (new FileInfo(path2).Length >= 1024)
+                    {
+                        File.Copy(path2, path3, true);
+
+                        if (_dbXDoc != null)
+                        {
+                            UpdateOrInsertNewShow(path3);
+                        }
+                        else
+                        {
+                            MergeNewPodcastXmlWithDbXml(path3);
+                        }
+
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            foreach (FileInfo file in dirInfo.GetFiles())
+            {
+                file.Delete();
+            }
+            DbXmlReload();
+        }
+
+        /// <summary>
         /// Lädt die "Datenbank-Xml" erneut den Arbeitsspeicher.
         /// </summary>
         public void DbXmlReload()
@@ -244,21 +311,29 @@ namespace LocalStorage
         {
             DateTimeParser dateParser = new DateTimeParser();
             List<Show> allShowsList = new List<Show>();
-            if (_dbXDoc != null)
+            try
             {
-                var query = from s in _dbXDoc.Descendants("show")
-                            select new Show
-                            {
-                                PodcastTitle = s.Element("title").Value,
-                                RssLink = s.Element("link").Value,
-                                ImageUri = s.Element("imageuri").Value != null ? s.Element("imageuri").Value : "https://lh3.googleusercontent.com/BQUYd1Th9Z_XI5wtklPQDHmiNkSOzBakOnpk-Ni8CBTyHb0E7UM5LpyjRW9BWs4fUuVD",
-                                ShowId = s.Attribute("sid").Value,
-                                Description = s.Element("description").Value,
-                                LastBuildDate = dateParser.ConvertStringToDateTime(s.Element("lastbuilddate").Value),
-                                LastUpdated = dateParser.ConvertStringToDateTime(s.Element("lastupdated").Value),
-                                PublisherName = s.Element("publisher").Value
-                            };
-                allShowsList = query.ToList();
+                if (_dbXDoc != null)
+                {
+                    var query = from s in _dbXDoc.Descendants("show")
+                                select new Show
+                                {
+                                    PodcastTitle = s.Element("title").Value,
+                                    RssLink = s.Element("link").Value,
+                                    ImageUri = s.Element("imageuri").Value != null ? s.Element("imageuri").Value : "https://lh3.googleusercontent.com/BQUYd1Th9Z_XI5wtklPQDHmiNkSOzBakOnpk-Ni8CBTyHb0E7UM5LpyjRW9BWs4fUuVD",
+                                    ShowId = s.Attribute("sid").Value,
+                                    Description = s.Element("description").Value,
+                                    LastBuildDate = dateParser.ConvertStringToDateTime(s.Element("lastbuilddate").Value),
+                                    LastUpdated = dateParser.ConvertStringToDateTime(s.Element("lastupdated").Value),
+                                    PublisherName = s.Element("publisher").Value
+                                };
+                    allShowsList = query.ToList();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
             return allShowsList;
         }
