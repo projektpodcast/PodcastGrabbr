@@ -88,7 +88,20 @@ namespace PresentationLayer.ViewModel
                 return _deleteAllPodcasts;
             }
         }
-
+        //private ICommand _nextPage;
+        //public ICommand NextPage
+        //{
+        //    get
+        //    {
+        //        if (_nextPage == null)
+        //        {
+        //            _nextPage = new RelayCommand(
+        //                p => true,
+        //                p => this.ExecuteNextPage());
+        //        }
+        //        return _nextPage;
+        //    }
+        //}
         private ICommand _searchFilter;
         public ICommand SearchFilter
         {
@@ -194,13 +207,42 @@ namespace PresentationLayer.ViewModel
                 if (_playMedia == null)
                 {
                     _playMedia = new RelayCommand(
-                        p => this.IsShowSelected(),
+                        p => true,
                         p => this.ExecutePlayMedia());
                 }
                 return _playMedia;
             }
         }
 
+        //private ICommand _downloadMedia;
+        //public ICommand DownloadMedia
+        //{
+        //    get
+        //    {
+        //        if (_downloadMedia == null)
+        //        {
+        //            _downloadMedia = new RelayCommand(
+        //                p => true,
+        //                param => this.ExecuteDownloadMedia((Episode)param));
+        //        }
+        //        return _downloadMedia;
+        //    }
+        //}
+
+        //private ICommand _downloadMedia;
+        //public ICommand DownloadMedia
+        //{
+        //    get
+        //    {
+        //        if (_downloadMedia == null)
+        //        {
+        //            _downloadMedia = new RelayCommand(
+        //                p => true,
+        //                param => this.ExecuteDownloadMedia((Episode)param));
+        //        }
+        //        return _downloadMedia;
+        //    }
+        //}
         private ICommand _downloadMedia;
         public ICommand DownloadMedia
         {
@@ -208,16 +250,42 @@ namespace PresentationLayer.ViewModel
             {
                 if (_downloadMedia == null)
                 {
-                    _downloadMedia = new RelayCommand(
-                        p => this.IsShowSelected(),
-                        p => this.ExecuteDownloadMedia());
+                    _downloadMedia = new AsyncRelayCommand<Episode>(ExecuteMediaDownloadAsync, CanExecuteSubmit);
                 }
-                return _deleteAllPodcasts;
+                return _downloadMedia;
             }
+        }
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set { _isBusy = value; }
+        }
+
+        private bool Yes()
+        {
+            return true;
         }
 
         #endregion ICommand Properties
 
+
+        //private void ExecuteNextPage()
+        //{
+        //    GetNextEpisodes(EpisodesCollection.Last());
+        //}
+
+        //private void GetNextEpisodes(Episode episode)
+        //{
+        //    EpisodesCollection.Clear();
+        //    var a = _businessAccess.Get.GetNextEpisodes(SelectedShow, episode);
+        //    foreach (var item in a)
+        //    {
+        //        EpisodesCollection.Add(item);
+        //    }
+        //    //EpisodesCollection = ;
+        //}
         private bool IsShowSelected()
         {
             return SelectedShow != null ? true : false;
@@ -234,11 +302,51 @@ namespace PresentationLayer.ViewModel
             //BusinessLayer-Zugriff um (Property) DownloadPath der Episode aufzulösen und abzuspielen.
         }
 
-        private void ExecuteDownloadMedia()
+        private async Task ExecuteMediaDownloadAsync(Episode episode)
         {
-            throw new NotImplementedException();
-            //BusinessLayer-Zugriff um LocalMedia anzusteuern und Episode anhand des DownloadPath runterzuladen.
+            try
+            {
+                IsBusy = true;
+                await _businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, episode);
+                episode.IsDownloaded = true;
+                
+                //GetEpisodes();
+                //EpisodesCollection.Clear();
+                //foreach (Episode item in updatedEpisodes)
+                //{
+                //    updatedEpisodes.Add(item);
+                //}
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
+
+        private bool CanExecuteSubmit(Episode episode)
+        {
+            return !IsBusy;
+        }
+
+        private async Task ExecuteDownloadMedia()
+        {
+            List<Task<bool>> tasks = new List<Task<bool>>();
+
+            //tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
+
+            var done = await Task.WhenAll(tasks);
+
+        }
+        //private async Task<List<bool>> ExecuteDownloadMedia(Episode param)
+        //{
+        //    List<Task<bool>> tasks = new List<Task<bool>>();
+
+        //    tasks.Add(_businessAccess.Save.SaveEpisodeAsLocalMedia(SelectedShow, param));
+
+        //    var done = await Task.WhenAll(tasks);
+        //    return new List<bool>(done);
+        //}
 
         private void ExecuteDeleteSelectedShow()
         {
@@ -272,7 +380,7 @@ namespace PresentationLayer.ViewModel
             //}
 
             //AllShows = new ObservableCollection<Show>(test);
-            Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
+            //Task.Delay(new TimeSpan(0, 0, 5)).ContinueWith(o => { AddMoreMockData(); });
         }
 
         private void AddMoreMockData()

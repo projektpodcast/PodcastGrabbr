@@ -21,6 +21,7 @@
         <local:NullToVisibilityConverter x:Key="NullToVisibility"/>
         <helper:ValidationRules x:Key="Validation"/>
 
+        <SolidColorBrush x:Key="MouseOverPrimary" Color="#FF5F563E" Opacity="1"/>
         <SolidColorBrush x:Key="OpacityEffect" Color="Black" Opacity="0.2"/>
         <SolidColorBrush x:Key="PrimaryColor" Color="#FF344955"/>
         <SolidColorBrush x:Key="PrimaryDark" Color="#FF232F34"/>
@@ -535,9 +536,13 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Opacity" TargetName="Figure1" Value="0.7"/>
+                                <!--<Setter Property="Opacity" TargetName="Figure1" Value="0.7"/>
                                 <Setter Property="Opacity" TargetName="Figure2" Value="0.7"/>
-                                <Setter Property="Opacity" TargetName="Figure3" Value="0.7"/>
+                                <Setter Property="Opacity" TargetName="Figure3" Value="0.7"/>-->
+
+                                <Setter Property="Fill" TargetName="Figure1" Value="{StaticResource MouseOverPrimary}"/>
+                                <Setter Property="Fill" TargetName="Figure2" Value="{StaticResource MouseOverPrimary}"/>
+                                <Setter Property="Fill" TargetName="Figure3" Value="{StaticResource MouseOverPrimary}"/>
                                 <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource ButtonHover}"/>-->
                                 <!--<Setter Property="Opacity" TargetName="Triangle" Value=""/>-->
                             </Trigger>
@@ -1496,7 +1501,7 @@
                     </ToggleButton.Style>
                 </ToggleButton>
                 <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
-                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="False" Margin="{TemplateBinding Padding}" 
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="True" Margin="{TemplateBinding Padding}" 
                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Grid>
             <ControlTemplate.Triggers>
@@ -1664,13 +1669,12 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>-->
         <ControlTemplate x:Key="errorTemplate">
-            
 
-                <Grid>
+
+            <Grid>
                 <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0" Foreground="White" Text="Bitte wählen"></TextBlock>
                 <AdornedElementPlaceholder />
-                </Grid>
-        
+            </Grid>
 
 
         </ControlTemplate>
@@ -1786,7 +1790,7 @@
             <!--<EventSetter Event="RequestBringIntoView" Handler="ListBoxItem_RequestBringIntoView">
             </EventSetter>-->
         </Style>
-        
+
         <!--Default Template geändert, da normalerweise ein festes Padding zugeteilt ist-->
         <ControlTemplate x:Key="ListViewControlTemplate1" TargetType="{x:Type ListView}">
             <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
@@ -1808,8 +1812,6 @@
                 </MultiTrigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
-        
 
     </Page.Resources>
 
@@ -1859,9 +1861,12 @@
 
 
                     <ComboBox x:Name="FilterComboBox" Width="100" ItemsSource="{Binding FilterOptions}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
-                                  Template="{DynamicResource ComboBoxControlTemplate2}" HorizontalAlignment="Left" IsSynchronizedWithCurrentItem="True"
+
+                                  Template="{DynamicResource ComboBoxControlTemplate2}" HorizontalAlignment="Left" 
+                                  IsSynchronizedWithCurrentItem="True"
                                   Foreground="White"
-                                  SelectedItem="{Binding TypeFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding TypeFilter, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedIndex="0"
                              >
                         <!--<ComboBox.SelectedItem>
                             <Binding Path="TypeFilter">
@@ -1964,20 +1969,28 @@
                     </Grid.ColumnDefinitions>
 
                 </Grid>-->
+
             </Grid>
         </Grid>
 
         <Rectangle Grid.Row="1" Fill="{StaticResource TertiaryDark}"/>
         <!--<Button Style="{StaticResource DownloadButton}"></Button>-->
         <!--<Rectangle Height="30" HorizontalAlignment="Stretch" Fill="{StaticResource PrimaryColor}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" SnapsToDevicePixels="True"/>-->
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        <ListView BorderThickness="0,0,0,0" BorderBrush="{StaticResource PrimaryColor}" x:Name="EpisodeList" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+            <ListView BorderThickness="0,0,0,0" BorderBrush="{StaticResource PrimaryColor}" x:Name="EpisodeList" Grid.Row="0" 
                   Foreground="Black" SnapsToDevicePixels="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch"
-                  Background="{StaticResource TertiaryDark}" ItemContainerStyle="{StaticResource TestEpisodeItems}" ScrollViewer.CanContentScroll="False"
-                  ItemsSource="{Binding EpisodesCollection}" Margin="0" SelectionMode="Single" Template="{DynamicResource ListViewControlTemplate1}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <!--<Grid>
+                  Background="{StaticResource TertiaryDark}" ItemContainerStyle="{StaticResource TestEpisodeItems}" ScrollViewer.CanContentScroll="True"
+                  ItemsSource="{Binding EpisodesCollection}" Margin="0" SelectionMode="Single" Template="{DynamicResource ListViewControlTemplate1}" 
+                  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <!--<Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition/>
@@ -1986,72 +1999,98 @@
                         </Grid.ColumnDefinitions>-->
 
 
-
-
-                    <!--<WrapPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <!--<WrapPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Download" Command="{Binding DownloadMedia}"
                                                 Visibility="{Binding IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}" Style="{StaticResource DownloadButton}"/>
                             <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Play" Command="{Binding PlayMedia}"
                                                 Visibility="{Binding IsDownloaded, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource PlayButton}"/>
                         </WrapPanel>-->
 
-                    <Expander HorizontalAlignment="Left" Background="Transparent" 
+                        <Expander HorizontalAlignment="Left" Background="Transparent" 
                                           Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ItemsPresenter}}}"
                                           x:Name="EpisodeExpander" Grid.Row="0"
                                           VerticalAlignment="Center" Padding="0,0,0,0" Margin="0,0,0,0"
                                           Foreground="Black" BorderThickness="0"
                                           HorizontalContentAlignment="Stretch" Template="{DynamicResource ExpanderControlTemplate2}"
                               IsExpanded="{Binding IsSelected, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}, Mode=FindAncestor}}">
-                        <Expander.Header>
 
-                            <WrapPanel Grid.Row="0" Background="Transparent" x:Name="ShowPanel">
+                            <Expander.Header>
 
+                                <WrapPanel Grid.Row="0" Background="Transparent" x:Name="ShowPanel">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" x:Name="ButtonColumn"/>
+                                            <ColumnDefinition Width="*" x:Name="EpisodeColumn"/>
+                                            <ColumnDefinition Width="10" x:Name="SpaceColumn"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50"></RowDefinition>
+                                        </Grid.RowDefinitions>
+
+
+                                        <WrapPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0">
+                                            <!--<Button Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                            Command="{Binding DataContext.Download, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}" 
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource NewDownloadButton}"/>-->
+                                            <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Download" 
+                                                    Command="{Binding DataContext.DownloadMedia, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}"
+                                                    CommandParameter="{Binding}"
+                                                    Visibility="{Binding IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}" 
+                                                    Style="{StaticResource NewDownloadButton}"/>
+                                            <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Play" 
+                                                    Command="{Binding DataContext.PlayMedia, RelativeSource={RelativeSource AncestorType=Page, AncestorLevel=1}}"
+                                                    CommandParameter="{Binding}"
+                                                    Visibility="{Binding IsDownloaded, Converter={StaticResource BoolToVisibility}}" 
+                                                    Style="{StaticResource NewPlayButton}"/>
+                                        </WrapPanel>
+
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Title}" Style="{StaticResource EpisodeTb}"/>
+                                            <TextBlock Text="{Binding PublishDate}"/>
+                                        </StackPanel>
+
+                                    </Grid>
+                                </WrapPanel>
+
+                            </Expander.Header>
+                            <Expander.Content>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" x:Name="ButtonColumn"/>
-                                        <ColumnDefinition Width="*" x:Name="EpisodeColumn"/>
-                                        <ColumnDefinition Width="10" x:Name="SpaceColumn"/>
+                                        <ColumnDefinition Width="*" MaxWidth="750"/>
+                                        <ColumnDefinition Width="20"/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"></RowDefinition>
-                                    </Grid.RowDefinitions>
-
-
-                                    <WrapPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0">
-                                        <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Download" Command="{Binding DownloadMedia}"
-                                                Visibility="{Binding IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}" Style="{StaticResource NewDownloadButton}"/>
-                                        <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Play" Command="{Binding PlayMedia}"
-                                                Visibility="{Binding IsDownloaded, Converter={StaticResource BoolToVisibility}}" Style="{StaticResource NewPlayButton}"/>
-                                    </WrapPanel>
-
-                                    <StackPanel Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Title}" Style="{StaticResource EpisodeTb}"/>
-                                        <TextBlock Text="{Binding PublishDate}"/>
+                                    <StackPanel Margin="15,0,15,15" Grid.Column="0">
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Summary}" Style="{StaticResource EpisodeSummaryTb}"/>
                                     </StackPanel>
-                                    
                                 </Grid>
-                            </WrapPanel>
-
-                        </Expander.Header>
-                        <Expander.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" MaxWidth="750"/>
-                                    <ColumnDefinition Width="20"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Margin="15,0,15,15" Grid.Column="0">
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Summary}" Style="{StaticResource EpisodeSummaryTb}"/>
-                                </StackPanel>
-                            </Grid>
-                        </Expander.Content>
-                    </Expander>
+                            </Expander.Content>
+                        </Expander>
 
 
-                    <!--</Grid>-->
-                </DataTemplate>
-            </ListView.ItemTemplate>
-           
-        </ListView>
+                        <!--</Grid>-->
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
+            </ListView>
+            <!--<Grid Grid.Row="1" Height="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                <Button Width="15" Height="15" Command="{Binding}"></Button>
+                    <Label>Seite</Label>
+                    <Label>1</Label>
+                    <Label>von</Label>
+                    <Label>4</Label>
+                    <Button Width="15" Height="15" Command="{Binding NextPage}"></Button>
+                </StackPanel>
+                <Frame></Frame>
+            </Grid>-->
+
+        </Grid>
     </Grid>
 </Page>

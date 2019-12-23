@@ -147,11 +147,8 @@ namespace PresentationLayer.ViewModel
             DbDetailVisibility = SelectedDataType.Key <= 1 ? Visibility.Collapsed : Visibility.Visible;
         }
 
-
-
-
-        private IDatenArt _userManipulatedData { get; set; }
-        public IDatenArt UserManipulatedData
+        private IDataStorageType _userManipulatedData { get; set; }
+        public IDataStorageType UserManipulatedData
         {
             get { return _userManipulatedData; }
             set
@@ -161,8 +158,8 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private IDatenArt _configData { get; set; }
-        public IDatenArt ConfigData
+        private IDataStorageType _configData { get; set; }
+        public IDataStorageType ConfigData
         {
             get { return _configData; }
             set
@@ -174,7 +171,8 @@ namespace PresentationLayer.ViewModel
 
         private void MapConfigData()
         {
-            ConfigData = new DatenArt
+
+            ConfigData = new DataStorageType
             {
                 DataType = _configurationService.ConfigDatenArt.DataType,
                 Ip = _configurationService.ConfigDatenArt.Ip,

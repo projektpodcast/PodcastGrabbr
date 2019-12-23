@@ -11,20 +11,22 @@ namespace BusinessLayer
 {
     public static class Factory
     {
-        public static IDatenArt DatenHaltung { private get; set; }
+        public static IDataStorageType DatenHaltung { private get; set; }
+
         internal static IDataTarget CreateDataTarget()
         {
             IDataTarget dataTargetInstance = null;
             switch (DatenHaltung.DataType.Key)
             {
                 case 1:
-                    dataTargetInstance = new XmlDataTarget();
+                    dataTargetInstance = new XmlAsDataTarget();
                     break;
                 case 2:
                     dataTargetInstance = new MySQLDataTarget();
                     break;
                 case 3:
-                    dataTargetInstance = new PostDataTarget();
+                    dataTargetInstance = new PostDataTarget(DatenHaltung);
+
                     break;
                 default:
                     throw new Exception(); //impl.
@@ -38,21 +40,32 @@ namespace BusinessLayer
             switch (DatenHaltung.DataType.Key)
             {
                 case 1:
-                    dataSourceInstance = new XmlDataSource();
+                    dataSourceInstance = new XmlAsDataSource();
                     break;
                 case 2:
                     dataSourceInstance = new MySQLDataSource();
                     break;
                 case 3:
-                    dataSourceInstance = new PostDataSource();
+                    dataSourceInstance = new PostDataSource(DatenHaltung);
                     break;
                 case 4:
                     dataSourceInstance = new MockDataSource();
                     break;
                 default:
-                    throw new Exception(); //impl.
+                    break;
+                    //throw new Exception(); //impl.
             }
             return dataSourceInstance;
+        }
+
+        internal static ILocalMediaSource CreateLocalMediaSource()
+        {
+            return new MediaDataSource();
+        }
+
+        internal static ILocalMediaTarget CreateLocalMediaTarget()
+        {
+            return new MediaDataTarget();
         }
     }
 }

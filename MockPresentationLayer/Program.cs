@@ -21,7 +21,6 @@ namespace MockPresentationLayer
     {
         static void Main(string[] args)
         {
-
             string password = "#H1a!l@l^oMeinPasswortIstSuperLang";
             //string encryptionString = "asd123asd123";
             string encryptedPassword = SecurityLibrary.StringCipher.Encrypt(password);
@@ -30,7 +29,25 @@ namespace MockPresentationLayer
 
             //DeserializingManager deserializer = new DeserializingManager();
 
-            ////Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
+            //string password = "#H1a!l@l^oMeinPasswortIstSuperLang";
+            ////string encryptionString = "asd123asd123";
+            //string encryptedPassword = SecurityLibrary.StringCipher.Encrypt(password);
+
+            //string decryptedPassword = SecurityLibrary.StringCipher.Decrypt(encryptedPassword);
+
+            //DeserializingManager deserializer = new DeserializingManager();
+
+            //Podcast a = deserializer.DeserializeRssXml("http://joeroganexp.joerogan.libsynpro.com/rss");
+
+            ////deserializer.SerializeIt(a);
+            ///
+            //string url2 = "http://podcast.wdr.de/quarks.xml";
+            ////string url2 = "http://joeroganexp.joerogan.libsynpro.com/rss";
+            ////string url2 = "http://www1.swr.de/podcast/xml/swr2/forum.xml";
+            ////string url2 = "http://web.ard.de/radiotatort/rss/podcast.xml";
+            //LocalRssTest test = new LocalRssTest();
+            //test.ProcessNewPodcast(url2);
+
             ////Podcast a = deserializer.DeserializeRssXml("http://podcast.wdr.de/quarks.xml");
             ////Podcast a = deserializer.DeserializeRssXml("http://web.ard.de/radiotatort/rss/podcast.xml");
             //Podcast a = deserializer.DeserializeRssXml("https://www1.wdr.de/radio/podcasts/wdr2/kabarett132.podcast");
@@ -39,7 +56,10 @@ namespace MockPresentationLayer
             //PostgresData PostDbInstance = new PostgresData();
             //call postdb
             //PostDB(a);
+
+
         }
+
 
         //static void PostDB(Podcast a)
         //{
@@ -110,5 +130,4 @@ namespace MockPresentationLayer
         //    }
 
 
-        }
     }

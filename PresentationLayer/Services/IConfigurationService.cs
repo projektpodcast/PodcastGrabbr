@@ -9,8 +9,8 @@ namespace PresentationLayer.Services
 {
     public interface IConfigurationService
     {
-        IDatenArt ConfigDatenArt { get; }
-        void UpdateUserConfiguration(IDatenArt datenHaltung);
+        IDataStorageType ConfigDatenArt { get; }
+        void UpdateUserConfiguration(IDataStorageType datenHaltung);
         bool IsPropertySet();
     }
 }

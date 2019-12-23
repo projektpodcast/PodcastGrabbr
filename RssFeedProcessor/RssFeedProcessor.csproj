@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,6 +44,8 @@
   <ItemGroup>
     <Compile Include="DeserializingManager.cs" />
     <Compile Include="EpisodeDeserializer.cs" />
+    <Compile Include="LocalRssTest.cs" />
+    <Compile Include="LocalXmlSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShowDeserializer.cs" />
     <Compile Include="XmlLoader.cs" />
@@ -52,6 +55,17 @@
       <Project>{D042B04C-579A-40C9-8870-C2DABC168DB1}</Project>
       <Name>CommonTypes</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ShowCounter.xslt">
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="TransformRssToLocalXml.xslt">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XmlMerger.xslt">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

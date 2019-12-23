@@ -54,11 +54,12 @@ namespace PresentationLayer.ViewModel
 
         private void InitializeCurrentContent()
         {
-            if (_podcastUi == null)
-            {
-                InitializePodcastUi();
-            }
+
             DecideCurrentContent();
+            //if (_podcastUi == null)
+            //{
+            //    InitializePodcastUi();
+            //}
         }
 
         private void InitializePodcastUi()
@@ -103,6 +104,10 @@ namespace PresentationLayer.ViewModel
 
             if (CanSwitchOffSettings())
             {
+                if (_podcastUi == null)
+                {
+                    InitializePodcastUi();
+                }
                 CurrentContent = _podcastUi;
             }
             else
@@ -201,8 +206,11 @@ namespace PresentationLayer.ViewModel
 
         private void ReloadPodcastUi()
         {
-            _podcastUi.ViewModelType = null;
-            _podcastUi = null;
+            if (_podcastUi != null)
+            {
+                _podcastUi.ViewModelType = null;
+                _podcastUi = null;
+            }
             InitializePodcastUi();
         }
 

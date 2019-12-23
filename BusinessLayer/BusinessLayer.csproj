@@ -57,6 +57,10 @@
       <Project>{F95C2980-4B18-4605-B992-3E63E366C2C0}</Project>
       <Name>DataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RssFeedProcessor\RssFeedProcessor.csproj">
+      <Project>{725C78C2-BB58-4908-B81E-D1C418E26B99}</Project>
+      <Name>RssFeedProcessor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

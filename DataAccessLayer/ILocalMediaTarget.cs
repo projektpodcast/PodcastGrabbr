@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PresentationLayer.Services
+namespace DataAccessLayer
 {
-    public class OnDatenHaltungChanged : EventArgs
+    public interface ILocalMediaTarget
     {
-        public IDataStorageType DatenHaltungTyp {get;set;}
+        Task<string> DownloadEpisode(Show show, Episode episode);
     }
 }

@@ -60,7 +60,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AppConfigManager.cs" />
+    <Compile Include="AsyncRelayCommand.cs" />
+    <Compile Include="IAsyncCommand.cs" />
+    <Compile Include="IErrorHandler.cs" />
     <Compile Include="Models\ButtonModel.cs" />
+    <Compile Include="Models\PagingModel.cs" />
     <Compile Include="OnCurrentContentChanged.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\FileDialogService.cs" />
@@ -69,6 +73,7 @@
     <Compile Include="Services\OnConfigChanged.cs" />
     <Compile Include="Services\OnDatenHaltungChanged.cs" />
     <Compile Include="Services\UserConfigurationService.cs" />
+    <Compile Include="TaskUtilities.cs" />
     <Compile Include="ViewModel\DownloadsViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Services\InizializerService.cs" />

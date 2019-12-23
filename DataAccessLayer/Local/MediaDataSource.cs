@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class MediaDataSource : LocalDataSource, IDataSource
+    public class MediaDataSource : LocalDataSource, ILocalMediaSource
     {
         public List<Show> GetAllShows()
         {
