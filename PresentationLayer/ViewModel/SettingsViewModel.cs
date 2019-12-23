@@ -3,6 +3,7 @@ using CommonTypes;
 using PresentationLayer.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -147,6 +148,9 @@ namespace PresentationLayer.ViewModel
 
         /// <summary>
         /// Öffnet einen FileDialog, der durch das Interface IDialogService angeboten wird.
+        /// Bisher keine elegante Lösung gefunden, eine Wegnavigation zu verhindern (Nutzer soll während dem Import keinen Input tätigen dürfen)
+        /// und ihn asynchron über den Zustand zu informieren.
+        /// Bisherige Lösung ist bedürftig gebastelt und die .Save.ProcessRssList(uriListToProcess) ist noch synchron.
         /// </summary>
         private void ExecuteFileImport()
         {
@@ -154,6 +158,8 @@ namespace PresentationLayer.ViewModel
 
             List<string> uriListToProcess = new List<string>();
             uriListToProcess = fileServe.StartFileDialog();
+
+            Task.Run(() => { MessageBox.Show("Podcasts werden verarbeitet", "Bitte warten", MessageBoxButton.OK, MessageBoxImage.Information); });
 
             if (uriListToProcess.Count != 0)
             {
