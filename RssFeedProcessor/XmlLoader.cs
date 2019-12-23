@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Xml;
 
 /// <summary>
+/// AUTHOR DER KLASSE: PG
+/// 
 /// Die Klasse stellt Methoden bereit um:
 /// -ein XmlDocument aus einer uri zu erstellen.
 /// -Einen MemoryStream aus einem XmlDocument zu erstellen.

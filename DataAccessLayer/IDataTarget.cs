@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace DataAccessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Definiert Methoden, welche benötigt werden um ein datenbankähnliche Schreibbefehle an einem Datenziel durchzuführen.
     /// </summary>
     public interface IDataTarget

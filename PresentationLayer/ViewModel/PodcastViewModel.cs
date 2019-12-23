@@ -16,6 +16,8 @@ using PresentationLayer.Models;
 
 namespace PresentationLayer.ViewModel
 {
+    /// AUTHOR DER KLASSE: PG
+    /// 
     public class PodcastViewModel : BaseViewModel
     {
         #region Services

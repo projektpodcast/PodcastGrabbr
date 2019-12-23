@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace BusinessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// GetObjects verwaltet alle Methodenaufrufe um Daten aus einer Datenquelle des DataAccessLayers zu erhalten.
     /// Fungiert als Zwischenstück zwischen PresentationLayer und DataAccessLayer.
     /// </summary>

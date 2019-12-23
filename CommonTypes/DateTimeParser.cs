@@ -10,6 +10,8 @@ namespace CommonTypes
     public class DateTimeParser
     {
         /// <summary>
+        /// AUTHOR DER KLASSE: PG
+        /// 
         /// Versucht einen String in ein DateTime-Objekt zu parsen.
         /// Bei Misserfolg wird ein Default-Wert verwendet.
         /// </summary>

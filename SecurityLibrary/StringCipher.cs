@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace SecurityLibrary
 {
+    /// AUTHOR DER KLASSE: (PG) Siehe Quellenangabe
+    /// 
     // Um das in der UI hintelegte Datenpasswort nicht im Klartext als Variable zu übergeben,
     // kommt diese Klasse zur Encryption zum Einsatz.
     // Die Rijndael-Encryption ist heute noch Basis für aktuelle Verschlüsselungsmethoden (z.B. AES)

@@ -69,7 +69,6 @@
     <Compile Include="MockDataSource.cs" />
     <Compile Include="MySQL\MySQLDataSource.cs" />
     <Compile Include="MySQL\MySQLDataTarget.cs" />
-    <Compile Include="PostgreSQL\PostCollect.cs" />
     <Compile Include="PostgreSQL\PostConnect.cs" />
     <Compile Include="PostgreSQL\PostDataSource.cs" />
     <Compile Include="PostgreSQL\PostDataTarget.cs" />
@@ -91,6 +90,10 @@
     <ProjectReference Include="..\RssFeedProcessor\RssFeedProcessor.csproj">
       <Project>{725C78C2-BB58-4908-B81E-D1C418E26B99}</Project>
       <Name>RssFeedProcessor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecurityLibrary\SecurityLibrary.csproj">
+      <Project>{A6F8AF07-5D06-4593-84A2-4FD98E1FD146}</Project>
+      <Name>SecurityLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

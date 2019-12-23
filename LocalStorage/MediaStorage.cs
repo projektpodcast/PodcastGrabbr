@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace LocalStorage
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Diese Klasse verwaltet das Herunterladen von Episoden aus dem Internet auf die lokale Festplatte.
     /// Sie erstellt relative Pfade und gibt diese zurück, um die Dateien herunterzuladen.
     /// Zusätzlich wird der Download an dieser Stelle initialisiert.

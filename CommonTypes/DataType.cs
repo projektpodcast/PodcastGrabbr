@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace CommonTypes
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// An dieser Stelle wird festgelegt, welche Datenhaltungs-Verbindungen zur Auswahl stehen.
     /// </summary>
     public class DataType

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace PresentationLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Event, dass im UserNavigationModel implementiert wird.
     /// Soll ausgelöst werden, wenn der angezeigten Inhalt mit einer anderen View/ViewModel ersetzt wird.
     /// </summary>

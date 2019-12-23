@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace BusinessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// SaveObjects verwaltet alle Methodenaufrufe um Daten in ein Datenziel des DataAccessLayers zu persistieren.
     /// Fungiert als Zwischenstück zwischen PresentationLayer und DataAccessLayer
     /// </summary>

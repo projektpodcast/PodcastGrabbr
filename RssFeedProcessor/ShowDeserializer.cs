@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 /// <summary>
+/// AUTHOR DER KLASSE: PG
+/// 
 /// Die Klasse ShowDeserializer besitzt drei Aufgaben:
 /// 1. Xml-Knoten, die Daten einer "Show" enthalten, an Properties mappen.
 /// 2. Eine Xml deserialisieren und die Werte an die Properties binden.

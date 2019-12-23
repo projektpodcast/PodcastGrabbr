@@ -11,6 +11,8 @@ using LocalStorage;
 namespace DataAccessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Definiert Methoden, welche benötigt werden um Medien-Dateien zu persistieren.
     /// </summary>
     public class MediaDataTarget : ILocalMediaTarget

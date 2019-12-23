@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace CommonTypes
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Der Parent einer Episode ist eine Show.
     /// Zu einer Show können eine Vielzahl an Episoden gehören.
     /// </summary>

@@ -13,6 +13,8 @@ using System.Windows.Input;
 namespace PresentationLayer.ViewModel
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Das MainViewModel initialisiert verschiedene Views mit ihren ViewModels.
     /// Es wird benötigt um multiple Views in einem Window (MainView) anzuzeigen.
     /// To Do: Castle Windsow/MVVM Light etc. implementieren um eine saubere Dependency Injection zu erreichen.

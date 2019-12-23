@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace PresentationLayer.ViewModel
 {
+
+    /// AUTHOR DER KLASSE: PG
+    /// NICHT BEACHTEN: NICHT RICHTIG IMPLEMENTIERT.
     public class DownloadsViewModel : BaseViewModel, IViewModel
     {
         private IBusinessAccessService _businessAccess { get; set; }

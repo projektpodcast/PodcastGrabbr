@@ -12,6 +12,8 @@ using System.Windows.Input;
 namespace PresentationLayer.ViewModel
 {
 
+    /// AUTHOR DER KLASSE: PG
+    /// 
     public class UserNavigationViewModel : BaseViewModel
     {
         #region Ui Properties

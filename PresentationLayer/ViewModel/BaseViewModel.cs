@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace PresentationLayer.ViewModel
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Basis, die von allen ViewModel implementiert werden soll um das 
     /// Interface IViewModel und INotifyPropertyChanged automatisch zu implementieren.
     /// </summary>

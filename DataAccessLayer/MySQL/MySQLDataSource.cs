@@ -7,6 +7,9 @@ using CommonTypes;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: RK
+    /// </summary>
     public class MySQLDataSource : IDataSource
     {
         public List<Podcast> GetAllDownloadedPodcasts()

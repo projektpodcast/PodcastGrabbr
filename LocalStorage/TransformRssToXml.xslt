@@ -6,7 +6,9 @@
     xmlns:itunes2="http://www.itunes.com/DTDs/Podcast-1.0.dtd">
   <xsl:output method="xml" indent="yes"/>
 
-  
+  <!--/// AUTHOR DER KLASSE: PG
+  ///-->
+
   <xsl:template match="/rss">
     <xsl:element name="podcasts">
       <xsl:apply-templates select="channel"/>

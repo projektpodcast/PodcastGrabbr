@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace CommonTypes
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Die Klasse "Podcast" gruppiert die Daten einer Show UND alle verfügbaren Episoden dieser Show.
     /// Die Properties des Typs "Show" und "List<Episode>" werden über Vererbung eingebunden.
     /// </summary>

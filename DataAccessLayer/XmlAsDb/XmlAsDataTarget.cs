@@ -9,6 +9,8 @@ using LocalStorage;
 namespace DataAccessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Als Datenbankalternative, soll es eine offline Option geben.
     /// Lokal wird eine Xml-Datei gehalten die datenbankähnliche Funktionen erfüllen soll.
     /// Die Methoden rufen jeweils die implementierte Klasse XmlStorage auf und stellen Schreibbefehle dar.

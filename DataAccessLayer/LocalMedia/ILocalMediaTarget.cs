@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace DataAccessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Legt Methoden nach außen Frei, welche benötigt werden um Medien-Dateien zu persistieren.
     /// </summary>
     public interface ILocalMediaTarget

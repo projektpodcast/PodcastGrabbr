@@ -8,6 +8,9 @@ using System.Data;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: MA
+    /// </summary>
     public class PostgresData
     {
         public static NpgsqlConnection con = new NpgsqlConnection();

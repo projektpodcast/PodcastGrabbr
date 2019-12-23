@@ -3,6 +3,8 @@
 namespace CommonTypes
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Enthält benötigte Informationen um eine Datenbank-Verbindung zu öffnen.
     /// Das KeyValuePair enthält um welche Art von Datenziel es sich handelt.
     /// </summary>

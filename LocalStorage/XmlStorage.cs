@@ -13,6 +13,8 @@ using System.Xml.Xsl;
 namespace LocalStorage
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Die Klasse XmlStorage wird als "lokale in memory" Datenbank genutzt.
     /// Eine Xml-Datei wird in den Speicher geladen und mit Linq to Xml durchsucht.
     /// Daten können persistiert werden, indem ein XmlWriter in die Datei schreibt und erneut in das XDocument geladen wird.

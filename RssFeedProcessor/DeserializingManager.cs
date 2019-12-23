@@ -10,6 +10,8 @@ using System.Xml;
 namespace RssFeedProcessor
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Diese Klasse regelt den Ablauf verschiedener, an der Xml-Deserialisierung teilhabenden, Klassen.
     /// Mit dem externen Aufruf der Methode "DeserializeRssXml(string xmlUri)" wird eine online gehostete Uri eines Rss-Feeds übergeben.
     /// Die Xml des Rss-Feeds enthält Daten eines Podcasts.

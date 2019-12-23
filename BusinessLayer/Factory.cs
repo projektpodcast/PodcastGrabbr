@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 namespace BusinessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Die Factory erstellt für die Klassen "GetObjects" und "SaveObjects" Instanzen, um den DataAccessLayer aufzurufen.
     /// 
     /// </summary>
@@ -85,8 +87,8 @@ namespace BusinessLayer
                     _dataSource = new MySQLDataSource();
                     break;
                 case 3:
-                    _dataTarget = new PostDataTarget();
-                    _dataSource = new PostDataSource();
+                    _dataTarget = new PostDataTarget(DatenHaltung);
+                    _dataSource = new PostDataSource(DatenHaltung);
                     break;
                 default:
                     break;

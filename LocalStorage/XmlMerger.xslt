@@ -8,6 +8,8 @@
   <xsl:variable name="updateShows" select="$updates/podcasts/show" />
   <xsl:variable name="updateIds" select="$updates/podcasts" />
 
+  <!--/// AUTHOR DER KLASSE: PG
+  ///-->
 
   <xsl:template match="@* | node()">
     <xsl:copy>

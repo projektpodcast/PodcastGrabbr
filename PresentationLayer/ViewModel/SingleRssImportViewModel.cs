@@ -10,6 +10,8 @@ using System.Windows.Input;
 
 namespace PresentationLayer.ViewModel
 {
+    /// AUTHOR DER KLASSE: PG
+    /// 
     public class SingleRssImportViewModel : BaseViewModel
     {
         public IBusinessAccessService _businessAccessService { get; set; }

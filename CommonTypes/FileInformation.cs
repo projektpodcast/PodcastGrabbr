@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 namespace CommonTypes
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Eine Gruppierung an Informationen, die eine downloadbare Datei beschreiben
     /// </summary>
     public class FileInformation

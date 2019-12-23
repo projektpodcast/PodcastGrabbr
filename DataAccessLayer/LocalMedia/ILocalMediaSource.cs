@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 namespace DataAccessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Definiert Methoden, welche benötigt werden um Medien-Dateien abzuspielen 
     /// </summary>
     public interface ILocalMediaSource

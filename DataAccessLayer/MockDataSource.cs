@@ -8,6 +8,8 @@ using CommonTypes;
 namespace DataAccessLayer
 {
     /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
     /// Verwendet um Testdaten zu erzeugen
     /// </summary>
     [Obsolete]
