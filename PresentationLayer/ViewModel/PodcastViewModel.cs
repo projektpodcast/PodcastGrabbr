@@ -444,13 +444,20 @@ namespace PresentationLayer.ViewModel
 
         private void GetEpisodes()
         {
-            List<Episode> episodes = _businessAccess.Get.GetEpisodes(SelectedShow);
-            EpisodesCollection.Clear();
-
-            foreach (Episode item in episodes)
+            if (SelectedShow != null)
             {
-                EpisodeModel convertedEpisode = new EpisodeModel(item);
-                EpisodesCollection.Add(convertedEpisode);
+                List<Episode> episodes = _businessAccess.Get.GetEpisodes(SelectedShow);
+                EpisodesCollection.Clear();
+
+                foreach (Episode item in episodes)
+                {
+                    EpisodeModel convertedEpisode = new EpisodeModel(item);
+                    EpisodesCollection.Add(convertedEpisode);
+                }
+            }
+            else
+            {
+                EpisodesCollection.Clear();
             }
         }
         #endregion Mockdata
