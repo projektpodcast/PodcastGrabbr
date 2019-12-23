@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace PresentationLayer.Services
 {
+    /// <summary>
+    /// Veröffentlich Methoden um einen FileService per Dependency Injection zu übergeben.
+    /// Die Methoden öffnen einen FileDialog.
+    /// </summary>
     public interface IDialogService
     {
         string FilePath { get; set; }
-        void StartFileDialog();
+        List<string> StartFileDialog();
     }
 }

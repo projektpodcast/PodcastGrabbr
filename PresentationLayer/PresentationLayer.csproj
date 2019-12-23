@@ -59,49 +59,63 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AppConfigManager.cs" />
+    <Compile Include="Commands\AsyncRelayCommand.cs" />
+    <Compile Include="Commands\IAsyncCommand.cs" />
+    <Compile Include="Commands\IErrorHandler.cs" />
     <Compile Include="Models\ButtonModel.cs" />
+    <Compile Include="Models\EpisodeModel.cs" />
     <Compile Include="OnCurrentContentChanged.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\FileDialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Services\IInitializerService.cs" />
-    <Compile Include="Services\IUserConfigService.cs" />
     <Compile Include="Services\OnConfigChanged.cs" />
     <Compile Include="Services\OnDatenHaltungChanged.cs" />
-    <Compile Include="Services\UserConfigService.cs" />
+    <Compile Include="Services\OnPodcastsManipulated.cs" />
     <Compile Include="Services\UserConfigurationService.cs" />
+    <Compile Include="Commands\TaskUtilities.cs" />
     <Compile Include="ViewModel\DownloadsViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Services\InizializerService.cs" />
     <Compile Include="OnNavigationChanged.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="Services\GlobalUserCfgService.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ViewModel\IViewModel.cs" />
     <Compile Include="ViewModel\PodcastViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Compile Include="ViewModel\SingleRssImportViewModel.cs" />
     <Compile Include="ViewModel\UserNavigationViewModel.cs" />
-    <Compile Include="View\DateFormatter.cs" />
     <Compile Include="View\DownloadsView.xaml.cs">
       <DependentUpon>DownloadsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InvertedBoolToVisibilityConverter.cs" />
+    <Compile Include="View\Helper\ValidationRules.cs" />
+    <Compile Include="View\Helper\InvertedBoolToVisibilityConverter.cs" />
     <Compile Include="View\IView.cs" />
-    <Compile Include="View\NullToVisibilityConverter.cs" />
+    <Compile Include="View\Helper\NullToVisibilityConverter.cs" />
     <Compile Include="View\PasswordBoxUserControl.xaml.cs">
       <DependentUpon>PasswordBoxUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PodcastView.xaml.cs">
       <DependentUpon>PodcastView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UriToCachedImageConverter.cs" />
+    <Compile Include="View\Helper\UriToCachedImageConverter.cs" />
+    <Compile Include="View\SingleRssImportView.xaml.cs">
+      <DependentUpon>SingleRssImportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserNavigationView.xaml.cs">
       <DependentUpon>UserNavigationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Page Include="StyleResources\ColorBrushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StyleResources\TextBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DownloadsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PodcastView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SingleRssImportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,6 +187,10 @@
     <ProjectReference Include="..\CommonTypes\CommonTypes.csproj">
       <Project>{D042B04C-579A-40C9-8870-C2DABC168DB1}</Project>
       <Name>CommonTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LocalStorage\LocalStorage.csproj">
+      <Project>{29FB83F7-CD40-4CB6-AA59-9AF3E5C2A020}</Project>
+      <Name>LocalStorage</Name>
     </ProjectReference>
     <ProjectReference Include="..\SecurityLibrary\SecurityLibrary.csproj">
       <Project>{a6f8af07-5d06-4593-84a2-4fd98e1fd146}</Project>

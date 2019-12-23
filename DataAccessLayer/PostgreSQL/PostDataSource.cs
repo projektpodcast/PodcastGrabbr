@@ -1,159 +1,152 @@
 ﻿using System;
-
 using System.Collections.Generic;
-
 using System.Linq;
-
 using System.Text;
-
 using System.Threading.Tasks;
-
 using Npgsql;
-
 using CommonTypes;
-
-
-
-
+using RssFeedProcessor;
 
 namespace DataAccessLayer.PostgreSQL
-
 {
-
-    public class PostDataSource : LocalDataSource, IDataSource
-
+    /// <summary>
+    /// AUTHOR: MA
+    /// </summary>
+    public class PostDataSource : IDataSource
     {
+        //initialize prozess target and conenection
+        PostConnect myConecction;
+        PostDataTarget myTarget;
 
-        PostConnect myConecction = new PostConnect();
+        DeserializingManager deserializer = new DeserializingManager();
 
-        NpgsqlConnection conexionOpen;
+        public static IDataStorageType dbData;
 
-
-
-
-
-
-
-        public Boolean CheckShow(string id, string db)
-
+        public PostDataSource(IDataStorageType storageData)
         {
+            dbData = storageData;
 
-            Boolean check = false;
+            myTarget = new PostDataTarget(dbData);
 
-            try
+            String html = "http://podcast.wdr.de/quarks.xml";
 
+            Podcast podcast = deserializer.DeserializeRssXml(html);
+            myConecction = new PostConnect(storageData);
+
+            //check if the podcast exist
+            bool CheckPodcast = CheckInDB(podcast);
+
+            //if the podcast dont exist, it will be saved in the db
+            if (!CheckPodcast)
             {
-
-                string csql_create = "select sid from shows WHERE sid = " + id + "";
-
-                NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect(db));
-
-                Command.ExecuteNonQuery();
-
-                myConecction.DBDesConnect();
-
-                // conect with the created db
-
-                check = true;
-
-                return check;
-
+                myTarget.SavePodcast(podcast);
             }
-
-            catch (Exception)
-
-            {
-
-                return check;
-
-            }
-
-
-
 
 
         }
 
 
+        private bool CheckInDB(Podcast thisPodcast)
+        {
+            bool check = false;
 
+
+
+            string csql_create = "select * from shows where podcasttitle = '" + thisPodcast.ShowInfo.PodcastTitle + "'";
+
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
+            var reader = Command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                check = true;
+            }
+            myConecction.DBDesConnect();
+            return check;
+        }
+
+        // collect the episodes
         public List<Episode> GetAllEpisodes(Show selectedShow)
-
         {
 
-            conexionOpen = new NpgsqlConnection();
-
-            conexionOpen = myConecction.DBConnectionOpen();
-
-            
-
             string csql_create = "select * from episodes";
-
-            NpgsqlCommand Command = new NpgsqlCommand(csql_create, conexionOpen);
-
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
             var reader = Command.ExecuteReader();
 
             var list = new List<Episode>();
 
-
-
             while (reader.Read())
 
-                list.Add(new Episode { IsDownloaded = false, Summary = reader.GetString(4), ImageUri = reader.GetString(10), Title = reader.GetString(2), PublishDate = reader.GetDateTime(5) });
+
+                // return a list with all episodes 
+
+
+                list.Add(new Episode
+                {
+                    //EpisodeId = reader.GetString(0),
+                    //showid = reader.GetString(1),
+                    Title = reader.GetString(2),
+                    PublishDate = reader.GetDateTime(3),
+                    Summary = reader.GetString(4),
+                    Keywords = reader.GetString(5),
+                    ImageUri = reader.GetString(6),
+                    //duration = reader.GetString(7),
+                    //filetyp = reader.GetString(8),
+                    //fileurl = reader.GetString(9),
+                    //FileDetails = reader.GetString(10),
+                    IsDownloaded = reader.GetBoolean(11),
+                    DownloadPath = reader.GetString(12)
+                });
 
             list.ToArray();
 
             myConecction.DBDesConnect();
 
             return list;
-
         }
 
-
-
+        //Collect all shows 
         public List<Show> GetAllShows()
-
         {
-
-            conexionOpen = new NpgsqlConnection();
-
-            conexionOpen = myConecction.DBConnectionOpen();
-
-
-
             string csql_create = "select * from shows";
-
-            NpgsqlCommand Command = new NpgsqlCommand(csql_create, conexionOpen);
+            NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
 
             var reader = Command.ExecuteReader();
 
             var list = new List<Show>();
 
 
-
             while (reader.Read())
 
-                list.Add(new Show { Description = reader.GetString(2), Keywords = "null", Language = "null", PodcastTitle = reader.GetString(1), PublisherName = reader.GetString(3), ImageUri = "" });
-
-
+                list.Add(new Show
+                {
+                    //ShowId = reader.GetString(0),
+                    PublisherName = reader.GetString(1),
+                    PodcastTitle = reader.GetString(2),
+                    //Category = reader.GetString(3),
+                    Keywords = reader.GetString(4),
+                    Subtitle = reader.GetString(5),
+                    Language = reader.GetString(6),
+                    Description = reader.GetString(7),
+                    LastUpdated = reader.GetDateTime(8),
+                    LastBuildDate = reader.GetDateTime(9),
+                    ImageUri = reader.GetString(10),
+                    RssLink = reader.GetString(11)
+                });
 
             list.ToArray();
-
             myConecction.DBDesConnect();
 
             return list;
 
         }
 
-
-
-        internal override string GetFolderName()
-
+        public List<Podcast> GetAllDownloadedPodcasts()
         {
-
             throw new NotImplementedException();
-
         }
-
     }
+
+
 
 }

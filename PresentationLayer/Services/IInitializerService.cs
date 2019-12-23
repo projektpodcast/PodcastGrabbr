@@ -8,7 +8,7 @@ namespace PresentationLayer.Services
     {
         IView InitializeView(IViewModel viewModel);
 
-        IUserConfigService InitializeConfigService();
+        IConfigurationService InitializeConfigService();
 
         IBusinessAccessService InitializeBusinessLayer();
     }

@@ -1,16 +1,28 @@
-﻿using CommonTypes;
+﻿using BusinessLayer;
+using CommonTypes;
+using LocalStorage;
 using PresentationLayer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
 namespace PresentationLayer.ViewModel
 {
+    /// AUTHOR DER KLASSE: PG
+    /// 
     public class SettingsViewModel : BaseViewModel
     {
-        private IUserConfigService _configService { get; set; }
         #region Ui Properties
+        private IConfigurationService _configurationService { get; set; }
+
+        /// <summary>
+        /// Gebunden an das SelectedItem einer ComboBox
+        /// Wenn ein neues Item ausgewählt wird, wird geprüft ob das DetailGrid 
+        /// in der Ui angezeigt werden soll oder nicht (Visibility Property an View gebunden)
+        /// </summary>
         private KeyValuePair<int, string> _selectedDataType { get; set; }
         public KeyValuePair<int, string> SelectedDataType
         {
@@ -18,22 +30,60 @@ namespace PresentationLayer.ViewModel
             set
             {
                 _selectedDataType = value;
-                OnPropertyChanged("SelectedDataType"); CheckEqualitySelectedAndConfigDataType();
+                OnPropertyChanged("SelectedDataType"); DecideVisibility();
+                if (ConfigData != null)
+                {
+                    ConfigData.DataType = value;
+                }
             }
         }
 
-        private KeyValuePair<int, string> _configDataType { get; set; }
-        public KeyValuePair<int, string> ConfigDataType
+        public Dictionary<int, string> PossibleTypes { get; set; }
+
+        /// <summary>
+        /// Ui Property, welche die Sichtbarkeit eines Grids bestimmt.
+        /// </summary>
+        private Visibility _dbDetailVisibility { get; set; }
+        public Visibility DbDetailVisibility { get { return _dbDetailVisibility; } set { _dbDetailVisibility = value; OnPropertyChanged("DbDetailVisibility"); } }
+
+        /// <summary>
+        /// An eine PasswordBox in der View gebunden. Inhalt ist ein Encrypted Passwort. Passwort wird automatisch durch eine Custom PasswordBox encrypted.
+        /// </summary>
+        private string _dbPassword { get; set; }
+        public string DbPassword
         {
-            get { return _configDataType; }
-            set
-            {
-                _configDataType = value;
-                OnPropertyChanged("ConfigDataType");
-            }
+            get { return _dbPassword; }
+            set { _dbPassword = value; OnPropertyChanged("DbPassword"); }
         }
+
+        private IBusinessAccessService _businessAccess { get; set; }
+
         #endregion Ui Properties
 
+        /// <summary>
+        /// Initialisiert non-nullable Properties, setzt das Dictionary für die Datenbank-Combobox
+        /// und synchronisiert die UserConfiguration mit einer Klasseninternen Property.
+        /// </summary>
+        /// <param name="configService"></param>
+        public SettingsViewModel(IConfigurationService configService, IBusinessAccessService businessAccessService)
+        {
+            SelectedDataType = new KeyValuePair<int, string>();
+
+            PossibleTypes = new Dictionary<int, string>
+            {
+                { 1, "Lokal: Xml" },
+                { 2, "Datenbank: MySQL" },
+                { 3, "Datenbank: PostgreSQL" }
+            };
+
+            _configurationService = configService;
+            _businessAccess = businessAccessService;
+
+            MapConfigData();
+            IsConfigurationSet();
+        }
+
+        #region ICommand Properties und CanExecute-Prüfungen
         private ICommand _fileImport { get; set; }
         public ICommand FileImport
         {
@@ -79,23 +129,61 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-      
-
-        #region ICommand Methods
-        private bool IsDataTypeSelected()
+        private ICommand _persistDbData { get; set; }
+        public ICommand PersistDbData
         {
-            if (ConfigDataType.Key != 0)
+            get
             {
-                return true;
+                if (_persistDbData == null)
+                {
+                    _persistDbData = new RelayCommand(
+                        p => IsDataTypeSelected(),
+                        p => this.ExecutePersistDbData());
+                }
+                return _persistDbData;
             }
-            return false;
         }
 
+        private bool IsDataTypeSelected()
+        {
+            return SelectedDataType.Key != 0 ? true : false;
+        }
+        #endregion ICommand Properties
+
+        /// <summary>
+        /// Öffnet einen FileDialog, der durch das Interface IDialogService angeboten wird.
+        /// Bisher keine elegante Lösung gefunden, eine Wegnavigation zu verhindern (Nutzer soll während dem Import keinen Input tätigen dürfen)
+        /// und ihn asynchron über den Zustand zu informieren.
+        /// Bisherige Lösung ist bedürftig gebastelt und die .Save.ProcessRssList(uriListToProcess) ist noch synchron.
+        /// </summary>
         private void ExecuteFileImport()
         {
             IDialogService fileServe = new FileDialogService();
-            fileServe.StartFileDialog();
+
+            List<string> uriListToProcess = new List<string>();
+            uriListToProcess = fileServe.StartFileDialog();
+
+            Task.Run(() => { MessageBox.Show("Podcasts werden verarbeitet", "Bitte warten", MessageBoxButton.OK, MessageBoxImage.Information); });
+            //try
+            //{
+            XmlStorage.Instance.MassImport(uriListToProcess);
+
+                //for (int i = 0; i < uriListToProcess.Count; i++)
+                //{
+
+                //    _businessAccess.Save.ProcessRssList(uriListToProcess);
+
+                //}
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Bei der Verarbeitung ist ein Fehler aufgetreten." +
+            //        $"Ab folgendem Link hat keine weitere Verarbeitung mehr stattgefunden: \n  {ex.ToString()}");
+            //    //throw;
+            //}
+            OnPodcastsInserted();
         }
+
 
 
         private void ExecuteDeleteAllDownloads()
@@ -107,163 +195,36 @@ namespace PresentationLayer.ViewModel
         {
             //bl..delete
         }
-        #endregion ICommand Methods
 
-        public void DoesItExist()
+        /// <summary>
+        /// Toggled die Ui-Property "Visibility" zwischen Collapsed und Visibility.
+        /// Wenn der SelectedDataType.Key 1 ist, wird die Sichtbarkeit ausgeblendet.
+        /// Ein Wert von 1 ist auf den DataType von Xml bezogen, dieser benötigt kein explizites setzen von Datenkbank-Informationen.
+        /// </summary>
+        private void DecideVisibility()
         {
-            int currentValue = _configService.ConfigValue;
-            if (currentValue != 0)
-            {
-                var configValue = PossibleTypes.First(p => p.Key == currentValue);
-                ConfigDataType = configValue;
-                if (currentValue == 1)
-                {
-                    Visible = Visibility.Collapsed;
-                }
-                else
-                {
-                    Visible = Visibility.Visible;
-                }
-            }
-            else
-            {
-                KeyValuePair<int, string> a = new KeyValuePair<int, string>(currentValue, "Bitte wählen");
-                ConfigDataType = a;
-                Visible = Visibility.Collapsed;
-
-            }
-        }
-
-        public Dictionary<int, string> PossibleTypes { get; set; }
-        public SettingsViewModel(IUserConfigService configService)
-        {
-            _configService = configService;
-            SelectedDataType = new KeyValuePair<int, string>();
-
-            PossibleTypes = new Dictionary<int, string>
-            {
-                { 1, "Lokal: Xml" },
-                { 2, "Datenbank: MySQL" },
-                { 3, "Datenbank: PostgreSQL" }
-            };
-            //DoesItExist();
-
-            _configurationService = new UserConfigurationService();
-            GetConfigData();
-            IsConfigurationSet();
-        }
-
-        private void CheckEqualitySelectedAndConfigDataType()
-        {
-            //if (SelectedDataType.Key != ConfigDataType.Key)
-            //{
-                if (SelectedDataType.Key == 1)
-                {
-                    Visible = Visibility.Collapsed;
-                }
-                else
-                {
-                    Visible = Visibility.Visible;
-                }
-            //}
-        }
-
-        public void SetConnectionType2()
-        {
-            if (SelectedDataType.Value != null)
-            {
-                _configService.ConfigValue = SelectedDataType.Key;
-                ConfigDataType = SelectedDataType;
-                OnTest();
-            }
-        }
-
-        public event System.EventHandler<OnConfigChanged> OnTestChanged;
-
-        public void OnTest()
-        {
-            if (OnTestChanged != null)
-            {
-                OnTestChanged(this, new OnConfigChanged());
-            }
-        }
-
-        //public void SetConnectionType()
-        //{
-        //    if (SelectedDataType.Value != null)
-        //    {
-        //        GlobalUserCfgService.TestValue = SelectedDataType.Key;
-        //        ConfigDataType = SelectedDataType;
-        //    }
-        //}
-
-        private Visibility _visibility { get; set; }
-        public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible"); } }
-
-        //private ICommand _toggleVisibility { get; set; }
-        //public ICommand ToggleVisibility
-        //{
-        //    get
-        //    {
-        //        if (_toggleVisibility == null)
-        //        {
-        //            _toggleVisibility = new RelayCommand(
-        //                p => this.IsDataTypeSelected(),
-        //                p => this.ExecuteVisibilityToggle());
-        //        }
-        //        return _toggleVisibility;
-        //    }
-        //}
-
-        private void ExecuteVisibilityToggle()
-        {
-            switch (Visible)
-            {
-                case Visibility.Visible:
-                    this.Visible = Visibility.Collapsed;
-                    break;
-                case Visibility.Collapsed:
-                    this.Visible = Visibility.Visible;
-                    break;
-                default:
-                    this.Visible = Visibility.Collapsed;
-                    break;
-            }
-        }
-
-        private void GetConfig()
-        {
-
-        }
-
-        private string _dbPassword { get; set; }
-        public string DbPassword
-        { get { return _dbPassword; }
-          set { _dbPassword = value; OnPropertyChanged("DbPassword"); }
+            DbDetailVisibility = SelectedDataType.Key <= 1 ? Visibility.Collapsed : Visibility.Visible;
         }
 
 
-
-
-
-
-
-
-        private IConfigurationService _configurationService { get; set; }
-
-        private DatenArt _selectedData { get; set; }
-        public DatenArt SelectedData
+        private IDataStorageType _userManipulatedData { get; set; }
+        public IDataStorageType UserManipulatedData
         {
-            get { return _selectedData; }
+            get { return _userManipulatedData; }
             set
             {
-                _selectedData = value;
-                OnPropertyChanged("SelectedData");
+                _userManipulatedData = value;
+                OnPropertyChanged("UserManipulatedData");
             }
         }
 
-        private IDatenArt _configData { get; set; }
-        public IDatenArt ConfigData
+        /// <summary>
+        /// Enthält Werte der gesetzten UserConfig.
+        /// Der Nutzer ändert diese Property mit seinen Nutzereingaben, 
+        /// welche durch den ICommand PersistDbData wiederum in die UserConfig geschrieben wird.
+        /// </summary>
+        private IDataStorageType _configData { get; set; }
+        public IDataStorageType ConfigData
         {
             get { return _configData; }
             set
@@ -273,100 +234,85 @@ namespace PresentationLayer.ViewModel
             }
         }
 
-        private void GetConfigData()
+        /// <summary>
+        /// Synchronisiert die Werte der UserConfiguration mit der Property ConfigDate.
+        /// Dies muss explizit geschehen, da es sonst Referenzprobleme zwischen der ConfigData und der UserConfiguration gibt.
+        /// </summary>
+        private void MapConfigData()
         {
-            ConfigData = _configurationService.ConfigDatenArt;
-
-        }
-
-        private void GetSelectedData()
-        {
-            //passiert im DataBinding, überflüssig
-        }
-
-        private void UpdateUserConfig()
-        {
-            //ConfigData.EncryptedPassword = DbPassword;
-            ConfigData.DataType = SelectedDataType;
-            _configurationService.UpdateUserConfiguration(ConfigData);
-            ConfigData = SelectedData;
-        }
-
-        private void SyncConfigAndSelectedData()
-        {
-            //prinzip: selecteddata = configdata
-        }
-
-
-        private ICommand _persistDbData { get; set; }
-        public ICommand PersistDbData
-        {
-            get
+            ConfigData = new DataStorageType
             {
-                if (_persistDbData == null)
-                {
-                    _persistDbData = new RelayCommand(
-                        p => CheckDbData(),
-                        p => this.ExecutePersistDbData());
-                }
-                return _persistDbData;
-            }
+                DataType = _configurationService.ConfigDatenArt.DataType,
+                Ip = _configurationService.ConfigDatenArt.Ip,
+                Port = _configurationService.ConfigDatenArt.Port,
+                DataBaseName = _configurationService.ConfigDatenArt.DataBaseName,
+                UserName = _configurationService.ConfigDatenArt.UserName,
+                EncryptedPassword = _configurationService.ConfigDatenArt.EncryptedPassword
+            };
         }
 
-
-        private bool CheckDbData()
-        {
-            if (SelectedDataType.Key != ConfigDataType.Key)
-            {
-                return true;
-            }
-            return false;
-        }
-
+        /// <summary>
+        /// Speichert die vom Nutzer hinterlegten Datenbank-Daten in die lokale UserConfiguration.
+        /// Löst ein Event aus um die Änderung anzuzeigen.
+        /// </summary>
         public void ExecutePersistDbData()
         {
             MessageBox.Show("Datenziel wird geändert"); //HIER KEINE MBOX ANZEIGEN, AN ANDERER STELLE
-            SetDataType();
+            _configurationService.UpdateUserConfiguration(ConfigData);
+            ConfigurationHasChanged();
         }
 
-        public void SetDataType()
-        {
-            if (SelectedDataType.Value != null)
-            {
-                UpdateUserConfig();
-            }
-        }
-
+        /// <summary>
+        /// Überprüft, ob die UserConfiguration vom Nutzer verändert wurde.
+        /// Standardmäßig ist der Key in der UserConfig 0.
+        /// </summary>
         public void IsConfigurationSet()
         {
-            //SelectedData = new DatenArt();
-
-            int currentValue = _configurationService.ConfigDatenArt.DataType.Key;
-            if (currentValue != 0)
+            if (ConfigData.DataType.Key != 0)
             {
-                var configValue = PossibleTypes.First(p => p.Key == currentValue);
-                //ConfigDataType = configValue;
-                //ConfigDataType = configValue;
-                //ConfigData.DataType = configValue;
-                if (currentValue == 1)
-                {
-                    Visible = Visibility.Collapsed;
-                }
-                else
-                {
-                    Visible = Visibility.Visible;
-                }
+                KeyValuePair<int, string> parsedConfigValue = PossibleTypes.First(p => p.Key == ConfigData.DataType.Key);
+                ConfigData.DataType = parsedConfigValue;
+                SelectedDataType = parsedConfigValue;
             }
+
             else
             {
-                KeyValuePair<int, string> a = new KeyValuePair<int, string>(currentValue, "Bitte wählen");
-
-                ConfigData.DataType = a;
-                
-                Visible = Visibility.Collapsed;
-
+                KeyValuePair<int, string> noDataTypeSelected = new KeyValuePair<int, string>(ConfigData.DataType.Key, "Bitte wählen");
+                ConfigData.DataType = noDataTypeSelected;
+                SelectedDataType = noDataTypeSelected;
             }
         }
 
+
+        #region Events
+        public event System.EventHandler<OnConfigChanged> OnUserConfigChanged;
+
+        /// <summary>
+        /// Veröffentlicht das OnUserConfigChanged Event.
+        /// Wenn es einen Event-Subscriber gibt, wird das in der UserConfig gesetzte KeyValuePair übertragen.
+        /// Das Event soll ausgelöst werden, wenn die UserConfiguration durch den Nutzer bearbeitet und abgespeichert wurde.
+        /// </summary>
+        public void ConfigurationHasChanged()
+        {
+            if (OnUserConfigChanged != null)
+            {
+                OnUserConfigChanged(this, new OnConfigChanged() { SettingValue = ConfigData.DataType.Key, SettingProperty = ConfigData.DataType.Value });
+            }
+        }
+
+        /// <summary>
+        /// Das Event soll ausgelöst werden, wenn über die Einstellungen (z.B. import/löschen) Podcasts im Datenziel hinzugefügt oder entfernt werden.
+        /// </summary>
+        public event System.EventHandler<OnPodcastsManipulated> OnPodcastsUpdated;
+        public void OnPodcastsInserted()
+        {
+            if (OnPodcastsUpdated != null)
+            {
+                OnPodcastsUpdated(this, new OnPodcastsManipulated());
+            }
+        }
+
+        #endregion
     }
+
 }

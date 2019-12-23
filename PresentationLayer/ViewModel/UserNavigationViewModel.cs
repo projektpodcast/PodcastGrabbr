@@ -12,22 +12,41 @@ using System.Windows.Input;
 namespace PresentationLayer.ViewModel
 {
 
+    /// AUTHOR DER KLASSE: PG
+    /// 
     public class UserNavigationViewModel : BaseViewModel
     {
+        #region Ui Properties
+        private bool _canSwitchToSettings { get; set; }
+        private bool _canSwitchToPodcast { get; set; }
+        private bool _canSwitchToDownloads { get; set; }
 
+        private Visibility _visibility = Visibility.Collapsed;
+        public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible"); } }
+        #endregion
+
+        /// <summary>
+        /// Gebunden an die Oberfläche. Jeder Eintrag ist ein Navigationspunkt, der in der View angezeigt wird.
+        /// </summary>
         public ObservableCollection<ButtonModel> MenueOptions { get; set; }
 
+        /// <summary>
+        /// Initialisiert die Menüpunkte, indem die Property MenueOptions gefüllt wird.
+        /// </summary>
         public UserNavigationViewModel()
         {
             InitializeButtonCollection();
         }
 
+        /// <summary>
+        /// Ein ButtonModel besteht aus einer Zeichenkette (wird in Menü angezeigt) und einem ICommand (wird an den Menüpunkt gebunden)
+        /// </summary>
         public void InitializeButtonCollection()
         {
             ButtonModel firstButton = new ButtonModel("Startseite", SwitchPageToHome);
             ButtonModel secondButton = new ButtonModel("Einstellungen", SwitchPageToSettings);
             ButtonModel thirdButton = new ButtonModel("Meine Downloads", SwitchPageToDownloads);
-            ButtonModel fourthButton = new ButtonModel("Show importieren", NotImplemented);
+            ButtonModel fourthButton = new ButtonModel("Show importieren", OpenWindowSingleRssImport);
             ButtonModel fifthButton = new ButtonModel("Shows aktualisieren", RefreshEpisodesOfAllShows);
             MenueOptions = new ObservableCollection<ButtonModel>
             {
@@ -39,27 +58,9 @@ namespace PresentationLayer.ViewModel
             };
         }
 
-        private bool _canSwitchToSettings { get; set; }
-        private bool _canSwitchToPodcast { get; set; }
-        private bool _canSwitchToDownloads { get; set; }
+        #region ICommands und Plausenprüfung
 
-        private Visibility _visibility = Visibility.Collapsed;
-        public Visibility Visible { get { return _visibility; } set { _visibility = value; OnPropertyChanged("Visible") ; } }
 
-        private ICommand _notImplemented;
-        public ICommand NotImplemented
-        {
-            get
-            {
-                if (_notImplemented == null)
-                {
-                    _notImplemented = new RelayCommand(
-                        p => true,
-                        p => this.Implement());
-                }
-                return _notImplemented;
-            }
-        }
         private ICommand _toggleMenueVisibility;
         public ICommand ToggleMenueVisibility
         {
@@ -84,7 +85,7 @@ namespace PresentationLayer.ViewModel
                 {
                     _switchPageToSettings = new RelayCommand(
                         p => this._canSwitchToSettings,
-                        p => this.OnTest("ToSettings"));
+                        p => this.NavigationChanged("ToSettings"));
                 }
                 return _switchPageToSettings;
             }
@@ -99,7 +100,7 @@ namespace PresentationLayer.ViewModel
                 {
                     _switchPageToHome = new RelayCommand(
                         p => this._canSwitchToPodcast,
-                        p => this.OnTest("ToPodcast"));
+                        p => this.NavigationChanged("ToPodcast"));
                 }
                 return _switchPageToHome;
             }
@@ -114,9 +115,24 @@ namespace PresentationLayer.ViewModel
                 {
                     _switchPageToDownloads = new RelayCommand(
                         p => this._canSwitchToDownloads,
-                        p => this.OnTest("ToDownloads"));
+                        p => this.NavigationChanged("ToDownloads"));
                 }
                 return _switchPageToDownloads;
+            }
+        }
+
+        private ICommand _openWindowSingleRssImport;
+        public ICommand OpenWindowSingleRssImport
+        {
+            get
+            {
+                if (_openWindowSingleRssImport == null)
+                {
+                    _openWindowSingleRssImport = new RelayCommand(
+                        p => this.CanClickButton(),
+                        p => this.NavigationChanged("ToImport"));
+                }
+                return _openWindowSingleRssImport;
             }
         }
 
@@ -154,21 +170,26 @@ namespace PresentationLayer.ViewModel
         {
             return true;
         }
+        #endregion
 
+        /// <summary>
+        /// Toggled die Sichtbarkeit zwischen Collapsed und Visible einer Ui-Property umher.
+        /// </summary>
         public void DecideVisibilityProperty()
         {
-            switch (Visible)
-            {
-                case Visibility.Visible:
-                    this.Visible = Visibility.Collapsed;
-                    break;
-                case Visibility.Collapsed:
-                    this.Visible = Visibility.Visible;
-                    break;
-                default:
-                    this.Visible = Visibility.Collapsed;
-                    break;
-            }
+            this.Visible = this.Visible != Visibility.Visible ? Visibility.Visible : Visibility.Collapsed;
+            //switch (Visible)
+            //{
+            //    case Visibility.Visible:
+            //        this.Visible = Visibility.Collapsed;
+            //        break;
+            //    case Visibility.Collapsed:
+            //        this.Visible = Visibility.Visible;
+            //        break;
+            //    default:
+            //        this.Visible = Visibility.Collapsed;
+            //        break;
+            //}
         }
 
         private void Implement()
@@ -182,16 +203,29 @@ namespace PresentationLayer.ViewModel
             //BL Zugriff: Show-RSS Feed erneut laden, deserialisieren, prüfen ob neue Episoden verfügbar sind, in Db schieben, Db abruf: ShowList
         }
 
-        public event EventHandler<OnNavigationButtonClicked> OnTestChanged;
+        #region Events
+        /// <summary>
+        /// Teilt den Subscribern mit, dass ein Menünavigationspunkt ausgewählt wurde.
+        /// Empfänger ist das MainViewModel, welchen den angezeigten Inhalt (CurrentContent) an ausgewählten Menünavigationspunkt angleicht.
+        /// </summary>
+        /// <param name="property"></param>
+        public event EventHandler<OnNavigationButtonClicked> OnNavigationChanged;
 
-        public void OnTest(string property)
+        public void NavigationChanged(string property)
         {
-            if (OnTestChanged != null)
+            if (OnNavigationChanged != null)
             {
-                OnTestChanged(this, new OnNavigationButtonClicked() { ChangeTo = property });
+                OnNavigationChanged(this, new OnNavigationButtonClicked() { ChangeTo = property });
             }
         }
 
+        /// <summary>
+        /// Subscribed einem Event aus dem MainViewModel.
+        /// Empfängt eine Änderung, wenn sich der angezeigte "CurrentContent" im MainViewModel ändert.
+        /// Dies ist wichtig, da der aktuell ausgewählte Menüpunkt inaktiv gesetzt werden soll.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Name des ViewModels, welches in der MainView angezeigt wird.</param>
         public void MainViewModel_OnTestChanged(object sender, OnCurrentContentChanged e)
         {
             if (e.ViewModelName.Contains("PodcastView"))
@@ -213,7 +247,7 @@ namespace PresentationLayer.ViewModel
                 this._canSwitchToDownloads = false;
             }
         }
-
+        #endregion
 
     }
 }

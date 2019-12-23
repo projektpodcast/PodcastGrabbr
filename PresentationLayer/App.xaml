@@ -4,7 +4,16 @@
              xmlns:local="clr-namespace:PresentationLayer.View"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="StyleResources/ColorBrushes.xaml" />
+                <ResourceDictionary Source="StyleResources/TextBoxStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
         
+
     </Application.Resources>
 
 </Application>

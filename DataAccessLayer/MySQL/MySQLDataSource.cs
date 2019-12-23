@@ -7,8 +7,16 @@ using CommonTypes;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: RK
+    /// </summary>
     public class MySQLDataSource : IDataSource
     {
+        public List<Podcast> GetAllDownloadedPodcasts()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Episode> getAllEpisodes()
         {
             throw new NotImplementedException();

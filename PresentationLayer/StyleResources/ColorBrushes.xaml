@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:PresentationLayer">
+    
+    <!--SolidColorBrushes nach Farbtheme-->
+    <SolidColorBrush x:Key="MouseOverPrimary" Color="#FF5F563E" Opacity="1"/>
+    <SolidColorBrush x:Key="OpacityEffect" Color="Black" Opacity="0.2"/>
+    <SolidColorBrush x:Key="PrimaryColor" Color="#FF344955"/>
+    <SolidColorBrush x:Key="PrimaryDark" Color="#FF232F34"/>
+    <SolidColorBrush x:Key="PrimaryLight" Color="#FF4A6572"/>
+    <SolidColorBrush x:Key="SecondaryColor" Color="#FFF9AA33"/>
+    <SolidColorBrush x:Key="Tertiary" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TertiaryDark" Color="#FFE1E9F0"/>
+    <SolidColorBrush x:Key="PrimaryColorTranslucent07" Opacity="0.7" Color="#FF344955"/>
+    <SolidColorBrush x:Key="PrimaryColorTranslucent09" Opacity="0.9" Color="#FF344955"/>
+    <SolidColorBrush x:Key="PrimaryDarkTranslucent07" Opacity="0.7" Color="#FF232F34"/>
+    <SolidColorBrush x:Key="PrimaryDarkTranslucent09" Opacity="0.9" Color="#FF232F34"/>
+    <SolidColorBrush x:Key="PrimaryLightTranslucent07" Opacity="0.7" Color="#FF4A6572"/>
+    <SolidColorBrush x:Key="SecondaryColorTranslucent07" Opacity="0.7" Color="#FFF9AA33"/>
+    <SolidColorBrush x:Key="SecondaryColorTranslucent04" Opacity="0.4" Color="#FFF9AA33"/>
+    <SolidColorBrush x:Key="TertiaryTranslucent07" Opacity="0.7" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TertiaryDarkTranslucent07" Opacity="0.7" Color="#FFE1E9F0"/>
+    <SolidColorBrush x:Key="ButtonHover" Color="#FFFABB47"/>
+    <SolidColorBrush x:Key="ButtonPrimaryHover" Color="#FF837047"/>
+    <SolidColorBrush x:Key="SearchButtonStroke" Color="#FF5A5193" Opacity="1"/>
+    
+    <!--SolidColorBrushes für Buttons-->
+    <SolidColorBrush x:Key="RedBrush" Color="Red" Opacity="0.45"/>
+    <SolidColorBrush x:Key="RedBrushBright2" Color="#FFB01B1B" Opacity="1"/>
+    <SolidColorBrush x:Key="RedBrushBright" Color="Red" Opacity="1"/>
+    <SolidColorBrush x:Key="GreenBrush" Color="Green" Opacity="0.6"/>
+    <SolidColorBrush x:Key="GreenBrushBright" Color="Green" Opacity="1"/>
+    <SolidColorBrush x:Key="GreenBrushPlay" Color="#FF1BA61B" Opacity="1"/>
+    <SolidColorBrush x:Key="GreenBrushPlayTranslucent" Color="Green" Opacity="0.8"/>
+    <SolidColorBrush x:Key="WhiteTranslucent" Color="White" Opacity="0.8"/>
+
+</ResourceDictionary>

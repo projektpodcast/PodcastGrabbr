@@ -11,10 +11,6 @@ namespace PresentationLayer.Services
 {
     public class DependencyService : IDependencyService
     {
-        public DependencyService()
-        {
-
-        }
         public IView InitializeView(IViewModel viewModel)
         {
             IView viewType;
@@ -35,15 +31,15 @@ namespace PresentationLayer.Services
             return viewType;
         }
 
-        public IUserConfigService InitializeConfigService()
+        public IConfigurationService InitializeConfigService()
         {
-            IUserConfigService configService = new UserConfigService();
+            IConfigurationService configService = new UserConfigurationService();
             return configService;
         }
 
         public IBusinessAccessService InitializeBusinessLayer()
         {
-            IBusinessAccessService businessLayer = new BusinessAccess();
+            IBusinessAccessService businessLayer = new BusinessAccessService();
             return businessLayer;
         }
 

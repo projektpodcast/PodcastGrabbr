@@ -7,43 +7,17 @@ using CommonTypes;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR DER KLASSE: PG
+    /// 
+    /// Verwendet um Testdaten zu erzeugen
+    /// </summary>
+    [Obsolete]
     public class MockDataSource : IDataSource
     {
         public MockDataSource()
         {
         }
-        //public List<Show> GetAllShows()
-        //{
-        //    List<Show> mockList = new List<Show>();
-        //    string bild3 = "http://static.libsyn.com/p/assets/7/1/f/3/71f3014e14ef2722/JREiTunesImage2.jpg";
-        //    string bild2 = "https://www1.wdr.de/mediathek/video/sendungen/quarks-und-co/logo-quarks100~_v-Podcast.jpg";
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        if (i % 2 >= 1)
-        //        {
-        //            mockList.Add(new Show
-        //            {
-        //                PodcastTitle = "Titel des PodcastsTitel des PodcastsTitel des Podcasts",
-        //                PublisherName = "Ich bin der Publisher",
-        //                Description = "The podcast of Comedian Joe Rogan.",
-        //                ImageUri = bild3,
-        //                LastUpdated = DateTime.UtcNow
-        //            });
-        //        }
-        //        else
-        //        {
-        //            mockList.Add(new Show
-        //            {
-        //                PodcastTitle = "WowTitel",
-        //                PublisherName = "ARD & ZDF",
-        //                Description = "Wow Podcast",
-        //                ImageUri = bild2,
-        //                LastUpdated = DateTime.UtcNow
-        //            });
-        //        }
-        //    }
-        //    return mockList;
-        //}
 
         public List<Podcast> GetDownloadedPodcasts()
         {
@@ -52,21 +26,22 @@ namespace DataAccessLayer
             List<Episode> episodeList = new List<Episode>();
 
             DateTime now = DateTime.Now;
-            Episode episode = new Episode
+            for (int i = 0; i < 10; i++)
             {
-                Title = "Neue Show Selected",
-                PublishDate = now,
-                Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
-                Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called " +
+                Episode episode = new Episode
+                {
+                    EpisodeId = i.ToString(),
+                    Title = "Neue Show Selected",
+                    PublishDate = now,
+                    Keywords = "podcast,joe,party,experience,brian,freak,rogan,redban,deathsquad,jre,1364",
+                    Summary = "Pete Dominick is a stand up comic, speaker, news commentator, host, and moderator. Look for his podcast called " +
                 "'StandUP!with Pete Dominick' available on Apple Podcasts.",
-            };
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
-            episodeList.Add(episode);
+                };
+                episodeList.Add(episode);
+            }
+
+
+
 
             List<Podcast> allDownloadedPodcasts = new List<Podcast>();
 
@@ -148,6 +123,11 @@ namespace DataAccessLayer
             }
 
             return episodesList;
+        }
+
+        public List<Podcast> GetAllDownloadedPodcasts()
+        {
+            throw new NotImplementedException();
         }
     }
 }

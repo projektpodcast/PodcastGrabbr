@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
+    /// <summary>
+    /// AUTHOR: RK
+    /// </summary>
     public class MySQLDataTarget : IDataTarget
     {
 
@@ -92,6 +95,28 @@ namespace DataAccessLayer
         public string CreateEpisodeInsert(Podcast newPodcast)
         {
             return "";
+        }
+
+        public void InsertDownloadPath(Show show, Episode episode, string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDataTarget.InsertDownloadPath(Show show, Episode episode, string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SavePodcast(string rssUri)
+        {
+            RssFeedProcessor.DeserializingManager deserializer = new RssFeedProcessor.DeserializingManager();
+            Podcast p = deserializer.DeserializeRssXml(rssUri);
+            SavePodcast(p);
+        }
+
+        public void BulkCopyPodcasts(List<string> rssUriList)
+        {
+            throw new NotImplementedException();
         }
     }
 }

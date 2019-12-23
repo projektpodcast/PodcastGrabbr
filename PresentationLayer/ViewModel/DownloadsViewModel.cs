@@ -10,6 +10,9 @@ using System.Windows.Input;
 
 namespace PresentationLayer.ViewModel
 {
+
+    /// AUTHOR DER KLASSE: PG
+    /// NICHT BEACHTEN: NICHT RICHTIG IMPLEMENTIERT.
     public class DownloadsViewModel : BaseViewModel, IViewModel
     {
         private IBusinessAccessService _businessAccess { get; set; }
@@ -22,7 +25,7 @@ namespace PresentationLayer.ViewModel
             set { _selectedEpisode = value; OnPropertyChanged("SelectedEpisode"); }
         }
 
-
+        #region ICommands und Plausenprüfung
         private ICommand _playEpisode { get; set; }
         public ICommand PlayEpisode
         {
@@ -31,8 +34,8 @@ namespace PresentationLayer.ViewModel
                 if (_playEpisode == null)
                 {
                     _playEpisode = new RelayCommand(
-                        param => this.IsEpisodeSelected(param), 
-                        param => this.ExecutePlayMedia());
+                        param => true, 
+                        param => this.ExecutePlayMedia(param));
                 }
                 return _playEpisode;
             }
@@ -63,51 +66,7 @@ namespace PresentationLayer.ViewModel
             return false;
         }
 
-        private void ExecutePlayMedia()
-        {
-            throw new NotImplementedException();
-            //
-        }
-
-        private void ExecuteDeleteEpisode()
-        {
-            SelectedEpisode = null;
-            throw new NotImplementedException();
-            //
-        }
-
-        public DownloadsViewModel(IBusinessAccessService businessAccess)
-        {
-            this._businessAccess = businessAccess;
-            //Mockdata
-            GetMockData();
-        }
-
-        #region MockData
-        public void GetMockData()
-        {
-            List<Podcast> a = _businessAccess.Get.GetMockDownloadedPodcasts();
-
-            Episode extraEpisode = new Episode();
-            extraEpisode.IsDownloaded = true;
-            extraEpisode.Title = "Joe Rogan and the world. Now. ";
-            extraEpisode.Summary = "Joe Rogan and the world. Now. Joe Rogan and the world. Now. Joe Rogan and the world. Now. Joe Rogan and the world. Now. Joe Rogan and the world. Now. ";
-
-            a[0].EpisodeList.Add(extraEpisode);
-            Podcasts = new ObservableCollection<Podcast>(a);
-
-        }
-        #endregion MockData
-
-
-
-
-
-
-
-
-
-        private ICommand _fileImport { get; set; }
+                private ICommand _fileImport { get; set; }
         public ICommand FileImport
         {
             get
@@ -125,6 +84,31 @@ namespace PresentationLayer.ViewModel
         private bool DataTrue()
         {
             return false;
+        }
+        #endregion
+
+        private void ExecutePlayMedia(object param)
+        {
+            _businessAccess.Get.PlayMediaFile((Episode)param);
+        }
+
+        private void ExecuteDeleteEpisode()
+        {
+            SelectedEpisode = null;
+            throw new NotImplementedException();
+            //
+        }
+
+        public DownloadsViewModel(IBusinessAccessService businessAccess)
+        {
+            Podcasts = new ObservableCollection<Podcast>();
+            this._businessAccess = businessAccess;
+            List<Podcast> podcastList = _businessAccess.Get.GetDownloadedPodcasts();
+
+            foreach (Podcast podcast in podcastList)
+            {
+                Podcasts.Add(podcast);
+            }
         }
 
         private void ExecuteImport()

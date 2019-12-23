@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace PresentationLayer.View
 {
+    /// AUTHOR DER KLASSE: PG
+    /// 
     public interface IView
     {
         IViewModel ViewModelType { get; set; }

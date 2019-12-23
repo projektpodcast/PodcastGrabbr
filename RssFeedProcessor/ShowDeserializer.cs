@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 /// <summary>
+/// AUTHOR DER KLASSE: PG
+/// 
 /// Die Klasse ShowDeserializer besitzt drei Aufgaben:
 /// 1. Xml-Knoten, die Daten einer "Show" enthalten, an Properties mappen.
 /// 2. Eine Xml deserialisieren und die Werte an die Properties binden.
@@ -27,8 +29,8 @@ namespace RssFeedProcessor
         //Die verknotete Xml Struktur wird mit Klassen-Wrappern dargestellt.
         //Map Properties
         #region MappedProperties
-        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss eine nested-Class verwendet werden. 
-        //(Beispiel: die Property "ImageUri" des Typs "ImageValue" zeigt das XmlElement an das gelesen werden muss. 
+        //Hinweis: Um Attribute eines Xml-Elements zu deserialisieren muss eine Wrapper-Klasse verwendet werden. 
+        //(Beispiel: die Property "ImageUri" des Typs "ImageValue" zeigt den Xml-Knoten an, welcher angesteuert werden soll.
         //Die Definition der Klasse "ImageValue" zeigt das XmlAttribute an (href), das gelesen werden soll.
         [XmlElement("channel")]
         public DeserializedShow DeserializedShowData { get; set; }
@@ -57,11 +59,13 @@ namespace RssFeedProcessor
             [XmlElement("image", Namespace = "http://www.itunes.com/dtds/podcast-1.0.dtd")]
             public ImageValue ImageUri { get; set; }
         }
+        //Wrapper-Klasse um Attribute anzusteuern.
         public class Categories
         {
             [XmlAttribute("text")]
             public string CategoryName { get; set; }
         }
+        //Wrapper-Klasse um Attribute anzusteuern.
         public class ImageValue
         {
             [XmlAttribute("href")]
@@ -93,9 +97,9 @@ namespace RssFeedProcessor
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(ShowDeserializer));
 
-            ShowDeserializer serializedShow = new ShowDeserializer();
-            serializedShow = (ShowDeserializer)deserializer.Deserialize(xmlStream);
-            DeserializedShowData = serializedShow.DeserializedShowData;
+            ShowDeserializer deserializedShow = new ShowDeserializer();
+            deserializedShow = (ShowDeserializer)deserializer.Deserialize(xmlStream);
+            DeserializedShowData = deserializedShow.DeserializedShowData;
         }
 
         /// <summary>

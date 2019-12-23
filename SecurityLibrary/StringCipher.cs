@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 
 namespace SecurityLibrary
 {
+    /// AUTHOR DER KLASSE: (PG) Siehe Quellenangabe
+    /// 
+    // Um das in der UI hintelegte Datenpasswort nicht im Klartext als Variable zu übergeben,
+    // kommt diese Klasse zur Encryption zum Einsatz.
+    // Die Rijndael-Encryption ist heute noch Basis für aktuelle Verschlüsselungsmethoden (z.B. AES)
+    // Verschlüsselung sollte nicht durch einen unvertrauten Entwickler implementiert werden,
+    // daher folgend die Quelle des Codes:
     // Quelle: https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
     public static class StringCipher
     {
@@ -16,7 +23,7 @@ namespace SecurityLibrary
         private const int Keysize = 256;
         private const string passPhrase = "t1Aqdfsa@§3tgaawe";
         // This constant determines the number of iterations for the password bytes generation function.
-        private const int DerivationIterations = 1000;
+        private const int DerivationIterations = 6000;
 
         public static string Encrypt(string plainText)
         {
