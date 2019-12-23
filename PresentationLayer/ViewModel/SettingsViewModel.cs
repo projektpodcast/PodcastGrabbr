@@ -1,4 +1,5 @@
-﻿using CommonTypes;
+﻿using BusinessLayer;
+using CommonTypes;
 using PresentationLayer.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,8 @@ namespace PresentationLayer.ViewModel
             set { _dbPassword = value; OnPropertyChanged("DbPassword"); }
         }
 
+        private IBusinessAccessService _businessAccess { get; set; }
+
         #endregion Ui Properties
 
         /// <summary>
@@ -57,7 +60,7 @@ namespace PresentationLayer.ViewModel
         /// und synchronisiert die UserConfiguration mit einer Klasseninternen Property.
         /// </summary>
         /// <param name="configService"></param>
-        public SettingsViewModel(IConfigurationService configService)
+        public SettingsViewModel(IConfigurationService configService, IBusinessAccessService businessAccessService)
         {
             SelectedDataType = new KeyValuePair<int, string>();
 
@@ -69,11 +72,13 @@ namespace PresentationLayer.ViewModel
             };
 
             _configurationService = configService;
+            _businessAccess = businessAccessService;
+
             MapConfigData();
             IsConfigurationSet();
         }
 
-        #region ICommand Properties und Plausenprüfung
+        #region ICommand Properties und CanExecute-Prüfungen
         private ICommand _fileImport { get; set; }
         public ICommand FileImport
         {
@@ -146,8 +151,18 @@ namespace PresentationLayer.ViewModel
         private void ExecuteFileImport()
         {
             IDialogService fileServe = new FileDialogService();
-            fileServe.StartFileDialog();
+
+            List<string> uriListToProcess = new List<string>();
+            uriListToProcess = fileServe.StartFileDialog();
+
+            if (uriListToProcess.Count != 0)
+            {
+                _businessAccess.Save.ProcessRssList(uriListToProcess);
+            }
+            OnPodcastsInserted();
         }
+
+
 
         private void ExecuteDeleteAllDownloads()
         {
@@ -262,43 +277,20 @@ namespace PresentationLayer.ViewModel
                 OnUserConfigChanged(this, new OnConfigChanged() { SettingValue = ConfigData.DataType.Key, SettingProperty = ConfigData.DataType.Value });
             }
         }
+
+        /// <summary>
+        /// Das Event soll ausgelöst werden, wenn über die Einstellungen (z.B. import/löschen) Podcasts im Datenziel hinzugefügt oder entfernt werden.
+        /// </summary>
+        public event System.EventHandler<OnPodcastsManipulated> OnPodcastsUpdated;
+        public void OnPodcastsInserted()
+        {
+            if (OnPodcastsUpdated != null)
+            {
+                OnPodcastsUpdated(this, new OnPodcastsManipulated());
+            }
+        }
+
         #endregion
     }
 
 }
-
-
-
-//public event System.EventHandler<OnConfigChanged> OnTestChanged;
-
-//public void OnTest()
-//{
-//    if (OnTestChanged != null)
-//    {
-//        OnTestChanged(this, new OnConfigChanged());
-//    }
-//}
-
-
-//private ICommand _toggleVisibility { get; set; }
-//public ICommand ToggleVisibility
-//{
-//    get
-//    {
-//        if (_toggleVisibility == null)
-//        {
-//            _toggleVisibility = new RelayCommand(
-//                p => this.IsDataTypeSelected(),
-//                p => this.ExecuteVisibilityToggle());
-//        }
-//        return _toggleVisibility;
-//    }
-//}
-//public void SetConnectionType()
-//{
-//    if (SelectedDataType.Value != null)
-//    {
-//        GlobalUserCfgService.TestValue = SelectedDataType.Key;
-//        ConfigDataType = SelectedDataType;
-//    }
-//}

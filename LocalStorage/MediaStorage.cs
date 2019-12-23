@@ -118,6 +118,12 @@ namespace LocalStorage
             }
         }
 
+        /// <summary>
+        /// Syncronisiert den WebClient-Downloadprogress mit der Property Progress.
+        /// Da die Property Progress und eine Progress-Property im ViewModel auf dieselbe Referenz haben, synchronisieren sich diese Werte.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             Progress.Report(e.ProgressPercentage);

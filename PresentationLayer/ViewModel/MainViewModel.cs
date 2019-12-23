@@ -82,7 +82,7 @@ namespace PresentationLayer.ViewModel
         /// </summary>
         private void InitializeSettingsUi()
         {
-            IViewModel viewModel = new SettingsViewModel(_configurationService);
+            IViewModel viewModel = new SettingsViewModel(_configurationService, _businessAccessService);
             _settingsUi = _initializerService.InitializeView(viewModel);
             SetUpSubscriber(viewModel);
         }
@@ -149,6 +149,7 @@ namespace PresentationLayer.ViewModel
                     _settingsUi.ViewModelType = null;
                     _settingsUi = null;
                 }
+
                 CurrentContent = _podcastUi;
             }
 
@@ -266,7 +267,20 @@ namespace PresentationLayer.ViewModel
             {
                 SettingsViewModel settingsVm = viewModel as SettingsViewModel;
                 settingsVm.OnUserConfigChanged += SettingsViewModel_OnUserConfigChanged;
+                settingsVm.OnPodcastsUpdated += SettingsVm_OnPodcastsUpdated;
             }
+        }
+
+        /// <summary>
+        /// Subscriber eines Events, dass im SettingsViewModel gepublished wird.
+        /// Wird ausgelöst, wenn die Podcasts im Datenziel über das SettingsViewModel verändert werden.
+        /// Um die Änderungen im Ui darzustellen, muss die PodcastView neugeladen werden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SettingsVm_OnPodcastsUpdated(object sender, OnPodcastsManipulated e)
+        {
+                ReloadPodcastUi();
         }
 
         /// <summary>

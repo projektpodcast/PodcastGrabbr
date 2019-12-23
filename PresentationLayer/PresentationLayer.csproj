@@ -71,6 +71,7 @@
     <Compile Include="Services\IInitializerService.cs" />
     <Compile Include="Services\OnConfigChanged.cs" />
     <Compile Include="Services\OnDatenHaltungChanged.cs" />
+    <Compile Include="Services\OnPodcastsManipulated.cs" />
     <Compile Include="Services\UserConfigurationService.cs" />
     <Compile Include="Commands\TaskUtilities.cs" />
     <Compile Include="ViewModel\DownloadsViewModel.cs" />

@@ -59,10 +59,19 @@ namespace BusinessLayer
             target.InsertDownloadPath(show, episode, path);
         }
 
-        //public void SaveRssPodcast(string rssUri)
-        //{
-        //    LocalRssTest rss = new LocalRssTest();
-        //    rss.ProcessNewPodcast(rssUri);
-        //}
+        /// <summary>
+        /// Eine Liste, die Links zu RSS-Feeds erhält, wird an den DataAccessLayer zur Weiterverarbeitung geleitet.
+        /// </summary>
+        /// <param name="rssLinksToProcess"></param>
+        public void ProcessRssList(List<string> rssLinksToProcess)
+        {
+            IDataTarget target = Factory.Instance.CreateDataTarget();
+
+            foreach (string uri in rssLinksToProcess)
+            {
+                target.SavePodcast(uri);
+            }
+        }
+
     }
 }

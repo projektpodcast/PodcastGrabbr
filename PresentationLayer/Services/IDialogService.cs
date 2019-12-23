@@ -13,6 +13,6 @@ namespace PresentationLayer.Services
     public interface IDialogService
     {
         string FilePath { get; set; }
-        void StartFileDialog();
+        List<string> StartFileDialog();
     }
 }

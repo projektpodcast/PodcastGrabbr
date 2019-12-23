@@ -84,16 +84,28 @@ namespace LocalStorage
         /// <param name="rssUri">RSS-Feed Uri eines Podcasts</param>
         public void ProcessNewPodcast(string rssUri)
         {
-            RssToNewPodcastXml(rssUri);
-            if (_dbXDoc != null)
+
+
+            try
             {
-                UpdateOrInsertNewShow();
+                RssToNewPodcastXml(rssUri);
+                if (_dbXDoc != null)
+                {
+                    UpdateOrInsertNewShow();
+                }
+                else
+                {
+                    MergeNewPodcastXmlWithDbXml();
+                }
                 DbXmlReload();
             }
-            else
+            catch (Exception)
             {
-                MergeNewPodcastXmlWithDbXml();
+
+                //throw;
             }
+
+
         }
 
         /// <summary>
@@ -103,8 +115,17 @@ namespace LocalStorage
         /// <param name="rssUri">RSS-Feed Uri eines Podcasts</param>
         private void RssToNewPodcastXml(string rssUri)
         {
-            XslCompiledTransform xslt = LoadXslt();
-            xslt.Transform(rssUri, _newPodcastPath);
+            try
+            {
+                XslCompiledTransform xslt = LoadXslt();
+                xslt.Transform(rssUri, _newPodcastPath);
+            }
+            catch (Exception)
+            {
+
+
+            }
+
         }
 
         /// <summary>
