@@ -46,8 +46,6 @@ namespace DataAccessLayer.PostgreSQL
 
         #region check db, create db and create tables
 
-
-
         // check if the db exist
         public Boolean CheckDatenBank(string db, NpgsqlConnection myConnection)
 
@@ -64,7 +62,6 @@ namespace DataAccessLayer.PostgreSQL
                 checkDb = reader.HasRows;
                 myConecction.DBDesConnect();
                 return checkDb;
-
             }
 
             catch (Exception)
@@ -188,9 +185,8 @@ namespace DataAccessLayer.PostgreSQL
             Command.Parameters.AddWithValue("rsslink", "RssLink");
             //Command.Parameters.AddWithValue("rsslink", newShow.RssLink);
 
+
             Command.ExecuteNonQuery();
-
-
             return resp;
         }
 
@@ -229,13 +225,10 @@ namespace DataAccessLayer.PostgreSQL
             //Command.Parameters.AddWithValue("path", newEpisode.LocalMediaPath);
             Command.Parameters.AddWithValue("path", "LocalMediaPath");
             Command.ExecuteNonQuery();
-
-
             return resp;
 
         }
-
-
+        
         //save the show whit the episodes
         public void SavePodcast(Podcast podcastToSave)
         {
@@ -267,9 +260,7 @@ namespace DataAccessLayer.PostgreSQL
                 countId++;
             }
             myConecction.DBDesConnect();
-
         }
-
 
         internal override string GetFileName(Podcast podcast)
         {
@@ -280,21 +271,13 @@ namespace DataAccessLayer.PostgreSQL
 
         {
             throw new NotImplementedException();
-
         }
-
-
-
-
-
-
 
         #endregion
 
         #region delete DB
         // this function will erase the db
         private bool DeleteShow(Show myShow)
-
         {
             bool resp = false;
 
@@ -306,7 +289,6 @@ namespace DataAccessLayer.PostgreSQL
 
             NpgsqlCommand Command = new NpgsqlCommand(sql, conexionOpen);
 
-
             var reader = Command.ExecuteReader();
 
             sql = "delete from episodes where episodes.showID = " + myShow.ShowId + "";
@@ -315,9 +297,6 @@ namespace DataAccessLayer.PostgreSQL
 
             return resp;
         }
-
-
-
         #endregion
 
         #region update DB
@@ -347,9 +326,5 @@ namespace DataAccessLayer.PostgreSQL
         }
 
         #endregion
-
     }
-
-
-
 }

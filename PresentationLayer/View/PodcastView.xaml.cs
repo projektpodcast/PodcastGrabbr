@@ -44,8 +44,6 @@ namespace PresentationLayer.View
             e.Handled = true;
         }
 
-
-
         //private void HeaderContent_SizeChanged(object sender, SizeChangedEventArgs e)
         //{
         //    UpdateColumnsWidth(sender as ListView);

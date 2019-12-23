@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CommonTypes
 {
+
     public class DataStorageType : IDataStorageType
     {
         public KeyValuePair<int, string> DataType { get; set; }

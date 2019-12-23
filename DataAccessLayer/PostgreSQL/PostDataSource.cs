@@ -70,10 +70,9 @@ namespace DataAccessLayer.PostgreSQL
 
             string csql_create = "select * from episodes";
             NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
+
             var reader = Command.ExecuteReader();
-
             var list = new List<Episode>();
-
             while (reader.Read())
                
                 
@@ -142,9 +141,7 @@ namespace DataAccessLayer.PostgreSQL
 
         }
 
-
     }
-
 
 
 }

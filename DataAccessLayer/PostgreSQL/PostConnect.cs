@@ -10,14 +10,15 @@ using SecurityLibrary;
 namespace DataAccessLayer.PostgreSQL
 
 {
+
     public class PostConnect
     {
         String dbName;
         int myPort;
         String myIp;
 
-
         public static NpgsqlConnection con = new NpgsqlConnection();
+
 
 
         public PostConnect()
@@ -54,6 +55,7 @@ namespace DataAccessLayer.PostgreSQL
             con.Close();
             return con;
         }
+
     }
 
 }

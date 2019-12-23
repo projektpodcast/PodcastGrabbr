@@ -88,7 +88,6 @@ namespace PresentationLayer.ViewModel
                 return _deleteAllPodcasts;
             }
         }
-
         //private ICommand _nextPage;
         //public ICommand NextPage
         //{
@@ -103,7 +102,6 @@ namespace PresentationLayer.ViewModel
         //        return _nextPage;
         //    }
         //}
-
         private ICommand _searchFilter;
         public ICommand SearchFilter
         {
@@ -245,7 +243,6 @@ namespace PresentationLayer.ViewModel
         //        return _downloadMedia;
         //    }
         //}
-
         private ICommand _downloadMedia;
         public ICommand DownloadMedia
         {
@@ -289,7 +286,6 @@ namespace PresentationLayer.ViewModel
         //    }
         //    //EpisodesCollection = ;
         //}
-
         private bool IsShowSelected()
         {
             return SelectedShow != null ? true : false;

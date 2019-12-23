@@ -12,6 +12,7 @@ namespace BusinessLayer
     public static class Factory
     {
         public static IDataStorageType DatenHaltung { private get; set; }
+
         internal static IDataTarget CreateDataTarget()
         {
             IDataTarget dataTargetInstance = null;
@@ -25,6 +26,7 @@ namespace BusinessLayer
                     break;
                 case 3:
                     dataTargetInstance = new PostDataTarget(DatenHaltung);
+
                     break;
                 default:
                     throw new Exception(); //impl.

@@ -543,9 +543,6 @@
                                 <Setter Property="Fill" TargetName="Figure1" Value="{StaticResource MouseOverPrimary}"/>
                                 <Setter Property="Fill" TargetName="Figure2" Value="{StaticResource MouseOverPrimary}"/>
                                 <Setter Property="Fill" TargetName="Figure3" Value="{StaticResource MouseOverPrimary}"/>
-
-
-
                                 <!--<Setter Property="Background" TargetName="Bd" Value="{StaticResource ButtonHover}"/>-->
                                 <!--<Setter Property="Opacity" TargetName="Triangle" Value=""/>-->
                             </Trigger>
@@ -1680,7 +1677,6 @@
             </Grid>
 
 
-
         </ControlTemplate>
 
         <ControlTemplate x:Key="ExpanderControlTemplate2" TargetType="{x:Type Expander}">
@@ -1817,8 +1813,6 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-
-
     </Page.Resources>
 
     <Grid ShowGridLines="False" Background="{StaticResource TertiaryDark}">
@@ -1867,6 +1861,7 @@
 
 
                     <ComboBox x:Name="FilterComboBox" Width="100" ItemsSource="{Binding FilterOptions}" ItemContainerStyle="{StaticResource ComboBoxItemStyle}"
+
                                   Template="{DynamicResource ComboBoxControlTemplate2}" HorizontalAlignment="Left" 
                                   IsSynchronizedWithCurrentItem="True"
                                   Foreground="White"
@@ -2004,8 +1999,6 @@
                         </Grid.ColumnDefinitions>-->
 
 
-
-
                         <!--<WrapPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Button Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Download" Command="{Binding DownloadMedia}"
                                                 Visibility="{Binding IsDownloaded, Converter={StaticResource InvertedBoolToVisibility}}" Style="{StaticResource DownloadButton}"/>
@@ -2020,6 +2013,7 @@
                                           Foreground="Black" BorderThickness="0"
                                           HorizontalContentAlignment="Stretch" Template="{DynamicResource ExpanderControlTemplate2}"
                               IsExpanded="{Binding IsSelected, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}, Mode=FindAncestor}}">
+
                             <Expander.Header>
 
                                 <WrapPanel Grid.Row="0" Background="Transparent" x:Name="ShowPanel">

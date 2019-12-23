@@ -21,6 +21,13 @@ namespace MockPresentationLayer
     {
         static void Main(string[] args)
         {
+            string password = "#H1a!l@l^oMeinPasswortIstSuperLang";
+            //string encryptionString = "asd123asd123";
+            string encryptedPassword = SecurityLibrary.StringCipher.Encrypt(password);
+
+            string decryptedPassword = SecurityLibrary.StringCipher.Decrypt(encryptedPassword);
+
+            //DeserializingManager deserializer = new DeserializingManager();
 
             //string password = "#H1a!l@l^oMeinPasswortIstSuperLang";
             ////string encryptionString = "asd123asd123";
@@ -50,7 +57,9 @@ namespace MockPresentationLayer
             //call postdb
             //PostDB(a);
 
+
         }
+
 
         //static void PostDB(Podcast a)
         //{
@@ -121,5 +130,4 @@ namespace MockPresentationLayer
         //    }
 
 
-    }
     }

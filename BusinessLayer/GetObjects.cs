@@ -47,7 +47,6 @@ namespace BusinessLayer
         }
 
 
-
         //public List<Episode> GetNextEpisodes(Show selectedShow, Episode lastEpisode)
         //{
         //    XmlAsDataSource dal = new XmlAsDataSource();

@@ -11,7 +11,6 @@ namespace PresentationLayer.Services
     {
         //public Guid guid { get; set; }
 
-
         private IDataStorageType _configDatenArt { get; set; }
         public IDataStorageType ConfigDatenArt {
             get { return _configDatenArt; }
@@ -81,6 +80,7 @@ namespace PresentationLayer.Services
 
 
         public event EventHandler<OnDatenHaltungChanged> DatenHaltungChanged;
+
 
         public void OnDatenHaltungChange(IDataStorageType datenHaltungsTyp)
         {

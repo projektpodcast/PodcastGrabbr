@@ -147,9 +147,6 @@ namespace PresentationLayer.ViewModel
             DbDetailVisibility = SelectedDataType.Key <= 1 ? Visibility.Collapsed : Visibility.Visible;
         }
 
-
-
-
         private IDataStorageType _userManipulatedData { get; set; }
         public IDataStorageType UserManipulatedData
         {
@@ -174,6 +171,7 @@ namespace PresentationLayer.ViewModel
 
         private void MapConfigData()
         {
+
             ConfigData = new DataStorageType
             {
                 DataType = _configurationService.ConfigDatenArt.DataType,

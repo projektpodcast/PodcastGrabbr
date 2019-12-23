@@ -54,12 +54,12 @@ namespace PresentationLayer.ViewModel
 
         private void InitializeCurrentContent()
         {
+
             DecideCurrentContent();
             //if (_podcastUi == null)
             //{
             //    InitializePodcastUi();
             //}
-
         }
 
         private void InitializePodcastUi()
@@ -211,7 +211,6 @@ namespace PresentationLayer.ViewModel
                 _podcastUi.ViewModelType = null;
                 _podcastUi = null;
             }
-
             InitializePodcastUi();
         }
 
