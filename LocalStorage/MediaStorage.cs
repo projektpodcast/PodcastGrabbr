@@ -111,10 +111,10 @@ namespace LocalStorage
                 ServicePointManager.Expect100Continue = true;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 await webClient.DownloadFileTaskAsync(DownloadUri, downloadPath);
+                webClient.DownloadProgressChanged -= WebClient_DownloadProgressChanged;
             }
             catch (Exception)
             {   
-                throw;
             }
         }
 
