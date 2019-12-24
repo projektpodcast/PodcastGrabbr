@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Npgsql;
 using CommonTypes;
 using RssFeedProcessor;
+using Mk.DBConnector;
 
 namespace DataAccessLayer.PostgreSQL
 {
@@ -25,28 +26,33 @@ namespace DataAccessLayer.PostgreSQL
         public PostDataSource(IDataStorageType storageData)
         {
             dbData = storageData;
-
-            myTarget = new PostDataTarget(dbData);
-
-            String html = "http://podcast.wdr.de/quarks.xml";
-
-            Podcast podcast = deserializer.DeserializeRssXml(html);
             myConecction = new PostConnect(storageData);
+            //myTarget = new PostDataTarget(dbData);
 
-            //check if the podcast exist
-            bool CheckPodcast = CheckInDB(podcast);
-
-            //if the podcast dont exist, it will be saved in the db
-            if (!CheckPodcast)
-            {
-                myTarget.SavePodcast(podcast);
-            }
+            //String html = "http://podcast.wdr.de/quarks.xml";
 
 
+            //Podcast podcast = deserializer.DeserializeRssXml(html);
+            //myConecction = new PostConnect(storageData);
+
+
+
+            ////check if the podcast exist
+            //bool CheckPodcast = CheckInDB(podcast);
+
+            ////if the podcast dont exist, it will be saved in the db
+            //if (!CheckPodcast)
+            //{
+            //    myTarget.SavePodcast(podcast);
+            //}
         }
 
+        public PostDataSource(PostConnect connection)
+        {
+            myConecction = connection;
+        }
 
-        private bool CheckInDB(Podcast thisPodcast)
+        internal bool CheckInDB(Podcast thisPodcast)
         {
             bool check = false;
 
@@ -69,34 +75,38 @@ namespace DataAccessLayer.PostgreSQL
         public List<Episode> GetAllEpisodes(Show selectedShow)
         {
 
-            string csql_create = "select * from episodes";
+            string csql_create = "select * from episodes WHERE showid= @showId";
+            int id = int.Parse(selectedShow.ShowId);
+
             NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
+            Command.Parameters.AddWithValue("@showId", id);
             var reader = Command.ExecuteReader();
 
             var list = new List<Episode>();
 
             while (reader.Read())
 
-
+           
                 // return a list with all episodes 
 
-
-                list.Add(new Episode
-                {
-                    //EpisodeId = reader.GetString(0),
-                    //showid = reader.GetString(1),
-                    Title = reader.GetString(2),
-                    PublishDate = reader.GetDateTime(3),
-                    Summary = reader.GetString(4),
-                    Keywords = reader.GetString(5),
-                    ImageUri = reader.GetString(6),
-                    //duration = reader.GetString(7),
-                    //filetyp = reader.GetString(8),
-                    //fileurl = reader.GetString(9),
-                    //FileDetails = reader.GetString(10),
-                    IsDownloaded = reader.GetBoolean(11),
-                    DownloadPath = reader.GetString(12)
-                });
+ 
+            list.Add(new Episode
+            {
+                EpisodeId = reader.GetInt32(0).ToString(),
+                //showid = reader.GetString(1),
+                Title = reader.GetString(2),
+                PublishDate = reader.GetDateTime(3),
+                Summary = reader.GetString(4),
+                Keywords = reader.GetString(5),
+                ImageUri = reader.GetString(6),
+                //duration = reader.GetString(7),
+                //filetyp = reader.GetString(8),
+                FileDetails = new FileInformation() { FileType = reader.GetString(8), SourceUri = reader.GetString(9) },
+                //fileurl = reader.GetString(9),
+                //FileDetails = reader.GetString(10),
+                IsDownloaded = reader.GetBoolean(11),
+                DownloadPath = reader.GetString(12)
+            });
 
             list.ToArray();
 
@@ -117,10 +127,9 @@ namespace DataAccessLayer.PostgreSQL
 
 
             while (reader.Read())
-
                 list.Add(new Show
                 {
-                    //ShowId = reader.GetString(0),
+                    ShowId = reader.GetInt32(0).ToString(),
                     PublisherName = reader.GetString(1),
                     PodcastTitle = reader.GetString(2),
                     //Category = reader.GetString(3),

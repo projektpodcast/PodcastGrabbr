@@ -15,38 +15,53 @@ namespace DataAccessLayer.PostgreSQL
         int myPort;
         String myIp;
 
-
+        private IDataStorageType ConnectionData { get; set; }
+        internal NpgsqlConnection DbConnection { get; set; }
         public static NpgsqlConnection con = new NpgsqlConnection();
 
 
         public PostConnect(IDataStorageType storageData)
         {
+            ConnectionData = storageData;
             //dbName = PostDataSource.dbData.DataBaseName;
             //myPort = PostDataSource.dbData.Port;
             //myIp = PostDataSource.dbData.Ip;
-            dbName = storageData.DataBaseName;
-            myPort = storageData.Port;
-            myIp = storageData.Ip;
         }
-
 
         public NpgsqlConnection DBConnect()
 
         {
-
-            con.ConnectionString = @"User ID = postgres; password=" + StringCipher.Decrypt(PostDataSource.dbData.EncryptedPassword) + "; host= " + myIp + ";database=" + dbName + ";port=" + myPort + ";commandtimeout=900";
-            //con.ConnectionString = @"User ID = postgres; password=" + myPass + "; host= " + myIp +";database=" + dbName + ";port="+ myPort +";commandtimeout=900";
-            con.Open();
-            return con;
+            con.ConnectionString =
+            $"Server={ConnectionData.Ip}; Port={ConnectionData.Port}; DataBase={ConnectionData.DataBaseName}; User Id={ConnectionData.UserName}; Password={StringCipher.Decrypt(ConnectionData.EncryptedPassword)}";
+            DbConnection = con;
+            DbConnection.Open();
+            return DbConnection;
         }
+
+        //public NpgsqlConnection DBConnect()
+
+        //{
+        //    con.ConnectionString = @"User ID = postgres; password=" + StringCipher.Decrypt(PostDataSource.dbData.EncryptedPassword) + "; host= " + myIp + ";database=" + dbName + ";port=" + myPort + ";commandtimeout=900";
+        //    //con.ConnectionString = @"User ID = postgres; password=" + myPass + "; host= " + myIp +";database=" + dbName + ";port="+ myPort +";commandtimeout=900";
+        //    con.Open();
+        //    return con;
+        //}
         public NpgsqlConnection DBConnectCheck()
 
         {
-
-            con.ConnectionString = @"User ID = postgres; password=" + StringCipher.Decrypt(PostDataSource.dbData.EncryptedPassword) + "; host= " + myIp + ";database=;port=" + myPort + ";commandtimeout=900";
-            //con.ConnectionString = @"User ID = postgres; password=" + myPass + "; host= " + myIp +";database=" + dbName + ";port="+ myPort +";commandtimeout=900";
-            con.Open();
-            return con;
+            if (DbConnection.State != System.Data.ConnectionState.Closed)
+            {
+                return DbConnection;
+            }
+            else
+            {
+                con.ConnectionString =
+                $"Server={ConnectionData.Ip}; Port={ConnectionData.Port}; DataBase={ConnectionData.DataBaseName}; User Id={ConnectionData.UserName}; " +
+                $"Password={StringCipher.Decrypt(ConnectionData.EncryptedPassword)}";
+                DbConnection = con;
+                DbConnection.Open();
+                return DbConnection;
+            }
         }
 
         public NpgsqlConnection DBDesConnect()

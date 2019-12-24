@@ -36,8 +36,6 @@ namespace DataAccessLayer.PostgreSQL
                 {
                     myConecction.DBDesConnect();
                 }
-
-
             }
             catch (Exception e)
             {
@@ -119,10 +117,10 @@ namespace DataAccessLayer.PostgreSQL
         {
 
 
-            string csql = @"CREATE TABLE shows (showid integer PRIMARY KEY,
+            string csql = @"CREATE TABLE shows (sid integer PRIMARY KEY,
                 publishername VARCHAR(255) NOT NULL,
 				podcasttitle VARCHAR(255) NOT NULL,
-                categorie VARCHAR(100),
+                category VARCHAR(100),
                 Keywords VARCHAR(255),
 				subtitle VARCHAR(255),
 				language VARCHAR(30),
@@ -135,7 +133,7 @@ namespace DataAccessLayer.PostgreSQL
 
 
                 create table episodes (episodeid serial PRIMARY KEY,
-				showid integer REFERENCES shows(showid) ON DELETE CASCADE ON UPDATE CASCADE,
+				showid integer REFERENCES shows(sid) ON DELETE CASCADE ON UPDATE CASCADE,
 				title VARCHAR(255) NOT NULL,
 				publishdate DATE,
 				summary VARCHAR(2000),
@@ -167,20 +165,20 @@ namespace DataAccessLayer.PostgreSQL
 
             bool resp = false;
 
-            string sql = @"INSERT INTO shows (showid, publishername, podcasttitle,
-            categorie, Keywords, subtitle, language, description, lastupdated, lastbuilddate, imageuri, rsslink) 
-            VALUES (@showid, @publishername, @podcasttitle, @categorie, @Keywords, 
+            string sql = @"INSERT INTO shows (sid, publishername, podcasttitle,
+            category, Keywords, subtitle, language, description, lastupdated, lastbuilddate, imageuri, rsslink) 
+            VALUES (@sid, @publishername, @podcasttitle, @category, @Keywords, 
             @subtitle, @language, @description, @lastupdated, @lastbuilddate, @imageuri, @rsslink)";
 
             NpgsqlCommand Command = new NpgsqlCommand(sql, myConnection);
 
-            Command.Parameters.AddWithValue("showid", Convert.ToInt32(newShow.ShowId));
+            Command.Parameters.AddWithValue("sid", Convert.ToInt32(newShow.ShowId));
             Command.Parameters.AddWithValue("publishername", newShow.PublisherName);
             Command.Parameters.AddWithValue("podcasttitle", newShow.PodcastTitle);
-            Command.Parameters.AddWithValue("categorie", "newCategorie");
-            //TODO new table for categorie
-            //Command.Parameters.AddWithValue("categorie", newShow.Category);
-            Command.Parameters.AddWithValue("Keywords", newShow.Keywords);
+            Command.Parameters.AddWithValue("category", "newcategory");
+            //TODO new table for category
+            //Command.Parameters.AddWithValue("category", newShow.Category);
+            Command.Parameters.AddWithValue("Keywords", newShow.Keywords != null ? newShow.Keywords : "none");
             Command.Parameters.AddWithValue("subtitle", "Subtitle");
             //Command.Parameters.AddWithValue("subtitle", newShow.Subtitle);
             Command.Parameters.AddWithValue("language", newShow.Language);
@@ -188,8 +186,8 @@ namespace DataAccessLayer.PostgreSQL
             Command.Parameters.AddWithValue("lastupdated", newShow.LastUpdated);
             Command.Parameters.AddWithValue("lastbuilddate", newShow.LastBuildDate);
             Command.Parameters.AddWithValue("imageuri", newShow.ImageUri);
-            Command.Parameters.AddWithValue("rsslink", "RssLink");
-            //Command.Parameters.AddWithValue("rsslink", newShow.RssLink);
+            //Command.Parameters.AddWithValue("rsslink", "RssLink");
+            Command.Parameters.AddWithValue("rsslink", newShow.RssLink);
 
             Command.ExecuteNonQuery();
 
@@ -211,18 +209,18 @@ namespace DataAccessLayer.PostgreSQL
             string sql = @"INSERT INTO episodes (episodeid, showid , title, publishdate, 
             summary, keywords, imageuri, duration, filetyp, fileurl, imageurl, 
             isDownload, path)
-            VALUES (default, @showid, @title, @publishdate, 
+            VALUES (default, @sid, @title, @publishdate, 
             @summary, @keywords, @imageuri, @duration, @filetyp, @fileurl, @imageurl, 
             @isDownload, @path)";
 
 
             NpgsqlCommand Command = new NpgsqlCommand(sql, myConnection);
 
-            Command.Parameters.AddWithValue("showid", Convert.ToInt32(showId));
+            Command.Parameters.AddWithValue("sid", Convert.ToInt32(showId));
             Command.Parameters.AddWithValue("title", newEpisode.Title);
             Command.Parameters.AddWithValue("publishdate", newEpisode.PublishDate.Date);
             Command.Parameters.AddWithValue("summary", newEpisode.Summary);
-            Command.Parameters.AddWithValue("keywords", newEpisode.Keywords);
+            Command.Parameters.AddWithValue("keywords", newEpisode.Keywords != null ? newEpisode.Keywords : "none");
             Command.Parameters.AddWithValue("imageuri", newEpisode.ImageUri);
             Command.Parameters.AddWithValue("duration", newEpisode.FileDetails.Length);
             Command.Parameters.AddWithValue("filetyp", newEpisode.FileDetails.FileType);
@@ -230,7 +228,7 @@ namespace DataAccessLayer.PostgreSQL
             Command.Parameters.AddWithValue("imageurl", newEpisode.ImageUri);
             Command.Parameters.AddWithValue("isDownload", newEpisode.IsDownloaded);
             //Command.Parameters.AddWithValue("path", newEpisode.LocalMediaPath);
-            Command.Parameters.AddWithValue("path", newEpisode.DownloadPath);
+            Command.Parameters.AddWithValue("path", newEpisode.DownloadPath != null ? newEpisode.DownloadPath : "");
             Command.ExecuteNonQuery();
 
 
@@ -242,14 +240,25 @@ namespace DataAccessLayer.PostgreSQL
         {
             DeserializingManager rssFeed = new DeserializingManager();
             Podcast podcastToSave = rssFeed.DeserializeRssXml(rssUri);
-            SavePodcast(podcastToSave);
+            podcastToSave.ShowInfo.RssLink = rssUri;
+            //SavePodcast(podcastToSave);
+
+            PostDataSource lookup = new PostDataSource(myConecction);
+            //check if the podcast exist
+            bool CheckPodcast = lookup.CheckInDB(podcastToSave);
+
+            //if the podcast dont exist, it will be saved in the db
+            if (!CheckPodcast)
+            {
+                SavePodcast(podcastToSave);
+            }
         }
 
         //save the show whit the episodes
         public void SavePodcast(Podcast podcastToSave)
         {
             // collect show id
-            string csql_create = "select count(showid) from shows";
+            string csql_create = "select count(sid) from shows";
 
             NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
             var reader = Command.ExecuteScalar();
@@ -330,7 +339,14 @@ namespace DataAccessLayer.PostgreSQL
 
         public void InsertDownloadPath(Show show, Episode episode, string path)
         {
+            NpgsqlConnection myConnection = myConecction.DBConnect();
+            string sql = @"UPDATE episodes SET path = @path, isdownload = true WHERE episodeid=@eid";
 
+            NpgsqlCommand Command = new NpgsqlCommand(sql, myConnection);
+
+            Command.Parameters.AddWithValue("@path", path);
+            Command.Parameters.AddWithValue("@eid", int.Parse(episode.EpisodeId));
+            Command.ExecuteNonQuery();
         }
 
         public void BulkCopyPodcasts(List<string> rssUriList)

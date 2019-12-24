@@ -291,6 +291,11 @@ namespace PresentationLayer.ViewModel
         private void ImportVm_OnPodcastsUpdated(object sender, OnPodcastsManipulated e)
         {
             this._singleRssImportUi.Close();
+            if (CurrentContent == _podcastUi)
+            {
+                ReloadPodcastUi();
+                SwitchToPodcastUi();
+            }
             ReloadPodcastUi();
         }
 
@@ -303,7 +308,12 @@ namespace PresentationLayer.ViewModel
         /// <param name="e"></param>
         private void SettingsVm_OnPodcastsUpdated(object sender, OnPodcastsManipulated e)
         {
+            if (CurrentContent == _podcastUi)
+            {
                 ReloadPodcastUi();
+                SwitchToPodcastUi();
+            }
+            ReloadPodcastUi();
         }
 
         /// <summary>
