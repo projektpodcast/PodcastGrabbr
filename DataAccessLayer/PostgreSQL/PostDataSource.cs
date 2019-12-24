@@ -58,9 +58,11 @@ namespace DataAccessLayer.PostgreSQL
 
 
 
-            string csql_create = "select * from shows where podcasttitle = '" + thisPodcast.ShowInfo.PodcastTitle + "'";
+            string csql_create = "select * from shows where podcasttitle = @title";
+
 
             NpgsqlCommand Command = new NpgsqlCommand(csql_create, myConecction.DBConnect());
+            Command.Parameters.AddWithValue("@title", thisPodcast.ShowInfo.PodcastTitle);
             var reader = Command.ExecuteReader();
 
             if (reader.HasRows)

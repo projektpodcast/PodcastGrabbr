@@ -31,16 +31,22 @@ namespace RssFeedProcessor
         public Podcast DeserializeRssXml(string xmlUri)
         {
             XmlLoader xmlLoader = new XmlLoader();
-            XmlDocument loadedXml = xmlLoader.CreateXmlDocument(xmlUri);
-
-            using (MemoryStream memoryStreamWithXml = xmlLoader.LoadXmlDocumentIntoMemoryStream(loadedXml))
+            try
             {
-                Show show = CreateShowObject(memoryStreamWithXml);
-                xmlLoader.SetMemoryStreamPositionToStart(memoryStreamWithXml);
-                List<Episode> episodeList = CreateEpisodeListObject(memoryStreamWithXml);
+                XmlDocument loadedXml = xmlLoader.CreateXmlDocument(xmlUri);
+                using (MemoryStream memoryStreamWithXml = xmlLoader.LoadXmlDocumentIntoMemoryStream(loadedXml))
+                {
+                    Show show = CreateShowObject(memoryStreamWithXml);
+                    xmlLoader.SetMemoryStreamPositionToStart(memoryStreamWithXml);
+                    List<Episode> episodeList = CreateEpisodeListObject(memoryStreamWithXml);
 
-                Podcast newPodcast = CreatePodcast(show, episodeList);
-                return newPodcast;
+                    Podcast newPodcast = CreatePodcast(show, episodeList);
+                    return newPodcast;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

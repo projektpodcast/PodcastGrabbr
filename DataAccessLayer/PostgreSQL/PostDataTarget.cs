@@ -182,7 +182,7 @@ namespace DataAccessLayer.PostgreSQL
             Command.Parameters.AddWithValue("subtitle", "Subtitle");
             //Command.Parameters.AddWithValue("subtitle", newShow.Subtitle);
             Command.Parameters.AddWithValue("language", newShow.Language);
-            Command.Parameters.AddWithValue("description", newShow.Description);
+            Command.Parameters.AddWithValue("description", newShow.Description != null ? newShow.Description : "");
             Command.Parameters.AddWithValue("lastupdated", newShow.LastUpdated);
             Command.Parameters.AddWithValue("lastbuilddate", newShow.LastBuildDate);
             Command.Parameters.AddWithValue("imageuri", newShow.ImageUri);
@@ -219,7 +219,7 @@ namespace DataAccessLayer.PostgreSQL
             Command.Parameters.AddWithValue("sid", Convert.ToInt32(showId));
             Command.Parameters.AddWithValue("title", newEpisode.Title);
             Command.Parameters.AddWithValue("publishdate", newEpisode.PublishDate.Date);
-            Command.Parameters.AddWithValue("summary", newEpisode.Summary);
+            Command.Parameters.AddWithValue("summary", newEpisode.Summary != null ? newEpisode.Summary : "");
             Command.Parameters.AddWithValue("keywords", newEpisode.Keywords != null ? newEpisode.Keywords : "none");
             Command.Parameters.AddWithValue("imageuri", newEpisode.ImageUri);
             Command.Parameters.AddWithValue("duration", newEpisode.FileDetails.Length);
@@ -351,7 +351,47 @@ namespace DataAccessLayer.PostgreSQL
 
         public void BulkCopyPodcasts(List<string> rssUriList)
         {
-            throw new NotImplementedException();
+            //DeserializingManager manager = new DeserializingManager();
+            //foreach (string link in rssUriList)
+            //{
+            //    Podcast podcast = manager.DeserializeRssXml(link);
+            //    SavePodcast(podcast);
+            //}
+
+
+            DeserializingManager rssFeed = new DeserializingManager();
+            foreach (string link in rssUriList)
+            {
+                Podcast podcastToSave = rssFeed.DeserializeRssXml(link);
+                if (podcastToSave != null)
+                {
+                    podcastToSave.ShowInfo.RssLink = link;
+
+                    PostDataSource lookup = new PostDataSource(myConecction);
+                    //check if the podcast exist
+                    bool CheckPodcast = lookup.CheckInDB(podcastToSave);
+
+                    try
+                    {
+                        if (podcastToSave.ShowInfo.Description != null && podcastToSave.ShowInfo.Description.Length >= 2000)
+                        {
+                            podcastToSave.ShowInfo.Description.Remove(2000);
+                        }
+                        //if the podcast dont exist, it will be saved in the db
+                        if (!CheckPodcast)
+                        {
+                            SavePodcast(podcastToSave);
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+                }
+            }
+
         }
 
         #endregion

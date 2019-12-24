@@ -166,7 +166,8 @@ namespace PresentationLayer.ViewModel
             Task.Run(() => { MessageBox.Show("Podcasts werden verarbeitet", "Bitte warten", MessageBoxButton.OK, MessageBoxImage.Information); });
             //try
             //{
-            XmlStorage.Instance.MassImport(uriListToProcess);
+            _businessAccess.Save.BulkSavePodcast(uriListToProcess);
+            //XmlStorage.Instance.MassImport(uriListToProcess);
 
                 //for (int i = 0; i < uriListToProcess.Count; i++)
                 //{

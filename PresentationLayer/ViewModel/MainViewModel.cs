@@ -308,12 +308,12 @@ namespace PresentationLayer.ViewModel
         /// <param name="e"></param>
         private void SettingsVm_OnPodcastsUpdated(object sender, OnPodcastsManipulated e)
         {
-            if (CurrentContent == _podcastUi)
-            {
+            //if (CurrentContent == _podcastUi)
+            //{
                 ReloadPodcastUi();
                 SwitchToPodcastUi();
-            }
-            ReloadPodcastUi();
+            //}
+            //ReloadPodcastUi();
         }
 
         /// <summary>
